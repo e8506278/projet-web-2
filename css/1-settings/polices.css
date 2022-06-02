@@ -1,0 +1,21 @@
+:root {
+    --police-titre: 'Catamaran', sans-serif;
+    --police-texte:'Lato', sans-serif;
+    --police-logo: 'Poiret One', cursive;
+
+    --police-gras :700;
+    --police-xgras :800;
+    
+
+    --police-xp: 0.9em;
+    --police-p: 1.2em;
+    --police-m: 1.5em;
+    --police-l: 1.8em;
+
+    /* Police importées*/
+    font-family: 'Noto Serif', serif;
+    font-family: 'Buda', cursive;
+    font-family: 'Gruppo', cursive;
+    font-family: 'M PLUS 1p', sans-serif;
+    font-family: 'Catamaran', sans-serif;
+}
