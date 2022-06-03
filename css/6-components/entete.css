@@ -1,5 +1,5 @@
 header{
-    background-color: black;
+    background-color: var(--couleur-secondaire);
     padding: var(--espace-p) var(--espace-p) 0 var(--espace-p) ;
     
 
@@ -31,17 +31,15 @@ header{
     letter-spacing: 3px;
     font-family: var(--police-texte);  
 }
-.entete__img--filtre{
-    filter: brightness(.8);
-}
+
 
 .entete__icone{
-    fill: white;  
+    fill: var(--couleur-primaire);  
 }
 .entete__nav{
     display: flex;
     justify-content: right;
-    background-color:black;
+    background-color:var(--couleur-secondaire);
 }
 .entete__img-wrapper{
     overflow: hidden;
@@ -51,10 +49,9 @@ header{
 }
 @media only screen and (min-width: 500px){
     .entete__img-wrapper{
-        
         width: 400px;
     }
 }
 .entete__img{
-    height: 80vh;
+    height: 55vh;
 }

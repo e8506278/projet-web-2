@@ -1,8 +1,13 @@
 .section-wrapper{
-    padding: var(--espace-p);
+    padding: var(--espace-m) var(--espace-p) ;
 }
 @media only screen and (min-width: 760px){
     .section-wrapper{
-        padding: var(--espace-l);
+        padding: var(--espace-l) var(--espace-m);
+    }
+}
+@media only screen and (min-width: 1200px){
+    .section-wrapper{
+        padding: var(--espace-xl) var(--espace-l);
     }
 }

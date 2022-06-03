@@ -3,14 +3,7 @@
     font-family: var(--police-texte);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6{
-    font-family: var(--police-titre);
-}
+
 /* ELEMENTS */
 
 body,
@@ -40,7 +33,6 @@ a,
 a:hover,
 a:focus,
 a:visited {
-    color: var(--black);
     text-decoration: none;
 }
 figcaption,

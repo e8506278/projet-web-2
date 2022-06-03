@@ -3,7 +3,8 @@
     position: fixed;
     bottom:0;
     width: 100%;
-    background-color: black;
+    background-color: var(--couleur-secondaire);
+    z-index:5;
 }
 @media only screen and (min-width: 760px){
     .nav-mobile{
@@ -16,8 +17,8 @@
     width: 100%;
 }
 .nav-mobile__icone{
-    fill: white;
+    fill: var(--couleur-primaire);
 }
 .nav-mobile__icone-milieu{
-    fill: var(--couleur-secondaire);
+    fill: var(--couleur-accent);
 }
