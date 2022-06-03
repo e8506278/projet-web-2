@@ -166,6 +166,8 @@ class SAQ extends Modele {
 		$retour = new stdClass();
 		$retour -> succes = false;
 		$retour -> raison = '';
+		//supprimer $ et remplacer , par . 
+		$bte->prix = floatval(str_replace(',', '.', $bte->prix));
 
 		//var_dump($bte);
 		// Récupère le type
