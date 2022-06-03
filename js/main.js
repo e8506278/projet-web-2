@@ -29,6 +29,8 @@ window.addEventListener('load', function () {
                 })
                 .then(response => {
                     console.debug(response);
+                    //reload page
+                    location.reload();
                 }).catch(error => {
                     console.error(error);
                 });
@@ -52,6 +54,8 @@ window.addEventListener('load', function () {
                 })
                 .then(response => {
                     console.debug(response);
+                    //reload page
+                    location.reload();
                 }).catch(error => {
                     console.error(error);
                 });
