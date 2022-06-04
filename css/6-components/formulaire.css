@@ -1,0 +1,7 @@
+.formulaire{
+    display: flex;
+    flex-direction: column;
+}
+.formulaire__champs{
+    padding-top: var(--espace-p);
+}
