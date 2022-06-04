@@ -5,9 +5,11 @@
     padding: var(--espace-xp);
     color: var(--couleur-secondaire);
     font-weight: 700;
+    cursor: pointer;
+    
 }
 .bouton-primaire:hover{
-    border: 1px solid var(--couleur-secondaire);
+    border: 1px solid var(--couleur-primaire);
     background-color: var(--couleur-secondaire);
     color: var(--couleur-primaire);
    
@@ -20,9 +22,11 @@
     padding: var(--espace-xp);
     color: var(--couleur-primaire);
     font-weight: 700;
+    cursor: pointer;
+   
 }
 .bouton-secondaire:hover{
-    border: 1px solid var(--couleur-primaire);
+    border: 1px solid black;
     background-color: var(--couleur-primaire);
     color: var(--couleur-secondaire);
    

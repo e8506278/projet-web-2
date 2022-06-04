@@ -1,19 +1,7 @@
 .formulaire{
-   
-}
-.formulaire__titre{
-
-}
-.formulaire__champs-boite{
-    
-    padding: var(--espace-xp) 0;
+    display: flex;
+    flex-direction: column;
 }
 .formulaire__champs{
-    outline: none;
-    border: none;
-    border-bottom: 1px solid ;
-    transition: 0.3s;
-}
-.formulaire__champs:focus{
-    border-bottom: 1px solid var(--couleur-accent);
+    padding-top: var(--espace-p);
 }
