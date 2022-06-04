@@ -12,9 +12,8 @@
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=M+PLUS+1p:wght@100;300;400;500;700;800;900&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Buda&family=Gruppo&family=M+PLUS+1p:wght@100;300;400;500;700;800;900&family=Poiret+One&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&family=Poiret+One&display=swap" rel="stylesheet">
+
 		<link rel="stylesheet" href="./css/styles.css" type="text/css" media="screen">
 		<base href="<?php echo BASEURL; ?>">
 		<!--<script src="./js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
@@ -26,54 +25,28 @@
 			<nav class="nav">
 				<div class="nav__logo">VINO</div>
 				<ul class="nav__liste">
-					<li><a>Categorie 1</a></li>
-					<li><a>Categorie 2</a></li>
-					<li><a>Categorie 3</a></li>
+					<li><a>Mes celliers</a></li>
+					<li><a>Mes bouteilles</a></li>
+					<li><a>Login</a></li>
 					<li><a>Categorie 4</a></li>
 				</ul>
 
 			</nav>
 			<div class="entete">
 				<div class="entete__titre">vino
-					<div class="entete__stitre">Gestion de cellier</div>	
+					<div class="entete__stitre">Gestion de celliers</div>	
 				</div>
 				<!--Image hero-->
 				<div class="entete__img-wrapper">
-					<img class="entete__img entete__img--filtre" src="./assets/img/unebouteille.jpg" alt="hero">
+					<img class="entete__img " src="./assets/img/unebouteille.jpg" alt="hero">
 				</div>
 			</div>
 		</header>
 		
 		<main>
-
-		<section  class="section-wrapper vignette">
-
-		<!--Couleur du titre directe dans le h3 si veut tester-->
-			<h3 style="color:#E1C16E;">ORGANISATION</h3>
-			<br>
-			<!--Espace 1-->
-			<div class="grille grille--4">
-				<figure class="vignette__wrapper">
-					<img class="vignette__img" src="./assets/img/cellier.jpg" alt="cellier">
-					<figcaption class="vignette__titre">Mes celliers</figcaption>
-				</figure>
-			<!--Espace 2-->
-				<figure class="vignette__wrapper">
-					<img class="vignette__img" src="./assets/img/unebouteille.jpg" alt="bouteille">
-					<figcaption class="vignette__titre">Vos celliers</figcaption>
-				</figure>
-			<!--Espace 3-->
-				<figure class="vignette__wrapper">
-					<img class="vignette__img" src="./assets/img/bouteilles.jpg" alt="bouteilles">
-					<figcaption class="vignette__titre">Vos celliers</figcaption>
-				</figure>
-			<!--Espace 4 Background color dans la div si veut tester-->
-				<div class="" style="background-color:#E1C16E;height: 150px;position: relative;">
-					<figcaption class="vignette__titre" >Vos celliers</figcaption>
-				</div>
-			</div>
-
-		</section>
+		
+		
+		
 
 		<!--Navigation Mobile-->
 			<nav class="nav-mobile section-wrapper">
@@ -86,4 +59,7 @@
 				</ul>
 			</nav>
 
+	
+
+			
 		

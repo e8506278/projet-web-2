@@ -1,6 +1,9 @@
 .vignette{
     background-color: var(--couleur-primaire);
 }
+.vignette__entete{
+    color: var(--couleur-secondaire);
+}
 .vignette__wrapper{
     position: relative;
     display: flex;
@@ -10,9 +13,10 @@
 .vignette__img{
     filter: brightness(0.8);
 }
+
 .vignette__titre{
     position: absolute;
-    color: white;
+    color: var(--couleur-primaire);
     top: 50%; right: 50%;
     transform: translate(50%,-50%);
     font-size: var(--police-p);

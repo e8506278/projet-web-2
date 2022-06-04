@@ -18,6 +18,8 @@
 @import "./5-objects/wrappers.css";
 
 /*COMPONENTS*/
+@import "./6-components/texte-photo.css";
+@import "./6-components/boite-double.css";
 @import "./6-components/caroussel.css";
 @import "./6-components/carte.css";
 @import "./6-components/pied.css";
@@ -27,6 +29,7 @@
 @import "./6-components/nav-mobile.css";
 @import "./6-components/hero.css";
 @import "./6-components/vignette.css";
+@import "./6-components/banderole.css";
 
 
 

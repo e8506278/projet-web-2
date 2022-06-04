@@ -46,9 +46,9 @@ class Controler
 		private function accueil()
 		{
 			$bte = new Bouteille();
-            $data = $bte->getListeBouteilleCellier();
+            //$data = $bte->getListeBouteilleCellier();
 			include("vues/entete.php");
-			include("vues/cellier.php");
+			include("vues/index.php");
 			include("vues/pied.php");
                   
 		}
