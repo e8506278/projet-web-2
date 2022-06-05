@@ -22,6 +22,9 @@ class Controler
 		{
 			
 			switch ($_GET['requete']) {
+				case 'celliers':
+					$this->listeCelliers();
+					break;
 				case 'listeBouteille':
 					$this->listeBouteille();
 					break;
@@ -111,6 +114,10 @@ class Controler
 			$bte = new Bouteille();
 			$resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
 			echo json_encode($resultat);
+		}
+		private function listeCelliers(){
+			$cellier = new Cellier();
+			echo json_encode($cellier);
 		}
 		
 }
