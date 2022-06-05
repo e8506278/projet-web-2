@@ -20,10 +20,14 @@ class Controler
 		 */
 		public function gerer()
 		{
-			
 			switch ($_GET['requete']) {
 				case 'listeBouteille':
 					$this->listeBouteille();
+					break;
+				case 'details':
+//					return "test";
+//					break;
+					$this->productDetails();
 					break;
 				case 'autocompleteBouteille':
 					$this->autocompleteBouteille();
@@ -50,9 +54,20 @@ class Controler
 			include("vues/entete.php");
 			include("vues/index.php");
 			include("vues/pied.php");
-                  
 		}
-		
+
+	    private function productDetails()
+		{
+			$bte = new Bouteille();
+			$result = $bte->getOneBouteille($_GET['id_bouteille']);
+			if(count($result)>0){
+				$product = $result[0];
+			}
+
+		include("vues/shortentete.php");
+		include("vues/details.php");
+		include("vues/pied.php");
+	}
 
 		private function listeBouteille()
 		{
@@ -74,6 +89,7 @@ class Controler
             echo json_encode($listeBouteille);
                   
 		}
+
 		private function ajouterNouvelleBouteilleCellier()
 		{
 			$body = json_decode(file_get_contents('php://input'));

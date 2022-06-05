@@ -1,6 +1,5 @@
 .texte-photo{
     background-color: var(--couleur-intermediaire-pale);
-    
 }
 .texte-photo__titre{
     font-size: var(--police-l);
