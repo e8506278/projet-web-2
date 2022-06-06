@@ -4,14 +4,19 @@
 .carte__entete{
     padding-bottom: var(--espace-p);
 }
+.carte__entete-bouton{
+    padding-bottom: var(--espace-p);
+    display: flex;
+    justify-content: space-between;
+}
 
 @media only screen and (min-width: 500px) {
-    .carte__contenant {
+    .carte {
         width: 80%;
     }
 }
 @media only screen and (min-width: 760px) {
-    .carte__contenant {
+    .carte{
         width: 60%;
     }
 }
@@ -46,11 +51,17 @@
 .carte__titre{
     border-bottom: 1px solid lightgrey;
     margin-bottom: var(--espace-xp);
+    justify-content: space-between;
 }
 .carte__lien{
     color: var(--couleur-secondaire);
 }
-
+.carte--aligne-centre{
+    align-self: center;
+}
+.carte__lien-icone:hover{
+    fill: var(--couleur-accent);
+}
 /*Bouteilles*/
 .carte--flex{
     display: flex;

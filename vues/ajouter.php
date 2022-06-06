@@ -1,6 +1,6 @@
 
 <section class="section-wrapper">
-    <h3>Ajouter une bouteille</h3>
+    <h3>Ajouter </h3>
 
     <form class="formulaire">
             <div class="formulaire__champs">
