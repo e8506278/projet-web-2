@@ -47,8 +47,6 @@ class Controler
 
 		private function accueil()
 		{
-			$bte = new Bouteille();
-            //$data = $bte->getListeBouteilleCellier();
 			include("vues/entete.php");
 			include("vues/index.php");
 			include("vues/pied.php");
@@ -59,13 +57,15 @@ class Controler
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
-            $cellier = $bte->getListeBouteilleCellier();
-            
-            echo json_encode($cellier);
+            //$cellier = $bte->getListeBouteilleCellier();
+            $data = $bte->getListeBouteilleCellier();
+
+            echo json_encode($data);
 			include("vues/entete.php");
 			include("vues/bouteilles.php");
 			include("vues/pied.php");
 		}
+
 		
 		private function autocompleteBouteille()
 		{

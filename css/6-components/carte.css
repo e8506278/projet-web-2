@@ -4,9 +4,7 @@
 .carte__entete{
     padding-bottom: var(--espace-p);
 }
-.carte__contenant{
 
-}
 @media only screen and (min-width: 500px) {
     .carte__contenant {
         width: 80%;
@@ -30,7 +28,7 @@
 .carte__liste{
     display: flex;
     justify-content: space-between;
-    padding-top: var(--espace-xp);
+   
     
 }
 .carte__detail{
@@ -47,4 +45,21 @@
 }
 .carte__titre{
     border-bottom: 1px solid lightgrey;
+    margin-bottom: var(--espace-xp);
+}
+.carte__lien{
+    color: var(--couleur-secondaire);
+}
+
+/*Bouteilles*/
+.carte--flex{
+    display: flex;
+}
+.carte__img{
+    width: 65px;
+
+}
+.carte__description{
+    flex-grow:1;
+    padding-left: var(--espace-p);
 }

@@ -3,7 +3,7 @@
     <div class="carte__contenant">
         <ul>
             <li class="carte__contenu ">
-                <a href="#">
+                <a class="carte__lien" href="#">
                     <h4 class="carte__titre">Cellier 1</h4>
                     <ul class="  carte__liste">
                         <li class="carte__detail">
@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li class="carte__contenu ">
-                <a href="#">
+                <a class="carte__lien" href="#">
                     <h4 class="carte__titre">Cellier 2</h4>
                     <ul class="  carte__liste">
                         <li class="carte__detail">
@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li class="carte__contenu ">
-                <a href="#">
+                <a class="carte__lien" href="#">
                     <h4 class="carte__titre">Cellier 3</h4>
                     <ul class="  carte__liste">
                         <li class="carte__detail">
