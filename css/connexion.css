@@ -3,6 +3,15 @@ body {
     width: 100vw;
 }
 
+a {
+    color: rgb(0, 0, 238);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
 button {
     font-size: 1rem;
     height: calc(2.25rem + 2px);
@@ -44,6 +53,10 @@ textarea:focus {
     border-bottom: 1px solid var(--couleur-accent);
 }
 
+.hidden {
+    display: none;
+}
+
 .justify-space-between {
     display: flex;
     justify-content: space-between;
@@ -57,19 +70,27 @@ textarea:focus {
     justify-content: center;
 }
 
-.formulaire {
+.main {
     max-width: 600px;
     width: 50%;
 }
 
+.entete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+}
+
 .wrapper-message {
+    color: red;
     margin: var(--espace-m) 0;
 }
 
-
-
 .form-group {
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 .form-control {
@@ -100,15 +121,11 @@ textarea:focus {
     justify-content: space-between;
 }
 
-.form-group {
-    width: 100%;
-}
-
 .groupe-de-2>* {
     width: 48%;
 }
 
-.conditions_wrapper {
+.conditions-wrapper {
     display: flex;
     align-items: center;
 }
@@ -117,7 +134,9 @@ textarea:focus {
     margin-right: 0.5rem;
 }
 
-.justify-right {
-    display: flex;
-    justify-content: flex-end;
+.btn-group {
+    background: var(--couleur-intermediaire-pale);
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 1rem;
+    padding: 1rem 0;
 }

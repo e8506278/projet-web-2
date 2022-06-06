@@ -12,9 +12,12 @@ const elUtilisateur = document.querySelector('[data-js-utilisateur]');
 const elUsagerMdp = document.querySelector('[data-js-mdp]');
 const elConfirmerMdp = document.querySelector('[data-js-confirmer]');
 const elPays = document.querySelector('[data-js-pays]');
-const valeurPays = elPays.options[elPays.selectedIndex].value;
-
-console.log(valeurPays);
+const elTelephone = document.querySelector('[data-js-telephone]');
+const elJour = document.querySelector('[data-js-ddn-jour]');
+const elMois = document.querySelector('[data-js-ddn-mois]');
+const elAnnee = document.querySelector('[data-js-ddn-annee]');
+const elCourriel = document.querySelector('[data-js-courriel]');
+const elConditions = document.querySelector('[data-js-conditions]')
 
 elFormulaire.addEventListener('submit', (e) => {
     // Nous inclurons toutes les erreurs dans cette chaîne
@@ -32,8 +35,30 @@ elFormulaire.addEventListener('submit', (e) => {
         lesErreurs += "<li>Vous devez indiquer votre ville.</li>";
     }
 
+    const valeurPays = elPays.options[elPays.selectedIndex].value;
+
     if (valeurPays <= 0) {
         lesErreurs += "<li>Vous devez indiquer votre pays.</li>";
+    }
+
+    if (elTelephone.value.length === 0) {
+        lesErreurs += "<li>Vous devez indiquer votre numéro de téléphone.</li>";
+    }
+
+    if (elJour.value <= 0) {
+        lesErreurs += "<li>Vous devez indiquer le jour de votre naissance.</li>";
+    }
+
+    if (elMois.value <= 0) {
+        lesErreurs += "<li>Vous devez indiquer le mois de votre naissance.</li>";
+    }
+
+    if (elAnnee.value <= 0) {
+        lesErreurs += "<li>Vous devez indiquer l'année de votre naissance.</li>";
+    }
+
+    if (elCourriel.value.length === 0) {
+        lesErreurs += "<li>Vous devez indiquer votre courriel.</li>";
     }
 
     if (elUtilisateur.value.length > 0) {
@@ -61,32 +86,29 @@ elFormulaire.addEventListener('submit', (e) => {
 
         if (mdpMauvaiseLongueur) {
             lesErreurs += "<li>Le mot de passe doit contenir entre 8 et 20 caractères.</li>";
-        } else {
-            // Regex to see if a digit is in the username, returns true if there is
-            const mdpAvecMajuscule = /[a-z]/.test(elUsagerMdp.value);
-
-            if (!mdpAvecMajuscule) {
-                lesErreurs += "<li>Le mot de passe doit contenir au moins une majuscule.</li>";
-            } else {
-                if (elUsagerMdp.value.length === 0) {
-                    lesErreurs += "<li>Vous devez confirmer le mot de passe.</li>";
-                } else if (elUsagerMdp.value !== elConfirmerMdp.value) {
-                    lesErreurs += "<li>Le mot de passe ne correspond pas.</li>";
-                }
-            }
+        } else if (elUsagerMdp.value.length === 0) {
+            lesErreurs += "<li>Vous devez confirmer le mot de passe.</li>";
+        } else if (elUsagerMdp.value !== elConfirmerMdp.value) {
+            lesErreurs += "<li>Le mot de passe ne correspond pas.</li>";
         }
     } else {
         lesErreurs += "<li>Vous devez indiquer un mot de passe.</li>";
+    }
+
+    if (!elConditions.checked) {
+        lesErreurs += "<li>Vous devez accepter les termes et conditions.</li>";
     }
 
     if (lesErreurs !== "") {
         // Modifiez la balise ul d'erreur pour afficher le(s) message(s) d'erreur
         elMessages.innerHTML = lesErreurs;
 
-        // Changer la couleur du texte en rouge
-        elMessages.style.color = 'red';
+        // Afficher les messages
+        elMessages.classList.remove("hidden");
 
         // Empêcher le bouton de soumettre le formulaire, tany qu'il y a des erreurs
         e.preventDefault();
+    } else if (!elMessages.classList.contains("hidden")) {
+        elMessages.classList.add("hidden");
     }
 });
