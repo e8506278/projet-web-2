@@ -1,0 +1,142 @@
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+a {
+    color: rgb(0, 0, 238);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+button {
+    font-size: 1rem;
+    height: calc(2.25rem + 2px);
+    line-height: 1.5;
+    width: 100%;
+}
+
+input {
+    width: auto;
+}
+
+select {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    transition: 0.3s;
+    background-color: var(--couleur-intermediaire-pale);
+    padding: var(--espace-xp);
+    width: 100%;
+}
+
+select:focus {
+    border-bottom: 1px solid var(--couleur-accent);
+}
+
+textarea {
+    min-height: 38px;
+    resize: vertical;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    transition: 0.3s;
+    background-color: var(--couleur-intermediaire-pale);
+    padding: var(--espace-xp);
+    width: 100%;
+}
+
+textarea:focus {
+    border-bottom: 1px solid var(--couleur-accent);
+}
+
+.hidden {
+    display: none;
+}
+
+.justify-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper-center {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.main {
+    max-width: 600px;
+    width: 50%;
+}
+
+.entete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+}
+
+.wrapper-message {
+    color: red;
+    margin: var(--espace-m) 0;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.date-container {
+    display: flex;
+}
+
+.date-container>*+* {
+    margin-left: 0.25rem;
+}
+
+.groupe-de-2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.groupe-de-2>* {
+    width: 48%;
+}
+
+.conditions-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+#accepter_conditions {
+    margin-right: 0.5rem;
+}
+
+.btn-group {
+    background: var(--couleur-intermediaire-pale);
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    margin: 0;
+    padding: 1rem 0;
+}

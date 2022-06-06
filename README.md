@@ -1,4 +1,6 @@
 # vino
+Pour se connecter, pour l'instant, les valeurs sont hardcodées: utilisateur: Toto9 et mdp: password9.
+
 Projet en cours de développement par les étudiants des groupes de Projet Web 2.
 
 Démo : https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/
