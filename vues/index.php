@@ -79,20 +79,20 @@
 			<br>
 
 			<div class="grille grille--4">
-				<a href="?requete=celliers">.php">
+				<a href="?requete=mesCelliers">
 					<figure class="vignette__wrapper">
 						<img class="vignette__img" src="./assets/img/cellier2.jpg" alt="cellier">
 						<figcaption class="vignette__titre">Mes celliers</figcaption>
 					</figure>
 				</a>
 				
-				<a href="">
+				<a href="?requete=listeBouteille">
 					<figure class="vignette__wrapper">
 						<img class="vignette__img" src="./assets/img/bouteilles1.jpg" alt="bouteille">
 						<figcaption class="vignette__titre">Mes bouteilles</figcaption>
 					</figure>
 				</a>
-				<a href="">
+				<a href="?requete=ajouterNouvelleBouteilleCellier">
 					<figure class="vignette__wrapper">
 						<img class="vignette__img" src="./assets/img/bouchonblanc.jpg" alt="bouteilles">
 						<figcaption class="vignette__titre">Ajouter une bouteille</figcaption>

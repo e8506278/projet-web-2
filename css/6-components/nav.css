@@ -21,3 +21,7 @@
     align-items: self-end;
     width: 60%;
 }
+.nav__lien{
+    color: var(--couleur-primaire);
+    text-transform: uppercase;
+}

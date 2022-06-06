@@ -25,10 +25,9 @@
 			<nav class="nav">
 				<div class="nav__logo">VINO</div>
 				<ul class="nav__liste">
-					<li><a>Mes celliers</a></li>
-					<li><a>Mes bouteilles</a></li>
-					<li><a>Login</a></li>
-					<li><a>Categorie 4</a></li>
+					<li><a class="nav__lien" href="#">Mes celliers</a></li>
+					<li><a class="nav__lien" href="#">Mes bouteilles</a></li>
+					<li><a class="nav__lien" href="#">Connexion</a></li>
 				</ul>
 
 			</nav>

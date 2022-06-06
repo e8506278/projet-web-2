@@ -2,6 +2,17 @@
     display: flex;
     flex-direction: column;
 }
+
 .formulaire__champs{
     padding-top: var(--espace-p);
+}
+.formulaire--flex{
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 760px){
+    .formulaire--flex{
+        flex-direction: row;
+    }
 }
