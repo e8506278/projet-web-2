@@ -46,17 +46,17 @@ class Bouteille extends Modele
 						c.millesime, 
 						b.id,
 						b.nom, 
-						b.categorie, 
+						b.type, 
 						b.image, 
 						b.code_saq, 
 						b.url_saq, 
 						b.pays, 
                         p.nom AS nom_pays,
 						b.description,
-						t.nom AS nom_categorie 
+						t.nom AS nom_type 
 						from vino__cellier c 
 						INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
-						INNER JOIN vino__categorie t ON t.id = b.categorie
+						INNER JOIN vino__type t ON t.id = b.type
                         INNER JOIN vino__pays p ON p.id = b.pays';
         // * CR - FIN - MODIF *
 

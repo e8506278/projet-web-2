@@ -84,7 +84,7 @@
                         <option value="46">Corée du Nord</option>
                         <option value="47">Corée du Sud</option>
                         <option value="48">Costa Rica</option>
-                        <option value="49">Côte d\</option>Ivoire</option>
+                        <option value="49">Côte d'Ivoire</option>
                         <option value="50">Croatie</option>
                         <option value="51">Cuba</option>
                         <option value="52">Danemark</option>

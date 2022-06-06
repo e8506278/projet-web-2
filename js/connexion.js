@@ -13,7 +13,7 @@ elFormulaire.addEventListener('submit', (e) => {
     let lesErreurs = '';
 
     if (elUtilisateur.value.length > 0) {
-        if (elUtilisateur.value !== "M0nster") {
+        if (elUtilisateur.value !== "Toto9") {
             lesErreurs = "<li>Échec de la connexion! Identifiant ou mot de passe invalide!</li>";
         }
     } else {
@@ -21,9 +21,7 @@ elFormulaire.addEventListener('submit', (e) => {
     }
 
     if (elUsagerMdp.value.length > 0) {
-        const mdpMauvaiseLongueur = (elUsagerMdp.value.length < 8 || elUsagerMdp.value.length > 20);
-
-        if (mdpMauvaiseLongueur) {
+        if (elUsagerMdp.value !== "password9") {
             lesErreurs = "<li>Échec de la connexion! Identifiant ou mot de passe invalide!</li>";
         }
     } else {
