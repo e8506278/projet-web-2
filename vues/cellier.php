@@ -1,3 +1,11 @@
+<section class="section-wrapper">
+    
+    <article>
+
+    </article>
+
+</section>
+
 <div class="cellier">
     <?php
     foreach ($data as $cle => $bouteille) {

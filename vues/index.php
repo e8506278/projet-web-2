@@ -55,7 +55,7 @@
 
 
 
-<!--
+<!--Page d'accueil connecté-->
 <section class="section-wrapper banderole">
 			<div class="grille grille--3 ">
 				<div class="banderole__contenant">
@@ -73,34 +73,60 @@
 			
 			</div>
 		</section>
-		<section  class="section-wrapper vignette">
-		
+		<section  class="section-wrapper vignette vignette--bgcouleur">
 
 			<h4 class="vignette__entete">Gérer mes collections</h4>
 			<br>
 
 			<div class="grille grille--4">
-				<figure class="vignette__wrapper">
-					<img class="vignette__img" src="./assets/img/cellier2.jpg" alt="cellier">
-					<figcaption class="vignette__titre">Mes celliers</figcaption>
-				</figure>
-
-				<figure class="vignette__wrapper">
-					<img class="vignette__img" src="./assets/img/bouteilles1.jpg" alt="bouteille">
-					<figcaption class="vignette__titre">Mes bouteilles</figcaption>
-				</figure>
-	
-				<figure class="vignette__wrapper">
-					<img class="vignette__img" src="./assets/img/bouchonblanc.jpg" alt="bouteilles">
-					<figcaption class="vignette__titre">Ajouter une bouteille</figcaption>
-				</figure>
-
-				<figure class="vignette__wrapper">
-					<img class="vignette__img" src="./assets/img/etagere.jpg" alt="bouteilles">
-					<figcaption class="vignette__titre">Ma liste d'achat</figcaption>
-				</figure>
+				<a href="?requete=mesCelliers">
+					<figure class="vignette__wrapper">
+						<img class="vignette__img" src="./assets/img/cellier2.jpg" alt="cellier">
+						<figcaption class="vignette__titre">Mes celliers</figcaption>
+					</figure>
+				</a>
+				
+				<a href="?requete=listeBouteille">
+					<figure class="vignette__wrapper">
+						<img class="vignette__img" src="./assets/img/bouteilles1.jpg" alt="bouteille">
+						<figcaption class="vignette__titre">Mes bouteilles</figcaption>
+					</figure>
+				</a>
+				<a href="?requete=ajouterNouvelleBouteilleCellier">
+					<figure class="vignette__wrapper">
+						<img class="vignette__img" src="./assets/img/bouchonblanc.jpg" alt="bouteilles">
+						<figcaption class="vignette__titre">Ajouter une bouteille</figcaption>
+					</figure>
+				</a>
+				<a href="">
+					<figure class="vignette__wrapper">
+						<img class="vignette__img" src="./assets/img/etagere.jpg" alt="bouteilles">
+						<figcaption class="vignette__titre">Ma liste d'achat</figcaption>
+					</figure>
+				</a>
 			</div>
 			
 		</section>
--->
+		<section class="section-wrapper vignette">
+			<h4 class="vignette__entete">Gérer mon compte</h4>
+			<br>
+			<div class="grille grille--4">
+				<a href="">
+					<figure class="vignette__wrapper">
+						<img class="vignette__img" src="./assets/img/degustation2.jpg" alt="cellier">
+						<figcaption class="vignette__titre">Mes informations</figcaption>
+					</figure>
+				</a>
+				
+
+				<a href="">
+					<figure class="vignette__wrapper">
+						<img class="vignette__img" src="./assets/img/bouteilleblancrouge.jpg" alt="cellier">
+						<figcaption class="vignette__titre">Mes statistiques</figcaption>
+					</figure>
+				</a>
+			</div>
+			
+		</section>
+
 

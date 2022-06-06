@@ -1,0 +1,50 @@
+.carte{
+    background-color: var(--couleur-intermediaire-pale);
+}
+.carte__entete{
+    padding-bottom: var(--espace-p);
+}
+.carte__contenant{
+
+}
+@media only screen and (min-width: 500px) {
+    .carte__contenant {
+        width: 80%;
+    }
+}
+@media only screen and (min-width: 760px) {
+    .carte__contenant {
+        width: 60%;
+    }
+}
+.carte__contenu{
+   
+    margin-bottom: var(--espace-p);
+    padding: var(--espace-xp);
+    background-color: white;
+
+}
+.carte__contenu:hover{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+.carte__liste{
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--espace-xp);
+    
+}
+.carte__detail{
+    display: flex;
+    align-items: center;
+ 
+}
+.carte__texte{
+    font-size: var(--police-xp);
+}
+.carte__icone{
+    padding-right: var(--espace-xp);
+    width: 1.5rem;
+}
+.carte__titre{
+    border-bottom: 1px solid lightgrey;
+}
