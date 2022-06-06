@@ -101,7 +101,7 @@
 				<a href="">
 					<figure class="vignette__wrapper">
 						<img class="vignette__img" src="./assets/img/etagere.jpg" alt="bouteilles">
-						<figcaption class="vignette__titre">Ma liste d'achat</figcaption>
+						<figcaption class="vignette__titre">Mes listes</figcaption>
 					</figure>
 				</a>
 			</div>

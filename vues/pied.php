@@ -9,8 +9,8 @@
 					<div class="pied__listes">
 						<ul class="pied__liste">
 							<li ><a href="#" class="pied__liens">Mon compte</a></li>
-							<li ><a href="#" class="pied__liens">Mes celliers</a></li>
-							<li ><a href="#" class="pied__liens">Mes bouteilles</a></li>
+							<li ><a href="?requete=mesCelliers" class="pied__liens">Mes celliers</a></li>
+							<li ><a href="?requete=listeBouteille" class="pied__liens">Mes bouteilles</a></li>
 						</ul>
 						<ul class="pied__liste">
 							<li ><a href="#" class="pied__liens">Mes listes</a></li>
