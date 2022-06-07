@@ -153,8 +153,52 @@ window.addEventListener('load', function () {
 
     }
 
+    /*CELLIER*/
+
+    let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
+        usager =  document.querySelector("[data-js-usager]")
+        
+
     
 
+    elBtnAjouterCellier.addEventListener('click', (e) => {
+
+        e.preventDefault();
+
+        let cellier = {
+       
+            "id_usager": usager.dataset.jsUsager,
+            "nom_cellier": document.querySelector("[name='nom_cellier']").value,
+            "type_cellier_id": document.querySelector("[name='type_cellier_id']").value,
+            "description_cellier": document.querySelector("[name='description_cellier']").value,
+        };    
+
+        let requete = new Request(BaseURL + "?requete=ajouterNouveauCellier", { method: 'POST', body: JSON.stringify(cellier) });
+        console.log(requete)
+                fetch(requete)
+                    .then(response => {
+                        if (response.status === 200) {
+                            
+                            elModal = document.querySelector('[data-js-modal]')
+                            if (elModal.classList.contains('modal--ouvre')) {
+                                elModal.classList.replace('modal--ouvre', 'modal--ferme');
+                                
+                                // Enlève la propriété overflow-y: hidden; sur les éléments html et body afin de rendre de nouveau possible le scroll en Y lorsque le modal est fermé
+                                document.documentElement.classList.remove('overflow-y--hidden');
+                                document.body.classList.remove('overflow-y--hidden');
+                            }
+                            return response.json();
+                        } else {
+                            throw new Error('Erreur');
+                        }
+                    })
+                    .then(response => {
+                        console.log(response);
+
+                    }).catch(error => {
+                        console.error(error);
+                    });
+    });
     
         
 });

@@ -17,11 +17,19 @@ class Cellier extends Modele
     public function getListeCellier($id)
     {
         $rows = array();
-        $requete = "SELECT * FROM usager__cellier INNER JOIN vino__type_cellier on type_cellier_id = vino__type_cellier.id WHERE id_usager = '$id'";
+        $requete = "SELECT usager__cellier.id_cellier, id_usager, nom_cellier, description_cellier, type_cellier_id, 
+                    SUM(quantite_bouteille)as bouteille_total, 
+                    SUM(prix)as prix_total, vino__type_cellier.nom_type_cellier, vino__type_cellier.nom_commun_type_cellier, vino__type_cellier.id_type_cellier 
+                    FROM usager__cellier 
+                    INNER JOIN vino__type_cellier on type_cellier_id = vino__type_cellier.id_type_cellier 
+                    LEFT OUTER JOIN usager__bouteille on usager__cellier.id_cellier = usager__bouteille.id_cellier 
+                    WHERE id_usager = '$id'
+                    Group by usager__cellier.id_cellier";
+
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    $row['nom'] = trim(utf8_encode($row['nom']));
+                    $row['nom_cellier'] = trim(utf8_encode($row['nom_cellier']));
                     $rows[] = $row;
                 }
             }
@@ -35,6 +43,20 @@ class Cellier extends Modele
         return $rows;
     }
 
+    public function ajouterNouveauCellier($data){
+        
+        $requete = "INSERT INTO usager__cellier(id_usager,nom_cellier,description_cellier,type_cellier_id) VALUES (" .
+            "'" . $data->id_usager . "'," .
+            "'" . $data->nom_cellier . "'," .
+            "'" . $data->description_cellier . "'," .
+            "'" . $data->type_cellier_id . "')";
 
+        $res = $this->_db->query($requete);
+
+        return $res;
+
+    }
+
+    
     
 }

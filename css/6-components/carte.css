@@ -1,4 +1,8 @@
 .carte{
+    display: flex;
+    flex-direction: column;
+}
+.carte--bg-couleur{
     background-color: var(--couleur-intermediaire-pale);
 }
 .carte__entete{
@@ -10,16 +14,7 @@
     justify-content: space-between;
 }
 
-@media only screen and (min-width: 500px) {
-    .carte {
-        width: 80%;
-    }
-}
-@media only screen and (min-width: 760px) {
-    .carte{
-        width: 60%;
-    }
-}
+
 .carte__contenu{
    
     margin-bottom: var(--espace-p);
@@ -33,16 +28,28 @@
 .carte__liste{
     display: flex;
     justify-content: space-between;
-   
+    flex-direction: column;
     
+}
+@media only screen and (min-width: 500px) {
+    .carte__liste{
+        flex-direction: row;
+    }
 }
 .carte__detail{
     display: flex;
     align-items: center;
- 
 }
+
 .carte__texte{
     font-size: var(--police-xp);
+    padding-bottom: var(--espace-xp);
+}
+@media only screen and (min-width: 500px) {
+    .carte__texte{
+        flex-direction: row;
+        padding-bottom:unset;
+    }
 }
 .carte__icone{
     padding-right: var(--espace-xp);
@@ -59,13 +66,17 @@
 .carte--aligne-centre{
     align-self: center;
 }
+.carte__lien-icone{
+    width: 1.8rem;
+    cursor: pointer;
+}
 .carte__lien-icone:hover{
     fill: var(--couleur-accent);
 }
 .carte__vertical-icon{
     vertical-align: text-bottom;
 }
-/*Bouteilles*/
+
 .carte--flex{
     display: flex;
 }
@@ -77,6 +88,13 @@
     flex-grow:1;
     padding-left: var(--espace-p);
 }
+.carte__detail-info{
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
+}
+
+
 [type=radio] { 
     position: absolute;
     opacity: 0;
@@ -85,11 +103,15 @@
   }
   
   /* IMAGE STYLES */
-  [type=radio] + i {
+[type=radio] + i {
     cursor: pointer;
   }
   
   /* CHECKED STYLES */
 [type=radio]:checked +i {
     outline: 2px solid var(--couleur-accent);
+   
+  }
+  .radio{
+      padding-right: var(--espace-xp);
   }

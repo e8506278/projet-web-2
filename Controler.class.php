@@ -24,6 +24,9 @@ class Controler
 				case 'mesCelliers':
 					$this->listeCelliers();
 					break;
+				case 'ajouterNouveauCellier':
+					$this->ajouterNouveauCellier();
+					break;
 				case 'listeBouteille':
 					$this->listeBouteille();
 					break;
@@ -116,16 +119,36 @@ class Controler
 			echo json_encode($resultat);
 		}
 		private function listeCelliers(){
+
 			$id = 1;
 			$celliers = new Cellier();
 			$data = $celliers->getListeCellier($id);
+		
 			echo json_encode($data);
-		var_dump($data);
+		
 	
 				include("vues/entete.php");
 				include("vues/celliers.php");
 				include("vues/pied.php");
 			
+		}
+
+		private function ajouterNouveauCellier(){
+			$body = json_decode(file_get_contents('php://input'));
+			
+			if(!empty($body)){
+				$cellier = new Cellier();
+				
+				
+				//var_dump($cellier);
+				$resultat = $cellier->ajouterNouveauCellier($body);
+				echo json_encode($resultat);
+			}
+			else{
+				include("vues/entete.php");
+				include("vues/celliers.php");
+				include("vues/pied.php");
+			}
 		}
 		
 }
