@@ -29,9 +29,6 @@ foreach ($data as $cle => $bouteille) {
                        
                     </div>
                 </div>
-                <div>
-                    <button>ajouter</button>
-                </div>
             </li>
 <?php
 }
