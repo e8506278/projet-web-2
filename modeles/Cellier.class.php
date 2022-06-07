@@ -16,9 +16,25 @@ class Cellier extends Modele
 
     public function getListeCellier($id)
     {
+        $rows = array();
+        $requete = "SELECT * FROM usager__cellier INNER JOIN vino__type_cellier on type_cellier_id = vino__type_cellier.id WHERE id_usager = '$id'";
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $row['nom'] = trim(utf8_encode($row['nom']));
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+            //$this->_db->error;
+        }
 
-        
+
+
+        return $rows;
     }
+
 
     
 }

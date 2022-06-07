@@ -49,8 +49,7 @@ class Controler
 		{
 			include("vues/entete.php");
 			include("vues/index.php");
-			include("vues/pied.php");
-                  
+			include("vues/pied.php");     
 		}
 		
 
@@ -117,9 +116,11 @@ class Controler
 			echo json_encode($resultat);
 		}
 		private function listeCelliers(){
-			//$celliers = new Cellier();
-			//echo json_encode($celliers);
-
+			$id = 1;
+			$celliers = new Cellier();
+			$data = $celliers->getListeCellier($id);
+			echo json_encode($data);
+		var_dump($data);
 	
 				include("vues/entete.php");
 				include("vues/celliers.php");

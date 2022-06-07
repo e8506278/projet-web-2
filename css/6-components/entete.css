@@ -19,7 +19,6 @@ header{
     top: 50%; right: 50%;
     transform: translate(50%,-50%);
     font-size: 6rem;
-    z-index: 1;
     font-family: var(--police-logo);
     text-transform: uppercase;
   

@@ -1,5 +1,7 @@
 <!--Page d'accueil non connecté-->
 
+
+
 <section class="section-wrapper texte-photo">
 	
 <h1 class="texte-photo__titre">La meilleure application de gestion de cellier disponible sur le marché</h1>

@@ -60,7 +60,7 @@ class Bouteille extends Modele
                         INNER JOIN vino__pays p ON p.id = b.pays';
         // * CR - FIN - MODIF *
 
-        if (($res = $this->_db->query($requete)) ==     true) {
+        if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
                     $row['nom'] = trim(utf8_encode($row['nom']));
