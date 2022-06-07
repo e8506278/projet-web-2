@@ -12,7 +12,15 @@
  */
 class Cellier extends Modele
 {
-    const TABLE = 'vino__cellier';
+    const TABLE = 'usager__cellier';
+
+    /**
+     * Cette méthode récupère la liste des celliers d'un usagé
+     * 
+     * @param int $id Id de session de l'usagé
+     * 
+     * @return Array Les données.
+     */
 
     public function getListeCellier($id)
     {
@@ -30,19 +38,24 @@ class Cellier extends Modele
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
                     $row['nom_cellier'] = trim(utf8_encode($row['nom_cellier']));
+                    $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
                     $rows[] = $row;
                 }
             }
         } else {
             throw new Exception("Erreur de requête sur la base de donnée", 1);
-            //$this->_db->error;
+            
         }
-
-
-
         return $rows;
     }
 
+    /**
+     * Cette méthode crée un nouveau cellier.
+     * 
+     * @param Array $data Tableau des données représentants le cellier.
+     * 
+     * @return Boolean Succès ou échec de l'ajout.
+     */
     public function ajouterNouveauCellier($data){
         
         $requete = "INSERT INTO usager__cellier(id_usager,nom_cellier,description_cellier,type_cellier_id) VALUES (" .
@@ -57,6 +70,22 @@ class Cellier extends Modele
 
     }
 
-    
+    /**
+     * Cette méthode modifie les informations d'un cellier
+     * 
+     * @param Array $data Tableau des informations à modifier
+     * 
+     * @return Boolean Succès ou échec de l'ajout.
+     */
+    public function modifierCellier($data)
+    {
+        $id = $data['id_cellier'];
+        $requete = "UPDATE TABLE SET nom_cellier, description_cellier, type_cellier_id 
+                    WHERE id_cellier = '$id'" ;
+
+        $res = $this->_db->query($requete);
+
+        return $res;
+    }
     
 }

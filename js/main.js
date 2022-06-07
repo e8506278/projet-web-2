@@ -156,9 +156,7 @@ window.addEventListener('load', function () {
     /*CELLIER*/
 
     let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
-        usager =  document.querySelector("[data-js-usager]")
-        
-
+        usager =  document.querySelector("[data-js-usager]")       
     
 
     elBtnAjouterCellier.addEventListener('click', (e) => {
@@ -198,6 +196,9 @@ window.addEventListener('load', function () {
                     }).catch(error => {
                         console.error(error);
                     });
+
+
+
     });
     
         

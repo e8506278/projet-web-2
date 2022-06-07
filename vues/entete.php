@@ -27,9 +27,10 @@
 			<nav class="nav">
 				<div class="nav__logo">VINO</div>
 				<ul class="nav__liste">
+				<li><a class="nav__lien" href="#"></a></li>
 					<li><a class="nav__lien" href="?requete=mesCelliers">Mes celliers</a></li>
 					<li><a class="nav__lien" href="?requete=listeBouteille">Mes bouteilles</a></li>
-					<li><a class="nav__lien" href="#">Connexion</a></li>
+					
 				</ul>
 
 			</nav>

@@ -11,7 +11,7 @@
 foreach ($data as $cle => $cellier) {
 ?>
             <li class="carte__contenu ">
-                <a class="carte__lien" href="#">
+                <a class="carte__lien"  href="?requete=listeBouteilleCellier&id_cellier=<?php echo $cellier["id_cellier"];?>">
                     <div class="carte--flex carte__titre">
                         <h4 ><?php echo $cellier['nom_cellier'];?></h4>
                         <?php if($cellier['nom_commun_type_cellier'] == "cellier"){;?>
