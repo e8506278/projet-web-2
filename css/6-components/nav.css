@@ -1,6 +1,6 @@
 .nav{
     display: none;
-    padding-bottom: var(--espace-m);
+    padding-bottom: var(--espace-l);
     
 }
 @media only screen and (min-width: 760px){
@@ -8,6 +8,7 @@
         display: flex;
         color: var(--couleur-primaire);
         justify-content: space-between;
+        font-size: var(--police-p);
     }
 }
 .nav__logo{
@@ -19,9 +20,13 @@
     display: flex;
     justify-content: space-between;
     align-items: self-end;
-    width: 60%;
+    width: 45%;
 }
 .nav__lien{
     color: var(--couleur-primaire);
     text-transform: uppercase;
+    
+}
+.nav__lien:hover{
+    color: var(--couleur-accent);
 }

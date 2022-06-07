@@ -17,17 +17,20 @@
 		<link rel="stylesheet" href="./css/styles.css" type="text/css" media="screen">
 		<base href="<?php echo BASEURL; ?>">
 		<!--<script src="./js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+		<script src="./js/modal.js" defer></script>
 		<script src="./js/plugins.js"></script>
 		<script src="./js/main.js"></script>
+
 	</head>
 	<body >
 		<header>
 			<nav class="nav">
 				<div class="nav__logo">VINO</div>
 				<ul class="nav__liste">
+				<li><a class="nav__lien" href="#"></a></li>
 					<li><a class="nav__lien" href="?requete=mesCelliers">Mes celliers</a></li>
 					<li><a class="nav__lien" href="?requete=listeBouteille">Mes bouteilles</a></li>
-					<li><a class="nav__lien" href="#">Connexion</a></li>
+					
 				</ul>
 
 			</nav>
