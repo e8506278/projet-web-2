@@ -1,3 +1,11 @@
+<section class="section-wrapper">
+    
+    <article>
+
+    </article>
+
+</section>
+
 <div class="cellier">
     <?php
     foreach ($data as $cle => $bouteille) {
@@ -12,7 +20,7 @@
                 <p class="nom">Nom : <?php echo $bouteille['nom'] ?></p>
                 <p class="quantite">Quantité : <?php echo $bouteille['quantite'] ?></p>
                 <p class="pays">Pays : <?php echo $bouteille['nom_pays'] ?></p>
-                <p class="type">Catégorie : <?php echo $bouteille['nom_categorie'] ?></p>
+                <p class="type">Type : <?php echo $bouteille['nom_type'] ?></p>
                 <p class="millesime">Millesime : <?php echo $bouteille['millesime'] ?></p>
                 <p><a href="<?php echo $bouteille['url_saq'] ?>">Voir SAQ</a></p>
             </div>
