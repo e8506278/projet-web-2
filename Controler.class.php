@@ -21,14 +21,13 @@ class Controler
 		public function gerer()
 		{
 			switch ($_GET['requete']) {
-				case 'mesCelliers':
-					$this->listeCelliers();
+				case 'listeBouteille':
+					$this->listeBouteille();
 					break;
-				case 'ajouterNouveauCellier':
-					$this->ajouterNouveauCellier();
-					break;
-				case 'listeBouteilleCellier':
-					$this->listeBouteilleCellier();
+				case 'details':
+//					return "test";
+//					break;
+					$this->productDetails();
 					break;
 				case 'autocompleteBouteille':
 					$this->autocompleteBouteille();
@@ -50,23 +49,34 @@ class Controler
 
 		private function accueil()
 		{
+			$bte = new Bouteille();
+            //$data = $bte->getListeBouteilleCellier();
 			include("vues/entete.php");
 			include("vues/index.php");
-			include("vues/pied.php");     
+			include("vues/pied.php");
 		}
-		
+
+	    private function productDetails()
+		{
+			$bte = new Bouteille();
+			$result = $bte->getOneBouteille($_GET['id_bouteille']);
+			if(count($result)>0){
+				$product = $result[0];
+			}
+
+		include("vues/shortentete.php");
+		include("vues/details.php");
+		include("vues/pied.php");
+		}
+
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
-          
-            $data = $bte->getListeBouteille();
-
-            echo json_encode($data);
-			include("vues/entete.php");
-			
-			include("vues/pied.php");
+            $cellier = $bte->getListeBouteilleCellier();
+            
+            echo json_encode($cellier);
+                  
 		}
-		
 		
 		private function autocompleteBouteille()
 		{
@@ -80,13 +90,10 @@ class Controler
                   
 		}
 
-		
 		private function ajouterNouvelleBouteilleCellier()
 		{
-			$id_cellier = $_GET['id_cellier'];
-		
 			$body = json_decode(file_get_contents('php://input'));
-
+			//var_dump($body);
 			if(!empty($body)){
 				$bte = new Bouteille();
 				//var_dump($_POST['data']);
@@ -121,56 +128,7 @@ class Controler
 			$resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
 			echo json_encode($resultat);
 		}
-
-
-		/*CELLIERS*/
-
-
-		private function listeCelliers(){
-
-			$id = 1;
-			$celliers = new Cellier();
-			$data = $celliers->getListeCellier($id);
 		
-			echo json_encode($data);
-		
-	
-				include("vues/entete.php");
-				include("vues/celliers.php");
-				include("vues/pied.php");
-			
-		}
-
-		private function ajouterNouveauCellier(){
-			$body = json_decode(file_get_contents('php://input'));
-			
-			if(!empty($body)){
-				$cellier = new Cellier();
-				
-				$resultat = $cellier->ajouterNouveauCellier($body);
-				
-				echo json_encode($resultat);
-			}
-			else{
-				include("vues/entete.php");
-				include("vues/celliers.php");
-				include("vues/pied.php");
-			}
-		}
-		
-		private function listeBouteilleCellier()
-		{
-			$id_cellier = $_GET['id_cellier'];
-			$bte = new Bouteille();
-			
-            $data = $bte->getListeBouteilleCellier($id_cellier);
-
-            echo json_encode($data);
-			include("vues/entete.php");
-			include("vues/bouteilles.php");
-			include("vues/pied.php");
-		}
-
 }
 ?>
 

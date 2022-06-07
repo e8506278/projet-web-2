@@ -11,20 +11,22 @@
  */
 
 
+ 
+	 /***************************************************/
+    /** Fichier de configuration, contient les define et l'autoloader **/
+    /***************************************************/
+    require_once('./dataconf.model.php');
+	require_once("./config.php");
+	
+   /***************************************************/
+    /** Initialisation des variables **/
+    /***************************************************/
+	require_once("./var.init.php");
+   
+   /***************************************************/
+    /** Démarrage du controleur **/
+    /***************************************************/
+	$oCtl = new Controler();
+	$oCtl->gerer();
 
-/***************************************************/
-/** Fichier de configuration, contient les define et l'autoloader **/
-/***************************************************/
-require_once('./dataconf.php');
-require_once("./config.php");
-
-/***************************************************/
-/** Initialisation des variables **/
-/***************************************************/
-require_once("./var.init.php");
-
-/***************************************************/
-/** Démarrage du controleur **/
-/***************************************************/
-$oCtl = new Controler();
-$oCtl->gerer();
+?>

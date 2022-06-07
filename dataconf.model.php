@@ -3,6 +3,6 @@
 define("BASEURL", "");
 
 define('HOST', 'localhost');
-define('USER', '');
+define('USER', 'root');
 define('PASSWORD', '');
-define('DATABASE', '');
+define('DATABASE', 'vino4');
