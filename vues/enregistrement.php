@@ -1,3 +1,4 @@
+<?php include('./controller/Enregistrement.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,38 +8,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enregistrement | Vino</title>
 
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/connexion.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/connexion.css">
 
-    <script defer src="../js/enregistrement.js"></script>
+    <script defer src="./js/enregistrement.js"></script>
 </head>
 
-<body>
-    <div class="wrapper-center">
-        <div class="main">
+<body class="main">
+    <div class="section-wrapper wrapper-center">
+        <div class="main-section">
             <div class="entete">
-                <h2 class="">Enregistrement</h2>
+                <h2 class="">Vino - Enregistrement</h2>
             </div>
 
-            <form class="formulaire" action="/" method="GET">
-                <ul class="wrapper-message hidden"></ul>
-
+            <form class="formulaire" action="" method="POST">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="usager_nom" data-js-nom placeholder="Votre nom" value="">
-                    <span>&nbsp;</span>
+                    <input type="text" class="form-control" name="usager_nom" data-js-nom placeholder="Votre nom" value="" />
+                    <span class="aucune-erreur" data-js-nom-err>&nbsp;</span>
 
+                    <?php if (isset($erreurs['usager_nom']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_nom'] . '</span>';
+                    ?>
                 </div>
 
                 <div class="form-group">
                     <textarea class="form-control" name="usager_adresse" data-js-adresse placeholder="Votre adresse"></textarea>
-                    <span>&nbsp;</span>
+                    <span class="aucune-erreur" data-js-adresse-err>&nbsp;</span>
+
+                    <?php if (isset($erreurs['usager_adresse']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_adresse'] . '</span>';
+                    ?>
                 </div>
 
-                <div class="form-group groupe-de-2">
-                    <input type="text" class="form-control" name="usager_ville" data-js-ville placeholder="Votre ville" value="">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="usager_ville" data-js-ville placeholder="Votre ville" value="" />
+                    <span class="aucune-erreur" data-js-ville-err>&nbsp;</span>
 
+                    <?php if (isset($erreurs['usager_ville']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_ville'] . '</span>';
+                    ?>
+                </div>
+
+                <div class="form-group">
                     <select name="usager_pays" class="form-control" data-js-pays>
-                        <option value="0">Chosir votre pays</option>
+                        <option value="0">Votre pays</option>
                         <option value="1">Afghanistan</option>
                         <option value="2">Afrique du Sud</option>
                         <option value="3">Albanie</option>
@@ -237,13 +250,24 @@
                         <option value="196">Zambie</option>
                         <option value="197">Zimbabwe</option>
                     </select>
-                    <span>&nbsp;</span>
+
+                    <span class="aucune-erreur" data-js-pays-err>&nbsp;</span>
+
+                    <?php if (isset($erreurs['usager_pays']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_pays'] . '</span>';
+                    ?>
                 </div>
 
-                <div class="form-group groupe-de-2">
-                    <input type="text" class="form-control" name="usager_telephone" data-js-telephone placeholder="Votre numéro de téléphone" value="">
-                    <span>&nbsp;</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="usager_telephone" data-js-telephone placeholder="Votre numéro de téléphone" value="" />
+                    <span class="aucune-erreur" data-js-telephone-err>&nbsp;</span>
 
+                    <?php if (isset($erreurs['usager_telephone']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_telephone'] . '</span>';
+                    ?>
+                </div>
+
+                <div class="form-group">
                     <div class="date-container">
                         <select name="usager_naissance[jour]" class="form-control" data-js-ddn-jour>
                             <option value="0">Jour</option>
@@ -420,40 +444,69 @@
                             <option value="1901">1901</option>
                             <option value="1900">1900</option>
                         </select>
-
-                        <span>&nbsp;</span>
                     </div>
+
+                    <span class="aucune-erreur" data-js-ddn-err>&nbsp;</span>
+
+                    <?php if (isset($erreurs['usager_naissance']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_naissance'] . '</span>';
+                    ?>
                 </div>
 
-                <div class="form-group groupe-de-2">
-                    <input type="text" class="form-control" name="usager_courriel" data-js-courriel placeholder="Votre courriel" value="">
-                    <span>&nbsp;</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="usager_courriel" data-js-courriel placeholder="Votre courriel" value="" />
+                    <span class="aucune-erreur" data-js-courriel-err>&nbsp;</span>
 
-                    <input type="text" class="form-control" name="usager_nom_utilisateur" data-js-utilisateur placeholder="Entrez un nom d'utilisateur" value="">
-                    <span>&nbsp;</span>
+                    <?php if (isset($erreurs['usager_courriel']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_courriel'] . '</span>';
+                    ?>
                 </div>
 
-                <div class="form-group groupe-de-2">
-                    <input type="password" class="form-control" name="usager_mot_de_passe" data-js-mdp placeholder="Entrez un mot de passe" value="">
-                    <span>&nbsp;</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="usager_nom_utilisateur" data-js-utilisateur placeholder="Entrez un nom d'utilisateur" value="" />
+                    <span class="aucune-erreur" data-js-utilisateur-err>&nbsp;</span>
 
-                    <input type="password" class="form-control" name="confirmer_mot_de_passe" data-js-confirmer placeholder="Retapez le mot de passe" value="">
-                    <span>&nbsp;</span>
+                    <?php if (isset($erreurs['usager_nom_utilisateur']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_nom_utilisateur'] . '</span>';
+                    ?>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" name="usager_mot_de_passe" data-js-mdp placeholder="Entrez un mot de passe" value="" />
+                    <span class="aucune-erreur" data-js-mdp-err>&nbsp;</span>
+
+                    <?php if (isset($erreurs['usager_mot_de_passe']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_mot_de_passe'] . '</span>';
+                    ?>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" name="confirmer_mot_de_passe" data-js-confirmer placeholder="Retapez le mot de passe" value="" />
+                    <span class="aucune-erreur" data-js-confirmer-err>&nbsp;</span>
+
+                    <?php if (isset($erreurs['confirmer_mot_de_passe']))
+                        echo '<span class="message-erreur">' . $erreurs['confirmer_mot_de_passe'] . '</span>';
+                    ?>
                 </div>
 
                 <div class="form-group">
                     <div class="conditions-wrapper">
-                        <input type="checkbox" name="accepter_conditions" id="accepter_conditions" data-js-conditions>
+                        <input type="checkbox" name="accepter_conditions" id="accepter_conditions" data-js-conditions />
                         <label for="accepter_conditions">J'accepte les termes et conditions d'utilisation du site</label>
-                        <span data-js-conditions-err>&nbsp;</span>
                     </div>
+
+                    <span class="aucune-erreur" data-js-conditions-err>&nbsp;</span>
+
+                    <?php if (isset($erreurs['accepter_conditions']))
+                        echo '<span class="message-erreur">' . $erreurs['accepter_conditions'] . '</span>';
+                    ?>
                 </div>
 
                 <div class="form-group btn-group">
-                    <button type="submit" class="bouton-secondaire" data-js-btn-submit>M'enregistrer</button>
+                    <button type="submit" class="bouton-secondaire" name="soumettre" data-js-btn-submit>M'enregistrer</button>
                 </div>
                 <div>
-                    <p>Vous avez déjà un compte? <a href="/">Connectez-vous ici</a></p>
+                    <p>Vous avez déjà un compte? <a href=" /">Connectez-vous</a></p>
                 </div>
             </form>
         </div>

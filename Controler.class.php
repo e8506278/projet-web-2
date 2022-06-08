@@ -46,10 +46,26 @@ class Controler
             case 'details':
                 $this->productDetails();
                 break;
+            case 'enregistrer':
+                $this->enregistrerUtilisateur();
+                break;
+            case 'connecter':
+                $this->connecterUtilisateur();
+                break;
             default:
                 $this->accueil();
                 break;
         }
+    }
+
+    private function enregistrerUtilisateur()
+    {
+        include("vues/enregistrement.php");
+    }
+
+    private function connecterUtilisateur()
+    {
+        include("vues/connexion.php");
     }
 
     private function accueil()
@@ -65,7 +81,7 @@ class Controler
 
         $data = $bte->getListeBouteille();
 
-        echo json_encode($data);
+        // echo json_encode($data);
         include("vues/entete.php");
 
         include("vues/pied.php");
@@ -80,7 +96,7 @@ class Controler
         //var_dump($body);
         $listeBouteille = $bte->autocomplete($body->nom);
 
-        echo json_encode($listeBouteille);
+        // echo json_encode($listeBouteille);
     }
 
 
@@ -96,7 +112,7 @@ class Controler
 
             //var_dump($data);
             $resultat = $bte->ajouterBouteilleCellier($body);
-            echo json_encode($resultat);
+            // echo json_encode($resultat);
         } else {
             include("vues/entete.php");
             include("vues/ajouter.php");
@@ -110,7 +126,7 @@ class Controler
 
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
-        echo json_encode($resultat);
+        // echo json_encode($resultat);
     }
 
     private function ajouterBouteilleCellier()
@@ -119,7 +135,7 @@ class Controler
 
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
-        echo json_encode($resultat);
+        // echo json_encode($resultat);
     }
 
 
@@ -133,7 +149,7 @@ class Controler
         $celliers = new Cellier();
         $data = $celliers->getListeCellier($id);
 
-        echo json_encode($data);
+        // echo json_encode($data);
 
 
         include("vues/entete.php");
@@ -150,7 +166,7 @@ class Controler
 
             $resultat = $cellier->ajouterNouveauCellier($body);
 
-            echo json_encode($resultat);
+            // echo json_encode($resultat);
         } else {
             include("vues/entete.php");
             include("vues/celliers.php");
@@ -167,7 +183,7 @@ class Controler
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
-        echo json_encode($data);
+        // echo json_encode($data);
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");

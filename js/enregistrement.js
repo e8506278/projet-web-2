@@ -1,9 +1,6 @@
 // Le formulaire qui contient les champs à valider
 const elFormulaire = document.querySelector('.formulaire');
 
-// Pour afficher les messages d'erreur
-const elMessages = document.querySelector('.wrapper-message');
-
 // Pour les validations
 const elNom = document.querySelector('[data-js-nom]');
 const elAdresse = document.querySelector('[data-js-adresse]');
@@ -19,47 +16,151 @@ const elAnnee = document.querySelector('[data-js-ddn-annee]');
 const elCourriel = document.querySelector('[data-js-courriel]');
 const elConditions = document.querySelector('[data-js-conditions]');
 
-elFormulaire.addEventListener('submit', (e) => {
-    // Nous inclurons toutes les erreurs dans cette chaîne
-    let lesErreurs = '';
+let erreur;
+
+elFormulaire.addEventListener('soumettre', (e) => {
+    e.preventDefault();
+
+    // Pour afficher les messages d'erreur
+    let erreursTrouvees = false;
+    let elErreur;
+
+    // Nom
+    erreur = "";
 
     if (elNom.value.length === 0) {
-        lesErreurs += "<li>Vous devez indiquer votre nom.</li>";
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer votre nom.";
     }
+
+    elErreur = document.querySelector('[data-js-nom-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
+    }
+
+    // Adresse
+    erreur = "";
 
     if (elAdresse.value.length === 0) {
-        lesErreurs += "<li>Vous devez indiquer votre adresse.</li>";
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer votre adresse.";
     }
+
+    elErreur = document.querySelector('[data-js-adresse-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
+    }
+
+    // Ville
+    erreur = "";
 
     if (elVille.value.length === 0) {
-        lesErreurs += "<li>Vous devez indiquer votre ville.</li>";
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer votre ville.";
     }
 
+    elErreur = document.querySelector('[data-js-ville-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
+    }
+
+    // Pays
     const valeurPays = elPays.options[elPays.selectedIndex].value;
+    erreur = "";
 
     if (valeurPays <= 0) {
-        lesErreurs += "<li>Vous devez indiquer votre pays.</li>";
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer votre pays.";
     }
+
+    elErreur = document.querySelector('[data-js-pays-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
+    }
+
+    // Téléphone
+    erreur = "";
 
     if (elTelephone.value.length === 0) {
-        lesErreurs += "<li>Vous devez indiquer votre numéro de téléphone.</li>";
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer votre téléphone.";
     }
 
-    if (elJour.value <= 0) {
-        lesErreurs += "<li>Vous devez indiquer le jour de votre naissance.</li>";
+    elErreur = document.querySelector('[data-js-telephone-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
     }
 
-    if (elMois.value <= 0) {
-        lesErreurs += "<li>Vous devez indiquer le mois de votre naissance.</li>";
+    // Date de naissance
+    erreur = "";
+
+    if (elJour.value <= 0 || elMois.value <= 0 || elAnnee.value <= 0) {
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer votre date de naissance.";
     }
 
-    if (elAnnee.value <= 0) {
-        lesErreurs += "<li>Vous devez indiquer l'année de votre naissance.</li>";
+    elErreur = document.querySelector('[data-js-ddn-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
     }
+
+    // Courriel
+    erreur = "";
 
     if (elCourriel.value.length === 0) {
-        lesErreurs += "<li>Vous devez indiquer votre courriel.</li>";
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer votre courriel.";
     }
+
+    elErreur = document.querySelector('[data-js-courriel-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
+    }
+
+    // Utilisateur
+    erreur = "";
 
     if (elUtilisateur.value.length > 0) {
         const premiereLettre = elUtilisateur.value[0];
@@ -67,52 +168,78 @@ elFormulaire.addEventListener('submit', (e) => {
         // Valide si 1ere lettre en majuscule
         const premiereLettreEnMajuscule = (premiereLettre === premiereLettre.toUpperCase());
 
-        if (!premiereLettreEnMajuscule) {
-            lesErreurs += "<li>La première lettre du nom d'utilisateur doit être en majuscule.</li>";
-        }
-
         // Regex pour valider si un nombre est inclut
         const utilisateurAvecChiffre = /\d/.test(elUtilisateur.value);
 
-        if (!utilisateurAvecChiffre) {
-            lesErreurs += "<li>Le nom d'utilisateur doit inclure au moins un chiffre.</li>";
+        if (!premiereLettreEnMajuscule || !utilisateurAvecChiffre) {
+            erreursTrouvees = true;
+            erreur = "Le nom d'utilisateur doit débuter avec une majuscule et contenir au moins un chiffre.";
         }
     } else {
-        lesErreurs += "<li>Vous devez indiquer le nom d'utilisateur.</li>";
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer un nom d'utilisateur.";
     }
+
+    elErreur = document.querySelector('[data-js-utilisateur-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
+    }
+
+    // Mot de passe
+    erreur = "";
 
     if (elUsagerMdp.value.length > 0) {
         const mdpMauvaiseLongueur = (elUsagerMdp.value.length < 8 || elUsagerMdp.value.length > 20);
 
         if (mdpMauvaiseLongueur) {
-            lesErreurs += "<li>Le mot de passe doit contenir entre 8 et 20 caractères.</li>";
+            erreursTrouvees = true;
+            erreur = "Le mot de passe doit contenir entre 8 et 20 caractères.";
+
         } else if (elUsagerMdp.value.length === 0) {
-            lesErreurs += "<li>Vous devez confirmer le mot de passe.</li>";
+            erreursTrouvees = true;
+            erreur = "Vous devez confirmer le mot de passe.";
         } else if (elUsagerMdp.value !== elConfirmerMdp.value) {
-            lesErreurs += "<li>Le mot de passe ne correspond pas.</li>";
+            erreursTrouvees = true;
+            erreur = "Le mot de passe ne correspond pas.";
         }
     } else {
-        lesErreurs += "<li>Vous devez indiquer un mot de passe.</li>";
+        erreursTrouvees = true;
+        erreur = "Vous devez entrer un mot de passe.";
     }
 
-    if (!elConditions.checked) {
-        lesErreurs += "<li>Vous devez accepter les termes et conditions.</li>";
+    elErreur = document.querySelector('[data-js-mdp-err]');
+    elErreur.innerHTML = erreur;
 
-        const erreur = "Vous devez accepter les termes et conditions.";
-        const elErreur = document.querySelector('[data-js-conditions-err]');
-        elErreur.innerHTML = erreur;
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
     }
 
-    if (lesErreurs !== "") {
-        // Modifiez la balise ul d'erreur pour afficher le(s) message(s) d'erreur
-        elMessages.innerHTML = lesErreurs;
+    // Termes et Conditions
+    erreur = "";
 
-        // Afficher les messages
-        elMessages.classList.remove("hidden");
+    // if (!elConditions.checked) {
+    //     erreursTrouvees = true;
+    //     erreur = "Vous devez accepter les termes et conditions.";
+    // }
 
-        // Empêcher le bouton de soumettre le formulaire, tany qu'il y a des erreurs
-        e.preventDefault();
-    } else if (!elMessages.classList.contains("hidden")) {
-        elMessages.classList.add("hidden");
+    elErreur = document.querySelector('[data-js-conditions-err]');
+    elErreur.innerHTML = erreur;
+
+    if (erreur) {
+        elErreur.classList.remove('aucune-erreur');
+        elErreur.classList.add('message-erreur');
+    } else {
+        elErreur.classList.remove('message-erreur');
+        elErreur.classList.add('aucune-erreur');
     }
 });
