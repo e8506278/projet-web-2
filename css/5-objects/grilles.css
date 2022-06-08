@@ -43,4 +43,7 @@
         grid-template-columns: repeat(6, 1fr);
     }
 }
-
+.grille--2s{
+    grid-gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+}
