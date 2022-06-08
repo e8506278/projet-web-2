@@ -1,23 +1,31 @@
 .nav{
-    display: none;
-    padding-bottom: var(--espace-m);
-    
+    display: none;  
 }
 @media only screen and (min-width: 760px){
     .nav{
         display: flex;
         color: var(--couleur-primaire);
         justify-content: space-between;
+        font-size: var(--police-p);
     }
 }
 .nav__logo{
     font-family: var(--police-logo);
     font-size: var(--police-l);
+    color: var(--couleur-primaire);
     
 }
 .nav__liste{
     display: flex;
     justify-content: space-between;
-    align-items: self-end;
-    width: 60%;
+    align-items: center;
+    width: 45%;
+}
+.nav__lien{
+    color: var(--couleur-primaire);
+    text-transform: uppercase;
+    
+}
+.nav__lien:hover{
+    color: var(--couleur-accent);
 }

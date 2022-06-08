@@ -1,6 +1,66 @@
+<?php include('./controller/Connexion.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
 
-		</main>
-		<footer class="section-wrapper pied">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | Vino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&family=Poiret+One&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <script defer src="./js/connexion.js"></script>
+</head>
+<div class="hero hero--pad-haut">
+	<div class="hero__titre">vino
+		<div class="hero__stitre">Gestion de celliers</div>	
+	</div>
+	<!--Image hero-->
+	<div class="hero__img-wrapper">
+		<img class="hero__img--hauteur " src="./assets/img/unebouteille.jpg" alt="hero">
+	</div>
+</div>
+<body class="main">
+    <div class="section-wrapper wrapper-center">
+        <div class="main-section">
+            <div class="entete">
+                <h2 class="">Connexion</h2>
+            </div>
+
+            <form class="formulaire" action="" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="usager_nom_utilisateur" data-js-utilisateur placeholder="Entrez votre nom d'utilisateur" value="" />
+                    <span class="aucune-erreur" data-js-utilisateur-err>&nbsp;</span>
+
+                    <?php if (isset($erreurs['usager_nom_utilisateur']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_nom_utilisateur'] . '</span>';
+                    ?>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" name="usager_mot_de_passe" data-js-mdp placeholder="Entrez votre mot de passe" value="" />
+                    <span class="aucune-erreur" data-js-mdp-err>&nbsp;</span>
+
+                    <?php if (isset($erreurs['usager_mot_de_passe']))
+                        echo '<span class="message-erreur">' . $erreurs['usager_mot_de_passe'] . '</span>';
+                    ?>
+                </div>
+
+                <div class="form-group btn-group">
+                    <button type="submit" class="bouton-secondaire" name="soumettre" data-js-btn-submit>Me connecter</button>
+                </div>
+
+                <div>
+                    <p>Vous n'avez pas de compte? <a href="./index.php?requete=enregistrer">Enregistrez-vous</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="section-wrapper pied">
 				<nav class="pied__nav">
 					<div class="pied__logo">
 						VINO
@@ -25,7 +85,6 @@
 					</div>	
 				</nav>
 			</footer>
-
-	</body>
+</body>
 
 </html>

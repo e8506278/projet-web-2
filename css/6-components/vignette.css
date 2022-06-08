@@ -8,10 +8,9 @@
     position: relative;
     display: flex;
     overflow: hidden;
-    height: 150px;
 }
 .vignette__img{
-    filter: brightness(0.8);
+    filter: brightness(0.6);
 }
 
 .vignette__titre{
@@ -22,4 +21,7 @@
     font-size: var(--police-p);
     text-align: center;
     text-transform: uppercase;
+}
+.vignette--bgcouleur{
+    background-color: var(--couleur-intermediaire-pale);
 }

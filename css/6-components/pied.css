@@ -4,7 +4,7 @@
 }
 
 .pied__nav{
-    padding-bottom: 100px;
+    padding-bottom: 70px;
 }
 @media only screen and (min-width: 760px){
     .pied__nav{
@@ -63,6 +63,9 @@
 .pied__liens{
     color: var(--couleur-primaire);
     cursor: pointer;
+}
+.pied__liens:hover{
+    color: var(--couleur-accent);
 }
 .pied__icone{
     fill: var(--couleur-primaire);

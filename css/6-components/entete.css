@@ -1,35 +1,14 @@
 header{
-    background-color: var(--couleur-secondaire);
-    padding: var(--espace-p) var(--espace-p) 0 var(--espace-p) ;
+    
+    
     
 
 }
 @media only screen and (min-width: 760px){
     header{
-        padding: var(--espace-p) var(--espace-l) 0 var(--espace-l);
+        padding: var(--espace-p) var(--espace-l) ;
+        background-color: var(--couleur-secondaire);
     }
-}
-
-.entete{
-    position: relative;
-}
-.entete__titre{
-    color: white;
-    position: absolute;
-    top: 50%; right: 50%;
-    transform: translate(50%,-50%);
-    font-size: 6rem;
-    z-index: 1;
-    font-family: var(--police-logo);
-    text-transform: uppercase;
-  
-}
-
-.entete__stitre{
-    text-align: center;
-    font-size: 1rem;
-    letter-spacing: 3px;
-    font-family: var(--police-texte);  
 }
 
 
@@ -40,18 +19,4 @@ header{
     display: flex;
     justify-content: right;
     background-color:var(--couleur-secondaire);
-}
-.entete__img-wrapper{
-    overflow: hidden;
-    width: auto;
-    display: flex;
-    
-}
-@media only screen and (min-width: 500px){
-    .entete__img-wrapper{
-        width: 400px;
-    }
-}
-.entete__img{
-    height: 55vh;
 }

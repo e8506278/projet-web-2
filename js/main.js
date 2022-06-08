@@ -64,7 +64,7 @@ window.addEventListener('load', function () {
     });
 
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
-    console.log(inputNomBouteille);
+
     let liste = document.querySelector('.listeAutoComplete');
 
     if (inputNomBouteille) {
@@ -150,7 +150,95 @@ window.addEventListener('load', function () {
 
             });
         }
+
     }
 
+    /*CELLIER*/
 
+    let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
+        usager =  document.querySelector("[data-js-usager]"),    
+        erreurnom =  document.querySelector("[data-js-erreurNom]"),
+        erreurradio =  document.querySelector("[data-js-erreurRadio]") 
+       
+    if(elBtnAjouterCellier){
+
+        elBtnAjouterCellier.addEventListener('click', (e) => {
+
+            e.preventDefault();
+
+            let nom_cellier = document.querySelector("[name='nom_cellier']"),
+                type_cellier_id = document.querySelectorAll("[name='type_cellier_id']"),
+                description_cellier = document.querySelector("[name='description_cellier']").value,
+                radio = false,
+                estValide = true
+
+                if(nom_cellier.value !== ""){
+                
+                    erreurnom.textContent = '';
+                    nom_cellier = nom_cellier.value
+                }
+                else{
+                
+                    erreurnom.textContent = "Ce champs est obligatoire";
+                    estValide = false;
+                }
+
+                type_cellier_id.forEach(element => {
+                    
+                    if(element.checked){
+                        radio = true;
+                    }
+                    
+                });
+
+                if(radio){
+                    
+                        erreurradio.textContent = '';
+                        type_cellier_id = document.querySelector('input[name="type_cellier_id"]:checked').value;
+                }
+                else{
+                
+                    erreurradio.textContent = 'Choisir un type.';
+                    estValide = false;
+                }
+                
+
+                if(estValide){
+                    let cellier = {
+        
+                        "id_usager": usager.dataset.jsUsager,
+                        "nom_cellier": nom_cellier,
+                        "type_cellier_id": type_cellier_id,
+                        "description_cellier": description_cellier
+                    };  
+        
+                    let requete = new Request(BaseURL + "?requete=ajouterNouveauCellier", { method: 'POST', body: JSON.stringify(cellier) });
+                    console.log(requete)
+                            fetch(requete)
+                                .then(response => {
+                                    if (response.status === 200) {
+                                        
+                                        elModal = document.querySelector('[data-js-modal]')
+                                        if (elModal.classList.contains('modal--ouvre')) {
+                                            elModal.classList.replace('modal--ouvre', 'modal--ferme');
+                                            
+                                            document.documentElement.classList.remove('overflow-y--hidden');
+                                            document.body.classList.remove('overflow-y--hidden');
+                                        }
+                                        return response.json();
+                                    } else {
+                                        throw new Error('Erreur');
+                                    }
+                                })
+                                .then(response => {
+                                    console.log(response);
+                                    location.reload();
+                                }).catch(error => {
+                                    console.error(error);
+                                });
+                }
+
+            });
+
+    }
 });
