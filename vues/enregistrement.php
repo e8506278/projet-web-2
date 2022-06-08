@@ -9,12 +9,11 @@
     <title>Enregistrement | Vino</title>
 
     <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/connexion.css">
 
     <script defer src="./js/enregistrement.js"></script>
 </head>
 
-<body class="main">
+<body class="main-connexion">
     <div class="section-wrapper wrapper-center">
         <div class="main-section">
             <div class="entete">

@@ -9,10 +9,10 @@
     <title>Connexion | Vino</title>
 
     <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/connexion.css">
 
     <script defer src="./js/connexion.js"></script>
 </head>
+<<<<<<< HEAD
 <div class="hero hero--pad-haut">
 	<div class="hero__titre">vino
 		<div class="hero__stitre">Gestion de celliers</div>	
@@ -23,6 +23,10 @@
 	</div>
 </div>
 <body class="main">
+=======
+
+<body class="main-connexion">
+>>>>>>> sprint01
     <div class="section-wrapper wrapper-center">
         <div class="main-section">
             <div class="entete">
