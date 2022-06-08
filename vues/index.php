@@ -33,7 +33,7 @@
 					<input placeholder="Mot de passe">
 				</div>
 				<div class="formulaire__champs">
-					<button class="bouton-secondaire ">Se connecter</button>
+					<a href="?requete=connexion" class="bouton-secondaire ">Se connecter</a>
 				</div>	
 			</form>
 		</div>

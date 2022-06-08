@@ -21,6 +21,9 @@ class Controler
 		public function gerer()
 		{
 			switch ($_GET['requete']) {
+				case 'connexion':
+					$this->connexion();
+					break;
 				case 'mesCelliers':
 					$this->listeCelliers();
 					break;
@@ -55,6 +58,12 @@ class Controler
 		{
 			include("vues/entete.php");
 			include("vues/index.php");
+			include("vues/pied.php");     
+		}
+		private function connexion()
+		{
+			include("vues/entete.php");
+			include("vues/connexion.php");
 			include("vues/pied.php");     
 		}
 		
@@ -134,7 +143,15 @@ class Controler
 			$id = 1;
 			$celliers = new Cellier();
 			$data = $celliers->getListeCellier($id);
-		
+			$nombre_cellier = $celliers->nombreCellierUsager(1);
+			
+			if($nombre_cellier[0]["nombre_cellier"] == 10){
+				$erreur = "Vous avez atteint le maximum de celliers disponibles.";
+			}
+			else{
+				$erreur = "";
+			}
+			
 			echo json_encode($data);
 		
 	
@@ -150,9 +167,11 @@ class Controler
 			if(!empty($body)){
 				$cellier = new Cellier();
 				
-				$resultat = $cellier->ajouterNouveauCellier($body);
+	
+					$resultat = $cellier->ajouterNouveauCellier($body);
+					echo json_encode($resultat);
+		
 				
-				echo json_encode($resultat);
 			}
 			else{
 				include("vues/entete.php");

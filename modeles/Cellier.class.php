@@ -13,7 +13,7 @@
 class Cellier extends Modele
 {
     const TABLE = 'usager__cellier';
-
+   
     /**
      * Cette méthode récupère la liste des celliers d'un usagé
      * 
@@ -56,20 +56,44 @@ class Cellier extends Modele
      * 
      * @return Boolean Succès ou échec de l'ajout.
      */
-    public function ajouterNouveauCellier($data){
-        
-        $requete = "INSERT INTO usager__cellier(id_usager,nom_cellier,description_cellier,type_cellier_id) VALUES (" .
-            "'" . $data->id_usager . "'," .
-            "'" . $data->nom_cellier . "'," .
-            "'" . $data->description_cellier . "'," .
-            "'" . $data->type_cellier_id . "')";
+    public function ajouterNouveauCellier($data)
+    {
+      
+        $erreurs = array();
+        $estValide = true;
+        if($data){
+           
+            unset($erreurs['nom_cellier']);
+            $regExp = '/^.+$/';
+            if (!preg_match($regExp, $data->nom_cellier)) {
+                $erreurs['nom_cellier'] = 'Au moins un caractère.';
+                $estValide = false;
+            }
 
-        $res = $this->_db->query($requete);
+            unset($erreurs['type_cellier']);
+            if ($data->type_cellier_id == null) {
+                $erreurs['type_cellier_id'] = 'Choisir le type de cellier.';
+                $estValide = false;
+            }
+            if($estValide){
+                $requete = "INSERT INTO usager__cellier(id_usager,nom_cellier,description_cellier,type_cellier_id) VALUES (" .
+                            "'" . $data->id_usager . "'," .
+                            "'" . $data->nom_cellier . "'," .
+                            "'" . $data->description_cellier . "'," .
+                            "'" . $data->type_cellier_id . "')";
 
-        return $res;
+                $res = $this->_db->query($requete);
 
+                return $res;
+
+            }
+            else{
+                return $erreurs;
+            }
+
+       
     }
-
+}
     /**
      * Cette méthode modifie les informations d'un cellier
      * 
@@ -88,4 +112,23 @@ class Cellier extends Modele
         return $res;
     }
     
+
+    public function nombreCellierUsager($id)
+    {
+        
+        $requete = "SELECT COUNT(id_usager) AS nombre_cellier FROM usager__cellier where id_usager = '$id'" ;
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+            
+        }
+        return $rows;
+    }
 }

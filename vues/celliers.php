@@ -65,12 +65,22 @@ foreach ($data as $cle => $cellier) {
 
 <!--MODAL-->
 <div class="modal modal--ferme" data-js-modal>
+    <?php if($erreur !== ""){?>
+        <div class="modal__contenu">
+            <p><?php echo $erreur?></p>
+            <div class="formulaire__champs">
+                <button data-js-boutonFerme class="bouton-secondaire">Annuler</button>
+            </div> 
+        </div>
+        <?php }else{?>
 	<div class="modal__contenu" data-js-usager="1">
         <h4>Ajouter un cellier</h4>
         <!--Champs-->
+        
         <div class="formulaire__champs">
             <label>Nom du cellier:</label>
-            <input type="text" name="nom_cellier">
+            <input type="text" name="nom_cellier" required>
+            <small class="carte__erreur" data-js-erreurnom></small>
         </div>
         <div class="formulaire__champs">
             <label class="radio"> Cellier 
@@ -81,6 +91,7 @@ foreach ($data as $cle => $cellier) {
                 <input type="radio" name="type_cellier_id" value="2">
                 <i class="carte--aligne-centre"><span  class="material-symbols-outlined carte__vertical-icon">kitchen</span></i>
             </label>
+            <small class="carte__erreur"data-js-erreurradio></small>
         </div>
         <div class="formulaire__champs">
             <label>Description:</label>
@@ -92,4 +103,5 @@ foreach ($data as $cle => $cellier) {
             <button data-js-boutonFerme class="bouton-secondaire">Annuler</button>
         </div> 
 	</div>
+    <?php }?>
 </div>

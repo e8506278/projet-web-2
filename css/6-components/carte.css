@@ -136,7 +136,9 @@
     
 }
 
-
+.carte__erreur{
+    color: red;
+}
 
 [type=radio] { 
     position: absolute;
