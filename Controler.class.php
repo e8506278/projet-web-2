@@ -161,6 +161,8 @@ class Controler
 		private function listeBouteilleCellier()
 		{
 			$id_cellier = $_GET['id_cellier'];
+			$nom_cellier = $_GET['nom_cellier'];
+
 			$bte = new Bouteille();
 			
             $data = $bte->getListeBouteilleCellier($id_cellier);
