@@ -123,14 +123,16 @@ window.addEventListener('load', function () {
         let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
         if (btnAjouter) {
             btnAjouter.addEventListener("click", function (evt) {
+                evt.preventDefault();
                 var param = {
-                    "id_bouteille": bouteille.nom.dataset.id,
-                    "date_achat": bouteille.date_achat.value,
-                    "garde_jusqua": bouteille.garde_jusqua.value,
-                    "notes": bouteille.date_achat.value,
-                    "prix": bouteille.prix.value,
-                    "quantite": bouteille.quantite.value,
-                    "millesime": bouteille.millesime.value,
+                    "id_bouteille": document.querySelector("[name='id_bouteille']").value,
+                    "date_achat": document.querySelector("[name='date_achat']").value,
+                    "garde_jusqua": document.querySelector("[name='garde_jusqua']").value,
+                    "notes": document.querySelector("[name='notes']").value,
+                    "prix": document.querySelector("[name='prix']").value,
+                    "quantite": document.querySelector("[name='quantite']").value,
+                    "millesime": document.querySelector("[name='millesime']").value,
+                    "id_cellier" : "1",
                 };
                 let requete = new Request(BaseURL + "index.php?requete=ajouterNouvelleBouteilleCellier", { method: 'POST', body: JSON.stringify(param) });
                 fetch(requete)
