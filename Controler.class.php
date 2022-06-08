@@ -71,7 +71,7 @@ class Controler
     private function accueil()
     {
         include("vues/entete.php");
-        include("vues/index.php");
+        include("vues/connexion.php");
         include("vues/pied.php");
     }
 
