@@ -14,8 +14,8 @@
 
 class Controler
 {
-
-    /**
+	
+		    /**
      * Traite la requête
      * @return void
      */
@@ -146,11 +146,19 @@ class Controler
     {
 
         $id = 1;
-        $celliers = new Cellier();
-        $data = $celliers->getListeCellier($id);
-
-        // echo json_encode($data);
-
+			$celliers = new Cellier();
+			$data = $celliers->getListeCellier($id);
+			$nombre_cellier = $celliers->nombreCellierUsager(1);
+		
+			if($nombre_cellier == '10'){
+				
+				$erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
+			}
+			else{
+				$erreur = "";
+			}
+			
+			echo json_encode($data);
 
         include("vues/entete.php");
         include("vues/celliers.php");
@@ -166,7 +174,7 @@ class Controler
 
             $resultat = $cellier->ajouterNouveauCellier($body);
 
-            // echo json_encode($resultat);
+            echo json_encode($resultat);
         } else {
             include("vues/entete.php");
             include("vues/celliers.php");
@@ -183,7 +191,7 @@ class Controler
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
-        // echo json_encode($data);
+         echo json_encode($data);
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");
@@ -203,3 +211,7 @@ class Controler
         include("vues/pied.php");
     }
 }
+?>
+
+
+

@@ -1,7 +1,5 @@
 .nav{
-    display: none;
-    padding-bottom: var(--espace-l);
-    
+    display: none;  
 }
 @media only screen and (min-width: 760px){
     .nav{
@@ -14,12 +12,13 @@
 .nav__logo{
     font-family: var(--police-logo);
     font-size: var(--police-l);
+    color: var(--couleur-primaire);
     
 }
 .nav__liste{
     display: flex;
     justify-content: space-between;
-    align-items: self-end;
+    align-items: center;
     width: 45%;
 }
 .nav__lien{

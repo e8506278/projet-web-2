@@ -1,30 +1,30 @@
-.texte-photo{
+.t-p{
     background-color: var(--couleur-intermediaire-pale);
     
 }
-.texte-photo__titre{
+.t-p__titre{
     font-size: var(--police-l);
     
 }
 
 @media only screen and (min-width: 760px){
-    .texte-photo__img{
+    .t-p__img{
         padding-left: var(--espace-l);
     }
 }
-.texte-photo__contenu{
+.t-p__contenu{
     display: flex;
     flex-direction: column;
 }
 @media only screen and (min-width: 760px){
-    .texte-photo__contenu{
+    .t-p__contenu{
         flex-direction: row;
     }
 }
-.texte-photo__texte{
+.t-p__texte{
     padding: var(--espace-m) 0;
     line-height: 30px;
 }
-.text-photo__texte--gras{
+.t-p__texte--gras{
     font-weight: var(--police-xgras);
 }

@@ -12,6 +12,8 @@
  * 
  */
 
+
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -27,5 +29,6 @@ function mon_autoloader($class)
         }
     }
 }
+
 
 spl_autoload_register('mon_autoloader');

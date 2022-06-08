@@ -1,18 +1,26 @@
 <!--Page d'accueil non connecté-->
+<div class="hero hero--pad-haut">
+	<div class="hero__titre">vino
+		<div class="hero__stitre">Gestion de celliers</div>	
+	</div>
+	<!--Image hero-->
+	<div class="hero__img-wrapper">
+		<img class="hero__img--hauteur " src="./assets/img/unebouteille.jpg" alt="hero">
+	</div>
+</div>
 
 
-
-<section class="section-wrapper texte-photo">
+<section class="section-wrapper t-p">
 	
-<h1 class="texte-photo__titre">La meilleure application de gestion de cellier disponible sur le marché</h1>
-	<article class="texte-photo__contenu">
+<h1 class="t-p__titre">La meilleure application de gestion de cellier disponible sur le marché</h1>
+	<article class="t-p__contenu">
 		
 
-		<p class="texte-photo__texte">Vino est l'application la plus complète sur le marché vous permettant de gerer jusqu'à <span class="text-photo__texte--gras">10 celliers différents</span>. 
+		<p class="t-p__texte">Vino est l'application la plus complète sur le marché vous permettant de gerer jusqu'à <span class="text-photo__texte--gras">10 celliers différents</span>. 
 			Simple à utiliser, l'application vous tiendra à jour des vins <span class="text-photo__texte--gras">prêts à boire</span>, vous permet d'y tenir une <span class="text-photo__texte--gras">liste d'achat</span> et d'avoir des <span class="text-photo__texte--gras">statistiques</span> sur les entrées et sorties des vins de votre cellier.
 			
 		</p>
-		<div class="texte-photo__img">
+		<div class="t-p__img">
 			<img  src="./assets/img/cellier.jpg" alt="degustation2">
 		</div>
 
@@ -33,7 +41,7 @@
 					<input placeholder="Mot de passe">
 				</div>
 				<div class="formulaire__champs">
-					<button class="bouton-secondaire ">Se connecter</button>
+					<a href="?requete=connexion" class="bouton-secondaire ">Se connecter</a>
 				</div>	
 			</form>
 		</div>
