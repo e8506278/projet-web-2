@@ -1,17 +1,19 @@
 <?php
 
-// Ouvrir une nouvelle connexion au serveur MySQL
-$connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
+// On valide si l'utilisateur est déjà connecté ou pas, avant de le forcer à le faire
+if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+    header("Location: ./index.php");
+    die;
+}
 
 // Tableau qui contient la liste des erreurs
 global $erreurs;
 
-$utilisateur = $motDePasse = "";
-$session_utilisateur;
-
 if (isset($_POST["soumettre"])) {
+    $utilisateur = $motDePasse = "";
+
     // On efface les anciennes données de la session PHP
-    $_SESSION['utilisateur'] = [];
+    unset($_SESSION['utilisateur']);
 
     if (isset($_POST["usager_nom_utilisateur"])) {
         $utilisateur = $_POST["usager_nom_utilisateur"];
@@ -19,6 +21,9 @@ if (isset($_POST["soumettre"])) {
     if (isset($_POST["usager_mot_de_passe"])) {
         $motDePasse = $_POST["usager_mot_de_passe"];
     }
+
+    // Ouvrir une nouvelle connexion au serveur MySQL
+    $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
 
     // Vérifier que les valeurs du formulaire ne soient pas vides
     if (!empty($utilisateur) && !empty($motDePasse)) {
