@@ -171,7 +171,7 @@ class Controler
             $erreur = "";
         }
 
-        echo json_encode($data);
+        // echo json_encode($data);
 
         include("vues/entete.php");
         include("vues/celliers.php");
@@ -187,7 +187,7 @@ class Controler
 
             $resultat = $cellier->ajouterNouveauCellier($body);
 
-            echo json_encode($resultat);
+            // echo json_encode($resultat);
         } else {
             include("vues/entete.php");
             include("vues/celliers.php");
@@ -204,7 +204,7 @@ class Controler
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
-        echo json_encode($data);
+        // echo json_encode($data);
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");

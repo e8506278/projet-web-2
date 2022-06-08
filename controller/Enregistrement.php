@@ -49,7 +49,7 @@ if (isset($_POST["soumettre"])) {
         $mois  = $naissance['mois'];
         $annee = $naissance['annee'];
 
-        $date_naissance = $annee . "-" . $jour . "-" . $jour . "-";
+        $date_naissance = $annee . "-" . $jour . "-" . $jour;
     }
 
     // Vérifier que les valeurs du formulaire ne soient pas vides

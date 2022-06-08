@@ -18,9 +18,7 @@ const elConditions = document.querySelector('[data-js-conditions]');
 
 let erreur;
 
-elFormulaire.addEventListener('soumettre', (e) => {
-    e.preventDefault();
-
+elFormulaire.addEventListener('submit', (e) => {
     // Pour afficher les messages d'erreur
     let erreursTrouvees = false;
     let elErreur;
@@ -227,10 +225,10 @@ elFormulaire.addEventListener('soumettre', (e) => {
     // Termes et Conditions
     erreur = "";
 
-    // if (!elConditions.checked) {
-    //     erreursTrouvees = true;
-    //     erreur = "Vous devez accepter les termes et conditions.";
-    // }
+    if (!elConditions.checked) {
+        erreursTrouvees = true;
+        erreur = "Vous devez accepter les termes et conditions.";
+    }
 
     elErreur = document.querySelector('[data-js-conditions-err]');
     elErreur.innerHTML = erreur;
