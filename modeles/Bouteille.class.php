@@ -102,14 +102,15 @@ class Bouteille extends Modele
         //TODO : Valider les données.
         //var_dump($data);	
 
-        $requete = "INSERT INTO vino__cellier(id_bouteille,date_achat,garde_jusqua,notes,prix,quantite,millesime) VALUES (" .
-            "'" . $data->id_bouteille . "'," .
+         $requete = "INSERT INTO usager__bouteille(id_cellier,date_achat,garde_jusqua,note,prix,quantite_bouteille,millesime,id_vino__bouteille) VALUES (" .
+            "'" . $data->id_cellier . "'," .
             "'" . $data->date_achat . "'," .
             "'" . $data->garde_jusqua . "'," .
             "'" . $data->notes . "'," .
             "'" . $data->prix . "'," .
             "'" . $data->quantite . "'," .
-            "'" . $data->millesime . "')";
+            "'" . $data->millesime . "',".
+            "'" . $data->id_bouteille . "')" ;
 
         $res = $this->_db->query($requete);
 
