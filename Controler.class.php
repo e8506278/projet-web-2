@@ -14,8 +14,8 @@
 
 class Controler
 {
-	
-		    /**
+
+    /**
      * Traite la requête
      * @return void
      */
@@ -52,6 +52,9 @@ class Controler
             case 'connecter':
                 $this->connecterUtilisateur();
                 break;
+            case 'deconnecter':
+                $this->deconnecterUtilisateur();
+                break;
             default:
                 $this->accueil();
                 break;
@@ -68,11 +71,22 @@ class Controler
         include("vues/connexion.php");
     }
 
+    private function deconnecterUtilisateur()
+    {
+        unset($_SESSION['utilisateur']);
+        include("vues/connexion.php");
+    }
+
     private function accueil()
     {
-        include("vues/entete.php");
-        include("vues/index.php");
-        include("vues/pied.php");
+        // On valide si l'utilisateur est déjà connecté ou pas, avant de le forcer à le faire
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/entete.php");
+            include("vues/index.php");
+            include("vues/pied.php");
+        } else {
+            include("vues/connexion.php");
+        }
     }
 
     private function listeBouteille()
@@ -146,19 +160,18 @@ class Controler
     {
 
         $id = 1;
-			$celliers = new Cellier();
-			$data = $celliers->getListeCellier($id);
-			$nombre_cellier = $celliers->nombreCellierUsager(1);
-		
-			if($nombre_cellier == '10'){
-				
-				$erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
-			}
-			else{
-				$erreur = "";
-			}
-			
-			echo json_encode($data);
+        $celliers = new Cellier();
+        $data = $celliers->getListeCellier($id);
+        $nombre_cellier = $celliers->nombreCellierUsager(1);
+
+        if ($nombre_cellier == '10') {
+
+            $erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
+        } else {
+            $erreur = "";
+        }
+
+        echo json_encode($data);
 
         include("vues/entete.php");
         include("vues/celliers.php");
@@ -191,7 +204,7 @@ class Controler
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
-         echo json_encode($data);
+        echo json_encode($data);
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");
@@ -211,7 +224,3 @@ class Controler
         include("vues/pied.php");
     }
 }
-?>
-
-
-

@@ -45,7 +45,7 @@
                 </div>
 
                 <div>
-                    <p>Vous n'avez pas de compte? <a href="">Enregistrez-vous</a></p>
+                    <p>Vous n'avez pas de compte? <a href="./index.php?requete=enregistrer">Enregistrez-vous</a></p>
                 </div>
             </form>
         </div>

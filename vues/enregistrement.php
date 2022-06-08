@@ -506,7 +506,7 @@
                     <button type="submit" class="bouton-secondaire" name="soumettre" data-js-btn-submit>M'enregistrer</button>
                 </div>
                 <div>
-                    <p>Vous avez déjà un compte? <a href=" /">Connectez-vous</a></p>
+                    <p>Vous avez déjà un compte? <a href="./index.php?requete=connecter">Connectez-vous</a></p>
                 </div>
             </form>
         </div>
