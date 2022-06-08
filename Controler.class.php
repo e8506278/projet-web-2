@@ -63,12 +63,16 @@ class Controler
 
     private function enregistrerUtilisateur()
     {
+     
         include("vues/enregistrement.php");
+       
     }
 
     private function connecterUtilisateur()
     {
+
         include("vues/connexion.php");
+        
     }
 
     private function deconnecterUtilisateur()
@@ -79,13 +83,16 @@ class Controler
 
     private function accueil()
     {
+  
         // On valide si l'utilisateur est déjà connecté ou pas, avant de le forcer à le faire
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-            include("vues/entete.php");
+   
             include("vues/index.php");
-            include("vues/pied.php");
+           
         } else {
+           
             include("vues/connexion.php");
+            
         }
     }
 
