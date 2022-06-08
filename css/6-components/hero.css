@@ -1,0 +1,35 @@
+.hero{
+    position: relative;
+    background-color: var(--couleur-secondaire);
+}
+.hero__titre{
+    color: white;
+    position: absolute;
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
+    font-size: 6rem;
+    font-family: var(--police-logo);
+    text-transform: uppercase;
+  
+}
+
+.hero__stitre{
+    text-align: center;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    font-family: var(--police-texte);  
+}
+.hero__img-wrapper{
+    overflow: hidden;
+    width: auto;
+    display: flex;
+    
+}
+@media only screen and (min-width: 500px){
+    .hero__img-wrapper{
+        width: 400px;
+    }
+}
+.hero__img{
+    height: 65vh;
+}

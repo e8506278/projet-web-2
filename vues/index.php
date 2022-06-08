@@ -1,5 +1,13 @@
 <!--Page d'accueil non connecté-->
-
+<div class="hero">
+	<div class="hero__titre">vino
+		<div class="hero__stitre">Gestion de celliers</div>	
+	</div>
+	<!--Image hero-->
+	<div class="hero__img-wrapper">
+		<img class="hero__img " src="./assets/img/unebouteille.jpg" alt="hero">
+	</div>
+</div>
 
 
 <section class="section-wrapper texte-photo">

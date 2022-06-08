@@ -25,7 +25,7 @@
 	<body >
 		<header>
 			<nav class="nav">
-				<div class="nav__logo">VINO</div>
+				<a  href="?requete=accueil" class="nav__logo">VINO</a>
 				<ul class="nav__liste">
 				<li><a class="nav__lien" href="#"></a></li>
 					<li><a class="nav__lien" href="?requete=mesCelliers">Mes celliers</a></li>
@@ -34,15 +34,8 @@
 				</ul>
 
 			</nav>
-			<div class="entete">
-				<div class="entete__titre">vino
-					<div class="entete__stitre">Gestion de celliers</div>	
-				</div>
-				<!--Image hero-->
-				<div class="entete__img-wrapper">
-					<img class="entete__img " src="./assets/img/unebouteille.jpg" alt="hero">
-				</div>
-			</div>
+
+			
 		</header>
 		
 		<main>

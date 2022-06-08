@@ -21,9 +21,6 @@ class Controler
 		public function gerer()
 		{
 			switch ($_GET['requete']) {
-				case 'connexion':
-					$this->connexion();
-					break;
 				case 'mesCelliers':
 					$this->listeCelliers();
 					break;
@@ -60,13 +57,7 @@ class Controler
 			include("vues/index.php");
 			include("vues/pied.php");     
 		}
-		private function connexion()
-		{
-			include("vues/entete.php");
-			include("vues/connexion.php");
-			include("vues/pied.php");     
-		}
-		
+
 		private function listeBouteille()
 		{
 			$bte = new Bouteille();
@@ -144,9 +135,10 @@ class Controler
 			$celliers = new Cellier();
 			$data = $celliers->getListeCellier($id);
 			$nombre_cellier = $celliers->nombreCellierUsager(1);
-			
-			if($nombre_cellier[0]["nombre_cellier"] == 10){
-				$erreur = "Vous avez atteint le maximum de celliers disponibles.";
+		
+			if($nombre_cellier == '10'){
+				
+				$erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
 			}
 			else{
 				$erreur = "";

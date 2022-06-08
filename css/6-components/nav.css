@@ -14,6 +14,7 @@
 .nav__logo{
     font-family: var(--police-logo);
     font-size: var(--police-l);
+    color: var(--couleur-primaire);
     
 }
 .nav__liste{

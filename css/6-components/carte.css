@@ -58,9 +58,7 @@
     }
 }
 .carte__texte{
-    font-size: var(--police-xp);
-    
-    padding-left:var(--espace-xp);
+    font-size: var(--police-xp); 
 }
 @media only screen and (min-width: 500px) {
     .carte__texte{
@@ -68,6 +66,9 @@
         padding-bottom:0;
        
     }
+}
+.carte__texte--esg{
+    padding-left: var(--espace-xp);
 }
 .carte__icone{
     width: 1rem;
@@ -89,10 +90,16 @@
 .carte__icone-petit--espace{
     padding-left: var(--espace-xp);
 }
+.carte__icone--couleur-blanc{
+    fill: var(--couleur-primaire);
+}
 .carte__titre{
     border-bottom: 1px solid lightgrey;
     margin-bottom: var(--espace-xp);
     justify-content: space-between;
+}
+.carte__titre--largeur{
+    width: 70vw;
 }
 .carte__lien{
     color: var(--couleur-secondaire);

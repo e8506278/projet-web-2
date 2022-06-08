@@ -119,16 +119,19 @@ class Cellier extends Modele
         $requete = "SELECT COUNT(id_usager) AS nombre_cellier FROM usager__cellier where id_usager = '$id'" ;
 
         if (($res = $this->_db->query($requete)) == true) {
+             
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
                     
                     $rows[] = $row;
+                    
                 }
             }
         } else {
             throw new Exception("Erreur de requête sur la base de donnée", 1);
             
         }
-        return $rows;
+        $valeur = $rows[0]["nombre_cellier"];
+        return $valeur;
     }
 }
