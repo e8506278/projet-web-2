@@ -58,7 +58,7 @@ class Cellier extends Modele
      */
     public function ajouterNouveauCellier($data)
     {
-      
+   
         $erreurs = array();
         $estValide = true;
         if($data){

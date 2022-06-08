@@ -166,10 +166,11 @@ class Controler
     private function listeCelliers()
     {
 
-        $id = 1;
+        $id = $_SESSION['utilisateur']['id'];
+     
         $celliers = new Cellier();
         $data = $celliers->getListeCellier($id);
-        $nombre_cellier = $celliers->nombreCellierUsager(1);
+        $nombre_cellier = $celliers->nombreCellierUsager($id);
 
         if ($nombre_cellier == '10') {
 
@@ -178,7 +179,7 @@ class Controler
             $erreur = "";
         }
 
-        echo json_encode($data);
+        //echo json_encode($data);
 
         include("vues/entete.php");
         include("vues/celliers.php");
@@ -211,7 +212,7 @@ class Controler
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
-        echo json_encode($data);
+        //echo json_encode($data);
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");

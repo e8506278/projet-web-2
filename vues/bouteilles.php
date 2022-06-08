@@ -7,6 +7,7 @@
     <div class="carte__contenant">
 
 <?php
+if($data){
 foreach ($data as $cle => $bouteille) {
 ?>
         <div class="carte__contenu ">
@@ -45,6 +46,13 @@ foreach ($data as $cle => $bouteille) {
             </div>
         </div>
     </div>
+<?php
+};
+}else{
+
+
+?>
+<p>Aucune bouteille</p>
 <?php
 }
 ?>

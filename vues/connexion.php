@@ -24,6 +24,27 @@
 		<img class="hero__img--hauteur " src="./assets/img/unebouteille.jpg" alt="hero">
 	</div>
 </div>
+<section class="section-wrapper t-p">
+	
+<h1 class="t-p__titre">La meilleure application de gestion de cellier disponible sur le marché</h1>
+	<article class="t-p__contenu">
+		<p class="t-p__texte">Vino est l'application la plus complète sur le marché vous permettant de gerer jusqu'à <span class="text-photo__texte--gras">10 celliers différents</span>. 
+			Simple à utiliser, l'application vous tiendra à jour des vins <span class="text-photo__texte--gras">prêts à boire</span>, vous permet d'y tenir une <span class="text-photo__texte--gras">liste d'achat</span> et d'avoir des <span class="text-photo__texte--gras">statistiques</span> sur les entrées et sorties des vins de votre cellier.
+			<br>
+           
+				 Commencez dès aujourd'hui à gérer vos celliers!<br>
+				
+					<span class="boite-double__texte--couleur">&#10148;</span> Possibilité de plusieurs celliers.<br>
+					<span class="boite-double__texte--couleur">&#10148;</span> Recherchez des bouteilles et ajoutez les à votre cellier.<br>
+					<span class="boite-double__texte--couleur">&#10148;</span> Faites votre liste d'achat, partagez sur les réseaux sociaux et bien plus!
+                   
+			
+		</p>
+		<div class="t-p__img">
+			<img  src="./assets/img/cellier.jpg" alt="degustation2">
+		</div>	
+	</article>
+</section>
 <body class="main">
     <div class="section-wrapper wrapper-center">
         <div class="main-section">

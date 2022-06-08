@@ -8,6 +8,7 @@
     <div class="carte__contenant">
         <ul>
         <?php
+        if($data){
 foreach ($data as $cle => $cellier) {
 ?>
             <li class="carte__contenu ">
@@ -67,8 +68,11 @@ foreach ($data as $cle => $cellier) {
                 </a>
             </li>
 <?php
-}
+};}else{
+
 ?>
+<p>Aucun cellier</p>
+<?php };?>
         </ul>
     </div>
     </div>
@@ -84,7 +88,7 @@ foreach ($data as $cle => $cellier) {
             </div> 
         </div>
         <?php }else{?>
-	<div class="modal__contenu" data-js-usager="1">
+	<div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id'];?>">
         <h4>Ajouter un cellier</h4>
         <!--Champs-->
         
