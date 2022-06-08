@@ -17,7 +17,7 @@ const elJour = document.querySelector('[data-js-ddn-jour]');
 const elMois = document.querySelector('[data-js-ddn-mois]');
 const elAnnee = document.querySelector('[data-js-ddn-annee]');
 const elCourriel = document.querySelector('[data-js-courriel]');
-const elConditions = document.querySelector('[data-js-conditions]')
+const elConditions = document.querySelector('[data-js-conditions]');
 
 elFormulaire.addEventListener('submit', (e) => {
     // Nous inclurons toutes les erreurs dans cette chaîne
@@ -97,6 +97,10 @@ elFormulaire.addEventListener('submit', (e) => {
 
     if (!elConditions.checked) {
         lesErreurs += "<li>Vous devez accepter les termes et conditions.</li>";
+
+        const erreur = "Vous devez accepter les termes et conditions.";
+        const elErreur = document.querySelector('[data-js-conditions-err]');
+        elErreur.innerHTML = erreur;
     }
 
     if (lesErreurs !== "") {

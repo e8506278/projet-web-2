@@ -25,10 +25,13 @@
 
                 <div class="form-group">
                     <input type="text" class="form-control" name="usager_nom" data-js-nom placeholder="Votre nom" value="">
+                    <span>&nbsp;</span>
+
                 </div>
 
                 <div class="form-group">
                     <textarea class="form-control" name="usager_adresse" data-js-adresse placeholder="Votre adresse"></textarea>
+                    <span>&nbsp;</span>
                 </div>
 
                 <div class="form-group groupe-de-2">
@@ -234,10 +237,12 @@
                         <option value="196">Zambie</option>
                         <option value="197">Zimbabwe</option>
                     </select>
+                    <span>&nbsp;</span>
                 </div>
 
                 <div class="form-group groupe-de-2">
                     <input type="text" class="form-control" name="usager_telephone" data-js-telephone placeholder="Votre numéro de téléphone" value="">
+                    <span>&nbsp;</span>
 
                     <div class="date-container">
                         <select name="usager_naissance[jour]" class="form-control" data-js-ddn-jour>
@@ -415,25 +420,32 @@
                             <option value="1901">1901</option>
                             <option value="1900">1900</option>
                         </select>
+
+                        <span>&nbsp;</span>
                     </div>
                 </div>
 
                 <div class="form-group groupe-de-2">
                     <input type="text" class="form-control" name="usager_courriel" data-js-courriel placeholder="Votre courriel" value="">
+                    <span>&nbsp;</span>
 
                     <input type="text" class="form-control" name="usager_nom_utilisateur" data-js-utilisateur placeholder="Entrez un nom d'utilisateur" value="">
+                    <span>&nbsp;</span>
                 </div>
 
                 <div class="form-group groupe-de-2">
                     <input type="password" class="form-control" name="usager_mot_de_passe" data-js-mdp placeholder="Entrez un mot de passe" value="">
+                    <span>&nbsp;</span>
 
                     <input type="password" class="form-control" name="confirmer_mot_de_passe" data-js-confirmer placeholder="Retapez le mot de passe" value="">
+                    <span>&nbsp;</span>
                 </div>
 
                 <div class="form-group">
                     <div class="conditions-wrapper">
                         <input type="checkbox" name="accepter_conditions" id="accepter_conditions" data-js-conditions>
                         <label for="accepter_conditions">J'accepte les termes et conditions d'utilisation du site</label>
+                        <span data-js-conditions-err>&nbsp;</span>
                     </div>
                 </div>
 

@@ -25,10 +25,12 @@
 
                 <div class="form-group">
                     <input type="text" class="form-control" name="usager_nom_utilisateur" data-js-utilisateur placeholder="Entrez votre nom d'utilisateur" value="">
+                    <span>&nbsp;</span>
                 </div>
 
                 <div class="form-group">
                     <input type="password" class="form-control" name="usager_mot_de_passe" data-js-mdp placeholder="Entrez votre mot de passe" value="">
+                    <span>&nbsp;</span>
                 </div>
 
                 <div class="form-group btn-group">
