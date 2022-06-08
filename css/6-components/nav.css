@@ -1,0 +1,23 @@
+.nav{
+    display: none;
+    padding-bottom: var(--espace-m);
+    
+}
+@media only screen and (min-width: 760px){
+    .nav{
+        display: flex;
+        color: var(--couleur-primaire);
+        justify-content: space-between;
+    }
+}
+.nav__logo{
+    font-family: var(--police-logo);
+    font-size: var(--police-l);
+    
+}
+.nav__liste{
+    display: flex;
+    justify-content: space-between;
+    align-items: self-end;
+    width: 60%;
+}

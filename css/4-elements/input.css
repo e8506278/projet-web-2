@@ -1,0 +1,12 @@
+input{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid ;
+    transition: 0.3s;
+    background-color: var(--couleur-intermediaire-pale);
+    padding: var(--espace-xp);
+    width: 100%;
+}
+input:focus{
+    border-bottom: 1px solid var(--couleur-accent);
+}

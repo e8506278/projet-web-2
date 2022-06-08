@@ -1,0 +1,24 @@
+.nav-mobile{
+    display: flex;
+    position: fixed;
+    bottom:0;
+    width: 100%;
+    background-color: var(--couleur-secondaire);
+    z-index:5;
+}
+@media only screen and (min-width: 760px){
+    .nav-mobile{
+        display:none;
+    }
+}
+.nav-mobile__liste{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.nav-mobile__icone{
+    fill: var(--couleur-primaire);
+}
+.nav-mobile__icone-milieu{
+    fill: var(--couleur-accent);
+}
