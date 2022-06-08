@@ -166,10 +166,11 @@ class Controler
     private function listeCelliers()
     {
 
-        $id = 1;
+        $id = $_SESSION['utilisateur']['id'];
+     
         $celliers = new Cellier();
         $data = $celliers->getListeCellier($id);
-        $nombre_cellier = $celliers->nombreCellierUsager(1);
+        $nombre_cellier = $celliers->nombreCellierUsager($id);
 
         if ($nombre_cellier == '10') {
 

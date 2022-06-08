@@ -10,13 +10,16 @@
 @media only screen and (min-width: 760px){
     .t-p__img{
         padding-left: var(--espace-l);
+        padding-top: var(--espace-m);
+        width: 70vw;
+        
     }
 }
 .t-p__contenu{
     display: flex;
     flex-direction: column;
 }
-@media only screen and (min-width: 760px){
+@media only screen and (min-width: 1024px){
     .t-p__contenu{
         flex-direction: row;
     }
