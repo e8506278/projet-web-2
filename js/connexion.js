@@ -7,7 +7,7 @@ const elUsagerMdp = document.querySelector('[data-js-mdp]');
 
 let erreur;
 
-elFormulaire.addEventListener('soumettre', (e) => {
+elFormulaire.addEventListener('submit', (e) => {
     // Pour afficher les messages d'erreur
     let erreursTrouvees = false;
     let elErreur;
@@ -59,12 +59,5 @@ elFormulaire.addEventListener('soumettre', (e) => {
     } else {
         elErreur.classList.remove('message-erreur');
         elErreur.classList.add('aucune-erreur');
-    }
-
-    console.log(erreursTrouvees);
-
-    // Empêcher le bouton de soumettre le formulaire, tant qu'il y a des erreurs
-    if (erreursTrouvees) {
-        e.preventDefault();
     }
 });
