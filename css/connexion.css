@@ -1,5 +1,6 @@
-body {
+.main {
     height: 100vh;
+    padding: 0;
     width: 100vw;
 }
 
@@ -65,14 +66,8 @@ textarea:focus {
 .wrapper-center {
     align-items: center;
     display: flex;
-    flex-direction: column;
-    height: 100%;
+    min-height: 100vh;
     justify-content: center;
-}
-
-.main {
-    max-width: 600px;
-    width: 50%;
 }
 
 .entete {
@@ -83,7 +78,16 @@ textarea:focus {
     padding: 1rem 0;
 }
 
-.wrapper-message {
+.main-section {
+    width: max(50%, 600px);
+}
+
+.aucune-erreur {
+    display: none;
+}
+
+.message-erreur {
+    display: inline;
     color: red;
     margin: var(--espace-m) 0;
 }

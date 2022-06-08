@@ -70,7 +70,6 @@ CREATE TABLE `saq_data` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7365 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
 --
 -- Table structure for table `usager__bouteille`
 --
@@ -152,14 +151,12 @@ CREATE TABLE `usager__detail` (
   `courriel` varchar(100) NOT NULL,
   `verification_courriel` timestamp NULL DEFAULT NULL,
   `date_naissance` date NOT NULL,
-  `ville_id` int(11) NOT NULL,
+  `ville` varchar(100) NOT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
   `date_modification` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usager_courriel_unique` (`courriel`),
-  KEY `usager_ville_id_foreign` (`ville_id`),
-  CONSTRAINT `usager_login_id_foreign` FOREIGN KEY (`id`) REFERENCES `usager__login` (`id`),
-  CONSTRAINT `usager_ville_id_foreign` FOREIGN KEY (`ville_id`) REFERENCES `usager__ville` (`id`)
+  CONSTRAINT `usager_login_id_foreign` FOREIGN KEY (`id`) REFERENCES `usager__login` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,7 +166,7 @@ CREATE TABLE `usager__detail` (
 
 LOCK TABLES `usager__detail` WRITE;
 /*!40000 ALTER TABLE `usager__detail` DISABLE KEYS */;
-INSERT INTO `usager__detail` VALUES (1,'Toto Gingras','123 de la Commune','(514) 555-2345','toto@inter.net',NULL,'1993-12-15',1,NULL,NULL);
+INSERT INTO `usager__detail` VALUES (1,'Toto Gingras','123 de la Commune','(514) 555-2345','toto@inter.net',NULL,'1993-12-15','Montréal',NULL,NULL),(7,'Toto Gingras','8592 rue de Reims\r\n','5148312405','roychristian2013@gmail.com',NULL,'2012-03-03','Montréal','2022-06-08 16:13:40','2022-06-08 16:13:40'),(9,'Toto Gingras','8592 rue de Reims\r\n','5148312405','roychristian2@gmail.com',NULL,'1976-06-06','Montréal','2022-06-08 16:36:12','2022-06-08 16:36:12');
 /*!40000 ALTER TABLE `usager__detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,13 +180,13 @@ DROP TABLE IF EXISTS `usager__login`;
 CREATE TABLE `usager__login` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom_utilisateur` varchar(100) NOT NULL,
-  `mot_de_passe` varchar(25) NOT NULL,
-  `jeton` varchar(100) DEFAULT NULL,
+  `mot_de_passe` varchar(255) NOT NULL,
+  `jeton` varchar(255) DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
   `date_modification` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nom_utilisateur_unique` (`nom_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +195,7 @@ CREATE TABLE `usager__login` (
 
 LOCK TABLES `usager__login` WRITE;
 /*!40000 ALTER TABLE `usager__login` DISABLE KEYS */;
-INSERT INTO `usager__login` VALUES (1,'Toto9','password9',NULL,NULL,NULL);
+INSERT INTO `usager__login` VALUES (1,'Toto9','password9',NULL,NULL,NULL),(7,'Test01','$2y$10$DVwZb0PQpFTEdCMu/TB3uur/VxKqTXym0vkG0APnboLmCaYfYTSZi','2b31c623cef291922d977f94cafab2fc','2022-06-08 16:13:40','2022-06-08 16:13:40'),(9,'Test02','$2y$10$lXRpSYXQCdTqbOvVQ8JrVumvBJVoirmNNnzueBGcLhlUCRt.DPb06','be2c3190bfc7bb365ac3d28908bc3785','2022-06-08 16:36:12','2022-06-08 16:36:12');
 /*!40000 ALTER TABLE `usager__login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -579,4 +576,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-07 19:02:53
+-- Dump completed on 2022-06-08 12:38:45
