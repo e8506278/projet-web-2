@@ -3,6 +3,8 @@
 // Ouvrir une nouvelle connexion au serveur MySQL
 $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
 
+// On valide si l'utilisateur est déjà connecté ou pas, avant de le forcer à le faire
+
 // Tableau qui contient la liste des erreurs
 global $erreurs;
 
