@@ -42,6 +42,9 @@ class Controler
 				case 'boireBouteilleCellier':
 					$this->boireBouteilleCellier();
 					break;
+			        case 'details':
+					$this->productDetails();
+					break;
 				default:
 					$this->accueil();
 					break;
@@ -83,15 +86,13 @@ class Controler
 		
 		private function ajouterNouvelleBouteilleCellier()
 		{
+			$bte = new Bouteille();
 			$id_cellier = $_GET['id_cellier'];
-		
 			$body = json_decode(file_get_contents('php://input'));
-
+			$data = $bte->getListeBouteille();
 			if(!empty($body)){
 				$bte = new Bouteille();
-				//var_dump($_POST['data']);
-				
-				//var_dump($data);
+				$body->id_cellier = $id_cellier;
 				$resultat = $bte->ajouterBouteilleCellier($body);
 				echo json_encode($resultat);
 			}
@@ -169,6 +170,20 @@ class Controler
 			include("vues/entete.php");
 			include("vues/bouteilles.php");
 			include("vues/pied.php");
+		}
+	
+	
+		private function productDetails()
+		{
+			$bte = new Bouteille();
+			$result = $bte->getOneBouteille($_GET['id_bouteille']);
+			if(count($result)>0){
+				$product = $result[0];
+			}
+
+		include("vues/entete.php");
+		include("vues/details.php");
+		include("vues/pied.php");
 		}
 
 }
