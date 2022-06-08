@@ -2,6 +2,9 @@
     position: relative;
     background-color: var(--couleur-secondaire);
 }
+.hero--pad-haut{
+    padding-top: var(--espace-l);
+}
 .hero__titre{
     color: white;
     position: absolute;
@@ -30,6 +33,6 @@
         width: 400px;
     }
 }
-.hero__img{
+.hero__img--hauteur{
     height: 65vh;
 }

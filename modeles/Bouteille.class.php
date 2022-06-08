@@ -40,8 +40,8 @@ class Bouteille extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                   // $row['nom_bouteille'] = trim(utf8_encode($row['nom_bouteille']));
-                   // $row['description_bouteille'] = trim(utf8_encode($row['description_bouteille']));
+                    //$row['nom_bouteille'] = trim(utf8_encode($row['nom_bouteille']));
+                    //$row['description_bouteille'] = trim(utf8_encode($row['description_bouteille']));
                     $rows[] = $row;
                 }
             }

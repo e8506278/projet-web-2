@@ -12,7 +12,9 @@
  */
 	
 	
-
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 	function mon_autoloader($class) 
 	{

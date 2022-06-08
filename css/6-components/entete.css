@@ -1,16 +1,15 @@
 header{
-    background-color: var(--couleur-secondaire);
-    padding: var(--espace-p) var(--espace-p) 0 var(--espace-p) ;
+    
+    
     
 
 }
 @media only screen and (min-width: 760px){
     header{
-        padding: var(--espace-p) var(--espace-l) 0 var(--espace-l);
+        padding: var(--espace-p) var(--espace-l) ;
+        background-color: var(--couleur-secondaire);
     }
 }
-
-
 
 
 .entete__icone{
