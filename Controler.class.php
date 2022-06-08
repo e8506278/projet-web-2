@@ -86,16 +86,14 @@ class Controler
 		
 		private function ajouterNouvelleBouteilleCellier()
 		{
+			$bte = new Bouteille();
 			$id_cellier = $_GET['id_cellier'];
-		
 			$body = json_decode(file_get_contents('php://input'));
-
+			$data = $bte->getListeBouteille();
 			if(!empty($body)){
 				$bte = new Bouteille();
-				//var_dump($_POST['data']);
-				
-				//var_dump($data);
-				$resultat = $bte->ajouterBouteilleCellier($body);
+				$body->id_cellier = $id_cellier;
+				$resultat = $bte->ajouterBouteilleCelliertest($body);
 				echo json_encode($resultat);
 			}
 			else{
