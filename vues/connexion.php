@@ -13,7 +13,15 @@
 
     <script defer src="./js/connexion.js"></script>
 </head>
-
+<div class="hero hero--pad-haut">
+	<div class="hero__titre">vino
+		<div class="hero__stitre">Gestion de celliers</div>	
+	</div>
+	<!--Image hero-->
+	<div class="hero__img-wrapper">
+		<img class="hero__img--hauteur " src="./assets/img/unebouteille.jpg" alt="hero">
+	</div>
+</div>
 <body class="main">
     <div class="section-wrapper wrapper-center">
         <div class="main-section">
