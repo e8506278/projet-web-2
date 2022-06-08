@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `usager__bouteille`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usager__bouteille` (
-  `id_bouteille` int(11) NOT NULL,
+  `id_bouteille` int(11) NOT NULL AUTO_INCREMENT,
   `id_cellier` int(11) NOT NULL,
   `date_achat` date DEFAULT NULL,
   `garde_jusqua` date DEFAULT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE `usager__bouteille` (
   `description_bouteille` varchar(200) DEFAULT NULL,
   `prix_bouteille` float DEFAULT NULL,
   PRIMARY KEY (`id_bouteille`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,7 +208,7 @@ DROP TABLE IF EXISTS `usager__ville`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usager__ville` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(255) NOT NULL,
+  `nom` varchar(100) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -310,10 +310,10 @@ DROP TABLE IF EXISTS `vino__cepage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vino__cepage` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1590 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -576,4 +576,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-08 12:38:45
+-- Dump completed on 2022-06-08 12:55:37
