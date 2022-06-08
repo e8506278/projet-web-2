@@ -93,7 +93,7 @@ class Controler
 			if(!empty($body)){
 				$bte = new Bouteille();
 				$body->id_cellier = $id_cellier;
-				$resultat = $bte->ajouterBouteilleCelliertest($body);
+				$resultat = $bte->ajouterBouteilleCellier($body);
 				echo json_encode($resultat);
 			}
 			else{
