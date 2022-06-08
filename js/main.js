@@ -225,6 +225,7 @@ window.addEventListener('load', function () {
                                             document.documentElement.classList.remove('overflow-y--hidden');
                                             document.body.classList.remove('overflow-y--hidden');
                                         }
+                                        location.reload();
                                         return response.json();
                                     } else {
                                         throw new Error('Erreur');
@@ -232,7 +233,7 @@ window.addEventListener('load', function () {
                                 })
                                 .then(response => {
                                     console.log(response);
-                                    location.reload();
+                                    
                                 }).catch(error => {
                                     console.error(error);
                                 });
