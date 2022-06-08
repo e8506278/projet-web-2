@@ -1,0 +1,80 @@
+.product-cards{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.card {
+    width: 25%;
+    max-width: 300px;
+    margin-bottom: 10px;
+    /*border-radius: 10px;*/
+    /*//padding: 10px 30px;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /*//height: 100%;*/
+    border: 1px solid lightgray;
+    min-height: 150px;
+    padding: 23px 14px 10px 27px;
+}
+
+.card .image{
+    height: 200px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card .image img{
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.title {
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.title-2 {
+    color: black;
+    font-size: var(--police-xp);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 13px;
+    color: black;
+    display: -webkit-box;
+    height: 24.2px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.625;
+}
+
+.rating{
+    margin: 10px 0;
+}
+
+.rating .small-text{
+    font-size: var(--police-xp);
+    opacity: .7;
+}
+
+.label{
+    font-weight: 500;
+}
+
+.submit-button{
+    min-height: 40px;
+    margin-top: 35px;
+}
