@@ -6,6 +6,9 @@
 //    }
 //    echo "Non". $product['prix'];
 ?>
+
+<!-- fiche produit -->
+
 <section class="section-wrapper texte-photo">
 
 	<article class="texte-photo__contenu d-flex">
@@ -245,6 +248,7 @@
 		</div>
 	</div>
 </section>
+<!--  note sur une bouteille-->
 <section class="section-wrapper texte-photo">
     <div class="boite-double">
         <!--LOGIN-->
