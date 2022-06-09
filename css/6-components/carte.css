@@ -147,6 +147,9 @@
 .carte--flex{
     display: flex;
 }
+.carte--hauteur{
+    min-height: 400px;
+}
 
 /* || image */
 .carte__img{

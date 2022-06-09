@@ -29,19 +29,29 @@ class Bouteille extends Modele
         return $rows;
     }
 
+
+     /**
+     * Cette méthode récupère la liste des bouteilles d'un cellier d'un usager
+     * 
+     * @param int $id_cellier l'id du cellier de l'usagé
+     * 
+     * @throws Exception Erreur de requête sur la base de données 
+     * 
+     * @return Array Les données.
+     */
     public function getListeBouteilleCellier($id_cellier)
     {
         $rows = array();
 
         $requete = "SELECT * FROM usager__bouteille 
-                    INNER JOIN vino__bouteille a ON usager__bouteille.id_bouteille = a.id_bouteille 
+             
                     WHERE usager__bouteille.id_cellier = '$id_cellier'";
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    //$row['nom_bouteille'] = trim(utf8_encode($row['nom_bouteille']));
-                    //$row['description_bouteille'] = trim(utf8_encode($row['description_bouteille']));
+                    $row['nom_bouteille'] = trim(utf8_encode($row['nom_bouteille']));
+                    $row['description_bouteille'] = trim(utf8_encode($row['description_bouteille']));
                     $rows[] = $row;
                 }
             }

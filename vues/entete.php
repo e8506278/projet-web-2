@@ -35,7 +35,7 @@
 		</header>
 	<main>
 
-<!--Navigation mobile-->
+<!--Navigation-->
 	<nav class="nav-mobile">
 			<ul class="nav-mobile__liste ">
 				
