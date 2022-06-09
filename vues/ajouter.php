@@ -1,3 +1,6 @@
+
+<!-- formulaire ajouter une bouteille -->
+
 <div class="ajouter">
 
     <div class="nouvelleBouteille" vertical layout>
