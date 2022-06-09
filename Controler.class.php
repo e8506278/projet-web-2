@@ -220,11 +220,13 @@ class Controler
 
     private function productDetails()
     {
-        $bte = new Bouteille();
-        $result = $bte->getOneBouteille($_GET['id_bouteille']);
-        if (count($result) > 0) {
-            $product = $result[0];
-        }
+
+//        $bte = new Bouteille();
+//        $result = $bte->getOneBouteille($_GET['id_bouteille']);
+//        if (count($result) > 0) {
+//            $product = $result[0];
+//        }
+
 
         include("vues/entete.php");
         include("vues/details.php");

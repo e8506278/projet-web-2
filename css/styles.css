@@ -2,6 +2,7 @@
 @import "./1-settings/couleurs.css";
 @import "./1-settings/polices.css";
 @import "./1-settings/espacements.css";
+@import "./1-settings/utils.css";
 
 /*GENERIC*/
 @import "./3-generic/purifie.css";
