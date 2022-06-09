@@ -1,10 +1,11 @@
 (() => {
 
 /* MODAL */
+
 let elBoutonOuvre = document.querySelector('[data-js-boutonOuvre]'),
 elModal = document.querySelector('[data-js-modal]'),
 elBoutonFerme = document.querySelector('[data-js-boutonFerme]')
-
+/*ouverture */
 if(elBoutonOuvre){
     elBoutonOuvre.addEventListener('click', ()=>{
         if (elModal.classList.contains('modal--ferme')) {

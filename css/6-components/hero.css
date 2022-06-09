@@ -5,6 +5,9 @@
 .hero--pad-haut{
     padding-top: var(--espace-l);
 }
+
+
+/* || Titre */
 .hero__titre{
     color: white;
     position: absolute;
@@ -16,12 +19,17 @@
   
 }
 
+
+/* || Sous-Titre */
 .hero__stitre{
     text-align: center;
     font-size: 1rem;
     letter-spacing: 3px;
     font-family: var(--police-texte);  
 }
+
+
+/* || Image */
 .hero__img-wrapper{
     overflow: hidden;
     width: auto;
@@ -33,6 +41,7 @@
         width: 400px;
     }
 }
+
 .hero__img--hauteur{
     height: 65vh;
 }

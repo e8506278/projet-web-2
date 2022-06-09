@@ -5,6 +5,8 @@
 .carte--bg-couleur{
     background-color: var(--couleur-intermediaire-pale);
 }
+
+/* || Entete*/
 .carte__entete{
     padding-bottom: var(--espace-p);
 }
@@ -14,7 +16,7 @@
     justify-content: space-between;
 }
 
-
+/* || Contenu*/
 .carte__contenu{
    
     margin-bottom: var(--espace-p);
@@ -30,6 +32,8 @@
 .carte__contenu:hover{
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
+
+/* || Liste*/
 .carte__liste{
     display: flex;
     justify-content: space-between;
@@ -41,6 +45,8 @@
         flex-direction: row;
     }
 }
+
+/* || Detail*/
 .carte__detail{
     display: flex;
     align-items: center;
@@ -57,6 +63,8 @@
        
     }
 }
+
+/* || Texte*/
 .carte__texte{
     font-size: var(--police-xp); 
 }
@@ -70,6 +78,8 @@
 .carte__texte--esg{
     padding-left: var(--espace-xp);
 }
+
+/* || Icones*/
 .carte__icone{
     width: 1rem;
 }
@@ -79,6 +89,11 @@
         padding-left: var(--espace-p);
     }
 }
+.carte__icone--couleur-blanc{
+    fill: var(--couleur-primaire);
+}
+
+
 .carte__icone-petit{
     width: 0.9rem;
     cursor: pointer;
@@ -89,9 +104,8 @@
 .carte__icone-petit--espace{
     padding-left: var(--espace-xp);
 }
-.carte__icone--couleur-blanc{
-    fill: var(--couleur-primaire);
-}
+
+/* || Titre*/
 .carte__titre{
     border-bottom: 1px solid lightgrey;
     margin-bottom: var(--espace-xp);
@@ -100,20 +114,10 @@
 .carte__titre--largeur{
     width: 70vw;
 }
+
+/* || Lien */
 .carte__lien{
     color: var(--couleur-secondaire);
-}
-.carte--aligne-centre{
-    align-self: center;
-}
-.carte--haut{
-    padding-top: var(--espace-p);
-}
-.carte--droite{
-    padding-right: var(--espace-xp);
-}
-.carte--aligne-droite{
-    text-align: end;
 }
 .carte__lien-icone{
     width: 1.8rem;
@@ -126,13 +130,31 @@
     vertical-align: text-bottom;
 }
 
+/* || Décorateurs divers */
+.carte--aligne-centre{
+    align-self: center;
+}
+.carte--haut{
+    padding-top: var(--espace-p);
+}
+.carte--droite{
+    padding-right: var(--espace-xp);
+}
+.carte--aligne-droite{
+    text-align: end;
+}
+
 .carte--flex{
     display: flex;
 }
+
+/* || image */
 .carte__img{
     width: 65px;
 
 }
+
+/* || Description */
 .carte__description{
     display: flex;
     flex-direction: column;
@@ -142,27 +164,11 @@
     
 }
 
+/* || Erreur */
 .carte__erreur{
     color: red;
 }
 
-[type=radio] { 
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  /* IMAGE STYLES */
-[type=radio] + i {
-    cursor: pointer;
-  }
-  
-  /* CHECKED STYLES */
-[type=radio]:checked +i {
-    outline: 2px solid var(--couleur-accent);
-   
-  }
-  .radio{
-      padding-right: var(--espace-xp);
-  }
+
+
+

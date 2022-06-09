@@ -1,18 +1,26 @@
 .vignette{
     background-color: var(--couleur-primaire);
 }
+
+/* || Entete */
 .vignette__entete{
     color: var(--couleur-secondaire);
 }
+
+/* || Wrapper */
 .vignette__wrapper{
     position: relative;
     display: flex;
     overflow: hidden;
 }
+
+/* || Image */
 .vignette__img{
     filter: brightness(0.6);
 }
 
+
+/* || Titre */
 .vignette__titre{
     position: absolute;
     color: var(--couleur-primaire);
@@ -22,6 +30,8 @@
     text-align: center;
     text-transform: uppercase;
 }
+
+/* || Décorateur divers */
 .vignette--bgcouleur{
     background-color: var(--couleur-intermediaire-pale);
 }

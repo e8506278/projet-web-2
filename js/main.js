@@ -153,7 +153,7 @@ window.addEventListener('load', function () {
 
     }
 
-    /*CELLIER*/
+    /*AJOUT D'UN CELLIER*/
 
     let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
         usager =  document.querySelector("[data-js-usager]"),    
@@ -165,24 +165,25 @@ window.addEventListener('load', function () {
         elBtnAjouterCellier.addEventListener('click', (e) => {
 
             e.preventDefault();
-
+            // Récupération des champs
             let nom_cellier = document.querySelector("[name='nom_cellier']"),
                 type_cellier_id = document.querySelectorAll("[name='type_cellier_id']"),
                 description_cellier = document.querySelector("[name='description_cellier']").value,
                 radio = false,
                 estValide = true
-
+                // Si le nom du cellier n'est pas vide
                 if(nom_cellier.value !== ""){
                 
                     erreurnom.textContent = '';
+                    // Assigné la valeur à la variable
                     nom_cellier = nom_cellier.value
                 }
                 else{
-                
+                    // Sinon message d'erreur
                     erreurnom.textContent = "Ce champs est obligatoire";
                     estValide = false;
                 }
-
+                //Pour chaque radio bouton
                 type_cellier_id.forEach(element => {
                     
                     if(element.checked){
@@ -190,20 +191,22 @@ window.addEventListener('load', function () {
                     }
                     
                 });
-
+                // Si un bouton a été sélectionné
                 if(radio){
                     
                         erreurradio.textContent = '';
+                        // Assigner la valeur
                         type_cellier_id = document.querySelector('input[name="type_cellier_id"]:checked').value;
                 }
                 else{
-                
+                    // Sinon message d'erreur
                     erreurradio.textContent = 'Choisir un type.';
                     estValide = false;
                 }
                 
-
+                // Si tout est valide
                 if(estValide){
+                    //Assigné les données à transmettre
                     let cellier = {
         
                         "id_usager": usager.dataset.jsUsager,
@@ -211,13 +214,14 @@ window.addEventListener('load', function () {
                         "type_cellier_id": type_cellier_id,
                         "description_cellier": description_cellier
                     };  
-        
+                    
+                    // Requête fetch
                     let requete = new Request(BaseURL + "?requete=ajouterNouveauCellier", { method: 'POST', body: JSON.stringify(cellier) });
                     console.log(requete)
                             fetch(requete)
                                 .then(response => {
                                     if (response.status === 200) {
-                                        
+                                        // si ok fermeture du modal
                                         elModal = document.querySelector('[data-js-modal]')
                                         if (elModal.classList.contains('modal--ouvre')) {
                                             elModal.classList.replace('modal--ouvre', 'modal--ferme');
@@ -225,6 +229,8 @@ window.addEventListener('load', function () {
                                             document.documentElement.classList.remove('overflow-y--hidden');
                                             document.body.classList.remove('overflow-y--hidden');
                                         }
+                                        // Rafraîchir la page
+                                        location.reload();
                                         return response.json();
                                     } else {
                                         throw new Error('Erreur');
@@ -232,7 +238,7 @@ window.addEventListener('load', function () {
                                 })
                                 .then(response => {
                                     console.log(response);
-                                    location.reload();
+                                    
                                 }).catch(error => {
                                     console.error(error);
                                 });

@@ -54,15 +54,19 @@ class Cellier extends Modele
      * 
      * @param Array $data Tableau des données représentants le cellier.
      * 
-     * @return Boolean Succès ou échec de l'ajout.
+     * @return Boolean Succès de l'ajout.
+     * @return Array Échec de l'ajout, tableau de messages d'erreurs.
      */
     public function ajouterNouveauCellier($data)
     {
-      
+        // VALIDATION 
         $erreurs = array();
         $estValide = true;
+
+        //Si il ya des données
         if($data){
-           
+            // VALIDATION NOM
+           // Réinitialisation du tableau d'erreur
             unset($erreurs['nom_cellier']);
             $regExp = '/^.+$/';
             if (!preg_match($regExp, $data->nom_cellier)) {
@@ -70,11 +74,16 @@ class Cellier extends Modele
                 $estValide = false;
             }
 
-            unset($erreurs['type_cellier']);
+             // VALIDATION type_cellier_id
+           // Réinitialisation du tableau d'erreur
+            unset($erreurs['type_cellier_id']);
+            //Si est nul donc aucun choix de radio bouton
             if ($data->type_cellier_id == null) {
                 $erreurs['type_cellier_id'] = 'Choisir le type de cellier.';
                 $estValide = false;
             }
+            
+            //Si tout est valide
             if($estValide){
                 $requete = "INSERT INTO usager__cellier(id_usager,nom_cellier,description_cellier,type_cellier_id) VALUES (" .
                             "'" . $data->id_usager . "'," .
@@ -90,10 +99,10 @@ class Cellier extends Modele
             else{
                 return $erreurs;
             }
-
-       
+         }
     }
-}
+
+
     /**
      * Cette méthode modifie les informations d'un cellier
      * 
@@ -113,9 +122,16 @@ class Cellier extends Modele
     }
     
 
+    /**
+     * Cette méthode récupère le nombre de cellier que possède un usagé
+     * 
+     * @param int $id Id de session de l'usagé
+     * 
+     * @return String Le nombre de cellier.
+     */
     public function nombreCellierUsager($id)
     {
-        
+        //Requête
         $requete = "SELECT COUNT(id_usager) AS nombre_cellier FROM usager__cellier where id_usager = '$id'" ;
 
         if (($res = $this->_db->query($requete)) == true) {
@@ -131,6 +147,7 @@ class Cellier extends Modele
             throw new Exception("Erreur de requête sur la base de donnée", 1);
             
         }
+        //Extraire la donnée
         $valeur = $rows[0]["nombre_cellier"];
         return $valeur;
     }
