@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
 		<link rel="stylesheet" href="./css/styles.css" type="text/css" media="screen">
 		<base href="<?php echo BASEURL; ?>">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 		<!--<script src="./js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
 		<script src="./js/modal.js" defer></script>
 		<script src="./js/plugins.js"></script>

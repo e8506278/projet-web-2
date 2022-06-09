@@ -112,6 +112,19 @@
 
 .info-details .info-unit{
     margin: 20px 0;
+    padding: 0 20px;
+}
+
+.select{
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+.submit-bloc{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .info-details .info-unit .label{
@@ -135,7 +148,7 @@
     background: white;
     border: 1px solid lightgray;
     padding: 18px 24px;
-  /*  border-radius: 17px; */
+    border-radius: 17px;
     margin-bottom: 10px;
     flex-direction: column;
 }
@@ -143,7 +156,7 @@
     width: 40px;
     height: 40px;
     object-fit: contain;
- /*   border-radius: 50%; */
+    border-radius: 50%;
     opacity: 0.6;
 }
 .comments b{
@@ -172,18 +185,22 @@
     font-size: 14px;
     opacity: .9;
 }
-.comments .input{
+.input{
     min-height: 40px;
     font-size: 12px;
     background: unset;
     border-bottom: 1px solid lightgray;
     width: 100%;
     margin-right: 20px;
+    padding-left: 12px;
+    padding-right: 12px;
 }
+
 .comments .light-text{
 /*font-weight: 300;*/
     opacity: .7;
     font-size: 12px;
+    padding-right: 12px;
 }
 .comments .btn{
     font-size: 12px;
@@ -228,84 +245,3 @@
     margin-top: 40px;
     line-height: 23px;
 }
-
-/*
- CSS for the main interaction
-*/
-.tabset > input[type="radio"] {
-    position: absolute;
-    left: -200vw;
-  }
-  
-  .tabset .tab-panel {
-    display: none;
-  }
-  
-  .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
-  .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
-  .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
-  .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
-  .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
-  .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
-    display: block;
-  }
-  
-  /*
-   Styling
-  */
- 
-  
-  .tabset > label {
-    position: relative;
-    display: inline-block;
-    padding: 15px 15px 25px;
-    border: 1px solid transparent;
-    border-bottom: 0;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  
-  .tabset > label::after {
-    content: "";
-    position: absolute;
-    left: 15px;
-    bottom: 10px;
-    width: 22px;
-    height: 4px;
-    background: #8d8d8d;
-  }
-  
-  .tabset > label:hover,
-  .tabset > input:focus + label {
-    color: #06c;
-  }
-  
-  .tabset > label:hover::after,
-  .tabset > input:focus + label::after,
-  .tabset > input:checked + label::after {
-    background: #06c;
-  }
-  
-  .tabset > input:checked + label {
-    border-color: #ccc;
-    border-bottom: 1px solid #fff;
-    margin-bottom: -1px;
-  }
-  
-  .tab-panel {
-    padding: 30px 0;
-    border-top: 1px solid #ccc;
-  }
-  
-  /*
-   Demo purposes only
-  */
-  *,
-  *:before,
-  *:after {
-    box-sizing: border-box;
-  }
-  
-  .tabset {
-    max-width: 65em;
-  }
