@@ -162,16 +162,21 @@ class Controler
 
     /*CELLIERS*/
 
-
+    /**
+     * Cette méthode récupère la liste des celliers d'un usagé ainsi que le nombre de cellier par usager
+     * avec l'id session de l'usager
+     */
     private function listeCelliers()
     {
 
         $id = $_SESSION['utilisateur']['id'];
      
         $celliers = new Cellier();
+        
         $data = $celliers->getListeCellier($id);
         $nombre_cellier = $celliers->nombreCellierUsager($id);
 
+        // Si le nombre de cellier est égal à 10
         if ($nombre_cellier == '10') {
 
             $erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
@@ -179,13 +184,16 @@ class Controler
             $erreur = "";
         }
 
-        // echo json_encode($data);
-
         include("vues/entete.php");
         include("vues/celliers.php");
         include("vues/pied.php");
     }
 
+    /**
+     * Cette méthode appelle la fonction pour ajouter un nouveau cellier 
+     * selon les information rentrée par l'usagé ($body).
+     *  
+     */
     private function ajouterNouveauCellier()
     {
         $body = json_decode(file_get_contents('php://input'));
@@ -195,7 +203,6 @@ class Controler
 
             $resultat = $cellier->ajouterNouveauCellier($body);
 
-            // echo json_encode($resultat);
         } else {
             include("vues/entete.php");
             include("vues/celliers.php");
@@ -203,6 +210,11 @@ class Controler
         }
     }
 
+    /**
+     * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
+     *  selon l'id_cellier envoyé dans l'url 
+     *  
+     */
     private function listeBouteilleCellier()
     {
         $id_cellier = $_GET['id_cellier'];
@@ -212,11 +224,12 @@ class Controler
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
-        // echo json_encode($data);
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");
     }
+
+/* FIN CELLIER */
 
 
     private function productDetails()

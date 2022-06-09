@@ -14,11 +14,15 @@
         display:none;
     }
 }
+
+/* Liste */
 .nav-mobile__liste{
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
+
+/* Icone */
 .nav-mobile__icone{
     fill: var(--couleur-primaire);
 }

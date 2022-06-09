@@ -1,12 +1,14 @@
 .t-p{
     background-color: var(--couleur-intermediaire-pale);
-    
 }
+
+/* || Titre */
 .t-p__titre{
     font-size: var(--police-l);
     
 }
 
+/* || Image */
 @media only screen and (min-width: 760px){
     .t-p__img{
         padding-left: var(--espace-l);
@@ -15,6 +17,8 @@
         
     }
 }
+
+/* || Contenu */
 .t-p__contenu{
     display: flex;
     flex-direction: column;
@@ -24,6 +28,8 @@
         flex-direction: row;
     }
 }
+
+/* || Texte */
 .t-p__texte{
     padding: var(--espace-m) 0;
     line-height: 30px;

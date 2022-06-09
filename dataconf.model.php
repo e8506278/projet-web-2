@@ -3,6 +3,6 @@
 define("BASEURL", "");
 
 define('HOST', 'localhost');
-define('USER', '');
-define('PASSWORD', '');
-define('DATABASE', '');
+define('USER', 'root');
+define('PASSWORD', 'root');
+define('DATABASE', 'PW2');
