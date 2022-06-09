@@ -19,6 +19,8 @@ class Cellier extends Modele
      * 
      * @param int $id Id de session de l'usagé
      * 
+     * @throws Exception Erreur de requête sur la base de données 
+     * 
      * @return Array Les données.
      */
 
@@ -37,7 +39,7 @@ class Cellier extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    $row['nom_cellier'] = trim(utf8_encode($row['nom_cellier']));
+                   // $row['nom_cellier'] = trim(utf8_encode($row['nom_cellier']));
                     $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
                     $rows[] = $row;
                 }
@@ -126,6 +128,8 @@ class Cellier extends Modele
      * Cette méthode récupère le nombre de cellier que possède un usagé
      * 
      * @param int $id Id de session de l'usagé
+     * 
+     * @throws Exception Erreur de requête sur la base de données 
      * 
      * @return String Le nombre de cellier.
      */

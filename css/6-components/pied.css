@@ -1,6 +1,7 @@
 .pied{
     background-color: var(--couleur-secondaire);
     color: var(--couleur-primaire);
+    bottom:0;
 }
 
 /* || nav */
