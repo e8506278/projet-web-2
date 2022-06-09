@@ -172,7 +172,7 @@ class Controler
         $id = $_SESSION['utilisateur']['id'];
      
         $celliers = new Cellier();
-        /
+        
         $data = $celliers->getListeCellier($id);
         $nombre_cellier = $celliers->nombreCellierUsager($id);
 
