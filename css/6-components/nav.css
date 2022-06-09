@@ -9,12 +9,15 @@
         font-size: var(--police-p);
     }
 }
+/* || Logo */
 .nav__logo{
     font-family: var(--police-logo);
     font-size: var(--police-l);
     color: var(--couleur-primaire);
     
 }
+
+/* || Lien */
 .nav__liste{
     display: flex;
     justify-content: space-between;

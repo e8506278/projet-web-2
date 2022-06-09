@@ -3,6 +3,7 @@
     color: var(--couleur-primaire);
 }
 
+/* || nav */
 .pied__nav{
     padding-bottom: 70px;
 }
@@ -15,7 +16,8 @@
         
     }
 }
-/*LOGO*/
+
+/* || Logo*/
 .pied__logo{
     font-family: var(--police-logo);
     font-size: var(--police-l);
@@ -43,6 +45,8 @@
      
     }
 }
+
+/* || Liste */
 .pied__listes{
     display: flex;
     justify-content: space-between;
@@ -60,6 +64,7 @@
     line-height: 27px;
 }
 
+/* || Lien */
 .pied__liens{
     color: var(--couleur-primaire);
     cursor: pointer;
@@ -67,6 +72,8 @@
 .pied__liens:hover{
     color: var(--couleur-accent);
 }
+
+/* || Icone */
 .pied__icone{
     fill: var(--couleur-primaire);
 }
