@@ -229,7 +229,8 @@ class Controler
         $bte = new Bouteille();
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
- 
+
+        
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");
@@ -238,14 +239,15 @@ class Controler
     private function ajouterQteBouteille(){
         $body = json_decode(file_get_contents('php://input'));
         var_dump($body);
-       // $bte = new Bouteille();
-       // $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
-        // echo json_encode($resultat);
+        $bte = new Bouteille();
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
+       
     }
     private function reduireQteBouteille(){
         $body = json_decode(file_get_contents('php://input'));
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
+       
     }
 /* FIN CELLIER */
 

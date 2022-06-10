@@ -31,7 +31,8 @@ class Bouteille extends Modele
 
 
      /**
-     * Cette méthode récupère la liste des bouteilles d'un cellier d'un usager
+     * Cette méthode récupère la liste des bouteilles d'un cellier d'un usager où la quantité de bouteille est plus grande que zéro
+     * et liste descendant selon id_bouteille
      * 
      * @param int $id_cellier l'id du cellier de l'usagé
      * 
@@ -44,8 +45,9 @@ class Bouteille extends Modele
         $rows = array();
 
         $requete = "SELECT * FROM usager__bouteille 
-             
-                    WHERE usager__bouteille.id_cellier = '$id_cellier'";
+                    WHERE usager__bouteille.id_cellier = '$id_cellier' 
+                    AND usager__bouteille.quantite_bouteille > 0 
+                    ORDER BY id_bouteille DESC ";
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {

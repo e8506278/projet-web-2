@@ -12,7 +12,7 @@
 if($data){
 foreach ($data as $cle => $bouteille) {
 ?>
-        <div class="carte__contenu ">
+        <div class="carte__contenu" data-js-bouteille="<?php echo $bouteille['id_bouteille'] ?>">
             <div class="carte__lien carte--flex">
                 <div class="carte__img">
                     <img src="<?php echo $bouteille['image_bouteille']; ?>" alt="bouteille">

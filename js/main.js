@@ -14,7 +14,9 @@ console.log(BaseURL);
 window.addEventListener('load', function () {
     console.log("load");
 
+    
     document.querySelectorAll(".btnBoire").forEach(function (element) {
+       
        
         element.addEventListener("click", function (evt) {
             let id =element.parentElement.dataset.jsId;
@@ -30,15 +32,31 @@ window.addEventListener('load', function () {
                     }
                 })
                 .then(response => {
+                    let carteBouteille = document.querySelectorAll('[data-js-bouteille]')
                     nombreBouteille = element.previousElementSibling.textContent
-                    element.previousElementSibling.innerHTML = `<span data-js-quantite>${nombreBouteille-1}</span>`
+                   for (let i = 0, l = carteBouteille.length; i < l; i++){
+                        if(carteBouteille[i].dataset.jsBouteille == id){
+                            if(nombreBouteille == 1){
+                                console.log(carteBouteille[i])
+                                carteBouteille[i].remove();
+                            }
+                        }
+                   }
+                    
+                    
+                    if(nombreBouteille >= 1){
+                        element.previousElementSibling.innerHTML = `<span data-js-quantite>${nombreBouteille-1}</span>`;
+                        
+                    }
+                    
                 }).catch(error => {
                     console.error(error);
                 });
                
         })
 
-    });
+    
+})
 
     document.querySelectorAll(".btnAjouter").forEach(function (element) {
      
@@ -56,7 +74,6 @@ window.addEventListener('load', function () {
                 })
                 .then(response => {
                     nombreBouteille = parseInt(element.nextElementSibling.textContent);
-                   
                     element.nextElementSibling.innerHTML = `<span data-js-quantite>${(nombreBouteille)+1}</span>`
         
                 }).catch(error => {
