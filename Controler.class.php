@@ -218,7 +218,7 @@ class Controler
 
     /**
      * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
-     *  selon l'id_cellier envoyé dans l'url 
+     *  selon l'id_cellier envoyé dans l'url, ou la quantité_bouteille est plus grande que 0, trié DESC selon l'id_bouteille 
      *  
      */
     private function listeBouteilleCellier()
@@ -236,6 +236,11 @@ class Controler
         include("vues/pied.php");
     }
 
+    /**
+     * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
+     *  selon l'id_cellier envoyé dans l'url 
+     *  
+     */
     private function ajouterQteBouteille(){
         $body = json_decode(file_get_contents('php://input'));
         var_dump($body);
