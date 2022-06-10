@@ -144,6 +144,14 @@ elFormulaire.addEventListener('submit', (e) => {
     if (elCourriel.value.length === 0) {
         erreursTrouvees = true;
         erreur = "Vous devez entrer votre courriel.";
+    } else {
+        const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        $courrielValide = res.test(String(elCourriel).toLowerCase());
+
+        if (!$courrielValide) {
+            erreursTrouvees = true;
+            erreur = "Le format du courriel est invalide.";
+        }
     }
 
     elErreur = document.querySelector('[data-js-courriel-err]');
@@ -199,7 +207,7 @@ elFormulaire.addEventListener('submit', (e) => {
             erreursTrouvees = true;
             erreur = "Le mot de passe doit contenir entre 8 et 20 caractères.";
 
-        } else if (elUsagerMdp.value.length === 0) {
+        } else if (elConfirmerMdp.value.length === 0) {
             erreursTrouvees = true;
             erreur = "Vous devez confirmer le mot de passe.";
         } else if (elUsagerMdp.value !== elConfirmerMdp.value) {
