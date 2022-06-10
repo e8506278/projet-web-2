@@ -1,4 +1,7 @@
-
+.bouton{
+    background-color: transparent;
+    border: none;
+}
 
 .bouton-primaire{
     background-color: var(--couleur-primaire);

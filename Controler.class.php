@@ -31,6 +31,12 @@ class Controler
             case 'listeBouteilleCellier':
                 $this->listeBouteilleCellier();
                 break;
+            case 'ajouterQteBouteille':
+                $this->ajouterQteBouteille();
+                break;
+            case 'reduireQteBouteille':
+                $this->reduireQteBouteille();
+                break;
             case 'autocompleteBouteille':
                 $this->autocompleteBouteille();
                 break;
@@ -212,7 +218,7 @@ class Controler
 
     /**
      * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
-     *  selon l'id_cellier envoyé dans l'url 
+     *  selon l'id_cellier envoyé dans l'url, ou la quantité_bouteille est plus grande que 0, trié DESC selon l'id_bouteille 
      *  
      */
     private function listeBouteilleCellier()
@@ -224,11 +230,30 @@ class Controler
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
+        
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");
     }
 
+    /**
+     * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
+     *  selon l'id_cellier envoyé dans l'url 
+     *  
+     */
+    private function ajouterQteBouteille(){
+        $body = json_decode(file_get_contents('php://input'));
+        var_dump($body);
+        $bte = new Bouteille();
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
+       
+    }
+    private function reduireQteBouteille(){
+        $body = json_decode(file_get_contents('php://input'));
+        $bte = new Bouteille();
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
+       
+    }
 /* FIN CELLIER */
 
 
