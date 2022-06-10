@@ -110,16 +110,21 @@
                             }
                             ?>
                         </select>
+
                         <select name="usager_naissance[mois]" class="form-control" data-js-ddn-mois>
                             <option value="0">Mois</option>
 
                             <?php
                             $nbMois = count($lesMois);
-                            $i = 0;
+                            $moisIndice = -1;
+
+                            if (isset($mois) && $mois > 0) {
+                                $moisIndice = $mois - 1;
+                            }
 
                             for ($i = 0; $i < $nbMois; $i++) {
                             ?>
-                                <option value="<?= $i + 1; ?>" <?php if ((int)$mois == $i) {
+                                <option value="<?= $i + 1; ?>" <?php if ($moisIndice == $i) {
                                                                     echo ' selected="selected"';
                                                                 } ?>> <?= $lesMois[$i] ?> </option>
                             <?php
@@ -190,7 +195,7 @@
 
                 <div class="form-group">
                     <div class="conditions-wrapper">
-                        <input type="checkbox" name="accepter_conditions" id="accepter_conditions" data-js-conditions />
+                        <input type="checkbox" name="accepter_conditions" id="accepter_conditions" <?php if ($conditions) echo ' checked="checked"'; ?> data-js-conditions />
                         <label for="accepter_conditions">J'accepte les termes et conditions d'utilisation du site</label>
                     </div>
 
