@@ -240,4 +240,8 @@ elFormulaire.addEventListener('submit', (e) => {
         elErreur.classList.remove('message-erreur');
         elErreur.classList.add('aucune-erreur');
     }
+
+    if (erreursTrouvees) {
+        e.preventDefault();
+    }
 });
