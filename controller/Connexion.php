@@ -6,12 +6,16 @@ if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
     die;
 }
 
+// Ouvrir une nouvelle connexion au serveur MySQL
+$connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
+
 // Tableau qui contient la liste des erreurs
 global $erreurs;
 
-if (isset($_POST["soumettre"])) {
-    $utilisateur = $motDePasse = "";
+// Les champs à valider
+$utilisateur = $motDePasse = "";
 
+if (isset($_POST["soumettre"])) {
     // On efface les anciennes données de la session PHP
     unset($_SESSION['utilisateur']);
 
@@ -39,7 +43,7 @@ if (isset($_POST["soumettre"])) {
         $utilisateurTrouve = mysqli_num_rows($sqlValiderUtilisateur);
 
         if ($utilisateurTrouve === 0) {
-            $erreurs['usager_nom_utilisateur'] = "Échec de la connexion! Identifiant ou mot de passe invalide!";
+            $erreurs['usager_non_connecte'] = "Échec de la connexion! Identifiant ou mot de passe invalide!";
             $estValide = false;
         } else {
             // Récupérer les données utilisateur
@@ -55,7 +59,7 @@ if (isset($_POST["soumettre"])) {
             $nbCar = strlen($motDePasse);
 
             if ($nbCar < 8 || $nbCar > 20) {
-                $erreurs['usager_mot_de_passe'] = "Échec de la connexion! Identifiant ou mot de passe invalide!";
+                $erreurs['usager_non_connecte'] = "Échec de la connexion! Identifiant ou mot de passe invalide!";
                 $estValide = false;
             }
         }
@@ -73,7 +77,7 @@ if (isset($_POST["soumettre"])) {
                 $_SESSION['utilisateur']['jeton'] = $jeton;
                 $_SESSION['utilisateur']['estConnecte'] = true;
             } else {
-                $erreurs['usager_mot_de_passe'] = "Échec de la connexion! Identifiant ou mot de passe invalide!";
+                $erreurs['usager_non_connecte'] = "Échec de la connexion! Identifiant ou mot de passe invalide!";
             }
         }
     } else {
