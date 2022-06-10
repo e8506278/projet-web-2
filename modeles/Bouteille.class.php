@@ -190,62 +190,16 @@ class Bouteille extends Modele
      */
     public function modifierQuantiteBouteilleCellier($id, $nombre)
     {
+
         //TODO : Valider les données.
 
 
-        $requete = "UPDATE vino__cellier SET quantite = GREATEST(quantite + " . $nombre . ", 0) WHERE id = " . $id;
-        //echo $requete;
+        $requete = "UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = " . $id;
+        echo $requete;
         $res = $this->_db->query($requete);
 
         return $res;
     }
     
-     public function getOneBouteille($id)
-    {
-
-        $rows = array();
-
-        // * CR - DEB - MODIF *
-        $requete = 'SELECT 
-						c.id as id_bouteille_cellier,
-						c.id_bouteille, 
-						c.date_achat, 
-						c.garde_jusqua, 
-						c.notes, 
-						c.prix, 
-						c.quantite,
-						c.millesime, 
-						b.id,
-						b.nom, 
-						b.categorie, 
-						b.image, 
-						b.code_saq, 
-						b.url_saq, 
-						b.pays, 
-						b.prix_saq, 
-                        p.nom AS nom_pays,
-						b.description,
-						f.nom as format,
-						t.nom AS nom_categorie 
-						from vino__cellier c 
-						INNER JOIN vino__bouteille b ON c.id_bouteille = b.id
-						INNER JOIN vino__categorie t ON t.id = b.categorie
-						INNER JOIN vino__format f ON f.id = b.format
-                        INNER JOIN vino__pays p ON p.id = b.pays
-                        WHERE b.id = '. $id ;
-        // * CR - FIN - MODIF *
-
-        if (($res = $this->_db->query($requete)) ==     true) {
-            if ($res->num_rows) {
-                while ($row = $res->fetch_assoc()) {
-                    $row['nom'] = trim(utf8_encode($row['nom']));
-                    $rows[] = $row;
-                }
-            }
-        } else {
-            throw new Exception("Erreur de requête sur la base de donnée", 1);
-            //$this->_db->error;
-        }
-        return $rows;
-    }
+    
 }

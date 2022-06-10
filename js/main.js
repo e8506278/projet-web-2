@@ -13,27 +13,30 @@ const BaseURL = document.baseURI;
 console.log(BaseURL);
 window.addEventListener('load', function () {
     console.log("load");
+
     document.querySelectorAll(".btnBoire").forEach(function (element) {
-        console.log(element);
+       
         element.addEventListener("click", function (evt) {
-            let id = evt.target.parentElement.dataset.id;
-            let requete = new Request(BaseURL + "index.php?requete=boireBouteilleCellier", { method: 'POST', body: '{"id": ' + id + '}' });
+            let id =element.parentElement.dataset.jsId;
+            //let nombreBouteille = document.querySelectorAll('[data-js-quantite]')
+            let requete = new Request(BaseURL + "?requete=reduireQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
+
 
             fetch(requete)
                 .then(response => {
                     if (response.status === 200) {
-                        return response.json();
+                        return response;
                     } else {
                         throw new Error('Erreur');
                     }
                 })
                 .then(response => {
-                    console.debug(response);
-                    //reload page
-                    location.reload();
+                    nombreBouteille = element.previousElementSibling.textContent
+                    element.previousElementSibling.innerHTML = `<span data-js-quantite>${nombreBouteille-1}</span>`
                 }).catch(error => {
                     console.error(error);
                 });
+               
         })
 
     });
