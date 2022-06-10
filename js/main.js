@@ -18,7 +18,6 @@ window.addEventListener('load', function () {
        
         element.addEventListener("click", function (evt) {
             let id =element.parentElement.dataset.jsId;
-            //let nombreBouteille = document.querySelectorAll('[data-js-quantite]')
             let requete = new Request(BaseURL + "?requete=reduireQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
 
 
@@ -42,23 +41,24 @@ window.addEventListener('load', function () {
     });
 
     document.querySelectorAll(".btnAjouter").forEach(function (element) {
-        console.log(element);
+     
         element.addEventListener("click", function (evt) {
-            let id = evt.target.parentElement.dataset.id;
-            let requete = new Request(BaseURL + "index.php?requete=ajouterBouteilleCellier", { method: 'POST', body: '{"id": ' + id + '}' });
+            let id =element.parentElement.dataset.jsId;
+            let requete = new Request(BaseURL + "?requete=ajouterQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
 
             fetch(requete)
                 .then(response => {
                     if (response.status === 200) {
-                        return response.json();
+                        return response;
                     } else {
                         throw new Error('Erreur');
                     }
                 })
                 .then(response => {
-                    console.debug(response);
-                    //reload page
-                    location.reload();
+                    nombreBouteille = parseInt(element.nextElementSibling.textContent);
+                   
+                    element.nextElementSibling.innerHTML = `<span data-js-quantite>${(nombreBouteille)+1}</span>`
+        
                 }).catch(error => {
                     console.error(error);
                 });
