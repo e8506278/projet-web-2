@@ -93,8 +93,6 @@ window.addEventListener('load', function () {
                         console.error(error);
                     });
             }
-
-
         });
 
         let bouteille = {
@@ -108,17 +106,19 @@ window.addEventListener('load', function () {
         };
 
 
-        liste.addEventListener("click", function (evt) {
-            console.dir(evt.target)
-            if (evt.target.tagName == "LI") {
-                bouteille.nom.dataset.id = evt.target.dataset.id;
-                bouteille.nom.innerHTML = evt.target.innerHTML;
+        if(liste){ // J'ai ajouté cette condition parceque ça bug quand c'est null
+            liste.addEventListener("click", function (evt) {
+                console.dir(evt.target)
+                if (evt.target.tagName == "LI") {
+                    bouteille.nom.dataset.id = evt.target.dataset.id;
+                    bouteille.nom.innerHTML = evt.target.innerHTML;
 
-                liste.innerHTML = "";
-                inputNomBouteille.value = "";
+                    liste.innerHTML = "";
+                    inputNomBouteille.value = "";
 
-            }
-        });
+                }
+            });
+        }
 
         let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
         if (btnAjouter) {
@@ -153,6 +153,41 @@ window.addEventListener('load', function () {
 
     }
 
+    console.log('hihi');
+    /*AJOUT D'UN BOUTEILLE*/
+    const selectBouteilleInput = document.querySelector('[data-js-bouteille-select]');
+    if(selectBouteilleInput){
+        selectBouteilleInput.addEventListener('input', (e) => {
+            console.log('selectBouteilleInput', e.target.value);
+
+            $baseUrl_without_parameters =  window.location.href.split('?');//[0];
+            $baseUrl_without_parameters = $baseUrl_without_parameters.length>0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
+            let requete = new Request($baseUrl_without_parameters + "index.php?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom:  e.target.value}) });
+            console.log(requete)
+            fetch(requete)
+                .then(response => {
+                    // if (response.status === 200) {
+                    //     console.log('got result', response.json());
+                    // }
+                    return response.json();
+                }).then(function (data) {
+                    console.log('data', data);
+                   Object.keys(data).forEach(key => {
+
+                       if(key === 'image_bouteille'){
+                           const image_bouteille = document.getElementById(key);
+                           image_bouteille.src = data[key];
+                       }
+                       const elements = document.getElementsByName(key);
+                       if( elements && elements.length>0){
+                           elements[0].value = data[key];
+                       }else{
+                           console.log('not found inn form', key);
+                       }
+                   });
+            });
+        })
+    }
     /*AJOUT D'UN CELLIER*/
 
     let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),

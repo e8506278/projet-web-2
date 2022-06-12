@@ -19,6 +19,11 @@
     max-width: 50%;
 }
 
+.col-4{
+    width: 33.33333333%;
+    float: left;
+}
+
 .w-100{
     width: 100% !important;
 }
