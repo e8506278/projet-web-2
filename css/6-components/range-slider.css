@@ -1,0 +1,269 @@
+[type=radio] {
+    position: relative;
+    opacity: 1;
+    width: auto;
+    height: auto;
+}
+
+.slider-item {
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.slider-item::before {
+    content: " ";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    width: calc(100% * (4 / 5));
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #5e6264;
+}
+
+.slider-item input,
+.slider-item label {
+    box-sizing: border-box;
+    flex: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.slider-item label {
+    display: inline-block;
+    position: relative;
+    width: 20%;
+    height: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.slider-item label::before {
+    content: attr(data-taux-de-sucre);
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 45px);
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0.85;
+    transition: all 0.15s ease-in-out;
+}
+
+.slider-item label::after {
+    content: " ";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    border: 2px solid #5e6264;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 1;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.slider-item label:hover::after {
+    transform: translate(-50%, -50%) scale(1.25);
+}
+
+.slider-item input {
+    display: none;
+}
+
+.slider-item input:checked+label::before {
+    font-weight: 800;
+    opacity: 1;
+}
+
+.slider-item input:checked+label::after {
+    border-width: 4px;
+    transform: translate(-50%, -50%) scale(0.75);
+}
+
+.slider-item input:checked~#taux-de-sucre-min-pos {
+    opacity: 1;
+}
+
+.slider-item input:checked:nth-child(1)~#taux-de-sucre-min-pos {
+    left: 10%;
+}
+
+.slider-item input:checked:nth-child(3)~#taux-de-sucre-min-pos {
+    left: 30%;
+}
+
+.slider-item input:checked:nth-child(5)~#taux-de-sucre-min-pos {
+    left: 50%;
+}
+
+.slider-item input:checked:nth-child(7)~#taux-de-sucre-min-pos {
+    left: 70%;
+}
+
+.slider-item input:checked:nth-child(9)~#taux-de-sucre-min-pos {
+    left: 90%;
+}
+
+.slider-item #taux-de-sucre-min-pos {
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 50%;
+    transition: all 0.15s ease-in-out;
+    transform: translate(-50%, -50%);
+    border: 2px solid #fff;
+    opacity: 0;
+    z-index: 2;
+}
+
+.slider-item input+label::before {
+    transform: translate(-50%, 45px) scale(0.9);
+    transition: all 0.15s linear;
+}
+
+.slider-item input:checked+label::before {
+    transform: translate(-50%, 45px) scale(1.1);
+    transition: all 0.15s linear;
+}
+
+form+button {
+    display: block;
+    position: relative;
+    margin: 56px auto 0;
+    padding: 10px 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: all 0.15s ease-in-out;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: 600;
+    background: #fff;
+    border: 2px solid #5e6264;
+    border-radius: 8px;
+    outline: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+form+button:hover {
+    background: #5e6264;
+    color: #fff;
+}
+
+form+button:hover:active {
+    transform: scale(0.9);
+}
+
+form+button:focus {
+    background: #4caf50;
+    border-color: #4caf50;
+    color: #fff;
+    pointer-events: none;
+}
+
+form+button:focus::before {
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+form+button::before {
+    display: inline-block;
+    width: 0;
+    opacity: 0;
+    content: "";
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 900;
+    margin-right: 0;
+    transform: rotate(0deg);
+}
+
+form:invalid+button {
+    pointer-events: none;
+    opacity: 0.25;
+}
+
+@-webkit-keyframes spin {
+    from {
+        transform: rotate(0deg);
+        width: 24px;
+        opacity: 1;
+        margin-right: 12px;
+    }
+
+    to {
+        transform: rotate(360deg);
+        width: 24px;
+        opacity: 1;
+        margin-right: 12px;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+        width: 24px;
+        opacity: 1;
+        margin-right: 12px;
+    }
+
+    to {
+        transform: rotate(360deg);
+        width: 24px;
+        opacity: 1;
+        margin-right: 12px;
+    }
+}
+
+.slider-container {
+    width: 400px;
+}
+
+.slider-groupe {
+    align-items: center;
+    display: flex;
+    min-height: 65px;
+}
+
+.slider-input-container {
+    align-items: center;
+    display: flex;
+}
+
+.slider-input {
+    border: 3px solid #5e6264;
+    width: 100px;
+    height: 29px;
+    margin: 0 3px;
+    padding: 3px 7px;
+}

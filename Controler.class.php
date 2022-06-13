@@ -61,24 +61,30 @@ class Controler
             case 'deconnecter':
                 $this->deconnecterUtilisateur();
                 break;
+            case 'rechercher':
+                $this->rechercher();
+                break;
             default:
                 $this->accueil();
                 break;
         }
     }
 
+    private function rechercher()
+    {
+        include("vues/recherche.php");
+    }
+
     private function enregistrerUtilisateur()
     {
-     
+
         include("vues/enregistrement.php");
-       
     }
 
     private function connecterUtilisateur()
     {
 
         include("vues/connexion.php");
-        
     }
 
     private function deconnecterUtilisateur()
@@ -89,16 +95,14 @@ class Controler
 
     private function accueil()
     {
-  
+
         // On valide si l'utilisateur est déjà connecté ou pas, avant de le forcer à le faire
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-   
+
             include("vues/index.php");
-           
         } else {
-           
+
             include("vues/connexion.php");
-            
         }
     }
 
@@ -176,9 +180,9 @@ class Controler
     {
 
         $id = $_SESSION['utilisateur']['id'];
-     
+
         $celliers = new Cellier();
-        
+
         $data = $celliers->getListeCellier($id);
         $nombre_cellier = $celliers->nombreCellierUsager($id);
 
@@ -208,7 +212,6 @@ class Controler
             $cellier = new Cellier();
 
             $resultat = $cellier->ajouterNouveauCellier($body);
-
         } else {
             include("vues/entete.php");
             include("vues/celliers.php");
@@ -230,7 +233,7 @@ class Controler
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
-        
+
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");
@@ -241,30 +244,30 @@ class Controler
      *  selon l'id_cellier envoyé dans l'url 
      *  
      */
-    private function ajouterQteBouteille(){
+    private function ajouterQteBouteille()
+    {
         $body = json_decode(file_get_contents('php://input'));
         var_dump($body);
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
-       
     }
-    private function reduireQteBouteille(){
+    private function reduireQteBouteille()
+    {
         $body = json_decode(file_get_contents('php://input'));
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
-       
     }
-/* FIN CELLIER */
+    /* FIN CELLIER */
 
 
     private function productDetails()
     {
 
-//        $bte = new Bouteille();
-//        $result = $bte->getOneBouteille($_GET['id_bouteille']);
-//        if (count($result) > 0) {
-//            $product = $result[0];
-//        }
+        //        $bte = new Bouteille();
+        //        $result = $bte->getOneBouteille($_GET['id_bouteille']);
+        //        if (count($result) > 0) {
+        //            $product = $result[0];
+        //        }
 
 
         include("vues/entete.php");
