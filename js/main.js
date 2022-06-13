@@ -14,6 +14,7 @@ const BaseURL = document.baseURI;
 window.addEventListener('load', function () {
 
 // RÉDUIRE LA QTÉ D'UNE BOUTEILLE DANS UN CELLIER
+
     document.querySelectorAll(".btnBoire").forEach(function (element) {
        
        // Au click du bouton diminué (-)
