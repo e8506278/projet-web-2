@@ -25,8 +25,14 @@ class Controler
             case 'mesCelliers':
                 $this->listeCelliers();
                 break;
+            case 'monCellier':
+                $this->unCellier();
+                break;
             case 'ajouterNouveauCellier':
                 $this->ajouterNouveauCellier();
+                break;
+            case 'modifierCellier':
+                $this->modifierCellier();
                 break;
             case 'listeBouteilleCellier':
                 $this->listeBouteilleCellier();
@@ -153,7 +159,7 @@ class Controler
 
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
-        // echo json_encode($resultat);
+       
     }
 
     private function ajouterBouteilleCellier()
@@ -162,7 +168,7 @@ class Controler
 
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
-        // echo json_encode($resultat);
+       
     }
 
 
@@ -194,6 +200,19 @@ class Controler
         include("vues/celliers.php");
         include("vues/pied.php");
     }
+/**
+     * Cette méthode appelle la fonction pour récupérer les informations d'un cellier
+     *  selon l'id_cellier envoyé dans l'url
+     *  
+     */
+    private function unCellier(){
+
+        $body = json_decode(file_get_contents('php://input'));
+        var_dump($body->id);
+        $cellier = new Cellier();
+        $cellier = $cellier->getUnCellier($body->id);
+
+    }
 
     /**
      * Cette méthode appelle la fonction pour ajouter un nouveau cellier 
@@ -206,7 +225,6 @@ class Controler
 
         if (!empty($body)) {
             $cellier = new Cellier();
-
             $resultat = $cellier->ajouterNouveauCellier($body);
 
         } else {
@@ -214,6 +232,16 @@ class Controler
             include("vues/celliers.php");
             include("vues/pied.php");
         }
+    }
+
+    /**
+     * Cette méthode appelle la fonction pour récupérer les informations d'un cellier
+     *  selon l'id_cellier envoyé dans l'url
+     *  
+     */
+    private function modifierCellier(){
+        $body = json_decode(file_get_contents('php://input'));
+
     }
 
     /**

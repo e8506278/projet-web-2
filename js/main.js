@@ -190,98 +190,130 @@ window.addEventListener('load', function () {
 // AJOUT D'UN CELLIER
 
     let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
+    elBtnModifierCellier = document.querySelector('[data-js-modifierInfoscellier]'),
         usager =  document.querySelector("[data-js-usager]"),    
         erreurnom =  document.querySelector("[data-js-erreurNom]"),
-        erreurradio =  document.querySelector("[data-js-erreurRadio]") 
-       
+        erreurradio =  document.querySelector("[data-js-erreurRadio]"),
+        nom_cellier = document.querySelector("[name='nom_cellier']"),
+        type_cellier_id = document.querySelectorAll("[name='type_cellier_id']"),
+        description_cellier = document.querySelector("[name='description_cellier']"),
+        radio = false,
+        estValide = true 
+     
+    // Ajouter cellier    
     if(elBtnAjouterCellier){
-
         elBtnAjouterCellier.addEventListener('click', (e) => {
-
             e.preventDefault();
-            // Récupération des champs
-            let nom_cellier = document.querySelector("[name='nom_cellier']"),
-                type_cellier_id = document.querySelectorAll("[name='type_cellier_id']"),
-                description_cellier = document.querySelector("[name='description_cellier']").value,
-                radio = false,
-                estValide = true
+                
+            // Validation
+            let validation = validationCellier(nom_cellier, type_cellier_id)
+            // Si tout est valide
+            if(validation){
+                //Assigné les données à transmettre
+                let cellier = {
+    
+                    "id_usager": usager.dataset.jsUsager,
+                    "nom_cellier": nom_cellier.value,
+                    "type_cellier_id": document.querySelector('input[name="type_cellier_id"]:checked').value,
+                    "description_cellier": description_cellier.value
+                    
+                };  
+                
+                // Requête fetch
+                let requete = new Request(BaseURL + "?requete=ajouterNouveauCellier", { method: 'POST', body: JSON.stringify(cellier) });
+                fetchCellier(requete)
+                        
+            }
 
-                //VALIDATION
-                // Si le nom du cellier n'est pas vide
-                if(nom_cellier.value !== ""){
-                
-                    erreurnom.textContent = '';
-                    // Assigné la valeur à la variable
-                    nom_cellier = nom_cellier.value
-                }
-                else{
-                    // Sinon message d'erreur
-                    erreurnom.textContent = "Ce champs est obligatoire";
-                    estValide = false;
-                }
-                //Pour chaque radio bouton
-                type_cellier_id.forEach(element => {
-                    
-                    if(element.checked){
-                        radio = true;
-                    }
-                    
-                });
-                // Si un bouton a été sélectionné
-                if(radio){
-                    
-                        erreurradio.textContent = '';
-                        // Assigner la valeur
-                        type_cellier_id = document.querySelector('input[name="type_cellier_id"]:checked').value;
-                }
-                else{
-                    // Sinon message d'erreur
-                    erreurradio.textContent = 'Choisir un type.';
-                    estValide = false;
-                }
-                
-                // Si tout est valide
-                if(estValide){
-                    //Assigné les données à transmettre
-                    let cellier = {
+        });
         
-                        "id_usager": usager.dataset.jsUsager,
-                        "nom_cellier": nom_cellier,
-                        "type_cellier_id": type_cellier_id,
-                        "description_cellier": description_cellier
-                    };  
-                    
-                    // Requête fetch
-                    let requete = new Request(BaseURL + "?requete=ajouterNouveauCellier", { method: 'POST', body: JSON.stringify(cellier) });
-                    console.log(requete)
-                            fetch(requete)
-                                .then(response => {
-                                    if (response.status === 200) {
-                                        return response
-                                    } else {
-                                        throw new Error('Erreur');
-                                    }
-                                })
-                                .then(response => {
-
-
-                                    // Fermeture du modal
-                                    elModal = document.querySelector('[data-js-modal]')
-                                    if (elModal.classList.contains('modal--ouvre')) {
-                                        elModal.classList.replace('modal--ouvre', 'modal--ferme');
-                                        
-                                        document.documentElement.classList.remove('overflow-y--hidden');
-                                        document.body.classList.remove('overflow-y--hidden');
-                                    }
-                                    // Rafraîchir la page
-                                    location.reload();
-                                    
-                                }).catch(error => {
-                                    console.error(error);
-                                });
-                }
-
-            });
-
     }
+    if(elBtnModifierCellier){
+        // Modifier cellier
+        elBtnModifierCellier.addEventListener('click', (e) => {
+            e.preventDefault();
+                
+            // Validation
+            let validation = validationCellier(nom_cellier, type_cellier_id)
+            // Si tout est valide
+            if(validation){
+                //Assigné les données à transmettre
+                let cellier = {
+    
+                    "id_usager": usager.dataset.jsUsager,
+                    "nom_cellier": nom_cellier.value,
+                    "type_cellier_id": document.querySelector('input[name="type_cellier_id"]:checked').value,
+                    "description_cellier": description_cellier.value
+                    
+                };  
+                
+               
+                // Requête fetch
+                let requete = new Request(BaseURL + "?requete=modifierCellier", { method: 'POST', body: JSON.stringify(cellier) });
+                fetchCellier(requete)         
+            }
+
+        });
+    }
+    // Validation cellier
+    function validationCellier(nom_cellier, type_cellier_id){
+        if(nom_cellier.value !== ""){     
+            erreurnom.textContent = '';
+        }
+        else{
+            // Sinon message d'erreur
+            erreurnom.textContent = "Ce champs est obligatoire";
+            estValide = false;
+        }
+        //Pour chaque radio bouton
+        type_cellier_id.forEach(element => {    
+            if(element.checked){
+                radio = true;
+            } 
+        });
+        // Si un bouton a été sélectionné
+        if(radio){
+            erreurradio.textContent = '';
+        }
+        else{
+            // Sinon message d'erreur
+            erreurradio.textContent = 'Choisir un type.';
+            estValide = false;
+        }
+        return estValide;
+    }
+    // Requête fetch
+    function fetchCellier(requete){
+        fetch(requete)
+            .then(response => {
+                if (response.status === 200) {
+              
+                    return response
+                } else {
+                    throw new Error('Erreur');
+                }
+            })
+            .then(response => {
+
+
+                // Fermeture du modal
+                elModal = document.querySelector('[data-js-modal]')
+                if (elModal.classList.contains('modal--ouvre')) {
+                    elModal.classList.replace('modal--ouvre', 'modal--ferme');
+                    
+                    document.documentElement.classList.remove('overflow-y--hidden');
+                    document.body.classList.remove('overflow-y--hidden');
+                }
+                // Rafraîchir la page
+                //location.reload();
+    
+            }).catch(error => {
+                console.error(error);
+            });
+    }
+
+    
+
+    
+    
 });
