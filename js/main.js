@@ -22,7 +22,8 @@ window.addEventListener('load', function () {
             // id_bouteille
             let id =element.parentElement.dataset.jsId;
 
-            let requete = new Request(BaseURL + "?requete=reduireQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
+            
+            
 
             // Requête fetch
             fetch(requete)
@@ -190,7 +191,7 @@ window.addEventListener('load', function () {
 // AJOUT D'UN CELLIER
 
     let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
-    elBtnModifierCellier = document.querySelector('[data-js-modifierInfoscellier]'),
+    elBtnModifierInfosCellier = document.querySelector('[data-js-modifierInfosCellier]'),
         usager =  document.querySelector("[data-js-usager]"),    
         erreurnom =  document.querySelector("[data-js-erreurNom]"),
         erreurradio =  document.querySelector("[data-js-erreurRadio]"),
@@ -198,8 +199,9 @@ window.addEventListener('load', function () {
         type_cellier_id = document.querySelectorAll("[name='type_cellier_id']"),
         description_cellier = document.querySelector("[name='description_cellier']"),
         radio = false,
-        estValide = true 
-     
+        estValide = true,
+        id_cellier = ""
+  
     // Ajouter cellier    
     if(elBtnAjouterCellier){
         elBtnAjouterCellier.addEventListener('click', (e) => {
@@ -209,6 +211,7 @@ window.addEventListener('load', function () {
             let validation = validationCellier(nom_cellier, type_cellier_id)
             // Si tout est valide
             if(validation){
+            
                 //Assigné les données à transmettre
                 let cellier = {
     
@@ -228,18 +231,50 @@ window.addEventListener('load', function () {
         });
         
     }
-    if(elBtnModifierCellier){
+    
+
+    
+     document.querySelectorAll('[data-js-carte]').forEach(function(carte){
+        
+        carte.querySelectorAll('[data-js-modifiercellier]').forEach(function (btnModalModifier) {
+       
+      
+            btnModalModifier.addEventListener("click", function (evt) {
+                id_cellier = btnModalModifier.dataset.jsModifiercellier
+                nom_cellier.value = carte.querySelector('[data-js-nomcellier]').textContent,
+                description_cellier = carte.querySelector('[data-js-descriptioncellier]').textContent,
+                elCellierType = carte.querySelector('[data-js-type]').firstElementChild
+                console.log(elCellierType)
+                type_cellier_id.forEach(function(element){
+                    if(elCellierType.classList.contains("cave")){
+                        if(element.value == "1"){
+                            element.checked = true;
+                        } 
+                    }
+                    else{
+                        element.checked = true;
+                    }
+                })
+            })
+         })
+    });
+
+    
+   
+    if(elBtnModifierInfosCellier){
+    
         // Modifier cellier
-        elBtnModifierCellier.addEventListener('click', (e) => {
+        elBtnModifierInfosCellier.addEventListener('click', (e) => {
             e.preventDefault();
-                
+          // id_cellier = elBtnModifierInfosCellier.dataset.jsModifierinfoscellier
+
             // Validation
             let validation = validationCellier(nom_cellier, type_cellier_id)
             // Si tout est valide
             if(validation){
                 //Assigné les données à transmettre
                 let cellier = {
-    
+                    "id_cellier":id_cellier,
                     "id_usager": usager.dataset.jsUsager,
                     "nom_cellier": nom_cellier.value,
                     "type_cellier_id": document.querySelector('input[name="type_cellier_id"]:checked').value,
@@ -255,6 +290,8 @@ window.addEventListener('load', function () {
 
         });
     }
+
+
     // Validation cellier
     function validationCellier(nom_cellier, type_cellier_id){
         if(nom_cellier.value !== ""){     
@@ -282,20 +319,22 @@ window.addEventListener('load', function () {
         }
         return estValide;
     }
+
+
     // Requête fetch
     function fetchCellier(requete){
         fetch(requete)
             .then(response => {
                 if (response.status === 200) {
               
-                    return response
+                    return response.text()
                 } else {
                     throw new Error('Erreur');
                 }
             })
             .then(response => {
 
-
+    /*
                 // Fermeture du modal
                 elModal = document.querySelector('[data-js-modal]')
                 if (elModal.classList.contains('modal--ouvre')) {
@@ -304,6 +343,7 @@ window.addEventListener('load', function () {
                     document.documentElement.classList.remove('overflow-y--hidden');
                     document.body.classList.remove('overflow-y--hidden');
                 }
+                */
                 // Rafraîchir la page
                 //location.reload();
     
@@ -312,8 +352,8 @@ window.addEventListener('load', function () {
             });
     }
 
-    
 
     
     
+  
 });

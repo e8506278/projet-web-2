@@ -207,11 +207,7 @@ class Controler
      */
     private function unCellier(){
 
-        $body = json_decode(file_get_contents('php://input'));
-        var_dump($body->id);
-        $cellier = new Cellier();
-        $cellier = $cellier->getUnCellier($body->id);
-
+  
     }
 
     /**
@@ -241,7 +237,15 @@ class Controler
      */
     private function modifierCellier(){
         $body = json_decode(file_get_contents('php://input'));
+        if (!empty($body)) {
+            $cellier = new Cellier();
+            $resultat = $cellier->modifierCellier($body);
 
+        } else {
+            include("vues/entete.php");
+            include("vues/celliers.php");
+            include("vues/pied.php");
+        }
     }
 
     /**

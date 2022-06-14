@@ -7,8 +7,8 @@ let elNouveauCellier = document.querySelector('[data-js-nouveaucellier]'),
 elAnnulercellier = document.querySelector('[data-js-annulercellier]'),
 
 // MODIFIER CELLIER
-elModifierCellier = document.querySelector('[data-js-modifiercellier]'),
-elAnnulerModifcellier = document.querySelector('[data-js-annulermodifcellier]'),
+elModifierCellier = document.querySelectorAll('[data-js-modifiercellier]')
+
 
 
 // MODAL
@@ -23,7 +23,7 @@ if(elNouveauCellier){
         ouvre() 
     })
 }
-    //ferme
+//FERMER MODAL
 if(elAnnulercellier){
     elAnnulercellier.addEventListener('click', () => {
         ferme()
@@ -32,17 +32,15 @@ if(elAnnulercellier){
 
 // MODIFIER CELLIER
     //ouvre
-    if(elModifierCellier){
-        elModifierCellier.addEventListener('click', ()=>{
-            ouvre() 
-        })
-    }
-        //ferme
-    if(elAnnulerModifcellier){
-        elAnnulerModifcellier.addEventListener('click', () => {
-            ferme()
-        });
-    }
+    elModifierCellier.forEach(btnModifier=>{
+        if(btnModifier){
+            btnModifier.addEventListener('click', ()=>{
+                ouvre() 
+            })
+        }
+    })
+    
+   
 
 
 // Comportement du modal

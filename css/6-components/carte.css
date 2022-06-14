@@ -131,6 +131,12 @@
     vertical-align: text-bottom;
 }
 
+/* || Boutonn */
+.carte__bouton{
+    flex-direction: column;
+ 
+}
+
 /* || Décorateurs divers */
 .carte--aligne-centre{
     align-self: center;

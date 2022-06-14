@@ -62,6 +62,7 @@ class Cellier extends Modele
 
     public function getUnCellier($id)
     {
+       
         $rows = array();
         $requete = "SELECT *
                     FROM usager__cellier 
@@ -79,6 +80,7 @@ class Cellier extends Modele
             throw new Exception("Erreur de requête sur la base de donnée", 1);
             
         }
+  
         return $rows;
     }
 
@@ -144,6 +146,11 @@ class Cellier extends Modele
      */
     public function modifierCellier($data)
     {
+        $id = $data->id_cellier;
+        $nom_cellier = $data->nom_cellier;
+        $description_cellier = $data->description_cellier;
+        $type_cellier_id = $data->type_cellier_id;
+  
         // VALIDATION 
         $erreurs = array();
         $estValide = true;
@@ -154,7 +161,7 @@ class Cellier extends Modele
            // Réinitialisation du tableau d'erreur
             unset($erreurs['nom_cellier']);
             $regExp = '/^.+$/';
-            if (!preg_match($regExp, $data->nom_cellier)) {
+            if (!preg_match($regExp, $nom_cellier)) {
                 $erreurs['nom_cellier'] = 'Au moins un caractère.';
                 $estValide = false;
             }
@@ -163,15 +170,15 @@ class Cellier extends Modele
            // Réinitialisation du tableau d'erreur
             unset($erreurs['type_cellier_id']);
             //Si est nul donc aucun choix de radio bouton
-            if ($data->type_cellier_id == null) {
+            if ($type_cellier_id == null) {
                 $erreurs['type_cellier_id'] = 'Choisir le type de cellier.';
                 $estValide = false;
             }
         }
         
         if($estValide){
-            $id = $data['id_cellier'];
-        $requete = "UPDATE TABLE SET nom_cellier, description_cellier, type_cellier_id 
+      
+        $requete = "UPDATE usager__cellier SET nom_cellier = '$nom_cellier' , description_cellier = '$description_cellier', type_cellier_id = '$type_cellier_id' 
                     WHERE id_cellier = '$id'" ;
 
         $res = $this->_db->query($requete);

@@ -38,6 +38,7 @@
 }
 .burger__bouton-dropdown{
     background-color: var(--couleur-secondaire);
+    margin-bottom: var(--espace-p);
 }
 
 /* Radio */
