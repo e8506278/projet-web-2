@@ -188,6 +188,7 @@ class Bouteille extends Modele
      * @param int $id id de la bouteille
      * @param int $nombre Nombre de bouteille a ajouter ou retirer
      * 
+     * @return String Si les id et nombre ne sont pas des caractères numériques
      * @return Boolean Succès ou échec de l'ajout.
      */
     public function modifierQuantiteBouteilleCellier($id, $nombre)

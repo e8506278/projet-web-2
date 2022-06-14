@@ -23,7 +23,7 @@ window.addEventListener('load', function () {
             let id =element.parentElement.dataset.jsId;
 
             
-            
+            let requete = new Request(BaseURL + "?requete=reduireQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
 
             // Requête fetch
             fetch(requete)
@@ -188,10 +188,11 @@ window.addEventListener('load', function () {
     }
 
 
-// AJOUT D'UN CELLIER
+// GESTION D'UN CELLIER
 
     let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
-    elBtnModifierInfosCellier = document.querySelector('[data-js-modifierInfosCellier]'),
+        elBtnModifierInfosCellier = document.querySelector('[data-js-modifierInfosCellier]'),
+        
         usager =  document.querySelector("[data-js-usager]"),    
         erreurnom =  document.querySelector("[data-js-erreurNom]"),
         erreurradio =  document.querySelector("[data-js-erreurRadio]"),
@@ -201,11 +202,14 @@ window.addEventListener('load', function () {
         radio = false,
         estValide = true,
         id_cellier = ""
-  
+        
     // Ajouter cellier    
     if(elBtnAjouterCellier){
+       
         elBtnAjouterCellier.addEventListener('click', (e) => {
             e.preventDefault();
+           
+
                 
             // Validation
             let validation = validationCellier(nom_cellier, type_cellier_id)
@@ -224,27 +228,26 @@ window.addEventListener('load', function () {
                 
                 // Requête fetch
                 let requete = new Request(BaseURL + "?requete=ajouterNouveauCellier", { method: 'POST', body: JSON.stringify(cellier) });
-                fetchCellier(requete)
-                        
+                fetchCellier(requete)         
             }
-
-        });
-        
+        });  
     }
     
 
-    
+    // Modification d'un cellier
+        // 1- Afficher les champs à modifier
      document.querySelectorAll('[data-js-carte]').forEach(function(carte){
-        
+        // Récupération du cellier à modifier
         carte.querySelectorAll('[data-js-modifiercellier]').forEach(function (btnModalModifier) {
-       
-      
+           // Au click
             btnModalModifier.addEventListener("click", function (evt) {
+
+                //Récupération des données du cellier dans le DOM
                 id_cellier = btnModalModifier.dataset.jsModifiercellier
-                nom_cellier.value = carte.querySelector('[data-js-nomcellier]').textContent,
+                nom_cellier.value = carte.querySelector('[data-js-nomcellier]').textContent
                 description_cellier = carte.querySelector('[data-js-descriptioncellier]').textContent,
                 elCellierType = carte.querySelector('[data-js-type]').firstElementChild
-                console.log(elCellierType)
+                // Type de cellier (Radio)
                 type_cellier_id.forEach(function(element){
                     if(elCellierType.classList.contains("cave")){
                         if(element.value == "1"){
@@ -255,12 +258,13 @@ window.addEventListener('load', function () {
                         element.checked = true;
                     }
                 })
+
             })
          })
     });
 
     
-   
+   // 2 -Modifier les informations du cellier
     if(elBtnModifierInfosCellier){
     
         // Modifier cellier
@@ -321,7 +325,7 @@ window.addEventListener('load', function () {
     }
 
 
-    // Requête fetch
+    // Requête fetch cellier
     function fetchCellier(requete){
         fetch(requete)
             .then(response => {
@@ -334,7 +338,6 @@ window.addEventListener('load', function () {
             })
             .then(response => {
 
-    /*
                 // Fermeture du modal
                 elModal = document.querySelector('[data-js-modal]')
                 if (elModal.classList.contains('modal--ouvre')) {
@@ -343,9 +346,9 @@ window.addEventListener('load', function () {
                     document.documentElement.classList.remove('overflow-y--hidden');
                     document.body.classList.remove('overflow-y--hidden');
                 }
-                */
+          
                 // Rafraîchir la page
-                //location.reload();
+                location.reload();
     
             }).catch(error => {
                 console.error(error);

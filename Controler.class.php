@@ -25,9 +25,6 @@ class Controler
             case 'mesCelliers':
                 $this->listeCelliers();
                 break;
-            case 'monCellier':
-                $this->unCellier();
-                break;
             case 'ajouterNouveauCellier':
                 $this->ajouterNouveauCellier();
                 break;
@@ -199,15 +196,6 @@ class Controler
         include("vues/entete.php");
         include("vues/celliers.php");
         include("vues/pied.php");
-    }
-/**
-     * Cette méthode appelle la fonction pour récupérer les informations d'un cellier
-     *  selon l'id_cellier envoyé dans l'url
-     *  
-     */
-    private function unCellier(){
-
-  
     }
 
     /**
