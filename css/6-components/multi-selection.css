@@ -1,3 +1,11 @@
+input:focus {
+    outline-offset: 0;
+}
+
+.recherche-wrapper {
+    width: 400px;
+}
+
 .multi-selection {
     padding: 20px;
     background: #dadada;
@@ -7,8 +15,10 @@
     width: 300px;
 }
 
-.filtre-autocomplete {
-    min-height: 100px;
+.filtre-autocomplete,
+.filtre-listbox {
+    margin: 10px;
+    width: 370px;
 }
 
 .filtre-autocomplete .choix-container,
@@ -29,7 +39,6 @@
     padding: 5px 10px;
     position: relative;
     transition: 0.2s;
-    width: 400px;
 }
 
 .filtre-autocomplete .choix-groupe {
@@ -96,6 +105,7 @@ input {
     background-color: #f1f1f1;
     padding: 10px;
     font-size: 16px;
+    width: auto;
 }
 
 input[type=submit] {
@@ -114,7 +124,7 @@ input[type=submit] {
     top: 100%;
     left: 0;
     right: 0;
-    height: 120px;
+    max-height: 120px;
     overflow-y: auto;
 }
 
@@ -124,6 +134,9 @@ input[type=submit] {
     color: #000;
     cursor: pointer;
     padding: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 /*when hovering an item:*/
@@ -145,10 +158,6 @@ input[type=submit] {
     overflow: hidden;
     padding: 3px 7px;
     white-space: nowrap;
-}
-
-.nb-total-container {
-    padding: 5px 15px;
 }
 
 .btn-enlever,
@@ -180,28 +189,21 @@ input[type=submit] {
     font-size: 16px;
     font-weight: 500;
     justify-content: left;
+    margin: 0;
     min-height: 44px;
     padding: 5px 10px;
     position: relative;
     transition: 0.2s;
-    width: 400px;
 }
 
 .liste-choix {
     border: 3px solid #5e6264;
     width: 100%;
-    min-width: 200px;
-    max-width: 500px;
+    min-width: 300px;
     border-radius: 4px;
     max-height: 131px;
     overflow-y: auto;
     margin: 5px;
-}
-
-.choix-item {
-    align-items: center;
-    display: flex;
-    padding: 5px 7px;
 }
 
 .liste-choix input {
@@ -212,11 +214,112 @@ input[type=submit] {
     font-weight: bold;
     flex-grow: 1;
     overflow: hidden;
-    padding: 5px;
+    padding: 0 5px;
     text-overflow: ellipsis;
 }
 
-.choix-item:hover {
+.filtre-listbox .choix-item {
+    align-items: center;
+    display: flex;
+    padding: 5px 7px;
+}
+
+.filtre-listbox .choix-item:hover {
     background-color: #5e6264;
     color: #fff;
+}
+
+.filtre-entete,
+.filtre-entete-checkbox {
+    align-items: center;
+    display: flex;
+}
+
+.filtre-entete {
+    justify-content: space-between;
+    padding: 5px 25px;
+}
+
+.libelle-tous {
+    padding: 0 5px;
+}
+
+.accordeon {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.active,
+.accordeon:hover {
+    background-color: #ccc;
+}
+
+.accordeon:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.acc-container {
+    background-color: white;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.2s ease-out;
+}
+
+.accordeon-flex {
+    display: flex;
+}
+
+.accordeon-flex div:nth-child(1) {
+    margin-right: 15px;
+}
+
+.accordeon-flex div:nth-child(2) {
+    flex-grow: 1;
+}
+
+.nb-selectionnes {
+    text-align: right;
+    width: 30px;
+}
+
+.accordeon-icon {
+    display: flex;
+    justify-content: flex-end;
+    width: 30px;
+}
+
+.accordeon-icon.hide {
+    opacity: 0;
+}
+
+.accordeon-icon svg {
+    fill: green;
+    width: 1rem;
+}
+
+.rechercher-action {
+    background-color: var(--couleur-accent);
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.rechercher-detail {
+    border: 3px solid var(--couleur-accent);
 }

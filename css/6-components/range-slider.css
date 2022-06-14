@@ -5,6 +5,10 @@
     height: auto;
 }
 
+input:focus {
+    border: 3px solid #5e6264;
+}
+
 .slider-item {
     display: flex;
     flex-direction: row;
@@ -53,7 +57,7 @@
 }
 
 .slider-item label::before {
-    content: attr(data-taux-de-sucre);
+    content: attr(data-slider-value);
     position: absolute;
     left: 50%;
     transform: translate(-50%, 45px);
@@ -104,31 +108,31 @@
     transform: translate(-50%, -50%) scale(0.75);
 }
 
-.slider-item input:checked~#taux-de-sucre-min-pos {
+.slider-item input:checked~.slider-pos {
     opacity: 1;
 }
 
-.slider-item input:checked:nth-child(1)~#taux-de-sucre-min-pos {
+.slider-item input:checked:nth-child(1)~.slider-pos {
     left: 10%;
 }
 
-.slider-item input:checked:nth-child(3)~#taux-de-sucre-min-pos {
+.slider-item input:checked:nth-child(3)~.slider-pos {
     left: 30%;
 }
 
-.slider-item input:checked:nth-child(5)~#taux-de-sucre-min-pos {
+.slider-item input:checked:nth-child(5)~.slider-pos {
     left: 50%;
 }
 
-.slider-item input:checked:nth-child(7)~#taux-de-sucre-min-pos {
+.slider-item input:checked:nth-child(7)~.slider-pos {
     left: 70%;
 }
 
-.slider-item input:checked:nth-child(9)~#taux-de-sucre-min-pos {
+.slider-item input:checked:nth-child(9)~.slider-pos {
     left: 90%;
 }
 
-.slider-item #taux-de-sucre-min-pos {
+.slider-item .slider-pos {
     display: block;
     position: absolute;
     top: 50%;
@@ -153,99 +157,23 @@
     transition: all 0.15s linear;
 }
 
-form+button {
-    display: block;
-    position: relative;
-    margin: 56px auto 0;
-    padding: 10px 20px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    transition: all 0.15s ease-in-out;
-    font-family: inherit;
-    font-size: 24px;
-    font-weight: 600;
-    background: #fff;
-    border: 2px solid #5e6264;
-    border-radius: 8px;
-    outline: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
-}
-
-form+button:hover {
-    background: #5e6264;
-    color: #fff;
-}
-
-form+button:hover:active {
-    transform: scale(0.9);
-}
-
-form+button:focus {
-    background: #4caf50;
-    border-color: #4caf50;
-    color: #fff;
-    pointer-events: none;
-}
-
-form+button:focus::before {
-    -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
-}
-
-form+button::before {
-    display: inline-block;
-    width: 0;
-    opacity: 0;
-    content: "";
-    font-family: "Font Awesome 5 Pro";
-    font-weight: 900;
-    margin-right: 0;
-    transform: rotate(0deg);
-}
-
-form:invalid+button {
-    pointer-events: none;
-    opacity: 0.25;
-}
-
-@-webkit-keyframes spin {
-    from {
-        transform: rotate(0deg);
-        width: 24px;
-        opacity: 1;
-        margin-right: 12px;
-    }
-
-    to {
-        transform: rotate(360deg);
-        width: 24px;
-        opacity: 1;
-        margin-right: 12px;
-    }
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-        width: 24px;
-        opacity: 1;
-        margin-right: 12px;
-    }
-
-    to {
-        transform: rotate(360deg);
-        width: 24px;
-        opacity: 1;
-        margin-right: 12px;
-    }
-}
-
 .slider-container {
+    align-items: center;
+    background: #f9f9f8;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    color: #363b3e;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 500;
+    justify-content: left;
+    min-height: 44px;
+    padding: 5px 10px;
+    position: relative;
+    transition: 0.2s;
     width: 400px;
 }
 
@@ -253,6 +181,11 @@ form:invalid+button {
     align-items: center;
     display: flex;
     min-height: 65px;
+    width: 100%;
+}
+
+.slider-groupe:last-child {
+    margin-bottom: 10px;
 }
 
 .slider-input-container {
@@ -266,4 +199,12 @@ form:invalid+button {
     height: 29px;
     margin: 0 3px;
     padding: 3px 7px;
+}
+
+.slider-titre {
+    padding: 5px 15px;
+}
+
+.filtre-slider label {
+    width: 35px;
 }

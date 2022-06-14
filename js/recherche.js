@@ -14,13 +14,20 @@ function autocomplete(section, arr) {
     /*execute a function when someone writes in the text field:*/
     inp.addEventListener("input", function (e) {
         let a, b, i, val = this.value;
+        const elAccContainer = this.closest(".acc-container");
 
         /*close any already open lists of autocompleted values*/
         closeAllLists();
 
         if (!val) {
+            elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) - 110;
+            elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
+
             return false;
         }
+
+        elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) + 110;
+        elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
 
         currentFocus = -1;
 
@@ -35,10 +42,11 @@ function autocomplete(section, arr) {
         /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
             /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i].actif && arr[i].nom.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            if (arr[i].selectionne && arr[i].nom.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 /*create a DIV element for each matching element:*/
                 b = document.createElement("DIV");
                 b.dataset.jsId = arr[i].id;
+                b.title = arr[i].nom;
 
                 /*make the matching letters bold:*/
                 b.innerHTML = "<strong>" + arr[i].nom.substr(0, val.length) + "</strong>";
@@ -62,6 +70,9 @@ function autocomplete(section, arr) {
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
                     closeAllLists();
+
+                    elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) - 110;
+                    elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
                 });
 
                 a.appendChild(b);
@@ -153,6 +164,28 @@ function traiterAppellation() {
     });
 }
 
+
+/**
+ * Traiter les bouteilles
+ */
+function traiterBouteille() {
+    autocomplete('bouteille', aBouteille);
+
+    const elNbSelectionnes = document.querySelector('.nb-bouteille');
+    const elContainer = document.querySelector('.bouteille-container');
+    const elGroupe = document.querySelector('.bouteille-groupe');
+    const elBtnAjouter = document.querySelector('[data-js-ajouter-bouteille]');
+
+    elBtnAjouter.addEventListener("click", (e) => {
+        ajouterSelection(e, 'bouteille', aBouteille, elNbSelectionnes, elContainer, elGroupe);
+    });
+
+    elGroupe.addEventListener("click", (e) => {
+        supprimerSelection(e, aBouteille, elNbSelectionnes, elContainer);
+    });
+}
+
+
 /**
  * Traiter les cépages de vin
  */
@@ -172,6 +205,7 @@ function traiterCepage() {
         supprimerSelection(e, aCepage, elNbSelectionnes, elContainer);
     });
 }
+
 
 /**
  * Traiter les classifications de vin
@@ -193,6 +227,7 @@ function traiterClassification() {
     });
 }
 
+
 /**
  * Traiter les désignations de vin
  */
@@ -213,6 +248,23 @@ function traiterDesignation() {
     });
 }
 
+
+/**
+ * Traiter les cellier de l'utilisateur
+ */
+function traiterMesCelliers() {
+    let nbSelections = 0;
+    const elNbSelections = document.querySelector('.nb-mes-celliers');
+
+    for (let i = 0, l = elMesCelliers.length; i < l; i++) {
+        if (elMesCelliers[i].checked) nbSelections++;
+    }
+
+    elNbSelections.innerHTML = nbSelections;
+    elMesCelliersTous.checked = (nbSelections === elMesCelliers.length);
+}
+
+
 /**
  * Traiter les pays
  */
@@ -223,6 +275,7 @@ function traiterPays() {
     const elContainer = document.querySelector('.pays-container');
     const elGroupe = document.querySelector('.pays-groupe');
     const elBtnAjouter = document.querySelector('[data-js-ajouter-pays]');
+    const elAccContainer = elContainer.closest('.acc-container');
 
     elBtnAjouter.addEventListener("click", (e) => {
         ajouterSelection(e, 'pays', aPays, elNbSelectionnes, elContainer, elGroupe);
@@ -232,6 +285,24 @@ function traiterPays() {
         supprimerSelection(e, aPays, elNbSelectionnes, elContainer);
     });
 }
+
+
+/**
+ * Traiter le produit du Québec
+ */
+function traiterProduitQc() {
+    let nbSelections = 0;
+    const elNbSelections = document.querySelector('.nb-produit-qc');
+
+    for (let i = 0, l = elProduitsQc.length; i < l; i++) {
+        if (elProduitsQc[i].checked) nbSelections++;
+    }
+
+    elNbSelections.innerHTML = nbSelections;
+    elProduitsQcTous.checked = (nbSelections === elProduitsQc.length);
+
+}
+
 
 /**
  * Traiter les régions
@@ -253,6 +324,23 @@ function traiterRegion() {
     });
 }
 
+
+/**
+ * Traiter le type de cellier
+ */
+function traiterTypeCellier() {
+    let nbSelections = 0;
+    const elNbSelections = document.querySelector('.nb-type-cellier');
+
+    for (let i = 0, l = elTypeCelliers.length; i < l; i++) {
+        if (elTypeCelliers[i].checked) nbSelections++;
+    }
+
+    elNbSelections.innerHTML = nbSelections;
+    elTypeCellierTous.checked = (nbSelections === elTypeCelliers.length);
+}
+
+
 /**
  * Traiter le type de vin
  */
@@ -265,35 +353,9 @@ function traiterTypeVin() {
     }
 
     elNbSelections.innerHTML = nbSelections;
+    elTypeVinTous.checked = (nbSelections === elTypeVins.length);
 }
 
-/**
- * Traiter le type de vin
- */
-function traiterTypeCellier() {
-    let nbSelections = 0;
-    const elNbSelections = document.querySelector('.nb-type-cellier');
-
-    for (let i = 0, l = elTypeCelliers.length; i < l; i++) {
-        if (elTypeCelliers[i].checked) nbSelections++;
-    }
-
-    elNbSelections.innerHTML = nbSelections;
-}
-
-/**
- * Traiter le type de vin
- */
-function traiterProduitQc() {
-    let nbSelections = 0;
-    const elNbSelections = document.querySelector('.nb-produit-qc');
-
-    for (let i = 0, l = elProduitsQc.length; i < l; i++) {
-        if (elProduitsQc[i].checked) nbSelections++;
-    }
-
-    elNbSelections.innerHTML = nbSelections;
-}
 
 /**
  * Html qui est ajouté lorsqu'une nouvelle sélection est faite.
@@ -310,6 +372,7 @@ let uneSelection = `
                 </div>
             </div>
         `;
+
 
 /**
  *  Ajoute l'élément dans la sélection 
@@ -335,8 +398,14 @@ function ajouterSelection(e, section, aDonnees, elNbSelections, elChoixContainer
     elNbSelections.innerHTML = nbSelections;
     elChoixContainer.classList.remove("hide");
 
+    const elAccContainer = elChoixContainer.closest(".acc-container");
+    elAccContainer.style.height = elAccContainer.scrollHeight + "px";
+    elAccContainer.dataset.jsHauteur = elAccContainer.scrollHeight;
+
     elParent.classList.add("disabled");
+    ajusterHauteur(nbSelections, elChoixContainer);
 }
+
 
 /**
  * Changer la visibilité d'un élément dans la liste générale
@@ -347,10 +416,11 @@ function ajouterSelection(e, section, aDonnees, elNbSelections, elChoixContainer
 function changerVisibilite(id, nouvValeur, aDonnees) {
     for (i = 0; i < aDonnees.length; i++) {
         if (aDonnees[i].id === id) {
-            aDonnees[i].actif = nouvValeur;
+            aDonnees[i].selectionne = nouvValeur;
         }
     }
 }
+
 
 /**
  * Supprime l'élément de la sélection
@@ -381,56 +451,225 @@ function supprimerSelection(e, aDonnees, elNbSelections, elChoixContainer) {
         if (nbSelections === 0) {
             elChoixContainer.classList.add("hide");
         }
+
+        ajusterHauteur(nbSelections, elChoixContainer);
     };
 }
+
+
+function ajusterHauteur(nbSelections, elChoixContainer) {
+    const elAccContainer = elChoixContainer.closest(".acc-container");
+
+    if (nbSelections === 0) {
+        elAccContainer.dataset.jsHauteur = 77;
+    } else if (nbSelections === 1) {
+        elAccContainer.dataset.jsHauteur = 134;
+    } else {
+        elAccContainer.dataset.jsHauteur = 174;
+    }
+
+    elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
+}
+
 
 /**
  * Lancer le traitement des listes semi-automatiques
  */
-traiterPays();
-traiterRegion();
 traiterAppellation();
+traiterBouteille();
 traiterCepage();
 traiterClassification();
 traiterDesignation();
+traiterPays();
+traiterRegion();
+
 
 /**
  * Lancer le traitement des listes de checkbox
  */
+
+/**
+ * Traiter les types de vin
+ */
 let elTypeVins = document.querySelectorAll('[data-js-type-vin]');
+let elTypeVinTous = document.querySelector('[data-js-type-vin-tous]');
 
 elTypeVins.forEach(typeVin => {
     typeVin.addEventListener('change', traiterTypeVin);
 });
 
+elTypeVinTous.addEventListener('change', () => {
+    elTypeVins.forEach(typeVin => {
+        typeVin.checked = elTypeVinTous.checked;
+    });
+
+    traiterTypeVin();
+});
+
+
+/**
+ * Traiter les celliers de l'utilisateur
+ */
+let elMesCelliers = document.querySelectorAll('[data-js-mes-celliers]');
+let elMesCelliersTous = document.querySelector('[data-js-mes-celliers-tous]');
+
+elMesCelliers.forEach(monCellier => {
+    monCellier.addEventListener('change', traiterMesCelliers);
+});
+
+elMesCelliersTous.addEventListener('change', () => {
+    elMesCelliers.forEach(monCellier => {
+        monCellier.checked = elMesCelliersTous.checked;
+    });
+
+    traiterMesCelliers();
+});
+
+
+/**
+ * Traiter les types de cellier
+ */
 let elTypeCelliers = document.querySelectorAll('[data-js-type-cellier]');
+let elTypeCellierTous = document.querySelector('[data-js-type-cellier-tous]');
 
 elTypeCelliers.forEach(typeCellier => {
     typeCellier.addEventListener('change', traiterTypeCellier);
 });
 
+elTypeCellierTous.addEventListener('change', () => {
+    elTypeCelliers.forEach(typeCellier => {
+        typeCellier.checked = elTypeCellierTous.checked;
+    });
+
+    traiterTypeCellier();
+});
+
+
+/**
+ * Trairer les produits du Québec
+ */
 let elProduitsQc = document.querySelectorAll('[data-js-produit-qc]');
+let elProduitsQcTous = document.querySelector('[data-js-produit-qc-tous]');
 
 elProduitsQc.forEach(produitsQc => {
     produitsQc.addEventListener('change', traiterProduitQc);
+});
+
+elProduitsQcTous.addEventListener('change', () => {
+    elProduitsQc.forEach(produitQc => {
+        produitQc.checked = elProduitsQcTous.checked;
+    });
+
+    traiterProduitQc();
 });
 
 
 /**
  * Lancer le traitement des sliders
  */
-// let lesSliders = document.querySelectorAll('input[name="taux-de-sucre-min"]');
+function traiterSlider(elInput, elValeurs) {
+    elValeurs.forEach(elValeur => {
+        elValeur.addEventListener('change', (e) => {
+            elInput.value = e.target.value;
+        });
+    });
 
-// lesSliders.forEach(unSlider => {
-//     unSlider.addEventListener('change', traiterTypeVin);
-// });
+}
 
 
-// let elTauxSucreMin = document.querySelector('[data-js-taux-sucre-min]');
+/**
+ * Traitement du slider format_min
+ */
+let elInput = document.querySelector('[data-js-format-val-min]');
+let elValeurs = document.querySelectorAll('input[name="format_min"]');
 
-// function traiterTypeVin(e) {
-//     e.preventDefault();
+traiterSlider(elInput, elValeurs);
 
-//     elTauxSucreMin.value = e.target.value;
 
-// }
+/**
+ * Traitement du slider format_max
+ */
+elInput = document.querySelector('[data-js-format-val-max]');
+elValeurs = document.querySelectorAll('input[name="format_max"]');
+
+traiterSlider(elInput, elValeurs);
+
+
+/**
+ * Traitement du slider ts-min
+ */
+elInput = document.querySelector('[data-js-ts-val-min]');
+elValeurs = document.querySelectorAll('input[name="ts_min"]');
+
+traiterSlider(elInput, elValeurs);
+
+
+/**
+ * Traitement du slider ts-max
+ */
+elInput = document.querySelector('[data-js-ts-val-max]');
+elValeurs = document.querySelectorAll('input[name="ts_max"]');
+
+traiterSlider(elInput, elValeurs);
+
+
+/**
+ * Traitement du slider da-min
+ */
+elInput = document.querySelector('[data-js-da-val-min]');
+elValeurs = document.querySelectorAll('input[name="da_min"]');
+
+traiterSlider(elInput, elValeurs);
+
+
+/**
+ * Traitement du slider da-max
+ */
+elInput = document.querySelector('[data-js-da-val-max]');
+elValeurs = document.querySelectorAll('input[name="da_max"]');
+
+traiterSlider(elInput, elValeurs);
+
+
+/**
+ * On limite les champs numériques à 2 décimales
+ */
+let elSliderInputs = document.querySelectorAll('[data-js-slider-input]');
+
+elSliderInputs.forEach(unSlider => {
+    unSlider.addEventListener('input', (e) => {
+        contenirDecimales(e);
+    });
+});
+
+const contenirDecimales = (e) => {
+    let nombre = e.target.value;
+
+    if (nombre.indexOf(".") >= 0) {
+        if ((nombre.substr(nombre.indexOf("."))).length > 3) {
+            const pos = nombre.indexOf(".");
+
+            nombre = nombre.substr(0, nombre.indexOf(".")) + nombre.substr(pos, pos + 2);
+            e.target.value = nombre;
+        }
+    }
+}
+
+
+/**
+ * Gestion des sections de recherche en accordéon
+ */
+var acc = document.getElementsByClassName("accordeon");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.height) {
+            panel.style.height = null;
+        } else {
+            panel.style.height = panel.scrollHeight + "px";
+        }
+    });
+}
