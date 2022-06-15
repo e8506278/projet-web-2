@@ -29,7 +29,6 @@
     transform: translate(-50%, -50%);
 }
 
-.modal__contenu__texte {
-    font-size: 1.25em;
-    text-align: center;
+.modal__texte {
+    padding: var(--espace-p) 0;
 }
