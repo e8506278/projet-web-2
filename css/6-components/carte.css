@@ -162,6 +162,9 @@
 .carte__icone--bb{
     border-bottom: 1px solid var(--couleur-accent);
 }
+.carte--flex-grow{
+    flex-grow: 1;
+}
 /* || image */
 .carte__img{
     width: 65px;
@@ -184,5 +187,25 @@
 }
 
 
-
+/* || Radio */
+.carte__radio-btn { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* icone  */
+.carte__radio-btn + i {
+    cursor: pointer;
+  }
+  
+  /* checked */
+.carte__radio-btn:checked +i {
+    outline: 2px solid var(--couleur-accent);
+   
+  }
+  .radio{
+      padding-right: var(--espace-xp);
+  }
 

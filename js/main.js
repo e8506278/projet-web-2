@@ -18,7 +18,8 @@ window.addEventListener('load', function () {
     document.querySelectorAll(".btnBoire").forEach(function (element) {
        
        // Au click du bouton diminué (-)
-        element.addEventListener("click", function (evt) {
+        element.addEventListener("click", function (e) {
+            e.preventDefault();
             // id_bouteille
             let id =element.parentElement.dataset.jsId;
 
@@ -67,7 +68,8 @@ window.addEventListener('load', function () {
     document.querySelectorAll(".btnAjouter").forEach(function (element) {
         
         // Au click du bouton ajouter (+)
-        element.addEventListener("click", function (evt) {
+        element.addEventListener("click", function (e) {
+            e.preventDefault();
             // id_bouteille
             let id =element.parentElement.dataset.jsId;
 
@@ -208,8 +210,6 @@ window.addEventListener('load', function () {
        
         elBtnAjouterCellier.addEventListener('click', (e) => {
             e.preventDefault();
-           
-
                 
             // Validation
             let validation = validationCellier(nom_cellier, type_cellier_id)
@@ -240,8 +240,8 @@ window.addEventListener('load', function () {
         // Récupération du cellier à modifier
         carte.querySelectorAll('[data-js-modifiercellier]').forEach(function (btnModalModifier) {
            // Au click
-            btnModalModifier.addEventListener("click", function (evt) {
-
+            btnModalModifier.addEventListener("click", function (e) {
+                e.preventDefault()
                 //Récupération des données du cellier dans le DOM
                 id_cellier = btnModalModifier.dataset.jsModifiercellier
                 nom_cellier.value = carte.querySelector('[data-js-nomcellier]').textContent
