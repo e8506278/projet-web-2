@@ -12,7 +12,7 @@ class Recherche
         $lesAppellations = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesAppellations[] = $row;
         }
 
@@ -29,7 +29,7 @@ class Recherche
         $lesBouteilles = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesBouteilles[] = $row;
         }
 
@@ -46,7 +46,7 @@ class Recherche
         $lesCelliers = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesCelliers[] = $row;
         }
 
@@ -63,7 +63,7 @@ class Recherche
         $lesCepages = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesCepages[] = $row;
         }
 
@@ -80,7 +80,7 @@ class Recherche
         $lesClassifications = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesClassifications[] = $row;
         }
 
@@ -97,7 +97,7 @@ class Recherche
         $lesDesignations = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesDesignations[] = $row;
         }
 
@@ -114,7 +114,7 @@ class Recherche
         $lesPays = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesPays[] = $row;
         }
 
@@ -131,7 +131,7 @@ class Recherche
         $lesProduits = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesProduits[] = $row;
         }
 
@@ -148,7 +148,7 @@ class Recherche
         $lesRegions = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesRegions[] = $row;
         }
 
@@ -165,7 +165,7 @@ class Recherche
         $lesTypes = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesTypes[] = $row;
         }
 
@@ -182,7 +182,7 @@ class Recherche
         $lesTypes = [];
 
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['selectionne' => 1];
+            $row += ['disponible' => 1];
             $lesTypes[] = $row;
         }
 

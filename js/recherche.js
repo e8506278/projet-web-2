@@ -1,3 +1,11 @@
+const aHauteurs = {
+    'ferme': 77,
+    'select-1': 134,
+    'select-2': 174
+};
+
+const hauteurListe = 110;
+
 function autocomplete(section, arr) {
     /* 
         Le code provient de w3schools: https://www.w3schools.com/howto/howto_js_autocomplete.asp
@@ -20,14 +28,16 @@ function autocomplete(section, arr) {
         closeAllLists();
 
         if (!val) {
-            elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) - 110;
+            elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) - hauteurListe;
             elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
 
             return false;
         }
 
-        elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) + 110;
-        elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
+        if (elAccContainer.dataset.jsHauteur <= aHauteurs['select-2']) {
+            elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) + hauteurListe;
+            elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
+        }
 
         currentFocus = -1;
 
@@ -42,7 +52,7 @@ function autocomplete(section, arr) {
         /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
             /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i].selectionne && arr[i].nom.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            if (arr[i].disponible && arr[i].nom.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 /*create a DIV element for each matching element:*/
                 b = document.createElement("DIV");
                 b.dataset.jsId = arr[i].id;
@@ -71,7 +81,7 @@ function autocomplete(section, arr) {
                     (or any other open lists of autocompleted values:*/
                     closeAllLists();
 
-                    elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) - 110;
+                    elAccContainer.dataset.jsHauteur = Number(elAccContainer.dataset.jsHauteur) - hauteurListe;
                     elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
                 });
 
@@ -255,12 +265,21 @@ function traiterDesignation() {
 function traiterMesCelliers() {
     let nbSelections = 0;
     const elNbSelections = document.querySelector('.nb-mes-celliers');
+    const elInnerSelection = elNbSelections.querySelector('.nb-selections');
 
     for (let i = 0, l = elMesCelliers.length; i < l; i++) {
         if (elMesCelliers[i].checked) nbSelections++;
     }
 
-    elNbSelections.innerHTML = nbSelections;
+    if (nbSelections === 0) {
+        if (!elInnerSelection.classList.contains("hide")) {
+            elInnerSelection.classList.add("hide");
+        }
+    } else {
+        elInnerSelection.innerHTML = nbSelections;
+        elInnerSelection.classList.remove("hide");
+    }
+
     elMesCelliersTous.checked = (nbSelections === elMesCelliers.length);
 }
 
@@ -293,12 +312,21 @@ function traiterPays() {
 function traiterProduitQc() {
     let nbSelections = 0;
     const elNbSelections = document.querySelector('.nb-produit-qc');
+    const elInnerSelection = elNbSelections.querySelector('.nb-selections');
 
     for (let i = 0, l = elProduitsQc.length; i < l; i++) {
         if (elProduitsQc[i].checked) nbSelections++;
     }
 
-    elNbSelections.innerHTML = nbSelections;
+    if (nbSelections === 0) {
+        if (!elInnerSelection.classList.contains("hide")) {
+            elInnerSelection.classList.add("hide");
+        }
+    } else {
+        elInnerSelection.innerHTML = nbSelections;
+        elInnerSelection.classList.remove("hide");
+    }
+
     elProduitsQcTous.checked = (nbSelections === elProduitsQc.length);
 
 }
@@ -331,12 +359,21 @@ function traiterRegion() {
 function traiterTypeCellier() {
     let nbSelections = 0;
     const elNbSelections = document.querySelector('.nb-type-cellier');
+    const elInnerSelection = elNbSelections.querySelector('.nb-selections');
 
     for (let i = 0, l = elTypeCelliers.length; i < l; i++) {
         if (elTypeCelliers[i].checked) nbSelections++;
     }
 
-    elNbSelections.innerHTML = nbSelections;
+    if (nbSelections === 0) {
+        if (!elInnerSelection.classList.contains("hide")) {
+            elInnerSelection.classList.add("hide");
+        }
+    } else {
+        elInnerSelection.innerHTML = nbSelections;
+        elInnerSelection.classList.remove("hide");
+    }
+
     elTypeCellierTous.checked = (nbSelections === elTypeCelliers.length);
 }
 
@@ -347,12 +384,21 @@ function traiterTypeCellier() {
 function traiterTypeVin() {
     let nbSelections = 0;
     const elNbSelections = document.querySelector('.nb-type-vin');
+    const elInnerSelection = elNbSelections.querySelector('.nb-selections');
 
     for (let i = 0, l = elTypeVins.length; i < l; i++) {
         if (elTypeVins[i].checked) nbSelections++;
     }
 
-    elNbSelections.innerHTML = nbSelections;
+    if (nbSelections === 0) {
+        if (!elInnerSelection.classList.contains("hide")) {
+            elInnerSelection.classList.add("hide");
+        }
+    } else {
+        elInnerSelection.innerHTML = nbSelections;
+        elInnerSelection.classList.remove("hide");
+    }
+
     elTypeVinTous.checked = (nbSelections === elTypeVins.length);
 }
 
@@ -376,12 +422,19 @@ let uneSelection = `
 
 /**
  *  Ajoute l'élément dans la sélection 
- * @param e : event
+ * @param e                 : event
+ * @param section           : Section sur laquelle la sélection est faite
+ * @param aDonnees          : Tableau qui contient toutes les sélections possibles
+ * @param elNbSelections    : Identifiant du nombre de choix sélectionnées
+ * @param elChoixContainer  : Container autours du groupe
+ * @param elChoixGroupe     : Groupe qui contient toutes les sélections
  */
 function ajouterSelection(e, section, aDonnees, elNbSelections, elChoixContainer, elChoixGroupe) {
     e.preventDefault();
 
-    let nbSelections = elNbSelections.innerHTML;
+    const elInnerSelection = elNbSelections.querySelector('.nb-selections');
+
+    let nbSelections = elInnerSelection.innerHTML;
     nbSelections++;
 
     const sectionMaj = section[0].toUpperCase() + section.slice(1);
@@ -395,7 +448,8 @@ function ajouterSelection(e, section, aDonnees, elNbSelections, elChoixContainer
     elChampTexte.value = "";
     changerVisibilite(elInputId, 0, aDonnees);
 
-    elNbSelections.innerHTML = nbSelections;
+    elInnerSelection.innerHTML = nbSelections;
+    elInnerSelection.classList.remove("hide");
     elChoixContainer.classList.remove("hide");
 
     const elAccContainer = elChoixContainer.closest(".acc-container");
@@ -410,13 +464,27 @@ function ajouterSelection(e, section, aDonnees, elNbSelections, elChoixContainer
 /**
  * Changer la visibilité d'un élément dans la liste générale
  * selon le fait qu'il ait été sélectionné ou pas
- * @param id : identifiant de l'élément
+ * @param id        : identifiant de l'élément
  * @param nouvValeur: 0: rendre invisible; 1: rendre visible
+ * @param aDonnees  : Tableau qui contient tous les éléments sur lesquelles travailler
  */
 function changerVisibilite(id, nouvValeur, aDonnees) {
     for (i = 0; i < aDonnees.length; i++) {
         if (aDonnees[i].id === id) {
-            aDonnees[i].selectionne = nouvValeur;
+            aDonnees[i].disponible = nouvValeur;
+        }
+    }
+}
+
+/**
+ * Remet visible tous les éléments de toutes les listes générales
+ */
+function reinitVisibilite() {
+    aDonnees = [aAppellation, aBouteille, aCepage, aClassification, aDesignation, aPays, aRegion];
+
+    for (i = 0; i < aDonnees.length; i++) {
+        for (j = 0; j < aDonnees[i].length; j++) {
+            aDonnees[i][j].disponible = 1;
         }
     }
 }
@@ -424,10 +492,14 @@ function changerVisibilite(id, nouvValeur, aDonnees) {
 
 /**
  * Supprime l'élément de la sélection
- * @param  e : event
+ * @param  e                : event
+ * @param aDonnees          : Tableau contenant toutes les données pour un groupe particulier
+ * @param elNbSelections    : Identifiant du nombre de choix sélectionnées
+ * @param elChoixContainer  : Container autours du groupe
  */
 function supprimerSelection(e, aDonnees, elNbSelections, elChoixContainer) {
     e.preventDefault();
+
     if (e.target.closest('.btn-enlever')) {
         elBtn = e.target.closest('.btn-enlever');
 
@@ -439,16 +511,19 @@ function supprimerSelection(e, aDonnees, elNbSelections, elChoixContainer) {
         elParent.remove();
         changerVisibilite(id, 1, aDonnees);
 
-        let nbSelections = elNbSelections.innerHTML;
+        const elInnerSelection = elNbSelections.querySelector('.nb-selections');
+
+        let nbSelections = elInnerSelection.innerHTML;
         nbSelections--;
 
         if (nbSelections < 0) {
             nbSelections = 0;
         }
 
-        elNbSelections.innerHTML = nbSelections;
+        elInnerSelection.innerHTML = nbSelections;
 
         if (nbSelections === 0) {
+            elInnerSelection.classList.add("hide");
             elChoixContainer.classList.add("hide");
         }
 
@@ -457,15 +532,20 @@ function supprimerSelection(e, aDonnees, elNbSelections, elChoixContainer) {
 }
 
 
+/**
+ * Ajuste la hauteur visible d'un accordéon selon son contenu dynamique
+ * @param nbSelections      : Est utilisé pour déterminer la hauteur dynamique
+ * @param elChoixContainer  : Identifie l'élément principal sur lequel il faut ajuster la hauteur
+ */
 function ajusterHauteur(nbSelections, elChoixContainer) {
     const elAccContainer = elChoixContainer.closest(".acc-container");
 
     if (nbSelections === 0) {
-        elAccContainer.dataset.jsHauteur = 77;
+        elAccContainer.dataset.jsHauteur = aHauteurs['ferme'];
     } else if (nbSelections === 1) {
-        elAccContainer.dataset.jsHauteur = 134;
+        elAccContainer.dataset.jsHauteur = aHauteurs['select-1'];
     } else {
-        elAccContainer.dataset.jsHauteur = 174;
+        elAccContainer.dataset.jsHauteur = aHauteurs['select-2'];
     }
 
     elAccContainer.style.height = elAccContainer.dataset.jsHauteur + "px";
@@ -489,7 +569,7 @@ traiterRegion();
  */
 
 /**
- * Traiter les types de vin
+ * Traiter la liste de checkboxes des types de vin
  */
 let elTypeVins = document.querySelectorAll('[data-js-type-vin]');
 let elTypeVinTous = document.querySelector('[data-js-type-vin-tous]');
@@ -508,7 +588,7 @@ elTypeVinTous.addEventListener('change', () => {
 
 
 /**
- * Traiter les celliers de l'utilisateur
+ * Traiter la liste de checkboxes des celliers
  */
 let elMesCelliers = document.querySelectorAll('[data-js-mes-celliers]');
 let elMesCelliersTous = document.querySelector('[data-js-mes-celliers-tous]');
@@ -659,13 +739,13 @@ const contenirDecimales = (e) => {
 /**
  * Gestion des sections de recherche en accordéon
  */
-var acc = document.getElementsByClassName("accordeon");
-var i;
+let acc = document.querySelectorAll(".accordeon");
 
-for (i = 0; i < acc.length; i++) {
+for (let i = 0, l = acc.length; i < l; i++) {
     acc[i].addEventListener("click", function () {
         this.classList.toggle("active");
-        var panel = this.nextElementSibling;
+        const panel = this.nextElementSibling;
+
         if (panel.style.height) {
             panel.style.height = null;
         } else {
@@ -673,3 +753,162 @@ for (i = 0; i < acc.length; i++) {
         }
     });
 }
+
+
+/**
+ * Réinitialisation des données
+ */
+elBtnReinit = document.querySelector('[data-js-reinit]');
+
+elBtnReinit.addEventListener("click", (e) => {
+    e.preventDefault();
+    initDonnees();
+});
+
+
+function initDonnees() {
+    elRechercheWrapper = document.querySelector('.recherche-wrapper');
+    let elCheckboxes = elRechercheWrapper.querySelectorAll('input[type="checkbox"]');
+    let elBtnsRadio = elRechercheWrapper.querySelectorAll('input[type="radio"]');
+    let elChoixGroupe = elRechercheWrapper.querySelectorAll('.choix-groupe');
+    let elChoixContainer = elRechercheWrapper.querySelectorAll('.choix-container');
+
+    // les checkbox
+    elCheckboxes.forEach(unCheckbox => {
+        if (unCheckbox.checked) unCheckbox.click();
+
+    });
+
+    // les boutons radio
+    elBtnsRadio.forEach(unBtnRadion => {
+        unBtnRadion.checked = false;
+    });
+
+    // les listes
+    elChoixGroupe.forEach(unGroupe => {
+        unGroupe.innerHTML = "";
+
+    });
+
+    elChoixContainer.forEach(unContainer => {
+        if (!unContainer.classList.contains('hide')) {
+            unContainer.classList.add('hide');
+        }
+    });
+
+    reinitVisibilite();
+
+    //
+    let elNbSelections = elRechercheWrapper.querySelectorAll('.nb-selections');
+
+    elNbSelections.forEach(uneSelection => {
+        uneSelection.innerHTML = "";
+
+        if (!uneSelection.classList.contains('hide')) {
+            uneSelection.classList.add('hide');
+        }
+    });
+
+    //
+    let elSliderInputs = document.querySelectorAll('[data-js-slider-input]');
+
+    elSliderInputs.forEach(unSlider => {
+        unSlider.value = "";
+    });
+
+
+    // Fermer les accordéons
+    let elAccordeons = elRechercheWrapper.querySelectorAll('.accordeon');
+
+    elAccordeons.forEach(unAccordeon => {
+        const panel = unAccordeon.nextElementSibling;
+        panel.dataset.jsHauteur = aHauteurs['ferme'];
+
+        if (panel.style.height) {
+            unAccordeon.click();
+        }
+    });
+}
+
+
+/**
+ * custom select
+ */
+var x, i, j, l, ll, selElmnt, a, b, c;
+/*look for any elements with the class "select-container":*/
+x = document.getElementsByClassName("select-container");
+l = x.length;
+for (i = 0; i < l; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    ll = selElmnt.length;
+    /*for each element, create a new DIV that will act as the selected item:*/
+    a = document.createElement("DIV");
+    a.setAttribute("class", "select-selected");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+    /*for each element, create a new DIV that will contain the option list:*/
+    b = document.createElement("DIV");
+    b.setAttribute("class", "select-items select-hide");
+    for (j = 1; j < ll; j++) {
+        /*for each option in the original select element,
+        create a new DIV that will act as an option item:*/
+        c = document.createElement("DIV");
+        c.innerHTML = selElmnt.options[j].innerHTML;
+        c.addEventListener("click", function (e) {
+            /*when an item is clicked, update the original select box,
+            and the selected item:*/
+            var y, i, k, s, h, sl, yl;
+            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            sl = s.length;
+            h = this.parentNode.previousSibling;
+            for (i = 0; i < sl; i++) {
+                if (s.options[i].innerHTML == this.innerHTML) {
+                    s.selectedIndex = i;
+                    h.innerHTML = this.innerHTML;
+                    y = this.parentNode.getElementsByClassName("same-as-selected");
+                    yl = y.length;
+                    for (k = 0; k < yl; k++) {
+                        y[k].removeAttribute("class");
+                    }
+                    this.setAttribute("class", "same-as-selected");
+                    break;
+                }
+            }
+            h.click();
+        });
+        b.appendChild(c);
+    }
+    x[i].appendChild(b);
+    a.addEventListener("click", function (e) {
+        /*when the select box is clicked, close any other select boxes,
+        and open/close the current select box:*/
+        e.stopPropagation();
+        closeAllSelect(this);
+        this.nextSibling.classList.toggle("select-hide");
+        this.classList.toggle("select-arrow-active");
+    });
+}
+function closeAllSelect(elmnt) {
+    /*a function that will close all select boxes in the document,
+    except the current select box:*/
+    var x, y, i, xl, yl, arrNo = [];
+    x = document.getElementsByClassName("select-items");
+    y = document.getElementsByClassName("select-selected");
+    xl = x.length;
+    yl = y.length;
+    for (i = 0; i < yl; i++) {
+        if (elmnt == y[i]) {
+            arrNo.push(i)
+        } else {
+            y[i].classList.remove("select-arrow-active");
+        }
+    }
+    for (i = 0; i < xl; i++) {
+        if (arrNo.indexOf(i)) {
+            x[i].classList.add("select-hide");
+        }
+    }
+}
+/*if the user clicks anywhere outside the select box,
+then close all select boxes:*/
+document.addEventListener("click", closeAllSelect);
