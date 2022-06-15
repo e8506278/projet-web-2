@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -18,19 +20,27 @@
 		<base href="<?php echo BASEURL; ?>">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 		<!--<script src="./js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+		<script defer src="./js/enregistrement.js"></script>
+		<script defer src="./js/connexion.js"></script>
 		<script src="./js/modal.js" defer></script>
-		<script src="./js/plugins.js"></script>
 		<script src="./js/main.js"></script>
-
 	</head>
+
+	
 	<body >
 		<header>
 			<nav class="nav">
 				<a  href="?requete=accueil" class="nav__logo">VINO</a>
 				<ul class="nav__liste">
 				<li><a class="nav__lien" href="#"></a></li>
+					<?php if($_SESSION){
+						if($_SESSION['utilisateur']){?>
 					<li><a class="nav__lien" href="?requete=mesCelliers">Mes celliers</a></li>
 					<li><a class="nav__lien" href="?requete=deconnecter">Déconnexion</a></li>
+					<?php  }}else if(!$_SESSION) {?>
+					<li><a class="nav__lien" href="?requete=connecter">Connexion</a></li>
+					<li><a class="nav__lien" href="?requete=enregistrer">S'enregistrer</a></li>
+					<?php };?>
 				</ul>
 			</nav>
 		</header>

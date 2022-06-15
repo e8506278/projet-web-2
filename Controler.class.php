@@ -1,5 +1,5 @@
 <?php
-
+ include('./controller/Connexion.php');
 /**
  * Class Controler
  * Gère les requêtes HTTP
@@ -64,45 +64,43 @@ class Controler
             case 'deconnecter':
                 $this->deconnecterUtilisateur();
                 break;
-            default:
+            case 'accueil':
                 $this->accueil();
+                 break;
+            default:
+            $this->connecterUtilisateur();
                 break;
         }
     }
 
     private function enregistrerUtilisateur()
     {
-     
+        include("vues/entete.php");
         include("vues/enregistrement.php");
+        include("vues/pied.php");
        
     }
 
     private function connecterUtilisateur()
     {
-
+        include("vues/entete.php");
         include("vues/connexion.php");
-        
+        include("vues/pied.php");   
     }
 
     private function deconnecterUtilisateur()
     {
         unset($_SESSION['utilisateur']);
+        include("vues/entete.php");
         include("vues/connexion.php");
+        include("vues/pied.php");
     }
 
     private function accueil()
     {
-  
-        // On valide si l'utilisateur est déjà connecté ou pas, avant de le forcer à le faire
-        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-   
+            include("vues/entete.php");
             include("vues/index.php");
-           
-        } else {
-           
-            include("vues/connexion.php");
-            
-        }
+            include("vues/pied.php");          
     }
 
     private function listeBouteille()
