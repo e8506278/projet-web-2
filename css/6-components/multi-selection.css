@@ -210,12 +210,21 @@ input[type=submit] {
     width: auto;
 }
 
-.liste-choix label {
-    font-weight: bold;
+.filtre-listbox .choix-nom {
+    display: flex;
     flex-grow: 1;
+    justify-content: space-between;
     overflow: hidden;
     padding: 0 5px;
+    width: 281px;
+}
+
+.liste-choix label {
+    flex-grow: 1;
+    font-weight: bold;
+    overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .filtre-listbox .choix-item {
@@ -293,7 +302,9 @@ input[type=submit] {
     flex-grow: 1;
 }
 
-.nb-selectionnes {
+.nb-selectionnes,
+.nb-trouves {
+    display: inline-block;
     text-align: right;
     width: 30px;
 }
@@ -320,7 +331,7 @@ input[type=submit] {
     padding: 15px;
 }
 
-.rechercher-detail {
+.rechercher-groupe {
     border: 3px solid var(--couleur-accent);
 }
 
@@ -375,33 +386,32 @@ input[type=submit] {
 }
 
 .tri-select-wrapper>*+* {
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
-.limiter-wrapper {
+.qte-affichage-wrapper {
     display: flex;
     align-items: center;
 }
 
-.limiter-wrapper>*+* {
+.qte-affichage-wrapper>*+* {
     margin-left: 5px;
 }
 
-.limiter-options {
+.qte-affichage-options {
     margin: 0 5px;
     padding: 5px;
 }
 
 #sidebarMenu {
-    height: 100%;
-    position: fixed;
-    left: 0;
-    width: calc(400px + var(--espace-l));
-    margin-top: 51px;
+    left: -64px;
     margin-left: var(--espace-l);
+    padding-bottom: var(--espace-l);
+    position: absolute;
+    top: 51px;
     transform: translateX(calc(-400px - var(--espace-l)));
     transition: transform .3s ease-in-out;
-    top: 64px;
+    width: calc(400px + var(--espace-l));
 }
 
 .openSidebarMenu:checked~#sidebarMenu {
@@ -490,7 +500,7 @@ input[type=checkbox]:checked~.sidebarIconToggle>.diagonal.part-2 {
     font-family: Arial;
 }
 
-.limiter-container {
+.qte-affichage-container {
     width: 60px;
 }
 
@@ -549,4 +559,17 @@ input[type=checkbox]:checked~.sidebarIconToggle>.diagonal.part-2 {
 .select-items div:hover,
 .same-as-selected {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.non-trouve {
+    background-color: #eee;
+    border: none;
+    color: coral;
+    display: flex;
+    font-size: 15px;
+    outline: none;
+    padding: 15px 15px 15px 60px;
+    text-align: left;
+    transition: 0.4s;
+    width: 100%;
 }
