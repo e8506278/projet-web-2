@@ -84,16 +84,16 @@ if(elAnnulercellier){
                 <p class="modal__texte">Cette action entraînera la suppression du cellier et de toutes ces bouteilles</p>
                 <div>
                     <h4 class="carte__entete carte--haut">Déplacer les bouteilles dans un autre cellier?</h4>
-                    <label class="modal__texte" for="celliers">Choisir un cellier
-                        <select >
-                            <option></option>
+                    <label class="modal__texte" for="celliers">Choisir un cellier :
+                        <select data-js-selectcellier >
+                            <option>Aucun cellier</option>
                         </select>
                     </label>
                 </div>
                 
                 <div class="formulaire__champs" data-js-boutonmodal>
-                    <button  class="bouton-secondaire" data-js-supprimerInfosCellier>Déplacer et supprimer</button>
-                    <button  class="bouton-secondaire" data-js-supprimerInfosCellier>Supprimer</button>
+                    <button  class="bouton-secondaire" data-js-supprimerdeplacer>Déplacer et supprimer</button>
+                    <button  class="bouton-secondaire" data-js-supprimeruncellier>Supprimer</button>
                     <button data-js-annulercellier class="bouton-secondaire">Annuler</button>
                 </div> 
                 `

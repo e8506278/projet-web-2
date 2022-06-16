@@ -25,11 +25,17 @@ class Controler
             case 'mesCelliers':
                 $this->listeCelliers();
                 break;
+            case 'celliers':
+                $this->liste();
+                break;
             case 'ajouterNouveauCellier':
                 $this->ajouterNouveauCellier();
                 break;
             case 'modifierCellier':
                 $this->modifierCellier();
+                break;
+            case 'deplacerBouteille':
+                $this->deplacerBouteille();
                 break;
             case 'listeBouteilleCellier':
                 $this->listeBouteilleCellier();
@@ -71,6 +77,18 @@ class Controler
             $this->connecterUtilisateur();
                 break;
         }
+    }
+
+    private function liste()
+    {
+        $id = $_SESSION['utilisateur']['id'];
+   
+        $celliers = new Cellier();
+        
+        $data = $celliers->getListeCellier($id);
+      
+    
+        echo json_encode($data);
     }
 
     private function enregistrerUtilisateur()
@@ -148,6 +166,9 @@ class Controler
         }
     }
 
+
+
+    
     private function boireBouteilleCellier()
     {
         $body = json_decode(file_get_contents('php://input'));
@@ -170,7 +191,7 @@ class Controler
     /*CELLIERS*/
 
     /**
-     * Cette méthode récupère la liste des celliers d'un usagé ainsi que le nombre de cellier par usager
+     * Cette méthode récupère la liste des celliers d'un usager ainsi que le nombre de cellier par usager
      * avec l'id session de l'usager
      */
     private function listeCelliers()
@@ -190,10 +211,12 @@ class Controler
         } else {
             $erreur = "";
         }
-
+        
+         
         include("vues/entete.php");
         include("vues/celliers.php");
         include("vues/pied.php");
+       
     }
 
     /**

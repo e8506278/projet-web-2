@@ -39,8 +39,12 @@ class Cellier extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
+                    
                     $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
+                    $row['nom_type_cellier'] = trim(utf8_encode($row['nom_type_cellier']));
+                   
                     $rows[] = $row;
+                    
                 }
             }
         } else {

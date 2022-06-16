@@ -305,6 +305,41 @@ document.querySelectorAll(".btnBoire").forEach(function (element) {
 
 /*---------Supprimer un cellier------------------*/ 
 
+    let elSupprimerCellier = document.querySelectorAll('[data-js-supprimercellier]')
+
+    elSupprimerCellier.forEach(btnSupprimer=>{
+        // Au click du bouton supprimer(-)
+        btnSupprimer.addEventListener('click', (e)=>{
+
+            let btnDeplacerSupprimer = document.querySelector('[data-js-supprimerdeplacer]'),
+            btnSupprimerCellier = document.querySelector('[data-js-supprimeruncellier]'),
+            selectCellier = document.querySelector('[data-js-selectcellier]')
+
+            // Récupérer les noms des celliers à mettre dans les options
+            let requete = new Request(BaseURL + "?requete=celliers")
+            fetch(requete)
+                .then(response => {
+                    if (response.status === 200) {
+                
+                        return response.json()
+                    } else {
+                        throw new Error('Erreur');
+                    }
+                })
+                .then(response => {
+
+                    // Récupération des celliers de l'usager et insertion dans le modal
+                    for (let key in response) {
+                        let option = `<option value="${response[key].id_cellier}">${response[key].nom_cellier}</option>`
+                        selectCellier.insertAdjacentHTML('beforeend', option);
+                    }    
+                }).catch(error => {
+                    console.error(error);
+                });
+        })
+
+        
+    })
 
 
     // Validation cellier 
@@ -337,7 +372,7 @@ document.querySelectorAll(".btnBoire").forEach(function (element) {
 
 
     // Requête fetch cellier 
-    function fetchCellier(requete){
+    function fetchCellier(requete, action){
         fetch(requete)
             .then(response => {
                 if (response.status === 200) {
@@ -365,6 +400,8 @@ document.querySelectorAll(".btnBoire").forEach(function (element) {
                 console.error(error);
             });
     }
+
+
 /********************************************************************************************************** */
     
 
