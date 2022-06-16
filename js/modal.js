@@ -82,6 +82,7 @@ if(elAnnulercellier){
         
                 elContenu.innerHTML = `<h4 class=""><span class="carte__erreur">Supprimer le cellier</span> "${nomCellier}" ?</h4>
                 <p class="modal__texte">Cette action entraînera la suppression du cellier et de toutes ces bouteilles</p>
+                
                 <div>
                     <h4 class="carte__entete carte--haut">Déplacer les bouteilles dans un autre cellier?</h4>
                     <label class="modal__texte" for="celliers">Choisir un cellier :

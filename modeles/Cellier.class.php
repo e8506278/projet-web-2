@@ -227,4 +227,29 @@ class Cellier extends Modele
         $valeur = $rows[0]["nombre_cellier"];
         return $valeur;
     }
+
+    /**
+     * Cette méthode déplace toutes les bouteilles d'un cellier dans un autre cellier
+     * 
+     * @param Int $id id_cellier sélectionné par l'usager
+     * 
+     *  @param Array $idBouteilles Tableau des id de bouteille à déplacer
+     * 
+     * @throws Exception Erreur de requête sur la base de données 
+     * 
+     * @return Boolean Succès ou échec de l'ajout.
+     */
+    public function deplacerBouteillesCellier($id, $bouteilles)
+    {
+            foreach($bouteilles as $bouteille){
+                $id_bouteille = $bouteille['id_bouteille'];
+            
+                $requete = "UPDATE usager__bouteille SET id_cellier = '$id'
+                WHERE id_bouteille = '$id_bouteille'" ;
+    
+                $res = $this->_db->query($requete);
+            }
+            
+        return $res;
+    }
 }

@@ -315,6 +315,7 @@ document.querySelectorAll(".btnBoire").forEach(function (element) {
             btnSupprimerCellier = document.querySelector('[data-js-supprimeruncellier]'),
             selectCellier = document.querySelector('[data-js-selectcellier]')
 
+
             // Récupérer les noms des celliers à mettre dans les options
             let requete = new Request(BaseURL + "?requete=celliers")
             fetch(requete)
@@ -336,6 +337,18 @@ document.querySelectorAll(".btnBoire").forEach(function (element) {
                 }).catch(error => {
                     console.error(error);
                 });
+
+                btnDeplacerSupprimer.addEventListener('click', (e)=>{
+                    let cellierAdeplacer = {
+                        "id_cellierChoisi" : selectCellier.value,
+                        "id_cellierSupprime":btnSupprimer.dataset.jsSupprimercellier
+                    }
+                
+                
+
+                    requete = new Request(BaseURL + "?requete=deplacerBouteille", { method: 'POST', body: JSON.stringify(cellierAdeplacer)});
+                    fetchCellier(requete)
+                })
         })
 
         
@@ -372,7 +385,7 @@ document.querySelectorAll(".btnBoire").forEach(function (element) {
 
 
     // Requête fetch cellier 
-    function fetchCellier(requete, action){
+    function fetchCellier(requete){
         fetch(requete)
             .then(response => {
                 if (response.status === 200) {
@@ -385,6 +398,7 @@ document.querySelectorAll(".btnBoire").forEach(function (element) {
             .then(response => {
 
                 // Fermeture du modal
+                /*
                 elModal = document.querySelector('[data-js-modal]')
                 if (elModal.classList.contains('modal--ouvre')) {
                     elModal.classList.replace('modal--ouvre', 'modal--ferme');
@@ -395,7 +409,7 @@ document.querySelectorAll(".btnBoire").forEach(function (element) {
           
                 // Rafraîchir la page
                 location.reload();
-    
+    */
             }).catch(error => {
                 console.error(error);
             });

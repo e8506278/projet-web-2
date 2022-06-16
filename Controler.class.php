@@ -168,7 +168,7 @@ class Controler
 
 
 
-    
+
     private function boireBouteilleCellier()
     {
         $body = json_decode(file_get_contents('php://input'));
@@ -255,6 +255,24 @@ class Controler
             include("vues/celliers.php");
             include("vues/pied.php");
         }
+    }
+
+    private function deplacerBouteille(){
+
+        $body = json_decode(file_get_contents('php://input'));
+        
+        if (!empty($body)) {
+          
+            $bte = new Bouteille();
+            $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
+            if($bouteilles){
+               
+                $cellier = new Cellier();
+                $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi,$bouteilles);
+                
+            }
+        }
+       
     }
 
     /**
