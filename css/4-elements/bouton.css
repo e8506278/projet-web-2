@@ -34,5 +34,21 @@
     border: 1px solid black;
     background-color: var(--couleur-primaire);
     color: var(--couleur-secondaire);
-   
+}
+
+
+.bouton-danger{
+    background-color: var(--couleur-rouge);
+    border: 1px solid var(--couleur-rouge);
+    transition: 0.3s;
+    padding: var(--espace-xp);
+    color: var(--couleur-primaire);
+    font-weight: 700;
+    cursor: pointer;
+
+}
+.bouton-danger:hover{
+    border: 1px solid var(--couleur-rouge);
+    background-color: var(--couleur-primaire);
+    color: var(--couleur-rouge);
 }

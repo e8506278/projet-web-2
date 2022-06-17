@@ -15,7 +15,12 @@ class Modele {
     protected $_db;
 	function __construct ()
 	{
-		$this->_db = MonSQL::getInstance();
+        try {
+            $this->_db = MonSQL::getInstance();
+        }catch (Exception $e){
+            print_r($e);
+        }
+
 	}
 	
 	function __destruct ()
