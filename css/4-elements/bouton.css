@@ -34,7 +34,7 @@
     border: 1px solid black;
     background-color: var(--couleur-primaire);
     color: var(--couleur-secondaire);
-}
+
 
 
 .bouton-danger{
@@ -52,3 +52,4 @@
     background-color: var(--couleur-primaire);
     color: var(--couleur-rouge);
 }
+

@@ -1,5 +1,5 @@
 <?php
-
+ include('./controller/Connexion.php');
 /**
  * Class Controler
  * Gère les requêtes HTTP
@@ -24,8 +24,20 @@ class Controler
             case 'mesCelliers':
                 $this->listeCelliers();
                 break;
+            case 'celliers':
+                $this->liste();
+                break;
             case 'ajouterNouveauCellier':
                 $this->ajouterNouveauCellier();
+                break;
+            case 'modifierCellier':
+                $this->modifierCellier();
+                break;
+            case 'supprimerCellier':
+                $this->supprimerCellier();
+                break;
+            case 'deplacerSupprimer':
+                $this->deplacerSupprimer();
                 break;
             case 'listeBouteilleCellier':
                 $this->listeBouteilleCellier();
@@ -66,45 +78,55 @@ class Controler
             case 'deconnecter':
                 $this->deconnecterUtilisateur();
                 break;
-            default:
+            case 'accueil':
                 $this->accueil();
+                 break;
+            default:
+            $this->connecterUtilisateur();
                 break;
         }
     }
 
+    private function liste()
+    {
+        $id = $_SESSION['utilisateur']['id'];
+   
+        $celliers = new Cellier();
+        
+        $data = $celliers->getListeCellier($id);
+      
+    
+        echo json_encode($data);
+    }
+
     private function enregistrerUtilisateur()
     {
-     
+        include("vues/entete.php");
         include("vues/enregistrement.php");
+        include("vues/pied.php");
        
     }
 
     private function connecterUtilisateur()
     {
-
+        include("vues/entete.php");
         include("vues/connexion.php");
-        
+        include("vues/pied.php");   
     }
 
     private function deconnecterUtilisateur()
     {
         unset($_SESSION['utilisateur']);
+        include("vues/entete.php");
         include("vues/connexion.php");
+        include("vues/pied.php");
     }
 
     private function accueil()
     {
-  
-        // On valide si l'utilisateur est déjà connecté ou pas, avant de le forcer à le faire
-        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-   
+            include("vues/entete.php");
             include("vues/index.php");
-           
-        } else {
-           
-            include("vues/connexion.php");
-            
-        }
+            include("vues/pied.php");          
     }
 
     private function listeBouteille()
@@ -152,13 +174,16 @@ class Controler
         }
     }
 
+
+
+
     private function boireBouteilleCellier()
     {
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
-        // echo json_encode($resultat);
+       
     }
 
     private function ajouterBouteilleCellier()
@@ -167,7 +192,7 @@ class Controler
 
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
-        // echo json_encode($resultat);
+       
     }
 
     private function detruireBouteille()
@@ -188,7 +213,7 @@ class Controler
     /*CELLIERS*/
 
     /**
-     * Cette méthode récupère la liste des celliers d'un usagé ainsi que le nombre de cellier par usager
+     * Cette méthode récupère la liste des celliers d'un usager ainsi que le nombre de cellier par usager
      * avec l'id session de l'usager
      */
     private function listeCelliers()
@@ -208,10 +233,12 @@ class Controler
         } else {
             $erreur = "";
         }
-
+        
+         
         include("vues/entete.php");
-        include("vues/celliers.php");
+        include("vues/Celliers/celliers.php");
         include("vues/pied.php");
+       
     }
 
     /**
@@ -225,13 +252,61 @@ class Controler
 
         if (!empty($body)) {
             $cellier = new Cellier();
-
             $resultat = $cellier->ajouterNouveauCellier($body);
 
         } else {
             include("vues/entete.php");
-            include("vues/celliers.php");
+            include("vues/Celliers/celliers.php");
             include("vues/pied.php");
+        }
+    }
+
+    /**
+     * Cette méthode appelle la fonction pour récupérer les informations d'un cellier
+     *  selon l'id_cellier envoyé dans l'url
+     *  
+     */
+    private function modifierCellier(){
+        $body = json_decode(file_get_contents('php://input'));
+        if (!empty($body)) {
+            $cellier = new Cellier();
+            $resultat = $cellier->modifierCellier($body);
+
+        } else {
+            include("vues/entete.php");
+            include("vues/Cellliers/celliers.php");
+            include("vues/pied.php");
+        }
+    }
+
+    private function deplacerSupprimer(){
+
+        $body = json_decode(file_get_contents('php://input'));
+        $id = $body->id_cellierSupprime;
+        if (!empty($body)) {
+          
+            $bte = new Bouteille();
+            $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
+            if($bouteilles){
+               
+               $cellier = new Cellier();
+                $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi,$bouteilles);
+                if($resultat){
+                 $resultat =   $cellier->supprimerCellier($id);
+                    
+                }
+            }
+        }
+       
+    }
+
+    private function supprimerCellier(){
+        $body = json_decode(file_get_contents('php://input'));
+       
+        if (!empty($body)) {
+          
+            $cellier = new Cellier();
+            $cellier->supprimerCellier($body->id);
         }
     }
 
@@ -251,7 +326,7 @@ class Controler
 
         
         include("vues/entete.php");
-        include("vues/bouteilles.php");
+        include("vues/Celliers/bouteilles.php");
         include("vues/pied.php");
     }
 

@@ -9,7 +9,7 @@
     border-top: 1px solid var(--couleur-intermediaire-foncee);
 }
 
-@media only screen and (min-width: 760px){
+@media only screen and (min-width: 1024px){
     .nav-mobile{
         display:none;
     }

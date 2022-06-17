@@ -1,10 +1,6 @@
 <?php
 
-// On valide si l'utilisateur est déjà connecté ou pas, avant de le forcer à le faire
-if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-    header("Location: ./index.php");
-    die;
-}
+
 
 // Ouvrir une nouvelle connexion au serveur MySQL
 $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -69,13 +65,13 @@ if (isset($_POST["soumettre"])) {
             $verifierMdp = password_verify($motDePasse, $mot_de_passe);
 
             if ($utilisateur == $nom_utilisateur && $verifierMdp) {
-                header("Location: ./index.php");
 
                 // Stocker les données utilisateur dans la session php
                 $_SESSION['utilisateur']['id'] = $id;
                 $_SESSION['utilisateur']['nom'] = $nom_utilisateur;
                 $_SESSION['utilisateur']['jeton'] = $jeton;
                 $_SESSION['utilisateur']['estConnecte'] = true;
+
             } else {
                 $erreurs['usager_non_connecte'] = "Échec de la connexion! Identifiant ou mot de passe invalide!";
             }

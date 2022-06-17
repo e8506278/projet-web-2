@@ -313,20 +313,27 @@ class Bouteille extends Modele
      *
      * @param int $id id de la bouteille
      * @param int $nombre Nombre de bouteille a ajouter ou retirer
+     * 
+     * @return String Si les id et nombre ne sont pas des caractères numériques
      *
-     * @return Boolean Succès ou échec de l'ajout.
      */
     public function modifierQuantiteBouteilleCellier($id, $nombre)
     {
-
-        //TODO : Valider les données.
-
-
-        $requete = "UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = " . $id;
-        echo $requete;
-        $res = $this->_db->query($requete);
+        $erreur = "";
+        if(is_numeric($id) && is_numeric($nombre)){
+            $requete = "UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = " . $id;
+            $res = $this->_db->query($requete);
+            
+        }
+        else{
+            $erreur = "$id et $nombre doivent être numériques.";
+            return $erreur;
+        }
 
         return $res;
+        
+
+        
     }
 
 
