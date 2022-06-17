@@ -18,7 +18,7 @@ console.log('hello bouteille', etatModification);
 window.addEventListener('load', function () {
     console.log("load bouteille.js");
 
-    /*AJOUT D'UN BOUTEILLE*/
+    /*AJOUT D'UNE BOUTEILLE*/
     const selectBouteilleInput = document.querySelector('[data-js-bouteille-select]');
     if(selectBouteilleInput){
         selectBouteilleInput.addEventListener('input', (e) => {
@@ -49,12 +49,13 @@ window.addEventListener('load', function () {
                     if( elements && elements.length>0){
                         elements[0].value = data[key];
                     }else{
-                        console.log('not found inn form', key);
+                        console.log('not found in form', key);
                     }
                 });
             });
         })
     }
+
 
     /*AJOUT D'UN CELLIER*/
 
@@ -63,9 +64,21 @@ window.addEventListener('load', function () {
     //     element.style.display = "none";
     // });
 
-    submit_btns = document.getElementById("submit_btns");
-    if(submit_btns){
-        submit_btns.style.display = 'none';
+    const fermerFormulaire = document.getElementById('fermerFormulaire');
+    const enregistrerFormulaire = document.getElementById('enregistrerFormulaire');
+    const modifier_bouton = document.getElementById('ouvrirFormulaire');
+    const askDeleteBtn = document.getElementById("askDeleteBtn");
+    const detruireButton = document.getElementById("detruirebtn");
+    const annulerDetruirebtn = document.getElementById("annulerDetruirebtn");
+    const annulerDetruirebtn2 = document.getElementById("annulerDetruirebtn2");
+    const fermerModalAnnulation = document.getElementById("fermerModalAnnulation");
+
+    if(fermerFormulaire){
+        fermerFormulaire.disabled = true;
+    }
+
+    if(enregistrerFormulaire){
+        enregistrerFormulaire.disabled = true;
     }
 
     document.getElementById('ouvrirFormulaire').addEventListener('click', function (e){
@@ -76,30 +89,165 @@ window.addEventListener('load', function () {
         document.querySelectorAll(".label-state").forEach(element => {
             element.style.display = "none";
         });
-        modifier_bouton = document.getElementById("ouvrirFormulaire");
+
         if(modifier_bouton){
-            modifier_bouton.style.display = "none";
+            modifier_bouton.disabled = true;
+        }
+        if(fermerFormulaire){
+            fermerFormulaire.disabled = false;
         }
 
-        if(submit_btns){
-            submit_btns.style.display = 'unset';
+        if(askDeleteBtn){
+            askDeleteBtn.disabled = true;
+        }
+
+        if(enregistrerFormulaire){
+            enregistrerFormulaire.disabled = false;
         }
     });
 
-    document.getElementById('fermerFormulaire').addEventListener('click', function (e){
-        etatModification = false;
-        document.querySelectorAll(".input-state").forEach(element => {
-            element.style.display = "none";
+    if(fermerFormulaire){
+
+        fermerFormulaire.addEventListener('click', function (e){
+            etatModification = false;
+            openModal(modalAnnulation);
+            document.querySelectorAll(".input-state").forEach(element => {
+                element.style.display = "none";
+            });
+            document.querySelectorAll(".label-state").forEach(element => {
+                element.style.display = "block";
+            });
+
+            if(modifier_bouton){
+                modifier_bouton.disabled = false;
+            }
+
+            if(fermerFormulaire){
+                fermerFormulaire.disabled = true;
+            }
+
+            if(askDeleteBtn){
+                askDeleteBtn.disabled = false;
+            }
+
+            if(enregistrerFormulaire){
+                enregistrerFormulaire.disabled = true;
+            }
+
         });
-        document.querySelectorAll(".label-state").forEach(element => {
-            element.style.display = "block";
+
+    }
+
+    if(detruireButton){
+        detruireButton.addEventListener('click', function (e){
+            const id_bouteille_input = document.getElementById('id_bouteille_input');
+            const id_cellier_input = document.getElementById('id_cellier_input');
+            if(id_bouteille_input && id_cellier_input){
+                console.log('id_bouteille_input', id_bouteille_input.value);
+                const id_bouteille = id_bouteille_input.value;
+                const id_cellier = id_cellier_input.value;
+                console.log('id_bouteille', id_bouteille);
+                const requete = new Request($baseUrl_without_parameters + "index.php?requete=detruireBouteille",
+                    { method: 'POST', body: JSON.stringify({id_bouteille, id_cellier}) });
+                fetch(requete)
+                    .then(response => {
+                        if (response.status === 200) {
+                            console.log('got result', response.json());
+                            window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier&id_cellier="+id_cellier);
+                        }
+                        return response.json();
+                    }).then(function (data) {
+                    console.log('data', data);
+                });
+            }
+        })
+    }
+
+    const modalAskDelete = '[modal-confirmation-delete]';
+    const modalModificationStatut = '[modal-modification-statut]';
+    const modalAnnulation = '[modal-annulation]';
+
+    if(askDeleteBtn){
+        askDeleteBtn.addEventListener('click', ()=>{
+           openModal(modalAskDelete);
         });
-        modifier_bouton = document.getElementById("ouvrirFormulaire");
-        if(modifier_bouton){
-            modifier_bouton.style.display = 'unset';
+    }
+
+    if(annulerDetruirebtn){
+        annulerDetruirebtn.addEventListener('click', () => {
+            closeModal(modalAskDelete);
+        })
+    }
+
+    if(annulerDetruirebtn2){
+        annulerDetruirebtn2.addEventListener('click', () => {
+            closeModal(modalModificationStatut);
+        })
+    }
+
+    if(fermerModalAnnulation){
+        fermerModalAnnulation.addEventListener('click', () => {
+            closeModal(modalAnnulation);
+        })
+    }
+
+    function openModal(modalSelector){
+        const elModal = document.querySelector(modalSelector);
+        if (elModal.classList.contains('modal--ferme')) {
+            elModal.classList.replace('modal--ferme', 'modal--ouvre');
+
+            // Ajoute la propriété overflow-y: hidden; sur les éléments html et body afin d'enlever le scroll en Y lorsque le modal est ouvert
+            document.documentElement.classList.add('overflow-y--hidden');
+            document.body.classList.add('overflow-y--hidden');
         }
-        if(submit_btns){
-            submit_btns.style.display = 'none';
+
+    }
+
+    function closeModal(modalSelector){
+        const elModal = document.querySelector(modalSelector);
+        if (elModal.classList.contains('modal--ouvre')) {
+            elModal.classList.replace('modal--ouvre', 'modal--ferme');
+
+            document.documentElement.classList.remove('overflow-y--hidden');
+            document.body.classList.remove('overflow-y--hidden');
         }
-    });
+
+    }
+
+    const modifStatus = document.getElementById('modifStatus');
+    if(modifStatus){
+        if(modifStatus.value){
+            openModal(modalModificationStatut);
+        }
+    }
+
+    const gobackbtn = document.getElementById('gobackbtn');
+    if(gobackbtn){
+        gobackbtn.addEventListener('click', (e) => {
+            console.log('gobackbtn', e.target.value);
+
+            if(e.target.value){
+                console.log("e.target.value", e.target.value);
+                if( e.target.value  === -1){
+                    window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier");
+                }else {
+                    window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier&id_cellier="+e.target.value);
+                }
+            }
+        });
+    }
+
+    const gobackbtn2 = document.getElementById('gobackbtn2');
+    if(gobackbtn2){
+        gobackbtn2.addEventListener('click', (e) => {
+            if(e.target.value){
+                console.log("e.target.value", e.target.value);
+                if( e.target.value  === -1){
+                    window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier");
+                }else {
+                    window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier&id_cellier="+e.target.value);
+                }
+            }
+        });
+    }
 });

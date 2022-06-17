@@ -42,6 +42,9 @@ class Controler
             case 'ajouterBouteilleCellier':
                 $this->ajouterBouteilleCellier();
                 break;
+            case 'detruireBouteille': //detruire une bouteille from cellier
+                return $this->detruireBouteille();
+                break;
             case 'boireBouteilleCellier':
                 $this->boireBouteilleCellier();
                 break;
@@ -161,6 +164,20 @@ class Controler
         // echo json_encode($resultat);
     }
 
+    private function detruireBouteille()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+
+        $bte = new Bouteille();
+        $resultat = $bte->deleteUsageBouteille($body->id_bouteille, $body->id_cellier);
+
+        if($resultat){
+            return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille, 'id_cellier' => $body->id_cellier, 'resultat' => $resultat]);
+        }
+        return $this->returnJsonHttpResponse(false, []);
+        // echo json_encode($resultat);
+    }
+
 
     /*CELLIERS*/
 
@@ -222,12 +239,10 @@ class Controler
         $id_cellier = $_GET['id_cellier'];
         $nom_cellier = $_GET['nom_cellier'];
 
-        echo 'test';
         $bte = new Bouteille();
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
 
-        echo 'anas';//$data;
         include("vues/entete.php");
         include("vues/bouteilles.php");
         include("vues/pied.php");
@@ -238,15 +253,18 @@ class Controler
 
     private function ficheBouteille()
     {
+        if(!$_SESSION['utilisateur']['id']){
+            $this->deconnecterUtilisateur();
+            return;
+        }
         $id_cellier = $_GET['id_cellier'];
         $id_bouteille = $_GET['id_bouteille'];
+        $message = $_GET['message'];
 
 
         if($id_bouteille){
             $bouteille = (new Bouteille());
-//            echo "jh";
-//            return;
-            $bouteille = $bouteille->getOneBouteille($id_bouteille);
+            $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
             if(is_array($bouteille) && count($bouteille)>0){
                 $bouteille = $bouteille[0];
             }
@@ -258,7 +276,8 @@ class Controler
         $list = new Lists();
         $bouteilles = $list->getList('bouteille');
         $usager_celliers = $list->getList('usager_cellier');
-        $celliers = $list->getList('cellier');
+        $usager_bouteille = $list->getList('usager_bouteille');
+
         $pays = $list->getList('pays');
         $regions = $list->getList('region');
         $types = $list->getList('type');
@@ -271,6 +290,20 @@ class Controler
         $produit_du_quebecs = $list->getList('produit_du_quebec');
         $classifications = $list->getList('classifications');
 
+
+        $celliers = $usager_celliers;
+        if(!is_array($celliers) || !(count($celliers)>0)){
+            $bouteille['celliers'] = [
+                'id_cellier' => null,
+                'nom_cellier' => '',
+                'quantite' => 0
+            ];
+        }else{
+            $bouteille['celliers'] = $celliers;
+        }
+
+
+        $bouteille['id_cellier'] = $id_cellier;
 
         include("vues/entete.php");
         include("vues/details.php");
@@ -289,7 +322,7 @@ class Controler
                 return $this->returnJsonHttpResponse(true, $resultat[0]);
             }
         }
-        return null;
+        return $this->returnJsonHttpResponse(false, null);
     }
 
 

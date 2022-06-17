@@ -1,6 +1,5 @@
 <!--Page d'accueil non connecté-->
 <?php
-print_r($product);
 //    foreach ($product as $key => $value){
 //        echo $key . " => ". $value."     -------      \n";
 //    }
@@ -9,6 +8,7 @@ print_r($product);
 if (!isset($pays)) $pays = [];
 if (!isset($bouteilles)) $bouteilles = [];
 if (!isset($celliers)) $celliers = [];
+if (!isset($usager_bouteille)) $usager_bouteille = [];
 if (!isset($usager_celliers)) $usager_celliers = [];
 if (!isset($regions)) $regions = [];
 if (!isset($types)) $types = [];
@@ -38,7 +38,6 @@ $items = [
     'produit_du_quebecs' => $produit_du_quebecs,
     'classifications' => $classifications,
 ];
-
 
 $form_values = [
     'id_bouteille'  => null,
@@ -77,114 +76,38 @@ $form_values = [
 
     'date_achat' => null,
     'garde_jusqua' => null,
-    'note' => null,
     'quantite' => null,
-    'millesime' => null
+    'millesime' => null,
+    'commentaires' => null,
+    'note' => null,
+
+    'celliers' => [
+         'nom_cellier' => null,
+         'quantite' => null
+    ]
 ];
 
-if(isset($bouteille) && $bouteille != null){
+$erreur = "";
+
+
+if(isset($bouteille) && $bouteille != null && $bouteille['id_bouteille'] && strlen($bouteille['nom_bouteille'])){
     $form_values = $bouteille;
+}else{
+    $bouteille = null;
 }
 
-if(isset($id_bouteille)){
-    echo "isset true";
+foreach ($celliers as & $cellier_dans_le_compte){
+    foreach ($usager_bouteille as $ub){
+        if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
+            $cellier_dans_le_compte['quantite'] = $ub['quantite_bouteille'];
+        }
+    }
 }
-
-if(isset($id_bouteille) && $id_bouteille != null){
-    echo "id bouteille not null";
-}
-
-//print_r($form_values['casher']);
+//echo $_SESSION['utilisateur']['id'];
+//print_r($celliers);
 
 ?>
 
-<!-- fiche produit -->
-
-<!--<section class="section-wrapper texte-photo">-->
-<!---->
-<!--    <article class="texte-photo__contenu d-flex">-->
-<!---->
-<!--        <div class="product-photo">-->
-<!--            <img src="https://www.saq.com/media/catalog/product/1/1/11097101-1_1580612720.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2"-->
-<!--                 alt="degustation2">-->
-<!--        </div>-->
-<!---->
-<!--        <div class="top-info">-->
-<!--            <h1 class="texte-photo__titre">19 Crimes Hard Chard</h1>-->
-<!--            <h3 class="under-texte-photo__texte">-->
-<!--                Vin blanc | 750 ml | Australie South Eastern Australia-->
-<!--            </h3>-->
-<!--            <div class="info-details" style="max-width: unset">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Pays</div>-->
-<!--                        <div class="value">France</div>-->
-<!--                    </div>-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Catégorie</div>-->
-<!--                        <div class="value">Vin blan</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Région</div>-->
-<!--                        <div class="value">South Eastern Australia **HC**</div>-->
-<!--                    </div>-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Format</div>-->
-<!--                        <div class="value">700ml</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Désignation réglementée</div>-->
-<!--                        <div class="value">Vin de table (VDT) **HC**</div>-->
-<!--                    </div>-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Vin de table (VDT)</div>-->
-<!--                        <div class="value">19 Crimes **HC**</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Cépage</div>-->
-<!--                        <div class="value">Chardonnay 100 % **HC**</div>-->
-<!--                    </div>-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Agent promotionnel</div>-->
-<!--                        <div class="value">Mark Anthony Brands Ltd **HC**</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Degré d'alcool</div>-->
-<!--                        <div class="value">16 % **HC**</div>-->
-<!--                    </div>-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Code SAQ</div>-->
-<!--                        <div class="value">311313342</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Taux de sucre</div>-->
-<!--                        <div class="value">10 g/L **HC**</div>-->
-<!--                    </div>-->
-<!--                    <div class="col-6 info-unit">-->
-<!--                        <div class="label">Code CUP</div>-->
-<!--                        <div class="value">00012354001947 **HC**</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row submit-bloc">-->
-<!--                    <button class="bouton-primaire">Signaler une erreur</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!---->
-<!--    </article>-->
-<!---->
-<!--</section>-->
 <script src="./js/bouteille.js"  type="text/javascript"></script>
 <section class="section-wrapper">
     <h2>Informations</h2>
@@ -194,11 +117,14 @@ if(isset($id_bouteille) && $id_bouteille != null){
             <!--  Le cas d'un id de bouteille inntrouvable dans la base de données-->
             <div class="warrning-message">
                 Cette bouteille est introuvable
+                <?php if(isset($id_cellier)) {?>
+                    dans ce cellier
+                <?php } ?>
             </div>
         <?php }else{ ?>
             <!--  Le cas normal-->
+            <!--        On ajout un champ hidden pour montrer qu'on veut la modification-->
             <div class="boite-double">
-                <!--LOGIN-->
                 <div class="boite-double__contenant-form">
                     <div class="product-photo">
                         <img src="<?php echo $form_values['image_bouteille']?>"
@@ -209,117 +135,39 @@ if(isset($id_bouteille) && $id_bouteille != null){
 
                 </div>
                 <form class="formulaire info-details"  action="./controller/AjouterBouteille.php" method="POST">
-                    <div class="row">
-                        <div class="col info-unit">
-                            <div class="label">Nom de la bouteille</div>
-                            <div class="value label-state" style="<?php if(!isset($id_bouteille)) echo 'display: unset'?>">
-                                <?php echo ($form_values['nom_bouteille'] ?: 'Non défini') ?>
-                            </div>
-                            <div class="value input-state">
-                                <input list="bouteilles"
-                                       value="<?php echo $form_values['nom_bouteille']?>"
-                                       placeholder="Sélectionner ici"
-                                       data-js-bouteille-select
-                                       class="input select formulaire__champs boite-double__champs"
-                                       name="nom_bouteille" id="id_bouteille" >
-
-                                <datalist id="bouteilles">
-                                    <?php foreach ($bouteilles as $element){ ?>
-                                    <option value="<?php echo $element['nom_bouteille'] ?>">
-                                        <?php } ?>
-                                </datalist>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--            Information liées au cellier-->
-                    <div class="form-block">
-                        <h6>Informations liés au cellier</h6>
-                        <div class="row">
-                            <div class="col-6 info-unit">
-                                <div class="label">Cellier</div>
-                                <div class="value label-state">
-                                    <?php echo $form_values['nom_cellier']  ?: 'Non défini'?>
-                                </div>
-                                <div class="value input-state">
-                                    <input list="usager_celliers"
-                                           value="<?php echo $form_values['nom_cellier']?>"
-                                           placeholder="Sélectionner ici"
-                                           class="input select formulaire__champs boite-double__champs"
-                                           name="id_cellier" id="id_cellier" >
-
-                                    <datalist id="usager_celliers">
-                                        <?php foreach ($usager_celliers as $element){ ?>
-                                            <option><?php echo $element['nom_cellier'] ?></option>
-                                        <?php } ?>
-                                    </datalist>
-                                </div>
-                            </div>
-                            <div class="col-6 info-unit">
-                                <div class="label">Quantité</div>
-                                <div class="value label-state">
-                                    <?php echo $form_values['quantite_bouteille']  ?: 'Non défini'?>
-                                </div>
-                                <div class="value input-state"><input type="number" name="quantite_bouteille"
-                                                                      value="<?php echo $form_values['quantite_bouteille']?>"
-                                                                      class="input formulaire__champs boite-double__champs"
-                                                                      placeholder="Saisir ici"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 info-unit">
-                                <div class="label">Date d'achat</div>
-                                <div class="value label-state">
-                                    <?php echo $form_values['date_achat']  ?: 'Non défini' ?>
-                                </div>
-                                <div class="value input-state"><input type="date" name="date_achat"
-                                                                      value="<?php echo $form_values['date_achat']?>"
-                                                                      class="input formulaire__champs boite-double__champs"
-                                                                      placeholder="Saisir ici"></div>
-                            </div>
-                            <div class="col-6 info-unit">
-                                <div class="label">Garde jusqu'à</div>
-                                <div class="value label-state">
-                                    <?php echo $form_values['garde_jusqua']  ?: 'Non défini'?>
-                                </div>
-                                <div class="value input-state"><input type="date" name="garde_jusqua"
-                                                                      value="<?php echo $form_values['garde_jusqua']?>"
-                                                                      class="input formulaire__champs boite-double__champs"
-                                                                      placeholder="Saisir ici"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 info-unit">
-                                <div class="label">Note</div>
-                                <div class="value label-state">
-                                    <?php echo $form_values['note']  ?: 'Non défini'?>
-                                </div>
-                                <div class="value input-state">
-                                    <input type="number" name="note"
-                                           value="<?php echo $form_values['note']?>"
-                                           class="input formulaire__champs boite-double__champs"
-                                           placeholder="Saisir ici">
-                                </div>
-                            </div>
-                            <div class="col-6 info-unit">
-                                <div class="label">Millesime</div>
-                                <div class="value label-state">
-                                    <?php echo $form_values['millesime']  ?: 'Non défini'?>
-                                </div>
-                                <div class="value input-state">
-                                    <input type="text" name="millesime"
-                                           value="<?php echo $form_values['millesime']?>"
-                                           class="input formulaire__champs boite-double__champs"
-                                           placeholder="Saisir ici">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--        fin    Information liées au cellier-->
-
+                    <input type="hidden"
+                           name="id_bouteille"
+                           value="<?php echo $form_values['id_bouteille']?>"
+                    />
+                    <input type="hidden"
+                           name="id_cellier"
+                           value="<?php echo $form_values['id_cellier']?>"
+                    />
                     <div class="form-block">
                         <h6>Informations sur la bouteille</h6>
                         <div class="row">
+                            <div class="col info-unit">
+                                <input type="hidden" value="<?php echo $form_values['id_bouteille']?>" name="id_bouteille"/>
+                                <div class="label">Nom de la bouteille</div>
+                                <div class="value label-state" style="<?php if(!isset($id_bouteille)) echo 'display: unset'?>">
+                                    <?php echo ($form_values['nom_bouteille'] ?: 'Non défini') ?>
+                                </div>
+                                <div class="value input-state">
+                                    <input list="bouteilles"
+                                           required
+                                           value="<?php echo $form_values['nom_bouteille']?>"
+                                           placeholder="Sélectionner ici"
+                                           data-js-bouteille-select
+                                           class="input select formulaire__champs boite-double__champs"
+                                           name="nom_bouteille" id="id_bouteille" >
+
+                                    <datalist id="bouteilles">
+                                        <?php foreach ($bouteilles as $element){ ?>
+                                        <option value="<?php echo $element['nom_bouteille'] ?>">
+                                            <?php } ?>
+                                    </datalist>
+                                </div>
+                            </div>
                             <div class="col-6 info-unit">
                                 <div class="label">Url de l'image de la bouteille</div>
                                 <div class="value label-state">
@@ -332,6 +180,8 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                            placeholder="Saisir ici">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-6 info-unit">
                                 <div class="label">Description</div>
                                 <div class="value label-state">
@@ -344,8 +194,6 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                            placeholder="Saisir ici">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-6 info-unit">
                                 <div class="label">Code saq</div>
                                 <div class="value label-state">
@@ -357,6 +205,8 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                                                       placeholder="Saisir ici">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-6 info-unit">
                                 <div class="label">Code cup</div>
                                 <div class="value label-state">
@@ -369,8 +219,6 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                            placeholder="Saisir ici">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-6 info-unit">
                                 <div class="label">Prix</div>
                                 <div class="value label-state">
@@ -378,11 +226,14 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                 </div>
                                 <div class="value input-state">
                                     <input type="number" name="prix_bouteille"
+                                           required
                                            value="<?php echo $form_values['prix_bouteille']?>"
                                            class="input formulaire__champs boite-double__champs"
                                            placeholder="Saisir ici">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-6 info-unit">
                                 <div class="label">Producteur</div>
                                 <div class="value label-state">
@@ -395,8 +246,6 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                            placeholder="Saisir ici">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-6 info-unit">
                                 <div class="label">Url saq</div>
                                 <div class="value label-state">
@@ -526,6 +375,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                 </div>
                                 <div class="value input-state">
                                     <input list="pays"
+                                           required
                                            placeholder="Sélectionner ici"
                                            value="<?php echo $form_values['nom_pays']?>"
                                            class="input select formulaire__champs boite-double__champs"
@@ -545,6 +395,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                 </div>
                                 <div class="value input-state">
                                     <input list="regions"
+                                           required
                                            value="<?php echo $form_values['nom_region']?>"
                                            placeholder="Sélectionner ici"
                                            class="input select formulaire__champs boite-double__champs"
@@ -567,6 +418,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                 </div>
                                 <div class="value input-state">
                                     <input list="types"
+                                           required
                                            placeholder="Sélectionner ici"
                                            value="<?php echo $form_values['nom_type']?>"
                                            class="input select formulaire__champs boite-double__champs"
@@ -586,6 +438,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                 </div>
                                 <div class="value input-state">
                                     <input list="formats"
+                                           required
                                            placeholder="Sélectionner ici"
                                            value="<?php echo $form_values['nom_format']?>"
                                            class="input select formulaire__champs boite-double__champs"
@@ -669,6 +522,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                 <div class="value input-state">
                                     <input list="taux_de_sucres"
                                            placeholder="Sélectionner ici"
+                                           required
                                            value="<?php echo $form_values['nom_taux_de_sucre']?>"
                                            class="input select formulaire__champs boite-double__champs"
                                            name="nom_taux_de_sucre" id="nom_taux_de_sucre" />
@@ -742,20 +596,202 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <?php if(isset($id_cellier) && $id_cellier!=null) {?>
+                            <input type="hidden"
+                                   name="celliers[0][nom_cellier]"
+                                   value="<?php echo $form_values['nom_cellier']?>"
+                            />
+                            <input type="hidden"
+                                   name="celliers[0][id_cellier]"
+                                   value="<?php echo $form_values['id_cellier']?>"
+                            />
+                        <?php } ?>
 
+                        <div class="row">
+                            <div class="col-6 info-unit">
+                                <div class="label">Date d'achat</div>
+                                <div class="value label-state">
+                                    <?php echo $form_values['date_achat']  ?: 'Non défini'?>
+                                </div>
+                                <div class="value input-state">
+                                    <input type="date"
+                                           value="<?php echo $form_values['date_achat']?>"
+                                           placeholder="Sélectionner ici"
+                                           class="input formulaire__champs boite-double__champs"
+                                           name="date_achat"
+                                           id="date_achat" />
+                                </div>
+                            </div>
+                            <div class="col-6 info-unit">
+                                <div class="label">Garder jusqu'à</div>
+                                <div class="value label-state">
+                                    <?php echo $form_values['garde_jusqua']  ?: 'Non défini'?>
+                                </div>
+                                <div class="value input-state">
+                                    <input type="date"
+                                           value="<?php echo $form_values['garde_jusqua']?>"
+                                           placeholder="Sélectionner ici"
+                                           class="input formulaire__champs boite-double__champs"
+                                           name="garde_jusqua"
+                                           id="garde_jusqua" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 info-unit">
+                                <div class="label">Millisime</div>
+                                <div class="value label-state">
+                                    <?php echo $form_values['millesime']  ?: 'Non défini'?>
+                                </div>
+                                <div class="value input-state">
+                                    <input type="number"
+                                           value="<?php echo $form_values['millesime']?>"
+                                           placeholder="Sélectionner ici"
+                                           class="input formulaire__champs boite-double__champs"
+                                           name="millesime"
+                                           id="millesime" />
+                                </div>
+                            </div>
+                            <?php if(isset($id_cellier) && $id_cellier!=null) {?>
+                                <div class="col-6 info-unit">
+                                <div class="label">Quantité</div>
+                                <div class="value label-state">
+                                    <?php echo $form_values['quantite']  ?: 'Non défini'?>
+                                </div>
+                                <div class="value input-state">
+                                    <input type="hidden" name="celliers[0][id_cellier]"
+                                           value="<?php echo $id_cellier?>"
+                                    />
+                                    <input type="number"
+                                           required
+                                           value="<?php echo $form_values['quantite']?>"
+                                           placeholder="Sélectionner ici"
+                                           class="input formulaire__champs boite-double__champs"
+                                           name="celliers[0][quantite]"
+                                           id="quantite" />
+                                </div>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <!--            Information liées au cellier-->
+                    <?php if(!isset($id_cellier) || !$id_cellier) {?>
+                        <div class="form-block" id="cellier-block">
+                        <h6>Informations liés au cellier</h6>
+
+                                <?php $key = 0; foreach ($celliers as $cellier) {?>
+                                    <div class="row">
+                                        <div class="col-6 info-unit">
+                                            <div class="label">Cellier</div>
+                                            <div class="value label-state">
+                                                <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
+                                            </div>
+                                            <div class="value input-state">
+                                                <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
+                                                       name="celliers<?php echo "[".$key."]"?>[id_cellier]"
+                                                />
+                                                <select placeholder="Sélectionner ici"
+                                                        class="input select formulaire__champs boite-double__champs"
+                                                        name="celliers<?php echo "[".$key."]"?>[nom_cellier]" id="nom_cellier">
+                                                    <?php foreach ($usager_celliers as $element){ ?>
+                                                        <option value="<?php echo $element['nom_cellier'] ?>"  <?php if($element['nom_cellier']==$cellier['nom_cellier']) echo "selected" ?>><?php echo $element['nom_cellier'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                                <!--                                    <input list="usager_celliers"-->
+                                                <!--                                           value="--><?php //echo $form_values['nom_cellier']?><!--"-->
+                                                <!--                                           placeholder="Sélectionner ici"-->
+                                                <!--                                           class="input select formulaire__champs boite-double__champs"-->
+                                                <!--                                           name="nom_cellier" id="nom_cellier" >-->
+
+                                                <!--                                    <datalist id="usager_celliers">-->
+                                                <!--                                        --><?php //foreach ($usager_celliers as $element){ ?>
+                                                <!--                                            <option>--><?php //echo $element['nom_cellier'] ?><!--</option>-->
+                                                <!--                                        --><?php //} ?>
+                                                <!--                                    </datalist>-->
+                                            </div>
+                                        </div>
+                                        <div class="col-6 info-unit">
+                                            <div class="label">Quantité</div>
+                                            <div class="value label-state">
+                                                <?php echo $cellier['quantite']  ?: 'Non défini'?>
+                                            </div>
+                                            <div class="value input-state">
+                                                <input type="number"
+                                                       required
+                                                       name="celliers<?php echo "[".$key."]"?>[quantite]"
+                                                          value="<?php echo $cellier['quantite']?>"
+                                                          class="input formulaire__champs boite-double__champs"
+                                                          placeholder="Saisir ici"></div>
+                                        </div>
+                                    </div>
+                                <?php $key++; } ?>
+
+<!--                        <div class="row">-->
+<!--                            <div class="col-6 info-unit">-->
+<!--                                <div class="label">Date d'achat</div>-->
+<!--                                <div class="value label-state">-->
+<!--                                    --><?php //echo $form_values['date_achat']  ?: 'Non défini' ?>
+<!--                                </div>-->
+<!--                                <div class="value input-state"><input type="date" name="date_achat"-->
+<!--                                                                      value="--><?php //echo $form_values['date_achat']?><!--"-->
+<!--                                                                      class="input formulaire__champs boite-double__champs"-->
+<!--                                                                      placeholder="Saisir ici"></div>-->
+<!--                            </div>-->
+<!--                            <div class="col-6 info-unit">-->
+<!--                                <div class="label">Garde jusqu'à</div>-->
+<!--                                <div class="value label-state">-->
+<!--                                    --><?php //echo $form_values['garde_jusqua']  ?: 'Non défini'?>
+<!--                                </div>-->
+<!--                                <div class="value input-state"><input type="date" name="garde_jusqua"-->
+<!--                                                                      value="--><?php //echo $form_values['garde_jusqua']?><!--"-->
+<!--                                                                      class="input formulaire__champs boite-double__champs"-->
+<!--                                                                      placeholder="Saisir ici"></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-6 info-unit">-->
+<!--                                <div class="label">Notes</div>-->
+<!--                                <div class="value label-state">-->
+<!--                                    --><?php //echo $form_values['notes']  ?: 'Non défini'?>
+<!--                                </div>-->
+<!--                                <div class="value input-state">-->
+<!--                                    <input type="number" name="notes"-->
+<!--                                           value="--><?php //echo $form_values['notes']?><!--"-->
+<!--                                           class="input formulaire__champs boite-double__champs"-->
+<!--                                           placeholder="Saisir ici">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-6 info-unit">-->
+<!--                                <div class="label">Millesime</div>-->
+<!--                                <div class="value label-state">-->
+<!--                                    --><?php //echo $form_values['millesime']  ?: 'Non défini'?>
+<!--                                </div>-->
+<!--                                <div class="value input-state">-->
+<!--                                    <input type="text" name="millesime"-->
+<!--                                           value="--><?php //echo $form_values['millesime']?><!--"-->
+<!--                                           class="input formulaire__champs boite-double__champs"-->
+<!--                                           placeholder="Saisir ici">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                    <?php } ?>
+                    <!--        fin    Information liées au cellier-->
                     <div class="row submit-bloc">
                         <div class="col-6 info-unit">
-                            <button class="bouton-danger" type="button">Détruire</button>
-                            <button class="bouton-secondaire" type="button" id="ouvrirFormulaire">Modifier</button>
+                                <button class="bouton-danger" type="button" id="askDeleteBtn"
+                                    <?php if(!$form_values['id_cellier'] || !$form_values['id_bouteille']) {echo "disabled";}?>
+                                >Détruire</button>
+                            <?php //if(isset($id_bouteille) && $id_bouteille != null) {echo "disabled";}?>
+                            <button class="bouton-secondaire" type="button" id="ouvrirFormulaire"
+                            >Modifier</button>
                         </div>
                         <div class="col-6 info-unit" >
 
                             <div id="submit_btns">
-                                <button class="bouton-primaire" type="button" id="fermerFormulaire" >Annuler</button>
-                                <?php if(isset($id_bouteille) && $id_bouteille != null) {?>
-                                    <button class="bouton-secondaire">Enregistrer</button>
-                                <?php } ?>
+                                <button class="bouton-primaire" type="button" id="fermerFormulaire"
+                                >Annuler</button>
+                                    <button class="bouton-secondaire" id="enregistrerFormulaire">Enregistrer</button>
                             </div>
                         </div>
                     </div>
@@ -776,97 +812,32 @@ if(isset($id_bouteille) && $id_bouteille != null){
 
             </div>
             <form class="formulaire info-details"  action="./controller/AjouterBouteille.php" method="POST">
-                <div class="row">
-                    <div class="col info-unit">
-                        <div class="label">Nom de la bouteille</div>
-                        <div class="value">
-                            <input list="bouteilles"
-                                   value="<?php echo $form_values['nom_bouteille']?>"
-                                   placeholder="Sélectionner ici"
-                                   data-js-bouteille-select
-                                   class="input select formulaire__champs boite-double__champs"
-                                   name="nom_bouteille" id="id_bouteille" >
 
-                            <datalist id="bouteilles">
-                                <?php foreach ($bouteilles as $element){ ?>
-                                <option value="<?php echo $element['nom_bouteille'] ?>">
-                                    <?php } ?>
-                            </datalist>
-                        </div>
-                    </div>
-                </div>
-
-                <!--            Information liées au cellier-->
-                <div class="form-block">
-                    <h6>Informations liés au cellier</h6>
-                    <div class="row">
-                        <div class="col-6 info-unit">
-                            <div class="label">Cellier</div>
-                            <div class="value">
-                                <input list="usager_celliers"
-                                       value="<?php echo $form_values['nom_cellier']?>"
-                                       placeholder="Sélectionner ici"
-                                       class="input select formulaire__champs boite-double__champs"
-                                       name="id_cellier" id="id_cellier" >
-
-                                <datalist id="usager_celliers">
-                                    <?php foreach ($usager_celliers as $element){ ?>
-                                        <option><?php echo $element['nom_cellier'] ?></option>
-                                    <?php } ?>
-                                </datalist>
-                            </div>
-                        </div>
-                        <div class="col-6 info-unit">
-                            <div class="label">Quantité</div>
-                            <div class="value ">
-                                <input type="number" name="quantite_bouteille"
-                                  value="<?php echo $form_values['quantite_bouteille']?>"
-                                  class="input formulaire__champs boite-double__champs"
-                                  placeholder="Saisir ici"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 info-unit">
-                            <div class="label">Date d'achat</div>
-                            <div class="value"><input type="date" name="date_achat"
-                                                                  value="<?php echo $form_values['date_achat']?>"
-                                                                  class="input formulaire__champs boite-double__champs"
-                                                                  placeholder="Saisir ici"></div>
-                        </div>
-                        <div class="col-6 info-unit">
-                            <div class="label">Garde jusqu'à</div>
-                            <div class="value"><input type="date" name="garde_jusqua"
-                                                                  value="<?php echo $form_values['garde_jusqua']?>"
-                                                                  class="input formulaire__champs boite-double__champs"
-                                                                  placeholder="Saisir ici"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 info-unit">
-                            <div class="label">Note</div>
-                            <div class="value">
-                                <input type="number" name="note"
-                                       value="<?php echo $form_values['note']?>"
-                                       class="input formulaire__champs boite-double__champs"
-                                       placeholder="Saisir ici">
-                            </div>
-                        </div>
-                        <div class="col-6 info-unit">
-                            <div class="label">Millesime</div>
-                            <div class="value">
-                                <input type="text" name="millesime"
-                                       value="<?php echo $form_values['millesime']?>"
-                                       class="input formulaire__champs boite-double__champs"
-                                       placeholder="Saisir ici">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--        fin    Information liées au cellier-->
-
+                <input type="hidden"
+                       name="id_cellier"
+                       value="<?php echo $form_values['id_cellier']?>"
+                />
                 <div class="form-block">
                     <h6>Informations sur la bouteille</h6>
                     <div class="row">
+                        <div class="col info-unit">
+                            <div class="label">Nom de la bouteille</div>
+                            <div class="value">
+                                <input list="bouteilles"
+                                       value="<?php echo $form_values['nom_bouteille']?>"
+                                       placeholder="Sélectionner ici"
+                                       required
+                                       data-js-bouteille-select
+                                       class="input select formulaire__champs boite-double__champs"
+                                       name="nom_bouteille" id="id_bouteille" >
+
+                                <datalist id="bouteilles">
+                                    <?php foreach ($bouteilles as $element){ ?>
+                                    <option value="<?php echo $element['nom_bouteille'] ?>">
+                                        <?php } ?>
+                                </datalist>
+                            </div>
+                        </div>
                         <div class="col-6 info-unit">
                             <div class="label">Url de l'image de la bouteille</div>
                             <div class="value">
@@ -876,6 +847,8 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                        placeholder="Saisir ici">
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-6 info-unit">
                             <div class="label">Description</div>
                             <div class="value">
@@ -885,8 +858,6 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                        placeholder="Saisir ici">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-6 info-unit">
                             <div class="label">Code saq</div>
                             <div class="value ">
@@ -896,6 +867,8 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                   placeholder="Saisir ici">
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-6 info-unit">
                             <div class="label">Code cup</div>
                             <div class="value">
@@ -905,18 +878,18 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                        placeholder="Saisir ici">
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-6 info-unit">
                             <div class="label">Prix</div>
                             <div class="value">
                                 <input type="number" name="prix_bouteille"
+                                       required
                                        value="<?php echo $form_values['prix_bouteille']?>"
                                        class="input formulaire__champs boite-double__champs"
                                        placeholder="Saisir ici">
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-6 info-unit">
                             <div class="label">Producteur</div>
                             <div class="value">
@@ -926,8 +899,6 @@ if(isset($id_bouteille) && $id_bouteille != null){
                                        placeholder="Saisir ici">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-6 info-unit">
                             <div class="label">Url saq</div>
                             <div class="value">
@@ -982,7 +953,6 @@ if(isset($id_bouteille) && $id_bouteille != null){
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-6 info-unit">
                             <div class="label">Faible taux alcool</div>
@@ -1030,6 +1000,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                             <div class="label">Pays</div>
                             <div class="value">
                                 <input list="pays"
+                                       required
                                        placeholder="Sélectionner ici"
                                        value="<?php echo $form_values['nom_pays']?>"
                                        class="input select formulaire__champs boite-double__champs"
@@ -1046,6 +1017,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                             <div class="label">Region</div>
                             <div class="value">
                                 <input list="regions"
+                                       required
                                        value="<?php echo $form_values['nom_region']?>"
                                        placeholder="Sélectionner ici"
                                        class="input select formulaire__champs boite-double__champs"
@@ -1065,6 +1037,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                             <div class="label">Type</div>
                             <div class="value">
                                 <input list="types"
+                                       required
                                        placeholder="Sélectionner ici"
                                        value="<?php echo $form_values['nom_type']?>"
                                        class="input select formulaire__champs boite-double__champs"
@@ -1081,6 +1054,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                             <div class="label">Format</div>
                             <div class="value">
                                 <input list="formats"
+                                       required
                                        placeholder="Sélectionner ici"
                                        value="<?php echo $form_values['nom_format']?>"
                                        class="input select formulaire__champs boite-double__champs"
@@ -1152,6 +1126,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
                             <div class="value">
                                 <input list="taux_de_sucres"
                                        placeholder="Sélectionner ici"
+                                       required
                                        value="<?php echo $form_values['nom_taux_de_sucre']?>"
                                        class="input select formulaire__champs boite-double__champs"
                                        name="nom_taux_de_sucre" id="nom_taux_de_sucre" />
@@ -1216,7 +1191,94 @@ if(isset($id_bouteille) && $id_bouteille != null){
                             </div>
                         </div>
                     </div>
+                        <div class="row">
+                            <div class="col-6 info-unit">
+                                <div class="label">Date d'achat</div>
+                                <div class="value">
+                                    <input type="date"
+                                           value="<?php echo $form_values['date_achat']?>"
+                                           placeholder="Sélectionner ici"
+                                           class="input formulaire__champs boite-double__champs"
+                                           name="date_achat" id="date_achat" />
+                                </div>
+                            </div>
+                            <div class="col-6 info-unit">
+                                <div class="label">Garder jusqu'à</div>
+                                <div class="value">
+                                    <input type="date"
+                                           value="<?php echo $form_values['garde_jusqua']?>"
+                                           placeholder="Sélectionner ici"
+                                           class="input formulaire__champs boite-double__champs"
+                                           name="garde_jusqua" id="garde_jusqua" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 info-unit">
+                                <div class="label">Millisime</div>
+                                <div class="value">
+                                    <input type="number"
+                                           value="<?php echo $form_values['millesime']?>"
+                                           placeholder="Sélectionner ici"
+                                           class="input formulaire__champs boite-double__champs"
+                                           name="millesime" id="millesime" />
+                                </div>
+                            </div>
+                            <?php if(isset($id_cellier) && $id_cellier!=null) {?>
+                                <div class="col-6 info-unit">
+                                    <div class="label">Quantité</div>
+                                    <div class="value">
+                                        <input type="hidden" name="celliers[0][id_cellier]"
+                                               value="<?php echo $id_cellier?>"
+                                        />
+                                        <input type="number"
+                                               required
+                                               value="<?php echo $form_values['quantite']?>"
+                                               placeholder="Sélectionner ici"
+                                               class="input formulaire__champs boite-double__champs"
+                                               name="celliers[0][quantite]"
+                                               id="quantite" />
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+
                 </div>
+
+                <?php if(!isset($id_cellier) || !$id_cellier) {?>
+                    <div class="form-block" id="cellier-block">
+                        <h6>Informations liés au cellier</h6>
+                            <?php $key = 0; foreach ($celliers as $cellier) {?>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Cellier</div>
+                                        <div class="value">
+                                            <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
+                                                   name="celliers<?php echo "[".$key."]"?>[id_cellier]"
+                                            />
+                                            <select placeholder="Sélectionner ici"
+                                                    class="input select formulaire__champs boite-double__champs"
+                                                    name="celliers<?php echo "[".$key."]"?>[nom_cellier]" id="nom_cellier">
+                                                <?php foreach ($usager_celliers as $element){ ?>
+                                                    <option value="<?php echo $element['nom_cellier'] ?>"  <?php if($element['nom_cellier']==$cellier['nom_cellier']) echo "selected" ?>><?php echo $element['nom_cellier'] ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Quantité</div>
+                                        <div class="value">
+                                            <input type="number"
+                                                   required
+                                                   name="celliers<?php echo "[".$key."]"?>[quantite]"
+                                                   value="<?php echo $cellier['quantite']?>"
+                                                   class="input formulaire__champs boite-double__champs"
+                                                   placeholder="Saisir ici"></div>
+                                    </div>
+                                </div>
+                                <?php $key++; } ?>
+                    </div>
+                <?php }?>
 
                 <div class="row submit-bloc">
                     <div class="col-6 info-unit">
@@ -1228,39 +1290,85 @@ if(isset($id_bouteille) && $id_bouteille != null){
 <!--                        </div>-->
                     </div>
                 </div>
+
+                <!--            Information liées au cellier-->
+                <!--                <div class="form-block">-->
+                <!--                    <h6>Informations liés au cellier</h6>-->
+                <!--                    <div class="row">-->
+                <!--                        <div class="col-6 info-unit">-->
+                <!--                            <div class="label">Cellier</div>-->
+                <!--                            <div class="value">-->
+                <!--                                <input list="usager_celliers"-->
+                <!--                                       value="--><?php //echo $form_values['nom_cellier']?><!--"-->
+                <!--                                       placeholder="Sélectionner ici"-->
+                <!--                                       class="input select formulaire__champs boite-double__champs"-->
+                <!--                                       name="nom_cellier" id="nom_cellier" >-->
+                <!---->
+                <!--                                <datalist id="usager_celliers">-->
+                <!--                                    --><?php //foreach ($usager_celliers as $element){ ?>
+                <!--                                        <option>--><?php //echo $element['nom_cellier'] ?><!--</option>-->
+                <!--                                    --><?php //} ?>
+                <!--                                </datalist>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                        <div class="col-6 info-unit">-->
+                <!--                            <div class="label">Quantité</div>-->
+                <!--                            <div class="value ">-->
+                <!--                                <input type="number" name="quantite"-->
+                <!--                                  value="--><?php //echo $form_values['quantite']?><!--"-->
+                <!--                                  class="input formulaire__champs boite-double__champs"-->
+                <!--                                  placeholder="Saisir ici"></div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                    <div class="row">-->
+                <!--                        <div class="col-6 info-unit">-->
+                <!--                            <div class="label">Date d'achat</div>-->
+                <!--                            <div class="value"><input type="date" name="date_achat"-->
+                <!--                                                                  value="--><?php //echo $form_values['date_achat']?><!--"-->
+                <!--                                                                  class="input formulaire__champs boite-double__champs"-->
+                <!--                                                                  placeholder="Saisir ici"></div>-->
+                <!--                        </div>-->
+                <!--                        <div class="col-6 info-unit">-->
+                <!--                            <div class="label">Garde jusqu'à</div>-->
+                <!--                            <div class="value"><input type="date" name="garde_jusqua"-->
+                <!--                                                                  value="--><?php //echo $form_values['garde_jusqua']?><!--"-->
+                <!--                                                                  class="input formulaire__champs boite-double__champs"-->
+                <!--                                                                  placeholder="Saisir ici"></div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                    <div class="row">-->
+                <!--                        <div class="col-6 info-unit">-->
+                <!--                            <div class="label">Notes</div>-->
+                <!--                            <div class="value">-->
+                <!--                                <input type="number" name="notes"-->
+                <!--                                       value="--><?php //echo $form_values['notes']?><!--"-->
+                <!--                                       class="input formulaire__champs boite-double__champs"-->
+                <!--                                       placeholder="Saisir ici">-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                        <div class="col-6 info-unit">-->
+                <!--                            <div class="label">Millesime</div>-->
+                <!--                            <div class="value">-->
+                <!--                                <input type="text" name="millesime"-->
+                <!--                                       value="--><?php //echo $form_values['millesime']?><!--"-->
+                <!--                                       class="input formulaire__champs boite-double__champs"-->
+                <!--                                       placeholder="Saisir ici">-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                <!--        fin    Information liées au cellier-->
             </form>
         </div>
     <?php } ?>
 </section>
 <!--  note sur une bouteille-->
-<section class="section-wrapper texte-photo">
-    <div class="boite-double">
-        <!--LOGIN-->
-        <!--        <div class="boite-double__contenant-form header-with-sub">-->
-        <!--            <h2>Avis</h2>-->
-        <!--            <div class="sub-header">-->
-        <!--                <p class="rating bigger-rating">-->
-        <!--                    <span class="fa fa-star checked"></span>-->
-        <!--                    <span class="fa fa-star checked"></span>-->
-        <!--                    <span class="fa fa-star checked"></span>-->
-        <!--                    <span class="fa fa-star"></span>-->
-        <!--                    <span class="fa fa-star"></span>-->
-        <!--                </p> <p class="small-text">| 65 avis</p>-->
-        <!--            </div>-->
-        <!--            <div class="sub-header">-->
-        <!--                <h2>3,7</h2>&nbsp;&nbsp;sur 5-->
-        <!--            </div>-->
-        <!--            <div class="sub-header">-->
-        <!--                <div class="note">-->
-        <!--                    Les avis que vous soumettez doivent respecter notre politique de modération.-->
-        <!--                    <p class="action">Voir la politique de modération de la SAQ.</p>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+<section class="section-wrapper texte-photo w-100">
+    <div class="boite-double info-details w-100" style="max-width: unset">
 
-        <div class="info-details">
+        <form class="form-block formulaire w-100"  action="./controller/AjouterBouteille.php" method="POST">
+            <input type="hidden" name="estCommentaire" value="1" />
             <div class='comments'>
-                <!--                this is for a nnew comment-->
                 <div class="comment">
                     <div class="comment-body">
                         <div class="comment-header">
@@ -1270,13 +1378,21 @@ if(isset($id_bouteille) && $id_bouteille != null){
                             </div>
                         </div>
                         <div class="comment-text new-comment">
-                            <p class="rating">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </p>
+<!--                            <p class="rating">-->
+<!--                                <span class="fa fa-star checked"></span>-->
+<!--                                <span class="fa fa-star checked"></span>-->
+<!--                                <span class="fa fa-star checked"></span>-->
+<!--                                <span class="fa fa-star"></span>-->
+<!--                                <span class="fa fa-star"></span>-->
+<!--                            </p>-->
+<!--                            <div class="d-flex ">-->
+                                <input type="number" name="note"
+                                       value="<?php echo $form_values['note']?>"
+                                       class="input formulaire__champs boite-double__champs"
+                                       min="0"
+                                       max="10"
+                                       placeholder="Ajouter une note ici entre 0 et 10"/>
+<!--                            </div>-->
                         </div>
                         <!--                        <div class='light-text orange'>Veillez vous connecter pour pouvoir soumettre un commentaire</div>-->
                     </div>
@@ -1293,10 +1409,21 @@ if(isset($id_bouteille) && $id_bouteille != null){
                     <div class="comment-text new-comment">
                             <textarea placeholder='Ajouter un nouveau commentaire'
                                       rows="4"
-                                      class="input formulaire__champs boite-double__champs"></textarea>
+                                      name="commentaires"
+                                      class="input formulaire__champs boite-double__champs"><?php echo $form_values['commentaires']?></textarea>
                     </div>
+                    <input type="hidden"
+                           name="id_bouteille"
+                           id="id_bouteille"
+                           value="<?php echo $form_values['id_bouteille']?>" />
+                    <input type="hidden"
+                           name="id_cellier"
+                           id="id_cellier"
+                           value="<?php echo $form_values['id_cellier']?>" />
                     <div class="comment-text submit-bloc">
-                        <button class="btn bouton-secondaire">Soumettre</button>
+                        <button class="btn bouton-secondaire"
+                            <?php if(!isset($bouteille) || !$bouteille) {echo "disabled";}?>
+                        >Soumettre</button>
                     </div>
                 </div>
                 <!--                we should do listing here-->
@@ -1411,129 +1538,205 @@ if(isset($id_bouteille) && $id_bouteille != null){
                 <!--                </div>-->
                 <!--   end loop comments-->
             </div>
-
-        </div>
+        </form>
     </div>
 </section>
-<section class="section-wrapper">
-    <div class="boite-double flex-column">
-        <div class="boite-double__contenant-form">
-            <h2>À Découvrir</h2>
+<!--<section class="section-wrapper">-->
+<!--    <div class="boite-double flex-column">-->
+<!--        <div class="boite-double__contenant-form">-->
+<!--            <h2>À Découvrir</h2>-->
+<!--        </div>-->
+<!--        <div class="product-cards row">-->
+<!--            <div class="card col">-->
+<!--                <div class="image">-->
+<!--                    <img src="https://www.saq.com/media/catalog/product/1/1/11097101-1_1580612720.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2">-->
+<!--                </div>-->
+<!--                <div class="title">-->
+<!--                    Cusumano Angimbé Sicilia 2021-->
+<!--                </div>-->
+<!--                <div class="title-2">-->
+<!--                    Vin-blan-->
+<!--                    <span class="divider">|</span>-->
+<!--                    375 ml-->
+<!--                </div>-->
+<!--                <div class="rating">-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star"></span>-->
+<!--                    <span class="fa fa-star"></span>&nbsp;&nbsp;-->
+<!--                    <span class="small-text">(10)</span>-->
+<!--                </div>-->
+<!--                <h2>-->
+<!--                    10,99 $-->
+<!--                </h2>-->
+<!--                <button class="bouton-secondaire w-100 submit-button">-->
+<!--                    Voir le produit-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="card col">-->
+<!--                <div class="image">-->
+<!--                    <img src="https://www.saq.com/media/catalog/product/1/1/11254680-1_1591965010.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2">-->
+<!--                </div>-->
+<!--                <div class="title">-->
+<!--                    Kim Crawford Sauvignon Blanc Marlborough-->
+<!--                </div>-->
+<!--                <div class="title-2">-->
+<!--                    Vin-blan-->
+<!--                    <span class="divider">|</span>-->
+<!--                    375 ml-->
+<!--                </div>-->
+<!--                <div class="rating">-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star"></span>-->
+<!--                    <span class="fa fa-star"></span>&nbsp;&nbsp;-->
+<!--                    <span class="small-text">(10)</span>-->
+<!--                </div>-->
+<!--                <h2>-->
+<!--                    10,99 $-->
+<!--                </h2>-->
+<!--                <button class="bouton-secondaire w-100 submit-button">-->
+<!--                    Voir le produit-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="card col">-->
+<!--                <div class="image">-->
+<!--                    <img src="https://www.saq.com/media/catalog/product/1/1/11133141-1_1580613312.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2">-->
+<!--                </div>-->
+<!--                <div class="title">-->
+<!--                    Folonari Pinot Grigio Delle Venezie-->
+<!--                </div>-->
+<!--                <div class="title-2">-->
+<!--                    Vin-blan-->
+<!--                    <span class="divider">|</span>-->
+<!--                    375 ml-->
+<!--                </div>-->
+<!--                <div class="rating">-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star"></span>-->
+<!--                    <span class="fa fa-star"></span>&nbsp;&nbsp;-->
+<!--                    <span class="small-text">(10)</span>-->
+<!--                </div>-->
+<!--                <h2>-->
+<!--                    10,99 $-->
+<!--                </h2>-->
+<!--                <button class="bouton-secondaire w-100 submit-button">-->
+<!--                    Voir le produit-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="card col">-->
+<!--                <div class="image">-->
+<!--                    <img src="https://www.saq.com/media/catalog/product/1/1/11072851-1_1588244410.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2">-->
+<!--                </div>-->
+<!--                <div class="title">-->
+<!--                    Le Grand Ballon Val de Loire Chardonnay-->
+<!--                </div>-->
+<!--                <div class="title-2">-->
+<!--                    Vin-blan-->
+<!--                    <span class="divider">|</span>-->
+<!--                    375 ml-->
+<!--                </div>-->
+<!--                <div class="rating">-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star checked"></span>-->
+<!--                    <span class="fa fa-star"></span>-->
+<!--                    <span class="fa fa-star"></span>&nbsp;&nbsp;-->
+<!--                    <span class="small-text">(10)</span>-->
+<!--                </div>-->
+<!--                <h2>-->
+<!--                    10,99 $-->
+<!--                </h2>-->
+<!--                <button class="bouton-secondaire w-100 submit-button">-->
+<!--                    Voir le produit-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--MODAL-->
+<div class="modal modal--ferme" modal-confirmation-delete>
+    <?php if($erreur !== ""){?>
+        <div class="modal__contenu">
+            <p><?php echo $erreur?></p>
+            <div class="formulaire__champs">
+                <button data-js-boutonFerme class="bouton-secondaire">Annuler</button>
+            </div>
         </div>
-        <div class="product-cards row">
-            <div class="card col">
-                <div class="image">
-                    <img src="https://www.saq.com/media/catalog/product/1/1/11097101-1_1580612720.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2">
-                </div>
-                <div class="title">
-                    Cusumano Angimbé Sicilia 2021
-                </div>
-                <div class="title-2">
-                    Vin-blan
-                    <span class="divider">|</span>
-                    375 ml
-                </div>
-                <div class="rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>&nbsp;&nbsp;
-                    <span class="small-text">(10)</span>
-                </div>
-                <h2>
-                    10,99 $
-                </h2>
-                <button class="bouton-secondaire w-100 submit-button">
-                    Voir le produit
-                </button>
-            </div>
-            <div class="card col">
-                <div class="image">
-                    <img src="https://www.saq.com/media/catalog/product/1/1/11254680-1_1591965010.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2">
-                </div>
-                <div class="title">
-                    Kim Crawford Sauvignon Blanc Marlborough
-                </div>
-                <div class="title-2">
-                    Vin-blan
-                    <span class="divider">|</span>
-                    375 ml
-                </div>
-                <div class="rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>&nbsp;&nbsp;
-                    <span class="small-text">(10)</span>
-                </div>
-                <h2>
-                    10,99 $
-                </h2>
-                <button class="bouton-secondaire w-100 submit-button">
-                    Voir le produit
-                </button>
-            </div>
-            <div class="card col">
-                <div class="image">
-                    <img src="https://www.saq.com/media/catalog/product/1/1/11133141-1_1580613312.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2">
-                </div>
-                <div class="title">
-                    Folonari Pinot Grigio Delle Venezie
-                </div>
-                <div class="title-2">
-                    Vin-blan
-                    <span class="divider">|</span>
-                    375 ml
-                </div>
-                <div class="rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>&nbsp;&nbsp;
-                    <span class="small-text">(10)</span>
-                </div>
-                <h2>
-                    10,99 $
-                </h2>
-                <button class="bouton-secondaire w-100 submit-button">
-                    Voir le produit
-                </button>
-            </div>
-            <div class="card col">
-                <div class="image">
-                    <img src="https://www.saq.com/media/catalog/product/1/1/11072851-1_1588244410.png?quality=80&fit=bounds&height=166&width=111&canvas=111:166&dpr=2">
-                </div>
-                <div class="title">
-                    Le Grand Ballon Val de Loire Chardonnay
-                </div>
-                <div class="title-2">
-                    Vin-blan
-                    <span class="divider">|</span>
-                    375 ml
-                </div>
-                <div class="rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>&nbsp;&nbsp;
-                    <span class="small-text">(10)</span>
-                </div>
-                <h2>
-                    10,99 $
-                </h2>
-                <button class="bouton-secondaire w-100 submit-button">
-                    Voir le produit
+    <?php }else{?>
+        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id'];?>" >
+            <h4 class="text-center">Voulez vous vraiment supprimer cette bouteille?</h4>
+
+            <div class="submit-bloc">
+                <input type="hidden"
+                       name="id_bouteille_input"
+                       id="id_bouteille_input"
+                       value="<?php echo $form_values['id_bouteille']?>" />
+                <input type="hidden"
+                       name="id_cellier_input"
+                       id="id_cellier_input"
+                       value="<?php echo $form_values['id_cellier']?>" />
+                <button data-js-boutonFerme class="bouton-secondaire" id="annulerDetruirebtn">Annuler</button>
+                <button  class="bouton-danger" id="detruirebtn">
+                    Oui, supprimer
                 </button>
             </div>
         </div>
-    </div>
-</section>
+    <?php }?>
+</div>
+
+<div   modal-modification-statut class="modal--ferme modal">
+    <?php if($erreur !== ""){?>
+        <div class="modal__contenu">
+            <p><?php echo $erreur?></p>
+            <div class="formulaire__champs">
+                <button data-js-boutonFerme class="bouton-secondaire">Annuler</button>
+            </div>
+        </div>
+    <?php }else{?>
+        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id'];?>">
+            <h4 class="text-center"><?php echo (isset($message) && $message != null ? $message: ''); ?></h4>
+
+            <div class="submit-bloc">
+                <button type="button" value="<?php echo ($form_values['id_cellier'] ?: -1) ;?>"  class="bouton-secondaire" id="gobackbtn" data-js-boutonAjouterCellier>Retour sur la page précédente</button>
+                <button data-js-boutonFerme class="bouton-secondaire" id="annulerDetruirebtn2">Fermer</button>
+            </div>
+
+        </div>
+    <?php }?>
+</div>
+
+<div   modal-annulation class="modal--ferme modal">
+    <?php if($erreur !== ""){?>
+        <div class="modal__contenu">
+            <p><?php echo $erreur?></p>
+            <div class="formulaire__champs">
+                <button data-js-boutonFerme class="bouton-secondaire">Annuler</button>
+            </div>
+        </div>
+    <?php }else{?>
+        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id'];?>">
+            <h4 class="text-center">Annulation réussie, Voulez-vous rester sur catte page?</h4>
+
+            <div class="submit-bloc">
+                <button type="button"
+                        value="<?php echo ($form_values['id_cellier'] ?: -1) ;?>"
+                        class="bouton-secondaire" id="gobackbtn2" >
+                    Retour sur la page précédente</button>
+                <button data-js-boutonFerme class="bouton-secondaire" id="fermerModalAnnulation">Oui, rester</button>
+            </div>
+
+        </div>
+    <?php }?>
+</div>
 
 
+<input type="hidden" name="modifStatus" id="modifStatus" value='<?php echo isset($message) && $message != null && strlen($message) > 0 ? $message: null ?>'  />
 <!--
 <section class="section-wrapper banderole">
 			<div class="grille grille--3 ">
@@ -1579,7 +1782,7 @@ if(isset($id_bouteille) && $id_bouteille != null){
 					<figcaption class="vignette__titre">Ma liste d'achat</figcaption>
 				</figure>
 			</div>
-			
+
 		</section>
 -->
 

@@ -20,7 +20,12 @@
 }
 
 .boite-double__contenant-form{
-    width: 35%;
+
+}
+@media only screen and (min-width: 760px){
+    .boite-double__contenant-form{
+        width: 35%;
+    }
 }
 .product-photo img{
     /*height: 100%;*/
@@ -129,7 +134,7 @@
 
 .info-details{
     flex: 1;
-    max-width: 65%;
+    /*max-width: 65%;*/
 }
 
 .info-details .info-unit{
@@ -138,7 +143,7 @@
 }
 
 .info-details .form-block{
-    border: 1px solid lightgray;
+    border: 1px solid var(--couleur-secondaire);
     margin-bottom: 10px;
 }
 
@@ -158,6 +163,10 @@
     margin-top: 10px;
 }
 
+button[disabled]{
+    opacity: .3;
+}
+
 .submit-bloc .col-6:last-child{
     display: flex;
     justify-content: flex-end;
@@ -165,6 +174,7 @@
 
 .submit-bloc button{
     margin: 0 5px;
+    margin-bottom: 10px;
 }
 
 .submit-bloc button:first-child{
@@ -183,17 +193,19 @@
 .info-details .info-unit .value{
     font-weight: 600;
     font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
 .comments {
-    margin-bottom: 40px;
+    /*margin-bottom: 40px;*/
 }
 
 .comments .comment{
     display: flex;
     background: white;
-    border: 1px solid lightgray;
+    /*border: 1px solid lightgray;*/
     padding: 18px 24px;
     border-radius: 17px;
     margin-bottom: 10px;

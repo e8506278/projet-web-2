@@ -63,50 +63,48 @@ class Bouteille extends Modele
     }
 
 
-    public function getOneBouteille($id)
+    public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();
         $requete = "SELECT 
-						c.id as id_cellier,
-						c.id_bouteille, 
-						c.date_achat, 
-						c.garde_jusqua, 
-						c.notes, 
-						c.prix, 
-						c.quantite,
-						c.millesime, 
-       
-                        uc.nom_cellier as nom_cellier,
-					
-                         b.id_bouteille,
-                         b.nom_bouteille,
-                          b.image_bouteille,
-                          b.code_saq,
-                          b.code_cup,
-                          b.pays_id,
-                          b.region_id,
-                          b.type_id,
-                          b.description_bouteille,
-                          b.producteur,
-                          b.prix_bouteille,
-                          b.url_saq,
-                          b.url_img,
-                          b.format_id,
-                          b.appellation_id,
-                          b.designation_id,
-                          b.classification_id,
-                          b.cepages_id,
-                          b.taux_de_sucre_id,
-                          b.degre_alcool_id,
-                          b.produit_du_quebec_id,
-                          b.biodynamique,
-                          b.casher,
-                          b.desalcoolise,
-                          b.equitable,
-                          b.faible_taux_alcool,
-                          b.produit_bio,
-                          b.vin_nature,
-                          b.vin_orange,
+					    uc.nom_cellier as nom_cellier,
+					    ub.id_cellier, 
+						ub.date_achat, 
+						ub.garde_jusqua, 
+                          ub.id_bouteille,
+                          ub.nom_bouteille,
+                          ub.image_bouteille,
+                          ub.code_saq,
+                          ub.code_cup,
+                          ub.pays_id,
+                          ub.region_id,
+                          ub.type_id,
+                          ub.description_bouteille,
+                          ub.producteur,
+                          ub.prix_bouteille,
+                          ub.url_saq,
+                          ub.url_img,
+                          ub.format_id,
+                          ub.appellation_id,
+                          ub.designation_id,
+                          ub.classification_id,
+                          ub.cepages_id,
+                          ub.taux_de_sucre_id,
+                          ub.degre_alcool_id,
+                          ub.produit_du_quebec_id,
+                          ub.biodynamique,
+                          ub.casher,
+                          ub.desalcoolise,
+                          ub.equitable,
+                          ub.faible_taux_alcool,
+                          ub.produit_bio,
+                          ub.vin_nature,
+                          ub.vin_orange,
+                          ub.quantite_bouteille as quantite,
+						 ub.millesime, 
+                         ub.commentaires, 
+                         ub.prix_bouteille, 
+                          ub.note, 
               
                          pays.nom AS nom_pays,
                          region.nom as nom_region,
@@ -121,22 +119,26 @@ class Bouteille extends Modele
                          classif.nom as nom_classification
 
                         from vino__bouteille b
-                        LEFT JOIN vino__cellier c ON c.id_bouteille = b.id_bouteille
+                        LEFT JOIN usager__bouteille ub ON ub.id_bouteille = b.id_bouteille
                     
-                        LEFT JOIN usager__cellier uc ON uc.id_cellier = c.id
-						LEFT JOIN vino__format format ON format.id = b.format_id
-                        LEFT JOIN vino__pays pays ON pays.id = b.pays_id
-                        LEFT JOIN vino__region region ON region.id = b.region_id
-                        LEFT JOIN vino__type typ ON typ.id = b.type_id
-                        LEFT JOIN vino__cepages cepages ON cepages.id = b.cepages_id
-                        LEFT JOIN vino__appellation appel ON appel.id = b.appellation_id
-                        LEFT JOIN vino__designation designation ON designation.id = b.designation_id
-                        LEFT JOIN vino__taux_de_sucre ts ON ts.id = b.taux_de_sucre_id
-                        LEFT JOIN vino__degre_alcool da ON da.id = b.degre_alcool_id
-                        LEFT JOIN vino__produit_du_quebec pc ON pc.id = b.produit_du_quebec_id
-                        LEFT JOIN vino__classification classif ON classif.id = b.classification_id
-                       WHERE b.id_bouteille = '".$id."'" ;
-        if (($res = $this->_db->query($requete)) ==     true) {
+						LEFT JOIN usager__cellier uc ON uc.id_cellier = ub.id_cellier
+						LEFT JOIN vino__format format ON format.id = ub.format_id
+                        LEFT JOIN vino__pays pays ON pays.id = ub.pays_id
+                        LEFT JOIN vino__region region ON region.id = ub.region_id
+                        LEFT JOIN vino__type typ ON typ.id = ub.type_id
+                        LEFT JOIN vino__cepages cepages ON cepages.id = ub.cepages_id
+                        LEFT JOIN vino__appellation appel ON appel.id = ub.appellation_id
+                        LEFT JOIN vino__designation designation ON designation.id = ub.designation_id
+                        LEFT JOIN vino__taux_de_sucre ts ON ts.id = ub.taux_de_sucre_id
+                        LEFT JOIN vino__degre_alcool da ON da.id = ub.degre_alcool_id
+                        LEFT JOIN vino__produit_du_quebec pc ON pc.id = ub.produit_du_quebec_id
+                        LEFT JOIN vino__classification classif ON classif.id = ub.classification_id
+                       WHERE b.id_bouteille = '".$id_bouteille."'" ;
+        if($id_cellier){
+            $requete = $requete. " AND ub.id_cellier = '".$id_cellier."'" ;
+        }
+        $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
+        if ($res) {
 
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
@@ -154,19 +156,21 @@ class Bouteille extends Modele
     {
         $rows = array();
         $requete = "SELECT 
-						c.id as id_cellier,
-						c.id_bouteille, 
-						c.date_achat, 
-						c.garde_jusqua, 
-						c.notes, 
-						c.prix, 
-						c.quantite,
-						c.millesime, 
+						ub.id_cellier, 
+						ub.date_achat, 
+						ub.garde_jusqua, 
+						ub.note, 
+						ub.prix, 
+						ub.quantite_bouteille as quantite,
+						ub.quantite_bouteille,
+						ub.millesime, 
+						ub.commentaires, 
+						ub.note, 
        
                         uc.nom_cellier as nom_cellier,
 					
-                         b.id_bouteille,
-                         b.nom_bouteille,
+                          b.id_bouteille,
+                          b.nom_bouteille,
                           b.image_bouteille,
                           b.code_saq,
                           b.code_cup,
@@ -208,9 +212,9 @@ class Bouteille extends Modele
                         classif.nom as nom_classification
 
                         from vino__bouteille b
-                        LEFT JOIN vino__cellier c ON c.id_bouteille = b.id_bouteille
+                        LEFT JOIN usager__bouteille ub ON ub.id_bouteille = b.id_bouteille
                     
-						LEFT JOIN usager__cellier uc ON uc.id_cellier = c.id
+						LEFT JOIN usager__cellier uc ON uc.id_cellier = ub.id_cellier
 						LEFT JOIN vino__format format ON format.id = b.format_id
                         LEFT JOIN vino__pays pays ON pays.id = b.pays_id
                         LEFT JOIN vino__region region ON region.id = b.region_id
@@ -323,4 +327,12 @@ class Bouteille extends Modele
         return $res;
     }
 
+
+    public function deleteUsageBouteille($id_bouteille, $id_cellier){
+        $query_string ="DELETE from usager__bouteille WHERE id_bouteille = ".$id_bouteille." AND id_cellier = ".$id_cellier;
+
+        $res = $this->_db->query($query_string);
+
+        return $res;
+    }
 }
