@@ -1,5 +1,5 @@
 
-@media only screen and (min-width: 760px){
+@media only screen and (min-width: 1024px){
     header{
         padding: var(--espace-p) var(--espace-l) ;
         background-color: var(--couleur-secondaire);
