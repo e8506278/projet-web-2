@@ -14,7 +14,7 @@
            e.preventDefault();
            // id_bouteille
            let id =element.parentElement.dataset.jsId;
-           
+           console.log(element.parentElement)
            let requete = new Request(BaseURL + "?requete=reduireQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
   
            // Requête fetch
