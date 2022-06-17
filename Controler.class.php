@@ -34,8 +34,11 @@ class Controler
             case 'modifierCellier':
                 $this->modifierCellier();
                 break;
-            case 'deplacerBouteille':
-                $this->deplacerBouteille();
+            case 'supprimerCellier':
+                $this->supprimerCellier();
+                break;
+            case 'deplacerSupprimer':
+                $this->deplacerSupprimer();
                 break;
             case 'listeBouteilleCellier':
                 $this->listeBouteilleCellier();
@@ -214,7 +217,7 @@ class Controler
         
          
         include("vues/entete.php");
-        include("vues/celliers.php");
+        include("vues/Celliers/celliers.php");
         include("vues/pied.php");
        
     }
@@ -234,7 +237,7 @@ class Controler
 
         } else {
             include("vues/entete.php");
-            include("vues/celliers.php");
+            include("vues/Celliers/celliers.php");
             include("vues/pied.php");
         }
     }
@@ -252,27 +255,40 @@ class Controler
 
         } else {
             include("vues/entete.php");
-            include("vues/celliers.php");
+            include("vues/Cellliers/celliers.php");
             include("vues/pied.php");
         }
     }
 
-    private function deplacerBouteille(){
+    private function deplacerSupprimer(){
 
         $body = json_decode(file_get_contents('php://input'));
-        
+        $id = $body->id_cellierSupprime;
         if (!empty($body)) {
           
             $bte = new Bouteille();
             $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
             if($bouteilles){
                
-                $cellier = new Cellier();
+               $cellier = new Cellier();
                 $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi,$bouteilles);
-                
+                if($resultat){
+                 $resultat =   $cellier->supprimerCellier($id);
+                    
+                }
             }
         }
        
+    }
+
+    private function supprimerCellier(){
+        $body = json_decode(file_get_contents('php://input'));
+       
+        if (!empty($body)) {
+          
+            $cellier = new Cellier();
+            $cellier->supprimerCellier($body->id);
+        }
     }
 
     /**
@@ -291,7 +307,7 @@ class Controler
 
         
         include("vues/entete.php");
-        include("vues/bouteilles.php");
+        include("vues/Celliers/bouteilles.php");
         include("vues/pied.php");
     }
 

@@ -22,7 +22,8 @@
 		<!--<script src="./js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
 		<script defer src="./js/connexion.js"></script>
 		<script defer src="./js/enregistrement.js"></script>
-	
+		<script type="module" src="./js/Celliers/celliers.js" defer></script>
+		<script src="./js/quantiteBouteille.js" defer></script>
 		<script src="./js/modal.js" defer></script>
 		<script src="./js/main.js"></script>
 	</head>

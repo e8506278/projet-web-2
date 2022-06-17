@@ -34,7 +34,8 @@ class Cellier extends Modele
                     INNER JOIN vino__type_cellier on type_cellier_id = vino__type_cellier.id_type_cellier 
                     LEFT OUTER JOIN usager__bouteille on usager__cellier.id_cellier = usager__bouteille.id_cellier 
                     WHERE id_usager = '$id'
-                    Group by usager__cellier.id_cellier";
+                    Group by usager__cellier.id_cellier
+                    ORDER BY usager__cellier.id_cellier DESC";
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
@@ -249,7 +250,23 @@ class Cellier extends Modele
     
                 $res = $this->_db->query($requete);
             }
-            
+
+        return $res;
+    }
+    /**
+     * Cette méthode supprime le cellier
+     * 
+     * @param Int $id id_cellier sélectionné par l'usager
+     * 
+     * @throws Exception Erreur de requête sur la base de données 
+     * 
+     * @return Boolean Succès ou échec de l'ajout.
+     */
+    public function supprimerCellier($id)
+    {
+       
+        $requete = "DELETE FROM usager__cellier WHERE id_cellier = '$id'";
+        $res = $this->_db->query($requete);   
         return $res;
     }
 }
