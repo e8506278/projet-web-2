@@ -12,15 +12,14 @@ elFormulaire.addEventListener('submit', (e) => {
     let erreursTrouvees = false;
     let elErreur;
 
+    // On efface les erreurs précédentes venues de PHP
+    elErreur = document.querySelector('[data-js-connexion-err]');
+    elErreur.innerHTML = "";
+
     // Utilisateur
     erreur = "";
 
-    if (elUtilisateur.value.length > 0) {
-        if (elUtilisateur.value !== "Toto9") {
-            erreursTrouvees = true;
-            erreur = "Échec de la connexion! Identifiant ou mot de passe invalide!";
-        }
-    } else {
+    if (elUtilisateur.value.length === 0) {
         erreursTrouvees = true;
         erreur = "Vous devez indiquer un nom d'utilisateur.";
     }
@@ -39,12 +38,7 @@ elFormulaire.addEventListener('submit', (e) => {
     // Mot de passe
     erreur = "";
 
-    if (elUsagerMdp.value.length > 0) {
-        if (elUsagerMdp.value !== "password9") {
-            erreursTrouvees = true;
-            erreur = "Échec de la connexion! Identifiant ou mot de passe invalide!";
-        }
-    } else {
+    if (elUsagerMdp.value.length === 0) {
         erreursTrouvees = true;
         erreur = "Vous devez indiquer un mot de passe.";
 
@@ -59,5 +53,9 @@ elFormulaire.addEventListener('submit', (e) => {
     } else {
         elErreur.classList.remove('message-erreur');
         elErreur.classList.add('aucune-erreur');
+    }
+
+    if (erreursTrouvees) {
+        e.preventDefault();
     }
 });

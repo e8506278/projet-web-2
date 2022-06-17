@@ -5,21 +5,24 @@
  */
 class ExtraData extends Modele
 {
-    private $stmt;
-
-    public function __construct()
+    function debug_to_console($data)
     {
-        parent::__construct();
-        if (!($this->stmt = $this->_db->prepare("INSERT INTO saq_data (link, pays, region, appellation, designation, classification, cepage, degre_alcool, taux_de_sucre, couleur, particularite, format, producteur, agent, code_saq, code_cup, produit_qc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"))) {
-            echo "Echec de la préparation";
-        }
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 
     public function lireFichier()
     {
+        if (!($stmt = $this->_db->prepare("INSERT INTO saq_data (link, pays, region, appellation, designation, classification, cepage, degre_alcool, taux_de_sucre, couleur, particularite, format, producteur, agent, code_saq, code_cup, produit_qc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"))) {
+            throw new Exception("Echec de la préparation", 1);
+        }
+
         // fichier json
         $filenames = [
-            "./files/run_results31.json"
+            "./files/run_results38.json"
         ];
 
         foreach ($filenames as $filename) {
@@ -127,7 +130,7 @@ class ExtraData extends Modele
 
                 $retour = false;
 
-                $this->stmt->bind_param(
+                $stmt->bind_param(
                     "sssssssssssssssss",
                     $link,
                     $pays,
@@ -148,7 +151,7 @@ class ExtraData extends Modele
                     $produit_qc
                 );
 
-                $retour = $this->stmt->execute();
+                $retour = $stmt->execute();
             }
 
             echo "Le fichier " . $filename . " a été traité.<br>";
@@ -164,14 +167,13 @@ class ExtraData extends Modele
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
 
-        $requete = 'SELECT id, url_SAQ from vino__bouteille ORDER BY id';
+        $requete = 'SELECT id_bouteille, url_SAQ from vino__bouteille ORDER BY id_bouteille';
         $compteur = 0;
         $reussi = false;
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 echo "Nombre de lignes totales: " . $res->num_rows . "<br>";
-
                 while ($row = $res->fetch_assoc()) {
                     $url_SAQ = $row['url_SAQ'];
 
@@ -190,27 +192,27 @@ class ExtraData extends Modele
 
     private function mettreAJourDonnees($url_SAQ)
     {
-        $rows = $this->_db->query("SELECT * from saq_data WHERE link = '" . $url_SAQ . "'");
-        $requete = 'UPDATE vino__bouteille SET region_id = ?, appellation = ?, designation = ?, classification = ?, cepage = ?, taux_sucre = ?, degre_alcool = ?, producteur = ?, code_cup = ?, biodynamique = ?, casher = ?, desalcoolise = ?, equitable = ?, faible_taux_alcool = ?, produit_bio = ?, vin_nature = ?, vin_orange = ?, produit_du_quebec = ? WHERE url_saq = ?';
+        $row = $this->_db->query("SELECT * from saq_data WHERE link = '" . $url_SAQ . "'");
 
-        if ($rows->num_rows == 1) {
-            $dataSaq = $rows->fetch_assoc();
+        if ($row->num_rows == 1) {
+            $dataSaq = $row->fetch_assoc();
+            $requete = 'UPDATE vino__bouteille SET region_id = ?, appellation_id = ?, designation_id = ?, classification_id = ?, cepages_id = ?, taux_de_sucre_id = ?, degre_alcool_id = ?, producteur = ?, code_cup = ?, biodynamique = ?, casher = ?, desalcoolise = ?, equitable = ?, faible_taux_alcool = ?, produit_bio = ?, vin_nature = ?, vin_orange = ?, produit_du_quebec_id = ? WHERE url_saq = ?';
 
             if (!($stmt = $this->_db->prepare($requete))) {
                 echo ("mettreAJourDonnees: Echec de la préparation: " . $stmt->error . "<br>");
                 return false;
             }
 
-            $region = $dataSaq['region'];
-            $appellation  = $dataSaq['appellation'];
-            $designation = $dataSaq['designation'];
-            $classification = $dataSaq['classification'];
-            $cepage = $dataSaq['cepage'];
-            $degre_alcool = $dataSaq['degre_alcool'];
-            $taux_de_sucre = $dataSaq['taux_de_sucre'];
+            $region = $dataSaq['region_id'];
+            $appellation  = $dataSaq['appellation_id'];
+            $designation = $dataSaq['designation_id'];
+            $classification = $dataSaq['classification_id'];
+            $cepage = $dataSaq['cepage_id'];
+            $degre_alcool = $dataSaq['degre_alcool_id'];
+            $taux_de_sucre = $dataSaq['taux_de_sucre_id'];
             $producteur = $dataSaq['producteur'];
             $code_cup = $dataSaq['code_cup'];
-            $produit_qc = $dataSaq['produit_qc'];
+            $produit_qc = $dataSaq['produit_qc_id'];
 
             $particularite = $dataSaq['particularite'];
             $myArray = explode(',', $particularite);
@@ -239,7 +241,7 @@ class ExtraData extends Modele
             }
 
             $stmt->bind_param(
-                "sssssssssiiiiiiiiss",
+                "iiiiiiissiiiiiiiiis",
                 $region,
                 $appellation,
                 $designation,
@@ -263,8 +265,6 @@ class ExtraData extends Modele
 
             $retour = $stmt->execute();
             if (!$retour) return false;
-        } else {
-            return false;
         }
 
         return true;
