@@ -14,7 +14,6 @@
 
 class Controler
 {
-
     /**
      * Traite la requête
      * @return void
@@ -64,6 +63,9 @@ class Controler
             case 'rechercher':
                 $this->rechercher();
                 break;
+            case 'rechercherBouteilles':
+                $this->rechercherBouteilles();
+                break;
             default:
                 $this->accueil();
                 break;
@@ -74,6 +76,17 @@ class Controler
     {
         include("vues/recherche.php");
     }
+
+
+    private function rechercherBouteilles()
+    {
+        $aDonnees = json_decode(file_get_contents('php://input'), true);
+
+        $recherche = new Recherche();
+        $listeBouteille = $recherche->rechercherBouteilles("", $aDonnees);
+        var_dump($listeBouteille);
+    }
+
 
     private function enregistrerUtilisateur()
     {

@@ -1,8 +1,8 @@
 <?php
 
-class Recherche
+class Recherche extends Modele
 {
-    function lireAppellations()
+    public function lireAppellations()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -32,7 +32,7 @@ class Recherche
     }
 
 
-    function lireBouteilles()
+    public function lireBouteilles()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -55,7 +55,7 @@ class Recherche
     }
 
 
-    function lireCelliers()
+    public function lireCelliers()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -77,7 +77,7 @@ class Recherche
     }
 
 
-    function lireCepages()
+    public function lireCepages()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -107,7 +107,7 @@ class Recherche
     }
 
 
-    function lireClassifications()
+    public function lireClassifications()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -137,7 +137,7 @@ class Recherche
     }
 
 
-    function lireDegreAlcool()
+    public function lireDegreAlcool()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -167,7 +167,7 @@ class Recherche
     }
 
 
-    function lireDesignations()
+    public function lireDesignations()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -197,7 +197,7 @@ class Recherche
     }
 
 
-    function lireFormats()
+    public function lireFormats()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -227,7 +227,7 @@ class Recherche
     }
 
 
-    function lireGardeJusqua()
+    public function lireGardeJusqua()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -250,7 +250,7 @@ class Recherche
     }
 
 
-    function lireMillesimes()
+    public function lireMillesimes()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -273,7 +273,7 @@ class Recherche
     }
 
 
-    function lireNotes()
+    public function lireNotes()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -296,7 +296,7 @@ class Recherche
     }
 
 
-    function lirePays()
+    public function lirePays()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -326,7 +326,7 @@ class Recherche
     }
 
 
-    function lirePrix()
+    public function lirePrix()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -349,7 +349,7 @@ class Recherche
     }
 
 
-    function lireProduitsQc()
+    public function lireProduitsQc()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -379,7 +379,7 @@ class Recherche
     }
 
 
-    function lireOrdresTri()
+    public function lireOrdresTri()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -396,7 +396,7 @@ class Recherche
     }
 
 
-    function lireRegions()
+    public function lireRegions()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -426,7 +426,7 @@ class Recherche
     }
 
 
-    function lireTauxDeSucre()
+    public function lireTauxDeSucre()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -455,7 +455,7 @@ class Recherche
         return $aTauxSucre;
     }
 
-    function lireTypesVin()
+    public function lireTypesVin()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -484,7 +484,7 @@ class Recherche
         return $aTypesVin;
     }
 
-    function lireTypesCellier()
+    public function lireTypesCellier()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
@@ -509,20 +509,122 @@ class Recherche
         return $aTypesCellier;
     }
 
-    function rechercherBouteilles($idTri)
+    public function rechercherBouteilles($idTri, $aDonnees)
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
         $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
 
         $sql = "SELECT id_bouteille, id_cellier, date_achat, garde_jusqua, note, commentaires, prix, quantite_bouteille, millesime, id_vino__bouteille, nom_bouteille, image_bouteille, pays_id, region_id, type_id, description_bouteille, prix_bouteille FROM usager__bouteille";
-        $result = mysqli_query($connection, $sql) or die(mysqli_error($connection));
-        $lesTypes = [];
+        $where = "";
+        $id_usager = 1;
 
-        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $row += ['disponible' => 1];
-            $lesTypes[] = $row;
+        // Cellier
+        if ($aDonnees["cellier"]) {
+            $where .= "(id_cellier IN (" . $aDonnees["cellier"] . ")) OR ";
         }
 
-        return $lesTypes;
+        // Types de cellier
+        if ($aDonnees["type-cellier"]) {
+            $where .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE type_cellier_id IN (" . $aDonnees["type-cellier"] . "))) OR ";
+        }
+
+        // Bouteilles
+        if ($aDonnees["bouteille"]) {
+            $where .= "(nom_bouteille IN (" . $aDonnees["bouteille"] . ")) OR ";
+        }
+
+        // Type de vin
+        if ($aDonnees["type-vin"]) {
+            $where .= "(type_id IN (" . $aDonnees["type-vin"] . ")) OR ";
+        }
+
+        // Pays
+        if ($aDonnees["pays"]) {
+            $where .= "(pays_id IN (" . $aDonnees["pays"] . ")) OR ";
+        }
+
+        // Région
+        if ($aDonnees["region"]) {
+            $where .= "(region_id IN (" . $aDonnees["region"] . ")) OR ";
+        }
+
+        // Prix
+        if ($aDonnees["prix"]) {
+            $where .= "(prix_bouteille IN (" . $aDonnees["prix"] . ")) OR ";
+        }
+
+        // Format
+        if ($aDonnees["format"]) {
+            $where .= "(format_id IN (" . $aDonnees["format"] . ")) OR ";
+        }
+
+        // Millésime
+        if ($aDonnees["millesime"]) {
+            $where .= "(millesime IN (" . $aDonnees["millesime"] . ")) OR ";
+        }
+
+        // Note
+        if ($aDonnees["note"]) {
+            $where .= "(note IN (" . $aDonnees["note"] . ")) OR ";
+        }
+
+        // Garder jusqu'à
+        if ($aDonnees["garde-jusqua"]) {
+            $where .= "(garde_jusqua IN (" . $aDonnees["garde-jusqua"] . ")) OR ";
+        }
+
+        // Produit du Québec
+        if ($aDonnees["produit-qc"]) {
+            $where .= "(produit_qc_id IN (" . $aDonnees["produit-qc"] . ")) OR ";
+        }
+
+        // Appellation
+        if ($aDonnees["appellation"]) {
+            $where .= "(appellation_id IN (" . $aDonnees["appellation"] . ")) OR ";
+        }
+
+        // Cépage
+        if ($aDonnees["cepage"]) {
+            $where .= "(cepage_id IN (" . $aDonnees["cepage"] . ")) OR ";
+        }
+
+        // Classification
+        if ($aDonnees["classification"]) {
+            $where .= "(classification_id IN (" . $aDonnees["classification"] . ")) OR ";
+        }
+
+        // Désignation
+        if ($aDonnees["designation"]) {
+            $where .= "(designation_id IN (" . $aDonnees["designation"] . ")) OR ";
+        }
+
+        // Taux de sucre
+        if ($aDonnees["taux-sucre"]) {
+            $where .= "(taux_sucre_id IN (" . $aDonnees["taux-sucre"] . ")) OR ";
+        }
+
+        // Degré d'alcool
+        if ($aDonnees["degre-alcool"]) {
+            $where .= "(degre_alcool_id IN (" . $aDonnees["degre-alcool"] . ")) OR ";
+        }
+
+        // On enlève le OR de trop à la fin et on ajoute le WHERE
+        if ($where) {
+            $sql .= " WHERE " . substr($where, 0, -4) . " AND ";
+        } else {
+            $sql .= " WHERE ";
+        }
+
+        // Par défaut, on doit absolument choisir uniquement les bouteilles qui se retrouvent dans les celliers de l'utilisateur.
+        $sql .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $id_usager . "))";
+
+        $result = mysqli_query($connection, $sql) or die(mysqli_error($connection));
+        $lesBouteilles = [];
+
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $lesBouteilles[] = $row;
+        }
+
+        return $lesBouteilles;
     }
 }

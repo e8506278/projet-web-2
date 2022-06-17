@@ -1,3 +1,5 @@
+const BaseURL = document.baseURI;
+
 /**
  * Traiter les appellations du vin
  */
@@ -924,4 +926,358 @@ function initDonnees() {
             unAccordeon.click();
         }
     });
+}
+
+const elburgerMenuRecherche = document.querySelector('.burgerMenuRecherche');
+const elMenuRecherche = document.querySelector('.menuRecherche');
+
+elburgerMenuRecherche.addEventListener("change", () => {
+    if (elburgerMenuRecherche.checked) {
+        if (!elMenuRecherche.classList.contains("montrer")) {
+            elMenuRecherche.classList.add("montrer");
+        }
+    } else {
+        elMenuRecherche.classList.remove("montrer");
+    }
+});
+
+/**
+ * 
+ */
+var x, i, j, l, ll, selElmnt, a, b, c;
+
+/*look for any elements with the class "select-container":*/
+x = document.getElementsByClassName("select-container");
+l = x.length;
+for (i = 0; i < l; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    ll = selElmnt.length;
+    /*for each element, create a new DIV that will act as the selected item:*/
+    a = document.createElement("DIV");
+    a.setAttribute("class", "select-selected");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+    /*for each element, create a new DIV that will contain the option list:*/
+    b = document.createElement("DIV");
+    b.setAttribute("class", "select-items select-hide");
+    for (j = 1; j < ll; j++) {
+        /*for each option in the original select element,
+        create a new DIV that will act as an option item:*/
+        c = document.createElement("DIV");
+        c.innerHTML = selElmnt.options[j].innerHTML;
+        c.addEventListener("click", function (e) {
+            /*when an item is clicked, update the original select box,
+            and the selected item:*/
+            var y, i, k, s, h, sl, yl;
+            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            sl = s.length;
+            h = this.parentNode.previousSibling;
+            for (i = 0; i < sl; i++) {
+                if (s.options[i].innerHTML == this.innerHTML) {
+                    s.selectedIndex = i;
+                    h.innerHTML = this.innerHTML;
+                    y = this.parentNode.getElementsByClassName("same-as-selected");
+                    yl = y.length;
+                    for (k = 0; k < yl; k++) {
+                        y[k].removeAttribute("class");
+                    }
+                    this.setAttribute("class", "same-as-selected");
+                    break;
+                }
+            }
+            h.click();
+        });
+        b.appendChild(c);
+    }
+    x[i].appendChild(b);
+    a.addEventListener("click", function (e) {
+        /*when the select box is clicked, close any other select boxes,
+        and open/close the current select box:*/
+        e.stopPropagation();
+        closeAllSelect(this);
+        this.nextSibling.classList.toggle("select-hide");
+        this.classList.toggle("select-arrow-active");
+    });
+}
+
+function closeAllSelect(elmnt) {
+    /*a function that will close all select boxes in the document,
+    except the current select box:*/
+    var x, y, i, xl, yl, arrNo = [];
+    x = document.getElementsByClassName("select-items");
+    y = document.getElementsByClassName("select-selected");
+    xl = x.length;
+    yl = y.length;
+    for (i = 0; i < yl; i++) {
+        if (elmnt == y[i]) {
+            arrNo.push(i)
+        } else {
+            y[i].classList.remove("select-arrow-active");
+        }
+    }
+    for (i = 0; i < xl; i++) {
+        if (arrNo.indexOf(i)) {
+            x[i].classList.add("select-hide");
+        }
+    }
+}
+
+/*if the user clicks anywhere outside the select box,
+then close all select boxes:*/
+document.addEventListener("click", closeAllSelect);
+
+const elBtnRechercher = document.querySelector('[data-js-rechercher]');
+elBtnRechercher.addEventListener("click", rechercher);
+
+function rechercher() {
+    let aDonnees = {},
+        listeSelection = "";
+
+    // Cellier
+    let elCellier = document.querySelectorAll('[data-js-cellier]'),
+        aCelliers = [];
+
+    elCellier.forEach(unCellier => {
+        if (unCellier.checked) {
+            aCelliers.push(unCellier.dataset.jsCellier);
+        }
+    });
+
+    listeSelection = aCelliers.toString();
+    aDonnees['cellier'] = listeSelection;
+
+    // Type de cellier
+    let elTypeCellier = document.querySelectorAll('[data-js-type-cellier]'),
+        aTypeCelliers = [];
+
+    elTypeCellier.forEach(unTypeCellier => {
+        if (unTypeCellier.checked) {
+            aTypeCelliers.push(unTypeCellier.dataset.jsTypeCellier);
+        }
+    });
+
+    listeSelection = aTypeCelliers.toString();
+    aDonnees['type-cellier'] = listeSelection;
+
+    // Bouteille
+    let elBouteille = document.querySelectorAll('[data-js-bouteille]'),
+        aBouteilles = [];
+
+    elBouteille.forEach(uneBouteille => {
+        if (uneBouteille.checked) {
+            aBouteilles.push("'" + uneBouteille.dataset.jsBouteille + "'");
+        }
+    });
+
+    listeSelection = aBouteilles.toString();
+    aDonnees['bouteille'] = listeSelection;
+
+    // Type de vin
+    let elTypeVin = document.querySelectorAll('[data-js-type-vin]'),
+        aTypeVins = [];
+
+    elTypeVin.forEach(unTypeVin => {
+        if (unTypeVin.checked) {
+            aTypeVins.push(unTypeVin.dataset.jsTypeVin);
+        }
+    });
+
+    listeSelection = aTypeVins.toString();
+    aDonnees['type-vin'] = listeSelection;
+
+    // Pays
+    let elPays = document.querySelectorAll('[data-js-pays]'),
+        aPays = [];
+
+    elPays.forEach(unPays => {
+        if (unPays.checked) {
+            aPays.push(unPays.dataset.jsPays);
+        }
+    });
+
+    listeSelection = aPays.toString();
+    aDonnees['pays'] = listeSelection;
+
+    // Région
+    let elRegion = document.querySelectorAll('[data-js-region]'),
+        aRegions = [];
+
+    elRegion.forEach(unRegion => {
+        if (unRegion.checked) {
+            aRegions.push(unRegion.dataset.jsRegion);
+        }
+    });
+
+    listeSelection = aRegions.toString();
+    aDonnees['region'] = listeSelection;
+
+    // Prix
+    let elPrix = document.querySelectorAll('[data-js-prix]'),
+        aPrix = [];
+
+    elPrix.forEach(unPrix => {
+        if (unPrix.checked) {
+            aPrix.push(unPrix.dataset.jsPrix);
+        }
+    });
+
+    listeSelection = aPrix.toString();
+    aDonnees['prix'] = listeSelection;
+
+    // Format de la bouteille
+    let elFormat = document.querySelectorAll('[data-js-format]'),
+        aFormats = [];
+
+    elFormat.forEach(unFormat => {
+        if (unFormat.checked) {
+            aFormats.push(unFormat.dataset.jsFormat);
+        }
+    });
+
+    listeSelection = aFormats.toString();
+    aDonnees['format'] = listeSelection;
+
+    // Quantité : A FAIRE
+
+    // Millésime
+    let elMillesime = document.querySelectorAll('[data-js-millesime]'),
+        aMillesime = [];
+
+    elMillesime.forEach(unMillesime => {
+        if (unMillesime.checked) {
+            aMillesime.push(unMillesime.dataset.jsMillesime);
+        }
+    });
+
+    listeSelection = aMillesime.toString();
+    aDonnees['millesime'] = listeSelection;
+
+    // Note
+    let elNote = document.querySelectorAll('[data-js-note]'),
+        aNote = [];
+
+    elNote.forEach(uneNote => {
+        if (uneNote.checked) {
+            aNote.push(uneNote.dataset.jsNote);
+        }
+    });
+
+    listeSelection = aNote.toString();
+    aDonnees['note'] = listeSelection;
+
+    // Garde jusqu'à
+    let elGardeJusqua = document.querySelectorAll('[data-js-garde-jusqua]'),
+        aGardeJusqua = [];
+
+    elGardeJusqua.forEach(uneGardeJusqua => {
+        if (uneGardeJusqua.checked) {
+            aGardeJusqua.push("'" + uneGardeJusqua.dataset.jsGardeJusqua + "'");
+        }
+    });
+
+    listeSelection = aGardeJusqua.toString();
+    aDonnees['garde-jusqua'] = listeSelection;
+
+    // Produit du Québec
+    let elProduitQc = document.querySelectorAll('[data-js-produit-qc]'),
+        aProduitQc = [];
+
+    elProduitQc.forEach(uneProduitQc => {
+        if (uneProduitQc.checked) {
+            aProduitQc.push(uneProduitQc.dataset.jsProduitQc);
+        }
+    });
+
+    listeSelection = aProduitQc.toString();
+    aDonnees['produit-qc'] = listeSelection;
+
+    // Appellation
+    let elAppellation = document.querySelectorAll('[data-js-appellation]'),
+        aAppellation = [];
+
+    elAppellation.forEach(uneAppellation => {
+        if (uneAppellation.checked) {
+            aAppellation.push(uneAppellation.dataset.jsAppellation);
+        }
+    });
+
+    listeSelection = aAppellation.toString();
+    aDonnees['appellation'] = listeSelection;
+
+    // Cépage
+    let elCepage = document.querySelectorAll('[data-js-cepage]'),
+        aCepage = [];
+
+    elCepage.forEach(uneCepage => {
+        if (uneCepage.checked) {
+            aCepage.push(uneCepage.dataset.jsCepage);
+        }
+    });
+
+    listeSelection = aCepage.toString();
+    aDonnees['cepage'] = listeSelection;
+
+    // Classification
+    let elClassification = document.querySelectorAll('[data-js-classification]'),
+        aClassification = [];
+
+    elClassification.forEach(uneClassification => {
+        if (uneClassification.checked) {
+            aClassification.push(uneClassification.dataset.jsClassification);
+        }
+    });
+
+    listeSelection = aClassification.toString();
+    aDonnees['classification'] = listeSelection;
+
+    // Désignation
+    let elDesignation = document.querySelectorAll('[data-js-designation]'),
+        aDesignation = [];
+
+    elDesignation.forEach(uneDesignation => {
+        if (uneDesignation.checked) {
+            aDesignation.push(uneDesignation.dataset.jsDesignation);
+        }
+    });
+
+    listeSelection = aDesignation.toString();
+    aDonnees['designation'] = listeSelection;
+
+    // Taux de sucre
+    let elTauxSucre = document.querySelectorAll('[data-js-taux-sucre]'),
+        aTauxSucre = [];
+
+    elTauxSucre.forEach(uneTauxSucre => {
+        if (uneTauxSucre.checked) {
+            aTauxSucre.push(uneTauxSucre.dataset.jsTauxSucre);
+        }
+    });
+
+    listeSelection = aTauxSucre.toString();
+    aDonnees['taux-sucre'] = listeSelection;
+
+    // Degré d'alcool
+    let elDegreAlcool = document.querySelectorAll('[data-js-degre-alcool]'),
+        aDegreAlcool = [];
+
+    elDegreAlcool.forEach(uneDegreAlcool => {
+        if (uneDegreAlcool.checked) {
+            aDegreAlcool.push(uneDegreAlcool.dataset.jsDegreAlcool);
+        }
+    });
+
+    listeSelection = aDegreAlcool.toString();
+    aDonnees['degre-alcool'] = listeSelection;
+
+
+    let donneesJson = JSON.stringify(aDonnees);
+
+    let requete = new Request("http://localhost/projet-web-2/index.php?requete=rechercherBouteilles", { method: 'POST', body: donneesJson });
+    fetch(requete)
+        .then(data => {
+            return data.json();
+        })
+        .then(post => {
+            console.log(post);
+        });
 }

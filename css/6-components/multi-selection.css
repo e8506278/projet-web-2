@@ -6,6 +6,10 @@ input:focus {
     width: 400px;
 }
 
+.main {
+    position: relative;
+}
+
 .multi-selection {
     padding: 20px;
     background: #dadada;
@@ -403,22 +407,20 @@ input[type=submit] {
     padding: 5px;
 }
 
-#sidebarMenu {
-    left: -64px;
-    margin-left: var(--espace-l);
+.menuRecherche {
     padding-bottom: var(--espace-l);
     position: absolute;
-    top: 51px;
+    top: 1px;
     transform: translateX(calc(-400px - var(--espace-l)));
     transition: transform .3s ease-in-out;
-    width: calc(400px + var(--espace-l));
+    width: 400px;
 }
 
-.openSidebarMenu:checked~#sidebarMenu {
+.menuRecherche.montrer {
     transform: translateX(0);
 }
 
-.openSidebarMenu {
+.burgerMenuRecherche {
     transition: all 0.3s;
     box-sizing: border-box;
     display: none;
