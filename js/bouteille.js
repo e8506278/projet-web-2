@@ -56,7 +56,23 @@ window.addEventListener('load', function () {
         })
     }
 
-
+    const image_inputs = document.getElementsByName('image_bouteille');
+    if( image_inputs && image_inputs.length>0){
+        image_inputs.forEach(el => {
+            el.addEventListener('input', (e) => {
+                console.log('input changed', e.target.value);
+                const newlien =  e.target.value;
+                const image_bouteille = document.getElementById('image_bouteille');
+                if(image_bouteille){
+                    image_bouteille.src = newlien;
+                }else {
+                    image_bouteille.src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png';
+                }
+            })
+        })
+    }else{
+        console.log('not found in form', key);
+    }
     /*AJOUT D'UN CELLIER*/
 
     // Swicher entre les vue selon si c'est modification ou bien just le mode view
