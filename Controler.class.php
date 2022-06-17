@@ -14,7 +14,6 @@
 
 class Controler
 {
-
     /**
      * Traite la requête
      * @return void
@@ -55,14 +54,20 @@ class Controler
             case 'ajouterNouvelleBouteilleCellier':
                 $this->ajouterNouvelleBouteilleCellier();
                 break;
+             case 'bouteille':
+                $this->ficheBouteille();
+                break;
             case 'ajouterBouteilleCellier':
                 $this->ajouterBouteilleCellier();
+                break;
+            case 'detruireBouteille': //detruire une bouteille from cellier
+                return $this->detruireBouteille();
                 break;
             case 'boireBouteilleCellier':
                 $this->boireBouteilleCellier();
                 break;
-            case 'details':
-                $this->productDetails();
+            case 'getBouteille':
+                $this->getBouteille();
                 break;
             case 'enregistrer':
                 $this->enregistrerUtilisateur();
@@ -188,6 +193,20 @@ class Controler
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
        
+    }
+
+    private function detruireBouteille()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+
+        $bte = new Bouteille();
+        $resultat = $bte->deleteUsageBouteille($body->id_bouteille, $body->id_cellier);
+
+        if($resultat){
+            return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille, 'id_cellier' => $body->id_cellier, 'resultat' => $resultat]);
+        }
+        return $this->returnJsonHttpResponse(false, []);
+        // echo json_encode($resultat);
     }
 
 
@@ -329,7 +348,82 @@ class Controler
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
        
     }
+
 /* FIN CELLIER */
+
+    private function ficheBouteille()
+    {
+        if(!$_SESSION['utilisateur']['id']){
+            $this->deconnecterUtilisateur();
+            return;
+        }
+        $id_cellier = $_GET['id_cellier'];
+        $id_bouteille = $_GET['id_bouteille'];
+        $message = $_GET['message'];
+
+
+        if($id_bouteille){
+            $bouteille = (new Bouteille());
+            $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
+            if(is_array($bouteille) && count($bouteille)>0){
+                $bouteille = $bouteille[0];
+            }
+        }
+
+
+        $body = json_decode(file_get_contents('php://input'));
+
+        $list = new Lists();
+        $bouteilles = $list->getList('bouteille');
+        $usager_celliers = $list->getList('usager_cellier');
+        $usager_bouteille = $list->getList('usager_bouteille');
+
+        $pays = $list->getList('pays');
+        $regions = $list->getList('region');
+        $types = $list->getList('type');
+        $formats = $list->getList('format');
+        $appellations = $list->getList('appellation');
+        $designations = $list->getList('designation');
+        $cepages = $list->getList('cepages');
+        $taux_de_sucres = $list->getList('taux_de_sucre');
+        $degre_alcools = $list->getList('degre_alcool');
+        $produit_du_quebecs = $list->getList('produit_du_quebec');
+        $classifications = $list->getList('classifications');
+
+
+        $celliers = $usager_celliers;
+        if(!is_array($celliers) || !(count($celliers)>0)){
+            $bouteille['celliers'] = [
+                'id_cellier' => null,
+                'nom_cellier' => '',
+                'quantite' => 0
+            ];
+        }else{
+            $bouteille['celliers'] = $celliers;
+        }
+
+
+        $bouteille['id_cellier'] = $id_cellier;
+
+        include("vues/entete.php");
+        include("vues/details.php");
+        include("vues/pied.php");
+    }
+
+    public function getBouteille()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body)) {
+            $bouteille = new Bouteille();
+
+            $resultat = $bouteille->getOneBouteilleByName($body->nom);
+            if(count($resultat)>0){
+                return $this->returnJsonHttpResponse(true, $resultat[0]);
+            }
+        }
+        return $this->returnJsonHttpResponse(false, null);
+    }
 
 
     private function productDetails()
@@ -345,5 +439,34 @@ class Controler
         include("vues/entete.php");
         include("vues/details.php");
         include("vues/pied.php");
+    }
+
+    function returnJsonHttpResponse($success, $data)
+    {
+        // remove any string that could create an invalid JSON
+        // such as PHP Notice, Warning, logs...
+        ob_clean();
+
+        // this will clean up any previously added headers, to start clean
+        header_remove();
+
+        // Set the content type to JSON and charset
+        // (charset can be set to something else)
+        header("Content-type: application/json; charset=utf-8");
+
+        // Set your HTTP response code, 2xx = SUCCESS,
+        // anything else will be error, refer to HTTP documentation
+        if ($success) {
+            http_response_code(200);
+        } else {
+            http_response_code(500);
+        }
+
+        // encode your PHP Object or Array into a JSON string.
+        // stdClass or array
+        echo json_encode($data);
+
+        // making sure nothing is added
+        exit();
     }
 }

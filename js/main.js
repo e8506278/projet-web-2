@@ -45,8 +45,6 @@ window.addEventListener('load', function () {
                         console.error(error);
                     });
             }
-
-
         });
 
         let bouteille = {
@@ -60,17 +58,19 @@ window.addEventListener('load', function () {
         };
 
 
-        liste.addEventListener("click", function (evt) {
-            console.dir(evt.target)
-            if (evt.target.tagName == "LI") {
-                bouteille.nom.dataset.id = evt.target.dataset.id;
-                bouteille.nom.innerHTML = evt.target.innerHTML;
+        if(liste){ // J'ai ajouté cette condition parceque ça bug quand c'est null
+            liste.addEventListener("click", function (evt) {
+                console.dir(evt.target)
+                if (evt.target.tagName == "LI") {
+                    bouteille.nom.dataset.id = evt.target.dataset.id;
+                    bouteille.nom.innerHTML = evt.target.innerHTML;
 
-                liste.innerHTML = "";
-                inputNomBouteille.value = "";
+                    liste.innerHTML = "";
+                    inputNomBouteille.value = "";
 
-            }
-        });
+                }
+            });
+        }
 
         let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
         if (btnAjouter) {
@@ -104,8 +104,6 @@ window.addEventListener('load', function () {
         }
 
     }
-
-
 
 
 

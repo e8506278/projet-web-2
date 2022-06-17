@@ -20,6 +20,7 @@ class Modele {
 	
 	function __construct ()
 	{
+
 		$this->_db = MonSQL::getInstance();
 		$this->verbe = $_SERVER['REQUEST_METHOD'];
 		
@@ -59,6 +60,14 @@ class Modele {
         }
         
         $this->parametres = $parametres;
+
+        try {
+            $this->_db = MonSQL::getInstance();
+        }catch (Exception $e){
+            print_r($e);
+        }
+
+
 	}
 	
 	/**
