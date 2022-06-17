@@ -11,9 +11,9 @@ if($_POST['estCommentaire']){
                             note = '".$_POST['note']."'
                             WHERE id_bouteille=".$_POST['id_bouteille'];//
     $message = "Le commentaire a bien été ajouté";
-    echo "<br>";
-    echo $query_string;
-    echo "<br>";
+//    echo "<br>";
+//    echo $query_string;
+//    echo "<br>";
     $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
 
 }else{
@@ -88,9 +88,9 @@ if($_POST['estCommentaire']){
 
         if($bouteille_id)
             $ub = $list->getUsagerBouteille( $bouteille_id, $cellier['id_cellier']);
-            echo "<br><br>";
-            print_r($ub);
-            echo "<br><br>";
+//            echo "<br><br>";
+//            print_r($ub);
+//            echo "<br><br>";
             if(!$ub){
                 $query_string = "INSERT INTO usager__bouteille(
                             id_bouteille ,
@@ -192,9 +192,9 @@ if($_POST['estCommentaire']){
             }
 
             if(isset($cellier['id_cellier']) && $cellier['id_cellier'] != null){
-                echo "<br>";
-                echo $query_string;
-                echo "<br>";
+//                echo "<br>";
+//                echo $query_string;
+//                echo "<br>";
                 $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
 
             }
@@ -204,12 +204,12 @@ if($_POST['estCommentaire']){
 
 }
 
-ECHO "FIN ...";
+echo "Traitement terminé avec succès !<br><br>";
+ECHO "Redirection ...";
 
 
-$returnpage = "/webiero?requete=bouteille";
+$returnpage = home_base_url()."?requete=bouteille";
 $id_cellier  = $_POST['id_cellier'];
-
 
 if(isset( $_POST['id_cellier']) &&  $_POST['id_cellier'] != null){
     $returnpage = $returnpage.'&id_cellier='.$id_cellier;
@@ -222,3 +222,78 @@ if(isset($message) && $message != null){
 }
 
 header("Location:".$returnpage);
+
+
+/*
+ *
+ * Une fonction util pour avoir le base url
+ *
+ * */
+
+function home_base_url(){
+
+// first get http protocol if http or https
+
+    $base_url = (isset($_SERVER['HTTPS']) &&
+
+        $_SERVER['HTTPS']!='off') ? 'https://' : 'http://';
+
+// get default website root directory
+
+    $tmpURL = dirname(__FILE__);
+
+// when use dirname(__FILE__) will return value like this "C:\xampp\htdocs\my_website",
+
+//convert value to http url use string replace,
+
+// replace any backslashes to slash in this case use chr value "92"
+
+    $tmpURL = str_replace(chr(92),'/',$tmpURL);
+
+// now replace any same string in $tmpURL value to null or ''
+
+// and will return value like /localhost/my_website/ or just /my_website/
+
+    $tmpURL = str_replace($_SERVER['DOCUMENT_ROOT'],'',$tmpURL);
+
+// delete any slash character in first and last of value
+
+    $tmpURL = ltrim($tmpURL,'/');
+
+    $tmpURL = rtrim($tmpURL, '/');
+
+
+// check again if we find any slash string in value then we can assume its local machine
+
+    if (strpos($tmpURL,'/')){
+
+// explode that value and take only first value
+
+        $tmpURL = explode('/',$tmpURL);
+
+        $tmpURL = $tmpURL[0];
+
+    }
+
+// now last steps
+
+// assign protocol in first value
+
+    if ($tmpURL !== $_SERVER['HTTP_HOST'])
+
+// if protocol its http then like this
+
+        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
+
+    else
+
+// else if protocol is https
+
+        $base_url .= $tmpURL.'/';
+
+// give return value
+
+    return $base_url;
+
+}
+
