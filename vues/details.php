@@ -148,7 +148,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                         <div class="row">
                             <div class="col info-unit">
                                 <input type="hidden" value="<?php echo $form_values['id_bouteille']?>" name="id_bouteille"/>
-                                <div class="label">Nom de la bouteille</div>
+                                <div class="label">Nom de la bouteille(*)</div>
                                 <div class="value label-state" style="<?php if(!isset($id_bouteille)) echo 'display: unset'?>">
                                     <?php echo ($form_values['nom_bouteille'] ?: 'Non défini') ?>
                                 </div>
@@ -220,7 +220,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 </div>
                             </div>
                             <div class="col-6 info-unit">
-                                <div class="label">Prix</div>
+                                <div class="label">Prix(*)</div>
                                 <div class="value label-state">
                                     <?php echo $form_values['prix_bouteille']  ?: 'Non défini'?>
                                 </div>
@@ -369,7 +369,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                         </div>
                         <div class="row">
                             <div class="col-6 info-unit">
-                                <div class="label">Pays</div>
+                                <div class="label">Pays(*)</div>
                                 <div class="value label-state">
                                     <?php echo $form_values['nom_pays']  ?: 'Non défini'?>
                                 </div>
@@ -389,7 +389,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 </div>
                             </div>
                             <div class="col-6 info-unit">
-                                <div class="label">Region</div>
+                                <div class="label">Region(*)</div>
                                 <div class="value label-state">
                                     <?php echo $form_values['nom_region']  ?: 'Non défini'?>
                                 </div>
@@ -412,7 +412,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                         </div>
                         <div class="row">
                             <div class="col-6 info-unit">
-                                <div class="label">Type</div>
+                                <div class="label">Type(*)</div>
                                 <div class="value label-state">
                                     <?php echo $form_values['nom_type']  ?: 'Non défini'?>
                                 </div>
@@ -432,7 +432,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 </div>
                             </div>
                             <div class="col-6 info-unit">
-                                <div class="label">Format</div>
+                                <div class="label">Format(*)</div>
                                 <div class="value label-state">
                                     <?php echo $form_values['nom_format']  ?: 'Non défini'?>
                                 </div>
@@ -515,7 +515,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 </div>
                             </div>
                             <div class="col-6 info-unit">
-                                <div class="label">Taux de sucre</div>
+                                <div class="label">Taux de sucre(*)</div>
                                 <div class="value label-state">
                                     <?php echo $form_values['nom_taux_de_sucre']  ?: 'Non défini'?>
                                 </div>
@@ -654,7 +654,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             </div>
                             <?php if(isset($id_cellier) && $id_cellier!=null) {?>
                                 <div class="col-6 info-unit">
-                                <div class="label">Quantité</div>
+                                <div class="label">Quantité(*)</div>
                                 <div class="value label-state">
                                     <?php echo $form_values['quantite']  ?: 'Non défini'?>
                                 </div>
@@ -677,7 +677,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                     <!--            Information liées au cellier-->
                     <?php if(!isset($id_cellier) || !$id_cellier) {?>
                         <div class="form-block" id="cellier-block">
-                        <h6>Informations liés au cellier</h6>
+                        <h6>Mes celliers</h6>
 
                                 <?php $key = 0; foreach ($celliers as $cellier) {?>
                                     <div class="row">
@@ -711,7 +711,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                             </div>
                                         </div>
                                         <div class="col-6 info-unit">
-                                            <div class="label">Quantité</div>
+                                            <div class="label">Quantité(*)</div>
                                             <div class="value label-state">
                                                 <?php echo $cellier['quantite']  ?: 'Non défini'?>
                                             </div>
@@ -821,7 +821,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                     <h6>Informations sur la bouteille</h6>
                     <div class="row">
                         <div class="col info-unit">
-                            <div class="label">Nom de la bouteille</div>
+                            <div class="label">Nom de la bouteille(*)</div>
                             <div class="value">
                                 <input list="bouteilles"
                                        value="<?php echo $form_values['nom_bouteille']?>"
@@ -879,7 +879,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             </div>
                         </div>
                         <div class="col-6 info-unit">
-                            <div class="label">Prix</div>
+                            <div class="label">Prix(*)</div>
                             <div class="value">
                                 <input type="number" name="prix_bouteille"
                                        required
@@ -997,7 +997,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                     </div>
                     <div class="row">
                         <div class="col-6 info-unit">
-                            <div class="label">Pays</div>
+                            <div class="label">Pays(*)</div>
                             <div class="value">
                                 <input list="pays"
                                        required
@@ -1014,7 +1014,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             </div>
                         </div>
                         <div class="col-6 info-unit">
-                            <div class="label">Region</div>
+                            <div class="label">Region(*)</div>
                             <div class="value">
                                 <input list="regions"
                                        required
@@ -1034,7 +1034,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                     </div>
                     <div class="row">
                         <div class="col-6 info-unit">
-                            <div class="label">Type</div>
+                            <div class="label">Type(*)</div>
                             <div class="value">
                                 <input list="types"
                                        required
@@ -1051,7 +1051,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             </div>
                         </div>
                         <div class="col-6 info-unit">
-                            <div class="label">Format</div>
+                            <div class="label">Format(*)</div>
                             <div class="value">
                                 <input list="formats"
                                        required
@@ -1122,7 +1122,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             </div>
                         </div>
                         <div class="col-6 info-unit">
-                            <div class="label">Taux de sucre</div>
+                            <div class="label">Taux de sucre(*)</div>
                             <div class="value">
                                 <input list="taux_de_sucres"
                                        placeholder="Sélectionner ici"
@@ -1226,7 +1226,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             </div>
                             <?php if(isset($id_cellier) && $id_cellier!=null) {?>
                                 <div class="col-6 info-unit">
-                                    <div class="label">Quantité</div>
+                                    <div class="label">Quantité(*)</div>
                                     <div class="value">
                                         <input type="hidden" name="celliers[0][id_cellier]"
                                                value="<?php echo $id_cellier?>"
@@ -1247,7 +1247,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
                 <?php if(!isset($id_cellier) || !$id_cellier) {?>
                     <div class="form-block" id="cellier-block">
-                        <h6>Informations liés au cellier</h6>
+                        <h6>AMes celliers</h6>
                             <?php $key = 0; foreach ($celliers as $cellier) {?>
                                 <div class="row">
                                     <div class="col-6 info-unit">
@@ -1266,7 +1266,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                         </div>
                                     </div>
                                     <div class="col-6 info-unit">
-                                        <div class="label">Quantité</div>
+                                        <div class="label">Quantité(*)</div>
                                         <div class="value">
                                             <input type="number"
                                                    required
