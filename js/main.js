@@ -8,60 +8,92 @@
  *
  */
 
-//const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
+
 const BaseURL = document.baseURI;
-console.log(BaseURL);
+
 window.addEventListener('load', function () {
-    console.log("load");
+
+// RÉDUIRE LA QTÉ D'UNE BOUTEILLE DANS UN CELLIER
     document.querySelectorAll(".btnBoire").forEach(function (element) {
-        console.log(element);
+       
+       // Au click du bouton diminué (-)
         element.addEventListener("click", function (evt) {
-            let id = evt.target.parentElement.dataset.id;
-            let requete = new Request(BaseURL + "index.php?requete=boireBouteilleCellier", { method: 'POST', body: '{"id": ' + id + '}' });
+            // id_bouteille
+            let id =element.parentElement.dataset.jsId;
 
+            let requete = new Request(BaseURL + "?requete=reduireQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
+
+            // Requête fetch
             fetch(requete)
                 .then(response => {
                     if (response.status === 200) {
-                        return response.json();
+                        return response;
                     } else {
                         throw new Error('Erreur');
                     }
                 })
                 .then(response => {
-                    console.debug(response);
-                    //reload page
-                    location.reload();
+                    // Récuperation des cartes bouteille
+                    let carteBouteille = document.querySelectorAll('[data-js-bouteille]')
+
+                    // Récupération du nombre de bouteille dans le <span></span>
+                    nombreBouteille = element.previousElementSibling.textContent
+
+                    // Pour chaque carte bouteille
+                    for (let i = 0, l = carteBouteille.length; i < l; i++){
+                        // Si le dataset de l'id_bouteille correspond au id_bouteille du  click
+                        if(carteBouteille[i].dataset.jsBouteille == id){
+                            // Si le nombre de bouteille est égal à 1
+                            if(nombreBouteille == 1){
+                                // Suppression à l'écran de la carte bouteille car le nombre de bouteille tombe à zéro
+                                carteBouteille[i].remove();
+                            }
+                        }
+                    }
+                    // Si le nombre de bouteille est supérieur ou égal à 1
+                    if(nombreBouteille >= 1){
+                        // Insertion dans le DOM de la nouvelle quantité
+                        element.previousElementSibling.innerHTML = `<span data-js-quantite>${nombreBouteille-1}</span>`; 
+                    }
                 }).catch(error => {
                     console.error(error);
-                });
+                });  
         })
+    })
 
-    });
-
+// AJOUTER LA QTÉ D'UNE BOUTEILLE DANS UN CELLIER
     document.querySelectorAll(".btnAjouter").forEach(function (element) {
-        console.log(element);
+        
+        // Au click du bouton ajouter (+)
         element.addEventListener("click", function (evt) {
-            let id = evt.target.parentElement.dataset.id;
-            let requete = new Request(BaseURL + "index.php?requete=ajouterBouteilleCellier", { method: 'POST', body: '{"id": ' + id + '}' });
+            // id_bouteille
+            let id =element.parentElement.dataset.jsId;
 
+            let requete = new Request(BaseURL + "?requete=ajouterQteBouteille", { method: 'POST', body: '{"id": ' + id + '}' });
+
+            // Requête fetch
             fetch(requete)
                 .then(response => {
                     if (response.status === 200) {
-                        return response.json();
+                        return response;
                     } else {
                         throw new Error('Erreur');
                     }
                 })
                 .then(response => {
-                    console.debug(response);
-                    //reload page
-                    location.reload();
+
+                    // Récupération de l'id_bouteille dans le <span></span>
+                    nombreBouteille = parseInt(element.nextElementSibling.textContent);
+                     // Insertion dans le DOM de la nouvelle quantité
+                    element.nextElementSibling.innerHTML = `<span data-js-quantite>${(nombreBouteille)+1}</span>`
+        
                 }).catch(error => {
                     console.error(error);
                 });
         })
 
     });
+
 
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
 
@@ -153,7 +185,6 @@ window.addEventListener('load', function () {
 
     }
 
-    console.log('hihi');
     /*AJOUT D'UN BOUTEILLE*/
     const selectBouteilleInput = document.querySelector('[data-js-bouteille-select]');
     if(selectBouteilleInput){
@@ -188,6 +219,7 @@ window.addEventListener('load', function () {
             });
         })
     }
+    
     /*AJOUT D'UN CELLIER*/
 
     let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
@@ -206,6 +238,8 @@ window.addEventListener('load', function () {
                 description_cellier = document.querySelector("[name='description_cellier']").value,
                 radio = false,
                 estValide = true
+
+                //VALIDATION
                 // Si le nom du cellier n'est pas vide
                 if(nom_cellier.value !== ""){
                 
@@ -256,23 +290,24 @@ window.addEventListener('load', function () {
                             fetch(requete)
                                 .then(response => {
                                     if (response.status === 200) {
-                                        // si ok fermeture du modal
-                                        elModal = document.querySelector('[data-js-modal]')
-                                        if (elModal.classList.contains('modal--ouvre')) {
-                                            elModal.classList.replace('modal--ouvre', 'modal--ferme');
-                                            
-                                            document.documentElement.classList.remove('overflow-y--hidden');
-                                            document.body.classList.remove('overflow-y--hidden');
-                                        }
-                                        // Rafraîchir la page
-                                        location.reload();
-                                        return response.json();
+                                        return response
                                     } else {
                                         throw new Error('Erreur');
                                     }
                                 })
                                 .then(response => {
-                                    console.log(response);
+
+
+                                    // Fermeture du modal
+                                    elModal = document.querySelector('[data-js-modal]')
+                                    if (elModal.classList.contains('modal--ouvre')) {
+                                        elModal.classList.replace('modal--ouvre', 'modal--ferme');
+                                        
+                                        document.documentElement.classList.remove('overflow-y--hidden');
+                                        document.body.classList.remove('overflow-y--hidden');
+                                    }
+                                    // Rafraîchir la page
+                                    location.reload();
                                     
                                 }).catch(error => {
                                     console.error(error);

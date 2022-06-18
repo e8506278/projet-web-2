@@ -11,11 +11,14 @@
     require("config.php");
 
     $saq = new ExtraData();
-    $result = $saq->lireFichier();
+    // $result = $saq->lireFichier();
 
-    if ($result) {
-        $result = $saq->traiterDonnees();
-    }
+    // if ($result) {
+    //     $result = $saq->traiterDonnees();
+    // }
+
+    $result = $saq->traiterDonnees();
+
     ?>
 </body>
 

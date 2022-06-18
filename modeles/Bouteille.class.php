@@ -44,8 +44,9 @@ class Bouteille extends Modele
         $rows = array();
 
         $requete = "SELECT * FROM usager__bouteille 
-             
-                    WHERE usager__bouteille.id_cellier = '$id_cellier'";
+                    WHERE usager__bouteille.id_cellier = '$id_cellier' 
+                    AND usager__bouteille.quantite_bouteille > 0 
+                    ORDER BY id_bouteille DESC ";
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
@@ -318,11 +319,12 @@ class Bouteille extends Modele
      */
     public function modifierQuantiteBouteilleCellier($id, $nombre)
     {
+
         //TODO : Valider les données.
 
 
-        $requete = "UPDATE vino__cellier SET quantite = GREATEST(quantite + " . $nombre . ", 0) WHERE id = " . $id;
-        //echo $requete;
+        $requete = "UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = " . $id;
+        echo $requete;
         $res = $this->_db->query($requete);
 
         return $res;
@@ -336,4 +338,5 @@ class Bouteille extends Modele
 
         return $res;
     }
+
 }

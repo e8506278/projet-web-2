@@ -22,7 +22,7 @@
     position: relative;
 }
 
-.burger__ouvre a{
+.burger__ouvre .burger__link{
     padding: var(--espace-xp) var(--espace-p);
     color:white;
     font-size: var(--police-xp);
@@ -30,6 +30,14 @@
 
 .burger__ouvre svg:hover{
     fill: var(--couleur-accent);
+}
+
+.burger__icone{
+    vertical-align: -webkit-baseline-middle;
+    border-bottom: 1px solid var(--couleur-accent);
+}
+.burger__bouton-dropdown{
+    background-color: var(--couleur-secondaire);
 }
 
 /* Radio */

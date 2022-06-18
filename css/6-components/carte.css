@@ -18,10 +18,11 @@
 
 /* || Contenu*/
 .carte__contenu{
-   
+    width:100%;
     margin-bottom: var(--espace-p);
     padding: var(--espace-xp);
     background-color: white;
+    justify-content: space-between;
 
 }
 @media only screen and (min-width: 500px) {
@@ -107,7 +108,7 @@
 
 /* || Titre*/
 .carte__titre{
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid var(--couleur-accent);
     margin-bottom: var(--espace-xp);
     justify-content: space-between;
 }
@@ -143,14 +144,18 @@
 .carte--aligne-droite{
     text-align: end;
 }
-
 .carte--flex{
     display: flex;
 }
 .carte--hauteur{
     min-height: 400px;
 }
-
+.carte__lien--largeur{
+    width: 100%;
+}
+.carte__icone--bb{
+    border-bottom: 1px solid var(--couleur-accent);
+}
 /* || image */
 .carte__img{
     width: 65px;

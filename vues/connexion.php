@@ -8,67 +8,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion | Vino</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&family=Poiret+One&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&family=Poiret+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
     <link rel="stylesheet" href="./css/styles.css">
 
     <script defer src="./js/connexion.js"></script>
 </head>
 <div class="hero hero--pad-haut">
-	<div class="hero__titre">vino
-		<div class="hero__stitre">Gestion de celliers</div>	
-	</div>
-	<!--Image hero-->
-	<div class="hero__img-wrapper">
-		<img class="hero__img--hauteur " src="./assets/img/unebouteille.jpg" alt="hero">
-	</div>
+    <div class="hero__titre">vino
+        <div class="hero__stitre">Gestion de celliers</div>
+    </div>
+    <!--Image hero-->
+    <div class="hero__img-wrapper">
+        <img class="hero__img--hauteur " src="./assets/img/unebouteille.jpg" alt="hero">
+    </div>
 </div>
 <section class="section-wrapper t-p">
-	
-<h1 class="t-p__titre">La meilleure application de gestion de cellier disponible sur le marché</h1>
-	<article class="t-p__contenu">
-		<p class="t-p__texte">Vino est l'application la plus complète sur le marché vous permettant de gerer jusqu'à <span class="text-photo__texte--gras">10 celliers différents</span>. 
-			Simple à utiliser, l'application vous tiendra à jour des vins <span class="text-photo__texte--gras">prêts à boire</span>, vous permet d'y tenir une <span class="text-photo__texte--gras">liste d'achat</span> et d'avoir des <span class="text-photo__texte--gras">statistiques</span> sur les entrées et sorties des vins de votre cellier.
-			<br>
-           
-				 Commencez dès aujourd'hui à gérer vos celliers!<br>
-				
-					<span class="boite-double__texte--couleur">&#10148;</span> Possibilité de plusieurs celliers.<br>
-					<span class="boite-double__texte--couleur">&#10148;</span> Recherchez des bouteilles et ajoutez les à votre cellier.<br>
-					<span class="boite-double__texte--couleur">&#10148;</span> Faites votre liste d'achat, partagez sur les réseaux sociaux et bien plus!
-                   
-			
-		</p>
-		<div class="t-p__img">
-			<img  src="./assets/img/cellier.jpg" alt="degustation2">
-		</div>	
-	</article>
+
+    <h1 class="t-p__titre">La meilleure application de gestion de cellier disponible sur le marché</h1>
+    <article class="t-p__contenu">
+        <p class="t-p__texte">Vino est l'application la plus complète sur le marché vous permettant de gerer jusqu'à <span class="text-photo__texte--gras">10 celliers différents</span>.
+            Simple à utiliser, l'application vous tiendra à jour des vins <span class="text-photo__texte--gras">prêts à boire</span>, vous permet d'y tenir une <span class="text-photo__texte--gras">liste d'achat</span> et d'avoir des <span class="text-photo__texte--gras">statistiques</span> sur les entrées et sorties des vins de votre cellier.
+            <br>
+
+            Commencez dès aujourd'hui à gérer vos celliers!<br>
+
+            <span class="boite-double__texte--couleur">&#10148;</span> Possibilité de plusieurs celliers.<br>
+            <span class="boite-double__texte--couleur">&#10148;</span> Recherchez des bouteilles et ajoutez les à votre cellier.<br>
+            <span class="boite-double__texte--couleur">&#10148;</span> Faites votre liste d'achat, partagez sur les réseaux sociaux et bien plus!
+
+
+        </p>
+        <div class="t-p__img">
+            <img src="./assets/img/cellier.jpg" alt="degustation2">
+        </div>
+    </article>
 </section>
-<body class="main">
+
+<body class="main-connexion">
     <div class="section-wrapper wrapper-center">
         <div class="main-section">
             <div class="entete">
                 <h2 class="">Connexion</h2>
             </div>
 
+            <?php if (isset($erreurs['usager_non_connecte'])) : ?>
+                <span class="message-erreur" data-js-connexion-err><?= $erreurs['usager_non_connecte'] ?></span>
+            <?php endif; ?>
+
             <form class="formulaire" action="" method="POST">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="usager_nom_utilisateur" data-js-utilisateur placeholder="Entrez votre nom d'utilisateur" value="" />
-                    <span class="aucune-erreur" data-js-utilisateur-err>&nbsp;</span>
+                    <input type="text" class="form-control" name="usager_nom_utilisateur" data-js-utilisateur placeholder="Entrez votre nom d'utilisateur" value="<?php echo $utilisateur ?>" />
 
-                    <?php if (isset($erreurs['usager_nom_utilisateur']))
-                        echo '<span class="message-erreur">' . $erreurs['usager_nom_utilisateur'] . '</span>';
-                    ?>
+                    <?php if (isset($erreurs['usager_nom_utilisateur'])) : ?>
+                        <span class="message-erreur" data-js-utilisateur-err><?= $erreurs['usager_nom_utilisateur'] ?></span>
+                    <?php else : ?>
+                        <span class="aucune-erreur" data-js-utilisateur-err>&nbsp;</span>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
-                    <input type="password" class="form-control" name="usager_mot_de_passe" data-js-mdp placeholder="Entrez votre mot de passe" value="" />
-                    <span class="aucune-erreur" data-js-mdp-err>&nbsp;</span>
+                    <input type="password" class="form-control" name="usager_mot_de_passe" data-js-mdp placeholder="Entrez votre mot de passe" />
 
-                    <?php if (isset($erreurs['usager_mot_de_passe']))
-                        echo '<span class="message-erreur">' . $erreurs['usager_mot_de_passe'] . '</span>';
-                    ?>
+                    <?php if (isset($erreurs['usager_mot_de_passe'])) : ?>
+                        <span class="message-erreur" data-js-mdp-err><?= $erreurs['usager_mot_de_passe'] ?></span>
+                    <?php else : ?>
+                        <span class="aucune-erreur" data-js-mdp-err>&nbsp;</span>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group btn-group">
@@ -82,18 +89,18 @@
         </div>
     </div>
     <footer class="section-wrapper pied">
-				<nav class="pied__nav">
-					<div class="pied__logo">
-						VINO
-						<div class="pied__logo-stitre">Gestion de cellier</div>
-					</div>
-					<div class="pied__listes">
-						<ul class="pied__liste">
-						<!--	<li ><a href="#" class="pied__liens">Mon compte</a></li>
+        <nav class="pied__nav">
+            <div class="pied__logo">
+                VINO
+                <div class="pied__logo-stitre">Gestion de cellier</div>
+            </div>
+            <div class="pied__listes">
+                <ul class="pied__liste">
+                    <!--	<li ><a href="#" class="pied__liens">Mon compte</a></li>
 							<li ><a href="?requete=mesCelliers" class="pied__liens">Mes celliers</a></li>
 							<li ><a href="?requete=listeBouteille" class="pied__liens">Mes bouteilles</a></li>-->
-						</ul>
-						<!--
+                </ul>
+                <!--
 						<ul class="pied__liste">
 							<li ><a href="#" class="pied__liens">Mes listes</a></li>
 							<li ><a href="#" class="pied__liens">Mes statistiques</a></li>
@@ -105,9 +112,9 @@
 							<li ><a href="#" class="pied__liens"><i><svg class="pied__icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-48.9 158.8c.2 2.8.2 5.7.2 8.5 0 86.7-66 186.6-186.6 186.6-37.2 0-71.7-10.8-100.7-29.4 5.3.6 10.4.8 15.8.8 30.7 0 58.9-10.4 81.4-28-28.8-.6-53-19.5-61.3-45.5 10.1 1.5 19.2 1.5 29.6-1.2-30-6.1-52.5-32.5-52.5-64.4v-.8c8.7 4.9 18.9 7.9 29.6 8.3a65.447 65.447 0 0 1-29.2-54.6c0-12.2 3.2-23.4 8.9-33.1 32.3 39.8 80.8 65.8 135.2 68.6-9.3-44.5 24-80.6 64-80.6 18.9 0 35.9 7.9 47.9 20.7 14.8-2.8 29-8.3 41.6-15.8-4.9 15.2-15.2 28-28.8 36.1 13.2-1.4 26-5.1 37.8-10.2-8.9 13.1-20.1 24.7-32.9 34z"/></svg></i></a></li>
 						</ul>
 -->
-					</div>	
-				</nav>
-			</footer>
+            </div>
+        </nav>
+    </footer>
 </body>
 
 </html>
