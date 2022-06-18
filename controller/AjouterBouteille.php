@@ -2,6 +2,7 @@
 if (!class_exists('Lists')) {
     require_once ('../modeles/Lists.class.php');
 }
+$debug = true;
 $message = null;
 
 $bouteille_id = $_POST['id_bouteille'];
@@ -11,9 +12,11 @@ if($_POST['estCommentaire']){
                             note = '".$_POST['note']."'
                             WHERE id_bouteille=".$_POST['id_bouteille'];//
     $message = "Le commentaire a bien été ajouté";
-//    echo "<br>";
-//    echo $query_string;
-//    echo "<br>";
+    if($debug){
+        echo "<br>";
+        echo $query_string;
+         echo "<br>";
+    }
     $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
 
 }else{
@@ -88,9 +91,12 @@ if($_POST['estCommentaire']){
 
         if($bouteille_id)
             $ub = $list->getUsagerBouteille( $bouteille_id, $cellier['id_cellier']);
-//            echo "<br><br>";
-//            print_r($ub);
-//            echo "<br><br>";
+
+        if($debug){
+                        echo "<br><br>";
+            print_r($ub);
+            echo "<br><br>";
+        }
             if(!$ub){
                 $query_string = "INSERT INTO usager__bouteille(
                             id_bouteille ,
@@ -98,7 +104,6 @@ if($_POST['estCommentaire']){
                             nom_bouteille,
                             image_bouteille ,
                             description_bouteille ,
-                            quantite_bouteille ,
                             code_saq ,
                             code_cup ,
                             prix_bouteille ,
@@ -114,25 +119,29 @@ if($_POST['estCommentaire']){
                             vin_orange,
                             pays_id,
                             region_id,
-                            type_id,
+                            type_de_vin_id,
                             format_id,
                             appellation_id,
                             designation_id,
-                            cepages_id,
+                            cepage_id,
                             taux_de_sucre_id,
                             degre_alcool_id,
                             produit_du_quebec_id,
-                            classification_id  
+                            classification_id, 
+                            quantite_bouteille ,
+                            date_achat ,
+                            garde_jusqua ,
+                            millesime
+                              
                     ) VALUES (
                           ".$bouteille_id.",
                           ".$cellier['id_cellier'].",
                            '".$_POST['nom_bouteille']."', 
                           '".$_POST['image_bouteille']."',
                           '".$_POST['description_bouteille']."',
-                          ".($cellier['quantite'] ?: 0).",
                           ".($_POST['code_saq'] ?: 'NULL').",
                           ".($_POST['code_cup'] ?: 'NULL').",
-                          ".$_POST['prix_bouteille'].",
+                          '".$_POST['prix_bouteille']."',
                           '".$_POST['url_saq']."',
                           '".$_POST['producteur']."',
                           ".(isset($_POST['biodynamique'])? 1: 0).",
@@ -153,7 +162,11 @@ if($_POST['estCommentaire']){
                           ".($taux_de_sucre_id ?: 'NULL').",
                           ".($degre_alcool_id ?: 'NULL').",
                           ".($produit_du_quebec_id ?: 'NULL').",
-                          ".($classification_id ?: 'NULL')."
+                          ".($classification_id ?: 'NULL').",
+                          '".($cellier['quantite'] ?: 0)."',
+                          ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
+                          ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
+                         '".($_POST['millesime'])."'
                     )";
             }else{
                 $query_string = "UPDATE  usager__bouteille SET 
@@ -162,7 +175,7 @@ if($_POST['estCommentaire']){
                             description_bouteille  = '".$_POST['description_bouteille']."',
                             code_saq  =  ".($_POST['code_saq'] ?: 'NULL').",
                             code_cup =  ".($_POST['code_cup']?: 'NULL').",
-                            prix_bouteille =  ".$_POST['prix_bouteille'].",
+                            prix_bouteille =  '".$_POST['prix_bouteille']."',
                             url_saq =  '".$_POST['url_saq']."',
                             producteur =  '".$_POST['producteur']."',
                             biodynamique  =  ".(isset($_POST['biodynamique']) ? 1: 0).",
@@ -175,11 +188,11 @@ if($_POST['estCommentaire']){
                             vin_orange=  ".(isset($_POST['vin_orange']) ? 1: 0).",
                             pays_id=  ".($pays_id?: 'NULL').",
                             region_id=  ".($region_id ?: 'NULL').",
-                            type_id=  ".($type_id ?: 'NULL').",
+                            type_de_vin_id=  ".($type_id ?: 'NULL').",
                             format_id=  ".($format_id ?: 'NULL').",
                             appellation_id=  ".($appellation_id ?: 'NULL').",
                             designation_id=  ".($designation_id ?: 'NULL').",
-                            cepages_id=  ".($cepages_id ?: 'NULL').",
+                            cepage_id=  ".($cepages_id ?: 'NULL').",
                             taux_de_sucre_id=  ".($taux_de_sucre_id ?: 'NULL').",
                             degre_alcool_id=  ".($degre_alcool_id ?: 'NULL').",
                             produit_du_quebec_id=  ".($produit_du_quebec_id ?: 'NULL').",
@@ -187,14 +200,17 @@ if($_POST['estCommentaire']){
                             quantite_bouteille = '".($cellier['quantite'] ?: 0)."',
                             date_achat = ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
                             garde_jusqua = ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
-                            millesime = ".($_POST['millesime'] ?: 'NULL')."
+                            millesime = '".($_POST['millesime'])."'
                             WHERE id_cellier=".$cellier['id_cellier']." AND id_bouteille=".$bouteille_id;
             }
 
             if(isset($cellier['id_cellier']) && $cellier['id_cellier'] != null){
-//                echo "<br>";
-//                echo $query_string;
-//                echo "<br>";
+
+                if($debug){
+                  echo "<br>";
+                  echo $query_string;
+                 echo "<br>";
+                }
                 $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
 
             }

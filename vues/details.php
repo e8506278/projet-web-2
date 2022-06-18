@@ -225,7 +225,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                     <?php echo $form_values['prix_bouteille']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
-                                    <input type="number" name="prix_bouteille"
+                                    <input type="text" name="prix_bouteille"
                                            required
                                            value="<?php echo $form_values['prix_bouteille']?>"
                                            class="input formulaire__champs boite-double__champs"
@@ -644,7 +644,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                     <?php echo $form_values['millesime']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
-                                    <input type="number"
+                                    <input type="text"
                                            value="<?php echo $form_values['millesime']?>"
                                            placeholder="Sélectionner ici"
                                            class="input formulaire__champs boite-double__champs"
@@ -881,7 +881,8 @@ foreach ($celliers as & $cellier_dans_le_compte){
                         <div class="col-6 info-unit">
                             <div class="label">Prix(*)</div>
                             <div class="value">
-                                <input type="number" name="prix_bouteille"
+                                <input type="text"
+                                       name="prix_bouteille"
                                        required
                                        value="<?php echo $form_values['prix_bouteille']?>"
                                        class="input formulaire__champs boite-double__champs"
@@ -1217,7 +1218,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Millisime</div>
                                 <div class="value">
-                                    <input type="number"
+                                    <input type="text"
                                            value="<?php echo $form_values['millesime']?>"
                                            placeholder="Sélectionner ici"
                                            class="input formulaire__champs boite-double__champs"

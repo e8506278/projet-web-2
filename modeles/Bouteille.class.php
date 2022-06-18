@@ -78,7 +78,7 @@ class Bouteille extends Modele
                           ub.code_cup,
                           ub.pays_id,
                           ub.region_id,
-                          ub.type_id,
+                          ub.type_de_vin_id,
                           ub.description_bouteille,
                           ub.producteur,
                           ub.prix_bouteille,
@@ -88,7 +88,7 @@ class Bouteille extends Modele
                           ub.appellation_id,
                           ub.designation_id,
                           ub.classification_id,
-                          ub.cepages_id,
+                          ub.cepage_id,
                           ub.taux_de_sucre_id,
                           ub.degre_alcool_id,
                           ub.produit_du_quebec_id,
@@ -123,10 +123,10 @@ class Bouteille extends Modele
                     
 						LEFT JOIN usager__cellier uc ON uc.id_cellier = ub.id_cellier
 						LEFT JOIN vino__format format ON format.id = ub.format_id
-                        LEFT JOIN vino__pays pays ON pays.id = ub.pays_id
+                        LEFT JOIN generique__pays pays ON pays.id = ub.pays_id
                         LEFT JOIN vino__region region ON region.id = ub.region_id
-                        LEFT JOIN vino__type typ ON typ.id = ub.type_id
-                        LEFT JOIN vino__cepages cepages ON cepages.id = ub.cepages_id
+                        LEFT JOIN vino__type typ ON typ.id = ub.type_de_vin_id
+                        LEFT JOIN vino__cepage cepages ON cepages.id = ub.cepage_id
                         LEFT JOIN vino__appellation appel ON appel.id = ub.appellation_id
                         LEFT JOIN vino__designation designation ON designation.id = ub.designation_id
                         LEFT JOIN vino__taux_de_sucre ts ON ts.id = ub.taux_de_sucre_id
@@ -160,7 +160,6 @@ class Bouteille extends Modele
 						ub.date_achat, 
 						ub.garde_jusqua, 
 						ub.note, 
-						ub.prix, 
 						ub.quantite_bouteille as quantite,
 						ub.quantite_bouteille,
 						ub.millesime, 
@@ -216,10 +215,10 @@ class Bouteille extends Modele
                     
 						LEFT JOIN usager__cellier uc ON uc.id_cellier = ub.id_cellier
 						LEFT JOIN vino__format format ON format.id = b.format_id
-                        LEFT JOIN vino__pays pays ON pays.id = b.pays_id
+                        LEFT JOIN generique__pays pays ON pays.id = b.pays_id
                         LEFT JOIN vino__region region ON region.id = b.region_id
                         LEFT JOIN vino__type typ ON typ.id = b.type_id
-                        LEFT JOIN vino__cepages cepages ON cepages.id = b.cepages_id
+                        LEFT JOIN vino__cepage cepages ON cepages.id = b.cepages_id
                         LEFT JOIN vino__appellation appel ON appel.id = b.appellation_id
                         LEFT JOIN vino__designation designation ON designation.id = b.designation_id
                         LEFT JOIN vino__taux_de_sucre ts ON ts.id = b.taux_de_sucre_id
@@ -228,7 +227,9 @@ class Bouteille extends Modele
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
 
                        WHERE b.nom_bouteille = '".$nom."'" ;
-        if (($res = $this->_db->query($requete)) ==     true) {
+
+        $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
+        if ($res) {
 
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {

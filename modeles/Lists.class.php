@@ -24,7 +24,7 @@ class Lists
         $condition = null;
         switch ($param){
             case 'pays': {
-                $table = 'vino__pays';
+                $table = 'generique__pays';
                 break;
             }
             case 'bouteille': {
@@ -71,7 +71,7 @@ class Lists
                 break;
             }
             case 'cepages': {
-                $table = 'vino__cepages';
+                $table = 'vino__cepage';
                 break;
             }
             case 'taux_de_sucre': {
@@ -116,7 +116,7 @@ class Lists
         $condition = null;
         switch ($entite){
             case 'pays': {
-                $table = 'vino__pays';
+                $table = 'generique__pays';
                 break;
             }
             case 'bouteille': {
@@ -161,7 +161,7 @@ class Lists
                 break;
             }
             case 'cepages': {
-                $table = 'vino__cepages';
+                $table = 'vino__cepage';
                 break;
             }
             case 'taux_de_sucre': {
@@ -210,7 +210,7 @@ class Lists
         $condition = null;
         switch ($entite){
             case 'pays': {
-                $table = 'vino__pays';
+                $table = 'generique__pays';
                 break;
             }
             case 'bouteille': {
@@ -255,7 +255,7 @@ class Lists
                 break;
             }
             case 'cepages': {
-                $table = 'vino__cepages';
+                $table = 'vino__cepage';
                 break;
             }
             case 'taux_de_sucre': {
@@ -307,7 +307,7 @@ class Lists
         }
         switch ($entite){
             case 'pays': {
-                $table = 'vino__pays';
+                $table = 'generique__pays';
                 break;
             }
             case 'bouteille': {
@@ -348,7 +348,7 @@ class Lists
                 break;
             }
             case 'cepages': {
-                $table = 'vino__cepages';
+                $table = 'vino__cepage';
                 break;
             }
             case 'taux_de_sucre': {
