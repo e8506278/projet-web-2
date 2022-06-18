@@ -182,32 +182,25 @@ input[type=submit] {
 }
 
 .filtre-listbox fieldset {
-    align-items: center;
-    background: #f9f9f8;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-    box-sizing: border-box;
-    color: #363b3e;
+    border-color: transparent;
     display: flex;
     font-size: 16px;
     font-weight: 500;
     justify-content: left;
     margin: 0;
     min-height: 44px;
-    padding: 5px 10px;
+    padding: 0;
     position: relative;
-    transition: 0.2s;
 }
 
 .liste-choix {
     border: 3px solid #5e6264;
-    width: 100%;
-    min-width: 300px;
     border-radius: 4px;
+    margin: 0;
     max-height: 131px;
+    min-width: 300px;
     overflow-y: auto;
-    margin: 5px;
+    width: 100%;
 }
 
 .liste-choix input {
@@ -240,20 +233,31 @@ input[type=submit] {
 .filtre-listbox .choix-item:hover {
     background-color: #5e6264;
     color: var(--couleur-primaire);
+    cursor: pointer;
+}
+
+.filtre-listbox .choix-item:hover * {
+    cursor: pointer;
 }
 
 .filtre-entete,
 .filtre-entete-checkbox {
     align-items: center;
     display: flex;
+    flex-grow: 1;
 }
 
 .filtre-entete {
     justify-content: space-between;
-    padding: 5px 25px;
+    padding: 5px 12px;
+}
+
+.filtre-entete:hover * {
+    cursor: pointer;
 }
 
 .libelle-tous {
+    flex-grow: 1;
     padding: 0 5px;
 }
 

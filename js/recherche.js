@@ -378,13 +378,13 @@ function traiterRegion() {
 /**
  * Traiter les taux de sucre
  */
-function traiterTauxSucre() {
+function traiterTauxDeSucre() {
     let nbSelections = 0;
-    const elNbSelections = document.querySelector('.nb-taux-sucre');
+    const elNbSelections = document.querySelector('.nb-taux-de-sucre');
     const elInnerSelection = elNbSelections.querySelector('.nb-selections');
 
-    for (let i = 0, l = elTauxSucre.length; i < l; i++) {
-        if (elTauxSucre[i].checked) nbSelections++;
+    for (let i = 0, l = elTauxDeSucre.length; i < l; i++) {
+        if (elTauxDeSucre[i].checked) nbSelections++;
     }
 
     if (nbSelections === 0) {
@@ -396,7 +396,7 @@ function traiterTauxSucre() {
         elInnerSelection.classList.remove("hide");
     }
 
-    elTauxSucreTous.checked = (nbSelections === elTauxSucre.length);
+    elTauxDeSucreTous.checked = (nbSelections === elTauxDeSucre.length);
 }
 
 
@@ -430,7 +430,7 @@ function traiterTypeCellier() {
  */
 function traiterTypeVin() {
     let nbSelections = 0;
-    const elNbSelections = document.querySelector('.nb-type-vin');
+    const elNbSelections = document.querySelector('.nb-type-de-vin');
     const elInnerSelection = elNbSelections.querySelector('.nb-selections');
 
     for (let i = 0, l = elTypeVins.length; i < l; i++) {
@@ -770,20 +770,20 @@ if (elRegion.length > 0) {
 /**
  * Traiter la liste de checkboxes des taux de sucre
  */
-let elTauxSucre = document.querySelectorAll('[data-js-taux-sucre]');
-let elTauxSucreTous = document.querySelector('[data-js-taux-sucre-tous]');
+let elTauxDeSucre = document.querySelectorAll('[data-js-taux-de-sucre]');
+let elTauxDeSucreTous = document.querySelector('[data-js-taux-de-sucre-tous]');
 
-if (elTauxSucre.length > 0) {
-    elTauxSucre.forEach(unTauxSucre => {
-        unTauxSucre.addEventListener('change', traiterTauxSucre);
+if (elTauxDeSucre.length > 0) {
+    elTauxDeSucre.forEach(unTauxDeSucre => {
+        unTauxDeSucre.addEventListener('change', traiterTauxDeSucre);
     });
 
-    elTauxSucreTous.addEventListener('change', () => {
-        elTauxSucre.forEach(unTauxSucre => {
-            unTauxSucre.checked = elTauxSucreTous.checked;
+    elTauxDeSucreTous.addEventListener('change', () => {
+        elTauxDeSucre.forEach(unTauxDeSucre => {
+            unTauxDeSucre.checked = elTauxDeSucreTous.checked;
         });
 
-        traiterTauxSucre();
+        traiterTauxDeSucre();
     });
 }
 
@@ -811,8 +811,8 @@ if (elTypeCelliers.length > 0) {
 /**
  * Traiter la liste de checkboxes des types de vin
  */
-let elTypeVins = document.querySelectorAll('[data-js-type-vin]');
-let elTypeVinTous = document.querySelector('[data-js-type-vin-tous]');
+let elTypeVins = document.querySelectorAll('[data-js-type-de-vin]');
+let elTypeVinTous = document.querySelector('[data-js-type-de-vin-tous]');
 
 if (elTypeVins.length > 0) {
     elTypeVins.forEach(typeVin => {
@@ -894,8 +894,6 @@ function initDonnees() {
         }
     });
 
-    reinitVisibilite();
-
     //
     let elNbSelections = elRechercheWrapper.querySelectorAll('.nb-selections');
 
@@ -920,7 +918,6 @@ function initDonnees() {
 
     elAccordeons.forEach(unAccordeon => {
         const panel = unAccordeon.nextElementSibling;
-        panel.dataset.jsHauteur = aHauteurs['ferme'];
 
         if (panel.style.height) {
             unAccordeon.click();
@@ -1044,7 +1041,10 @@ function rechercher() {
     });
 
     listeSelection = aCelliers.toString();
-    aDonnees['cellier'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['id_cellier'] = listeSelection;
+    }
 
     // Type de cellier
     let elTypeCellier = document.querySelectorAll('[data-js-type-cellier]'),
@@ -1052,12 +1052,15 @@ function rechercher() {
 
     elTypeCellier.forEach(unTypeCellier => {
         if (unTypeCellier.checked) {
-            aTypeCelliers.push(unTypeCellier.dataset.jsTypeCellier);
+            aTypeCelliers.push("'" + unTypeCellier.dataset.jsTypeCellier + "'");
         }
     });
 
     listeSelection = aTypeCelliers.toString();
-    aDonnees['type-cellier'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['type_cellier'] = listeSelection;
+    }
 
     // Bouteille
     let elBouteille = document.querySelectorAll('[data-js-bouteille]'),
@@ -1070,20 +1073,26 @@ function rechercher() {
     });
 
     listeSelection = aBouteilles.toString();
-    aDonnees['bouteille'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['bouteille'] = listeSelection;
+    }
 
     // Type de vin
-    let elTypeVin = document.querySelectorAll('[data-js-type-vin]'),
+    let elTypeVin = document.querySelectorAll('[data-js-type-de-vin]'),
         aTypeVins = [];
 
-    elTypeVin.forEach(unTypeVin => {
-        if (unTypeVin.checked) {
-            aTypeVins.push(unTypeVin.dataset.jsTypeVin);
+    elTypeVin.forEach(unTypeDeVin => {
+        if (unTypeDeVin.checked) {
+            aTypeVins.push("'" + unTypeDeVin.dataset.jsTypeDeVin + "'");
         }
     });
 
     listeSelection = aTypeVins.toString();
-    aDonnees['type-vin'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['type_de_vin_nom'] = listeSelection;
+    }
 
     // Pays
     let elPays = document.querySelectorAll('[data-js-pays]'),
@@ -1091,25 +1100,31 @@ function rechercher() {
 
     elPays.forEach(unPays => {
         if (unPays.checked) {
-            aPays.push(unPays.dataset.jsPays);
+            aPays.push("'" + unPays.dataset.jsPays + "'");
         }
     });
 
     listeSelection = aPays.toString();
-    aDonnees['pays'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['pays_nom'] = listeSelection;
+    }
 
     // Région
     let elRegion = document.querySelectorAll('[data-js-region]'),
         aRegions = [];
 
-    elRegion.forEach(unRegion => {
-        if (unRegion.checked) {
-            aRegions.push(unRegion.dataset.jsRegion);
+    elRegion.forEach(uneRegion => {
+        if (uneRegion.checked) {
+            aRegions.push("'" + uneRegion.dataset.jsRegion + "'");
         }
     });
 
     listeSelection = aRegions.toString();
-    aDonnees['region'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['region_nom'] = listeSelection;
+    }
 
     // Prix
     let elPrix = document.querySelectorAll('[data-js-prix]'),
@@ -1117,12 +1132,15 @@ function rechercher() {
 
     elPrix.forEach(unPrix => {
         if (unPrix.checked) {
-            aPrix.push(unPrix.dataset.jsPrix);
+            aPrix.push("'" + unPrix.dataset.jsPrix + "'");
         }
     });
 
     listeSelection = aPrix.toString();
-    aDonnees['prix'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['prix_bouteille'] = listeSelection;
+    }
 
     // Format de la bouteille
     let elFormat = document.querySelectorAll('[data-js-format]'),
@@ -1130,12 +1148,15 @@ function rechercher() {
 
     elFormat.forEach(unFormat => {
         if (unFormat.checked) {
-            aFormats.push(unFormat.dataset.jsFormat);
+            aFormats.push("'" + unFormat.dataset.jsFormat + "'");
         }
     });
 
     listeSelection = aFormats.toString();
-    aDonnees['format'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['format_nom'] = listeSelection;
+    }
 
     // Quantité : A FAIRE
 
@@ -1145,12 +1166,15 @@ function rechercher() {
 
     elMillesime.forEach(unMillesime => {
         if (unMillesime.checked) {
-            aMillesime.push(unMillesime.dataset.jsMillesime);
+            aMillesime.push("'" + unMillesime.dataset.jsMillesime + "'");
         }
     });
 
     listeSelection = aMillesime.toString();
-    aDonnees['millesime'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['millesime'] = listeSelection;
+    }
 
     // Note
     let elNote = document.querySelectorAll('[data-js-note]'),
@@ -1158,12 +1182,15 @@ function rechercher() {
 
     elNote.forEach(uneNote => {
         if (uneNote.checked) {
-            aNote.push(uneNote.dataset.jsNote);
+            aNote.push("'" + uneNote.dataset.jsNote + "'");
         }
     });
 
     listeSelection = aNote.toString();
-    aDonnees['note'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['note'] = listeSelection;
+    }
 
     // Garde jusqu'à
     let elGardeJusqua = document.querySelectorAll('[data-js-garde-jusqua]'),
@@ -1176,20 +1203,26 @@ function rechercher() {
     });
 
     listeSelection = aGardeJusqua.toString();
-    aDonnees['garde-jusqua'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['garde_jusqua'] = listeSelection;
+    }
 
     // Produit du Québec
     let elProduitQc = document.querySelectorAll('[data-js-produit-qc]'),
         aProduitQc = [];
 
-    elProduitQc.forEach(uneProduitQc => {
-        if (uneProduitQc.checked) {
-            aProduitQc.push(uneProduitQc.dataset.jsProduitQc);
+    elProduitQc.forEach(unProduitDuQc => {
+        if (unProduitDuQc.checked) {
+            aProduitQc.push("'" + unProduitDuQc.dataset.jsProduitQc + "'");
         }
     });
 
     listeSelection = aProduitQc.toString();
-    aDonnees['produit-qc'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['produit_du_quebec_nom'] = listeSelection;
+    }
 
     // Appellation
     let elAppellation = document.querySelectorAll('[data-js-appellation]'),
@@ -1197,25 +1230,31 @@ function rechercher() {
 
     elAppellation.forEach(uneAppellation => {
         if (uneAppellation.checked) {
-            aAppellation.push(uneAppellation.dataset.jsAppellation);
+            aAppellation.push("'" + uneAppellation.dataset.jsAppellation + "'");
         }
     });
 
     listeSelection = aAppellation.toString();
-    aDonnees['appellation'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['appellation_nom'] = listeSelection;
+    }
 
     // Cépage
     let elCepage = document.querySelectorAll('[data-js-cepage]'),
         aCepage = [];
 
-    elCepage.forEach(uneCepage => {
-        if (uneCepage.checked) {
-            aCepage.push(uneCepage.dataset.jsCepage);
+    elCepage.forEach(unCepage => {
+        if (unCepage.checked) {
+            aCepage.push("'" + unCepage.dataset.jsCepage + "'");
         }
     });
 
     listeSelection = aCepage.toString();
-    aDonnees['cepage'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['cepage_nom'] = listeSelection;
+    }
 
     // Classification
     let elClassification = document.querySelectorAll('[data-js-classification]'),
@@ -1223,12 +1262,15 @@ function rechercher() {
 
     elClassification.forEach(uneClassification => {
         if (uneClassification.checked) {
-            aClassification.push(uneClassification.dataset.jsClassification);
+            aClassification.push("'" + uneClassification.dataset.jsClassification + "'");
         }
     });
 
     listeSelection = aClassification.toString();
-    aDonnees['classification'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['classification_nom'] = listeSelection;
+    }
 
     // Désignation
     let elDesignation = document.querySelectorAll('[data-js-designation]'),
@@ -1236,48 +1278,73 @@ function rechercher() {
 
     elDesignation.forEach(uneDesignation => {
         if (uneDesignation.checked) {
-            aDesignation.push(uneDesignation.dataset.jsDesignation);
+            aDesignation.push("'" + uneDesignation.dataset.jsDesignation + "'");
         }
     });
 
     listeSelection = aDesignation.toString();
-    aDonnees['designation'] = listeSelection;
+
+    if (listeSelection) {
+        aDonnees['designation_nom'] = listeSelection;
+    }
 
     // Taux de sucre
-    let elTauxSucre = document.querySelectorAll('[data-js-taux-sucre]'),
-        aTauxSucre = [];
+    let elTauxDeSucre = document.querySelectorAll('[data-js-taux-de-sucre]'),
+        aTauxDeSucre = [];
 
-    elTauxSucre.forEach(uneTauxSucre => {
-        if (uneTauxSucre.checked) {
-            aTauxSucre.push(uneTauxSucre.dataset.jsTauxSucre);
+    elTauxDeSucre.forEach(unTauxDeSucre => {
+        if (unTauxDeSucre.checked) {
+            aTauxDeSucre.push("'" + unTauxDeSucre.dataset.jsTauxDeSucre + "'");
         }
     });
 
-    listeSelection = aTauxSucre.toString();
-    aDonnees['taux-sucre'] = listeSelection;
+    listeSelection = aTauxDeSucre.toString();
+
+    if (listeSelection) {
+        aDonnees['taux_de_sucre_nom'] = listeSelection;
+    }
 
     // Degré d'alcool
     let elDegreAlcool = document.querySelectorAll('[data-js-degre-alcool]'),
         aDegreAlcool = [];
 
-    elDegreAlcool.forEach(uneDegreAlcool => {
-        if (uneDegreAlcool.checked) {
-            aDegreAlcool.push(uneDegreAlcool.dataset.jsDegreAlcool);
+    elDegreAlcool.forEach(unDegreAlcool => {
+        if (unDegreAlcool.checked) {
+            aDegreAlcool.push("'" + unDegreAlcool.dataset.jsDegreAlcool + "'");
         }
     });
 
     listeSelection = aDegreAlcool.toString();
-    aDonnees['degre-alcool'] = listeSelection;
 
+    if (listeSelection) {
+        aDonnees['degre_alcool_nom'] = listeSelection;
+    }
 
-    let donneesJson = JSON.stringify(aDonnees);
+    const entete = new Headers();
+    entete.append("Content-Type", "application/json");
+    entete.append("Accept", "application/json");
 
-    let requete = new Request("http://localhost/projet-web-2/index.php?requete=rechercherBouteilles", { method: 'POST', body: donneesJson });
+    const reqOptions = {
+        method: "POST",
+        headers: entete,
+        body: JSON.stringify({ 'tri': { 'champ': 'nom', 'ordre': 'asc' }, 'filtres': aDonnees })
+    };
+
+    const requete = new Request("http://localhost/projet-web-2/index.php?requete=rechercherBouteilles", reqOptions);
+
     fetch(requete)
-        .then(data => {
-            return data.json();
+        .then(response => {
+            if (response.status === 200) {
+
+                return response.json()
+            } else {
+                throw new Error('Erreur');
+            }
         })
-        .then(post => {
-            console.log(post);
+        .then(donnees => {
+            console.log(donnees)
+
+        }).catch(erreur => {
+            console.error(erreur);
         });
 }

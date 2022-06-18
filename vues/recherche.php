@@ -1,4 +1,8 @@
 <?php
+if ($listeBouteille) {
+    $nbBouteilles = count($listeBouteille);
+}
+
 $oRecherche = new Recherche();
 
 $aAppellations = $oRecherche->lireAppellations();
@@ -17,7 +21,7 @@ $aPays = $oRecherche->lirePays();
 $aPrix = $oRecherche->lirePrix();
 $aProduitsQc = $oRecherche->lireProduitsQc();
 $aRegions = $oRecherche->lireRegions();
-$aTauxSucre = $oRecherche->lireTauxDeSucre();
+$aTauxDeSucre = $oRecherche->lireTauxDeSucre();
 $aTypesCellier = $oRecherche->lireTypesCellier();
 $aTypesVin = $oRecherche->lireTypesVin();
 ?>
@@ -120,8 +124,8 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                                 <?php for ($i = 0, $l = count($aCelliers); $i < $l; $i++) {
                                                     $id = $aCelliers[$i]['id'];
                                                     $nom = $aCelliers[$i]['nom'] . " - " . ucfirst($aCelliers[$i]['description']);
-                                                    $infoBulle = $nom;
-                                                    $nomChamp = "cellier-" . $id;
+                                                    $infoBulle = $aCelliers[$i]['nom'];
+                                                    $nomChamp = "cellier-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -164,11 +168,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aTypesCellier); $i < $l; $i++) {
-                                                    $id = $aTypesCellier[$i]['id'];
-                                                    $nom = $aTypesCellier[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aTypesCellier[$i]['nom'];
                                                     $nbTrouve = $aTypesCellier[$i]['nbTrouve'];
-                                                    $nomChamp = "type-cellier-" . $id;
+                                                    $nomChamp = "type-cellier-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -214,11 +216,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aBouteilles); $i < $l; $i++) {
-                                                    $id = $aBouteilles[$i]['nom'];
-                                                    $nom = $aBouteilles[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aBouteilles[$i]['nom'];
                                                     $nbTrouve = $aBouteilles[$i]['nbTrouve'];
-                                                    $nomChamp = 'bouteille-' . $id;
+                                                    $nomChamp = 'bouteille-' . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -248,7 +248,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                 </div>
                             <?php } else { ?>
                                 <button class="accordeon accordeon-flex">
-                                    <div class="nb-type-vin nb-selectionnes"><span class="nb-selections hide"></span></div>
+                                    <div class="nb-type-de-vin nb-selectionnes"><span class="nb-selections hide"></span></div>
                                     <div>Type de vin</div>
                                 </button>
 
@@ -256,22 +256,21 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                     <div class="filtre-listbox">
                                         <div class="filtre-entete">
                                             <div class="filtre-entete-checkbox">
-                                                <input type="checkbox" id="type-vin-tous" data-js-type-vin-tous data-js-type-tous />
-                                                <label class="libelle-tous" for="type-vin-tous">Tous</label>
+                                                <input type="checkbox" id="type-de-vin-tous" data-js-type-de-vin-tous data-js-type-tous />
+                                                <label class="libelle-tous" for="type-de-vin-tous">Tous</label>
                                             </div>
                                         </div>
 
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aTypesVin); $i < $l; $i++) {
-                                                    $id = $aTypesVin[$i]['id'];
-                                                    $nom = $aTypesVin[$i]['nom'];
+                                                    $id = $nom = $infoBulle = $aTypesVin[$i]['nom'];
                                                     $nbTrouve = $aTypesVin[$i]['nbTrouve'];
-                                                    $nomChamp = "type-vin-" . $id;
+                                                    $nomChamp = "type-de-vin-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
-                                                            <input name="' . $nomChamp . '" type="checkbox" id="' . $nomChamp . '" title="' . $infoBulle . '" data-js-type-vin="' . $id . '" />
+                                                            <input name="' . $nomChamp . '" type="checkbox" id="' . $nomChamp . '" title="' . $infoBulle . '" data-js-type-de-vin="' . $id . '" />
 
                                                             <div class="choix-nom">
                                                                 <label for="' . $nomChamp . '" title="' . $infoBulle . '">' .  $nom . '</label>
@@ -313,11 +312,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aPays); $i < $l; $i++) {
-                                                    $id = $aPays[$i]['id'];
-                                                    $nom = $aPays[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aPays[$i]['nom'];
                                                     $nbTrouve = $aPays[$i]['nbTrouve'];
-                                                    $nomChamp = "pays-" . $id;
+                                                    $nomChamp = "pays-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -363,11 +360,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aRegions); $i < $l; $i++) {
-                                                    $id = $aRegions[$i]['id'];
-                                                    $nom = $aRegions[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aRegions[$i]['nom'];
                                                     $nbTrouve = $aRegions[$i]['nbTrouve'];
-                                                    $nomChamp = "region-" . $id;
+                                                    $nomChamp = "region-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -413,11 +408,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aPrix); $i < $l; $i++) {
-                                                    $id = $aPrix[$i]['prix'];
-                                                    $nom = $aPrix[$i]['prix'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aPrix[$i]['nom'];
                                                     $nbTrouve = $aPrix[$i]['nbTrouve'];
-                                                    $nomChamp = "prix-" . $id;
+                                                    $nomChamp = "prix-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -463,11 +456,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aFormats); $i < $l; $i++) {
-                                                    $id = $aFormats[$i]['id'];
-                                                    $nom = $aFormats[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aFormats[$i]['nom'];
                                                     $nbTrouve = $aFormats[$i]['nbTrouve'];
-                                                    $nomChamp = "format-" . $id;
+                                                    $nomChamp = "format-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -578,11 +569,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aMillesimes); $i < $l; $i++) {
-                                                    $id = $aMillesimes[$i]['millesime'];
-                                                    $nom = $aMillesimes[$i]['millesime'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aMillesimes[$i]['nom'];
                                                     $nbTrouve = $aMillesimes[$i]['nbTrouve'];
-                                                    $nomChamp = "millesime-" . $id;
+                                                    $nomChamp = "millesime-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -628,11 +617,10 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aNotes); $i < $l; $i++) {
-                                                    $id = $aNotes[$i]['note'];
-                                                    $nom = $aNotes[$i]['note'] . " étoiles";
-                                                    $infoBulle = $nom;
+                                                    $id = $aNotes[$i]['nom'];
+                                                    $nom = $infoBulle = $aNotes[$i]['nom'] . " étoiles";
                                                     $nbTrouve = $aNotes[$i]['nbTrouve'];
-                                                    $nomChamp = "note-" . $id;
+                                                    $nomChamp = "note-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -678,11 +666,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aGardeJusqua); $i < $l; $i++) {
-                                                    $id = $aGardeJusqua[$i]['garde_jusqua'];
-                                                    $nom = $aGardeJusqua[$i]['garde_jusqua'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aGardeJusqua[$i]['nom'];
                                                     $nbTrouve = $aGardeJusqua[$i]['nbTrouve'];
-                                                    $nomChamp = "garde-jusqua-" . $id;
+                                                    $nomChamp = "garde-jusqua-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -729,10 +715,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aProduitsQc); $i < $l; $i++) {
-                                                    $id = $aProduitsQc[$i]['id'];
-                                                    $nom = $aProduitsQc[$i]['nom'];
+                                                    $id = $nom = $infoBulle = $aProduitsQc[$i]['nom'];
                                                     $nbTrouve = $aProduitsQc[$i]['nbTrouve'];
-                                                    $nomChamp = "produit-qc-" . $id;
+                                                    $nomChamp = "produit-qc-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -778,11 +763,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aAppellations); $i < $l; $i++) {
-                                                    $id = $aAppellations[$i]['id'];
-                                                    $nom = $aAppellations[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aAppellations[$i]['nom'];
                                                     $nbTrouve = $aAppellations[$i]['nbTrouve'];
-                                                    $nomChamp = "appellation-" . $id;
+                                                    $nomChamp = "appellation-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -828,11 +811,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aCepages); $i < $l; $i++) {
-                                                    $id = $aCepages[$i]['id'];
-                                                    $nom = $aCepages[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aCepages[$i]['nom'];
                                                     $nbTrouve = $aCepages[$i]['nbTrouve'];
-                                                    $nomChamp = "cepage-" . $id;
+                                                    $nomChamp = "cepage-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -878,11 +859,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aClassifications); $i < $l; $i++) {
-                                                    $id = $aClassifications[$i]['id'];
-                                                    $nom = $aClassifications[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aClassifications[$i]['nom'];
                                                     $nbTrouve = $aClassifications[$i]['nbTrouve'];
-                                                    $nomChamp = "classification-" . $id;
+                                                    $nomChamp = "classification-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -928,11 +907,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aDesignations); $i < $l; $i++) {
-                                                    $id = $aDesignations[$i]['id'];
-                                                    $nom = $aDesignations[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aDesignations[$i]['nom'];
                                                     $nbTrouve = $aDesignations[$i]['nbTrouve'];
-                                                    $nomChamp = "designation-" . $id;
+                                                    $nomChamp = "designation-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
@@ -956,13 +933,13 @@ $aTypesVin = $oRecherche->lireTypesVin();
 
                         <!-- Taux de sucre -->
                         <div class="rechercher-item">
-                            <?php if (!$aTauxSucre) { ?>
+                            <?php if (!$aTauxDeSucre) { ?>
                                 <div class="non-trouve">
                                     <p>Aucun taux de sucre trouvé</p>
                                 </div>
                             <?php } else { ?>
                                 <button class="accordeon accordeon-flex">
-                                    <div class="nb-taux-sucre nb-selectionnes"><span class="nb-selections hide"></span></div>
+                                    <div class="nb-taux-de-sucre nb-selectionnes"><span class="nb-selections hide"></span></div>
                                     <div>Taux de sucre</div>
                                 </button>
 
@@ -970,23 +947,21 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                     <div class="filtre-listbox">
                                         <div class="filtre-entete">
                                             <div class="filtre-entete-checkbox">
-                                                <input type="checkbox" id="taux-sucre-tous" data-js-taux-sucre-tous data-js-type-tous />
-                                                <label class="libelle-tous" for="taux-sucre-tous">Tous</label>
+                                                <input type="checkbox" id="taux-de-sucre-tous" data-js-taux-de-sucre-tous data-js-type-tous />
+                                                <label class="libelle-tous" for="taux-de-sucre-tous">Tous</label>
                                             </div>
                                         </div>
 
                                         <fieldset>
                                             <div class="liste-choix">
-                                                <?php for ($i = 0, $l = count($aTauxSucre); $i < $l; $i++) {
-                                                    $id = $aTauxSucre[$i]['id'];
-                                                    $nom = $aTauxSucre[$i]['nom'];
-                                                    $infoBulle = $nom;
-                                                    $nbTrouve = $aTauxSucre[$i]['nbTrouve'];
-                                                    $nomChamp = "taux-sucre-" . $id;
+                                                <?php for ($i = 0, $l = count($aTauxDeSucre); $i < $l; $i++) {
+                                                    $id = $nom = $infoBulle = $aTauxDeSucre[$i]['nom'];
+                                                    $nbTrouve = $aTauxDeSucre[$i]['nbTrouve'];
+                                                    $nomChamp = "taux-de-sucre-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">
-                                                            <input name="' . $nomChamp . '" type="checkbox" id="' . $nomChamp . '" title="' . $infoBulle . '" data-js-taux-sucre="' . $id . '" />
+                                                            <input name="' . $nomChamp . '" type="checkbox" id="' . $nomChamp . '" title="' . $infoBulle . '" data-js-taux-de-sucre="' . $id . '" />
 
                                                             <div class="choix-nom">
                                                                 <label for="' . $nomChamp . '" title="' . $infoBulle . '">' .  $nom . '</label>
@@ -1028,11 +1003,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <fieldset>
                                             <div class="liste-choix">
                                                 <?php for ($i = 0, $l = count($aDegresAlcool); $i < $l; $i++) {
-                                                    $id = $aDegresAlcool[$i]['id'];
-                                                    $nom = $aDegresAlcool[$i]['nom'];
-                                                    $infoBulle = $nom;
+                                                    $id = $nom = $infoBulle = $aDegresAlcool[$i]['nom'];
                                                     $nbTrouve = $aDegresAlcool[$i]['nbTrouve'];
-                                                    $nomChamp = "degre-alcool-" . $id;
+                                                    $nomChamp = "degre-alcool-" . ($i + 1);
 
                                                     echo '
                                                         <div class="choix-item">

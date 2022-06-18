@@ -80,11 +80,26 @@ class Controler
 
     private function rechercherBouteilles()
     {
-        $aDonnees = json_decode(file_get_contents('php://input'), true);
+        $_SESSION['utilisateur']['id'] = 1;
+        $_SESSION['utilisateur']['nom'] = 'Test01';
+        $_SESSION['utilisateur']['jeton'] = 'ad3f2f3ce073a77c3e1cfdbe5fec6572';
+        $_SESSION['utilisateur']['estConnecte'] = true;
 
-        $recherche = new Recherche();
-        $listeBouteille = $recherche->rechercherBouteilles("", $aDonnees);
-        var_dump($listeBouteille);
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $aDonnees = json_decode(file_get_contents('php://input'), true);
+
+            $tri = $aDonnees['tri'];
+            $filtres = $aDonnees['filtres'];
+
+            $recherche = new Recherche();
+            $listeBouteille = $recherche->rechercherBouteilles($tri, $filtres);
+
+            $resultats = array("liste" => $listeBouteille);
+        } else {
+            $resultats = array("erreur" => "Impossible de continuer. L'utilisateur n'est pas défini!");
+        }
+
+        echo json_encode($resultats);
     }
 
 
