@@ -459,94 +459,96 @@ class Recherche extends Modele
         $where = "";
         $id_usager = $_SESSION['utilisateur']['id'];
 
-        // Cellier
-        if (!$this->estVide($filtres, "id_cellier")) {
-            $where .= "(id_cellier IN (" . $filtres["id_cellier"] . ")) OR ";
-        }
+        if (isset($filtres)) {
+            // Cellier
+            if (!$this->estVide($filtres, "id_cellier")) {
+                $where .= "(id_cellier IN (" . $filtres["id_cellier"] . ")) OR ";
+            }
 
-        // Types de cellier
-        if (!$this->estVide($filtres, "type_cellier")) {
-            $where .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE type_cellier_id IN (" . $filtres["type_cellier"] . "))) OR ";
-        }
+            // Types de cellier
+            if (!$this->estVide($filtres, "type_cellier")) {
+                $where .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE type_cellier_id IN (" . $filtres["type_cellier"] . "))) OR ";
+            }
 
-        // Bouteilles
-        if (!$this->estVide($filtres, "bouteille")) {
-            $where .= "(nom_bouteille IN (" . $filtres["bouteille"] . ")) OR ";
-        }
+            // Bouteilles
+            if (!$this->estVide($filtres, "bouteille")) {
+                $where .= "(nom_bouteille IN (" . $filtres["bouteille"] . ")) OR ";
+            }
 
-        // Type de vin
-        if (!$this->estVide($filtres, "type_de_vin_nom")) {
-            $where .= "(type_de_vin IN (" . $filtres["type_de_vin_nom"] . ")) OR ";
-        }
+            // Type de vin
+            if (!$this->estVide($filtres, "type_de_vin_nom")) {
+                $where .= "(type_de_vin IN (" . $filtres["type_de_vin_nom"] . ")) OR ";
+            }
 
-        // Pays
-        if (!$this->estVide($filtres, "pays_nom")) {
-            $where .= "(pays_nom IN (" . $filtres["pays_nom"] . ")) OR ";
-        }
+            // Pays
+            if (!$this->estVide($filtres, "pays_nom")) {
+                $where .= "(pays_nom IN (" . $filtres["pays_nom"] . ")) OR ";
+            }
 
-        // Région
-        if (!$this->estVide($filtres, "region_nom")) {
-            $where .= "(region_nom IN (" . $filtres["region_nom"] . ")) OR ";
-        }
+            // Région
+            if (!$this->estVide($filtres, "region_nom")) {
+                $where .= "(region_nom IN (" . $filtres["region_nom"] . ")) OR ";
+            }
 
-        // Prix
-        if (!$this->estVide($filtres, "prix_bouteille")) {
-            $where .= "(prix_bouteille IN (" . $filtres["prix_bouteille"] . ")) OR ";
-        }
+            // Prix
+            if (!$this->estVide($filtres, "prix_bouteille")) {
+                $where .= "(prix_bouteille IN (" . $filtres["prix_bouteille"] . ")) OR ";
+            }
 
-        // Format
-        if (!$this->estVide($filtres, "format_nom")) {
-            $where .= "(format_nom IN (" . $filtres["format_nom"] . ")) OR ";
-        }
+            // Format
+            if (!$this->estVide($filtres, "format_nom")) {
+                $where .= "(format_nom IN (" . $filtres["format_nom"] . ")) OR ";
+            }
 
-        // Millésime
-        if (!$this->estVide($filtres, "millesime")) {
-            $where .= "(millesime_nom IN (" . $filtres["millesime"] . ")) OR ";
-        }
+            // Millésime
+            if (!$this->estVide($filtres, "millesime")) {
+                $where .= "(millesime_nom IN (" . $filtres["millesime"] . ")) OR ";
+            }
 
-        // Note
-        if (!$this->estVide($filtres, "note")) {
-            $where .= "(note IN (" . $filtres["note"] . ")) OR ";
-        }
+            // Note
+            if (!$this->estVide($filtres, "note")) {
+                $where .= "(note IN (" . $filtres["note"] . ")) OR ";
+            }
 
-        // Garder jusqu'à
-        if (!$this->estVide($filtres, "garde_jusqua")) {
-            $where .= "(garde_jusqua IN (" . $filtres["garde_jusqua"] . ")) OR ";
-        }
+            // Garder jusqu'à
+            if (!$this->estVide($filtres, "garde_jusqua")) {
+                $where .= "(garde_jusqua IN (" . $filtres["garde_jusqua"] . ")) OR ";
+            }
 
-        // Produit du Québec
-        if (!$this->estVide($filtres, "produit_du_quebec_nom")) {
-            $where .= "(produit_du_quebec_nom IN (" . $filtres["produit_du_quebec_nom"] . ")) OR ";
-        }
+            // Produit du Québec
+            if (!$this->estVide($filtres, "produit_du_quebec_nom")) {
+                $where .= "(produit_du_quebec_nom IN (" . $filtres["produit_du_quebec_nom"] . ")) OR ";
+            }
 
-        // Appellation
-        if (!$this->estVide($filtres, "appellation_nom")) {
-            $where .= "(appellation_nom IN (" . $filtres["appellation_nom"] . ")) OR ";
-        }
+            // Appellation
+            if (!$this->estVide($filtres, "appellation_nom")) {
+                $where .= "(appellation_nom IN (" . $filtres["appellation_nom"] . ")) OR ";
+            }
 
-        // Cépage
-        if (!$this->estVide($filtres, "cepage_nom")) {
-            $where .= "(cepage_nom IN (" . $filtres["cepage_nom"] . ")) OR ";
-        }
+            // Cépage
+            if (!$this->estVide($filtres, "cepage_nom")) {
+                $where .= "(cepage_nom IN (" . $filtres["cepage_nom"] . ")) OR ";
+            }
 
-        // Classification
-        if (!$this->estVide($filtres, "classification_nom")) {
-            $where .= "(classification_nom IN (" . $filtres["classification_nom"] . ")) OR ";
-        }
+            // Classification
+            if (!$this->estVide($filtres, "classification_nom")) {
+                $where .= "(classification_nom IN (" . $filtres["classification_nom"] . ")) OR ";
+            }
 
-        // Désignation
-        if (!$this->estVide($filtres, "designation_nom")) {
-            $where .= "(designation_nom IN (" . $filtres["designation_nom"] . ")) OR ";
-        }
+            // Désignation
+            if (!$this->estVide($filtres, "designation_nom")) {
+                $where .= "(designation_nom IN (" . $filtres["designation_nom"] . ")) OR ";
+            }
 
-        // Taux de sucre
-        if (!$this->estVide($filtres, "taux_de_sucre_nom")) {
-            $where .= "(taux_de_sucre_nom IN (" . $filtres["taux_de_sucre_nom"] . ")) OR ";
-        }
+            // Taux de sucre
+            if (!$this->estVide($filtres, "taux_de_sucre_nom")) {
+                $where .= "(taux_de_sucre_nom IN (" . $filtres["taux_de_sucre_nom"] . ")) OR ";
+            }
 
-        // Degré d'alcool
-        if (!$this->estVide($filtres, "degre_alcool_nom")) {
-            $where .= "(degre_alcool_nom IN (" . $filtres["degre_alcool_nom"] . ")) OR ";
+            // Degré d'alcool
+            if (!$this->estVide($filtres, "degre_alcool_nom")) {
+                $where .= "(degre_alcool_nom IN (" . $filtres["degre_alcool_nom"] . ")) OR ";
+            }
         }
 
         // On enlève le OR de trop à la fin et on ajoute le WHERE

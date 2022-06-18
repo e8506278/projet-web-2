@@ -1,5 +1,3 @@
-const BaseURL = document.baseURI;
-
 /**
  * Traiter les appellations du vin
  */
@@ -941,87 +939,87 @@ elburgerMenuRecherche.addEventListener("change", () => {
 /**
  * 
  */
-var x, i, j, l, ll, selElmnt, a, b, c;
+// var x, i, j, l, ll, selElmnt, a, b, c;
 
-/*look for any elements with the class "select-container":*/
-x = document.getElementsByClassName("select-container");
-l = x.length;
-for (i = 0; i < l; i++) {
-    selElmnt = x[i].getElementsByTagName("select")[0];
-    ll = selElmnt.length;
-    /*for each element, create a new DIV that will act as the selected item:*/
-    a = document.createElement("DIV");
-    a.setAttribute("class", "select-selected");
-    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-    x[i].appendChild(a);
-    /*for each element, create a new DIV that will contain the option list:*/
-    b = document.createElement("DIV");
-    b.setAttribute("class", "select-items select-hide");
-    for (j = 1; j < ll; j++) {
-        /*for each option in the original select element,
-        create a new DIV that will act as an option item:*/
-        c = document.createElement("DIV");
-        c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function (e) {
-            /*when an item is clicked, update the original select box,
-            and the selected item:*/
-            var y, i, k, s, h, sl, yl;
-            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-            sl = s.length;
-            h = this.parentNode.previousSibling;
-            for (i = 0; i < sl; i++) {
-                if (s.options[i].innerHTML == this.innerHTML) {
-                    s.selectedIndex = i;
-                    h.innerHTML = this.innerHTML;
-                    y = this.parentNode.getElementsByClassName("same-as-selected");
-                    yl = y.length;
-                    for (k = 0; k < yl; k++) {
-                        y[k].removeAttribute("class");
-                    }
-                    this.setAttribute("class", "same-as-selected");
-                    break;
-                }
-            }
-            h.click();
-        });
-        b.appendChild(c);
-    }
-    x[i].appendChild(b);
-    a.addEventListener("click", function (e) {
-        /*when the select box is clicked, close any other select boxes,
-        and open/close the current select box:*/
-        e.stopPropagation();
-        closeAllSelect(this);
-        this.nextSibling.classList.toggle("select-hide");
-        this.classList.toggle("select-arrow-active");
-    });
-}
+// /*look for any elements with the class "select-container":*/
+// x = document.getElementsByClassName("select-container");
+// l = x.length;
+// for (i = 0; i < l; i++) {
+//     selElmnt = x[i].getElementsByTagName("select")[0];
+//     ll = selElmnt.length;
+//     /*for each element, create a new DIV that will act as the selected item:*/
+//     a = document.createElement("DIV");
+//     a.setAttribute("class", "select-selected");
+//     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+//     x[i].appendChild(a);
+//     /*for each element, create a new DIV that will contain the option list:*/
+//     b = document.createElement("DIV");
+//     b.setAttribute("class", "select-items select-hide");
+//     for (j = 1; j < ll; j++) {
+//         /*for each option in the original select element,
+//         create a new DIV that will act as an option item:*/
+//         c = document.createElement("DIV");
+//         c.innerHTML = selElmnt.options[j].innerHTML;
+//         c.addEventListener("click", function (e) {
+//             /*when an item is clicked, update the original select box,
+//             and the selected item:*/
+//             var y, i, k, s, h, sl, yl;
+//             s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+//             sl = s.length;
+//             h = this.parentNode.previousSibling;
+//             for (i = 0; i < sl; i++) {
+//                 if (s.options[i].innerHTML == this.innerHTML) {
+//                     s.selectedIndex = i;
+//                     h.innerHTML = this.innerHTML;
+//                     y = this.parentNode.getElementsByClassName("same-as-selected");
+//                     yl = y.length;
+//                     for (k = 0; k < yl; k++) {
+//                         y[k].removeAttribute("class");
+//                     }
+//                     this.setAttribute("class", "same-as-selected");
+//                     break;
+//                 }
+//             }
+//             h.click();
+//         });
+//         b.appendChild(c);
+//     }
+//     x[i].appendChild(b);
+//     a.addEventListener("click", function (e) {
+//         /*when the select box is clicked, close any other select boxes,
+//         and open/close the current select box:*/
+//         e.stopPropagation();
+//         closeAllSelect(this);
+//         this.nextSibling.classList.toggle("select-hide");
+//         this.classList.toggle("select-arrow-active");
+//     });
+// }
 
-function closeAllSelect(elmnt) {
-    /*a function that will close all select boxes in the document,
-    except the current select box:*/
-    var x, y, i, xl, yl, arrNo = [];
-    x = document.getElementsByClassName("select-items");
-    y = document.getElementsByClassName("select-selected");
-    xl = x.length;
-    yl = y.length;
-    for (i = 0; i < yl; i++) {
-        if (elmnt == y[i]) {
-            arrNo.push(i)
-        } else {
-            y[i].classList.remove("select-arrow-active");
-        }
-    }
-    for (i = 0; i < xl; i++) {
-        if (arrNo.indexOf(i)) {
-            x[i].classList.add("select-hide");
-        }
-    }
-}
+// function closeAllSelect(elmnt) {
+//     /*a function that will close all select boxes in the document,
+//     except the current select box:*/
+//     var x, y, i, xl, yl, arrNo = [];
+//     x = document.getElementsByClassName("select-items");
+//     y = document.getElementsByClassName("select-selected");
+//     xl = x.length;
+//     yl = y.length;
+//     for (i = 0; i < yl; i++) {
+//         if (elmnt == y[i]) {
+//             arrNo.push(i)
+//         } else {
+//             y[i].classList.remove("select-arrow-active");
+//         }
+//     }
+//     for (i = 0; i < xl; i++) {
+//         if (arrNo.indexOf(i)) {
+//             x[i].classList.add("select-hide");
+//         }
+//     }
+// }
 
-/*if the user clicks anywhere outside the select box,
-then close all select boxes:*/
-document.addEventListener("click", closeAllSelect);
+// /*if the user clicks anywhere outside the select box,
+// then close all select boxes:*/
+// document.addEventListener("click", closeAllSelect);
 
 const elBtnRechercher = document.querySelector('[data-js-rechercher]');
 elBtnRechercher.addEventListener("click", rechercher);
@@ -1329,7 +1327,6 @@ function rechercher() {
         headers: entete,
         body: JSON.stringify({ 'tri': { 'champ': 'nom', 'ordre': 'asc' }, 'filtres': aDonnees })
     };
-
     const requete = new Request("http://localhost/projet-web-2/index.php?requete=rechercherBouteilles", reqOptions);
 
     fetch(requete)
@@ -1342,7 +1339,87 @@ function rechercher() {
             }
         })
         .then(donnees => {
-            console.log(donnees)
+            if (donnees['erreur']) {
+                console.log(donnees['erreur']);
+            } else if (donnees['liste']) {
+                const bouteilles = donnees['liste'];
+                const nbBouteilles = bouteilles.length;
+
+                let qteDeb = document.querySelector('[ data-js-qte-deb]');
+                let qteFin = document.querySelector('[ data-js-qte-fin]');
+                let qteMax = document.querySelector('[ data-js-qte-max]');
+
+                qteDeb.innerHTML = "1";
+                qteFin.innerHTML = nbBouteilles;
+                qteMax.innerHTML = nbBouteilles;
+
+                let qteAffichage = document.querySelector('[ data-js-qte-affichage]');
+
+                while (qteAffichage.options.length > 0) {
+                    qteAffichage.remove(0);
+                }
+
+                qteAffichage.options[0] = new Option(nbBouteilles, nbBouteilles);
+
+                const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
+                elCarteContenant.innerHTML = "";
+
+                bouteilles.forEach(bouteille => {
+                    let id_cellier = bouteille["id_cellier"];
+                    let id_bouteille = bouteille["id_bouteille"];
+                    let image_bouteille = bouteille["image_bouteille"];
+                    let nom_bouteille = bouteille["nom_bouteille"];
+                    let description_bouteille = bouteille["description_bouteille"];
+                    let millesime_bouteille = bouteille["millesime"];
+                    let quantite_bouteille = bouteille["quantite_bouteille"];
+
+                    let carteBouteille = `
+                                            <a class="carte__lien" href="?requete=details&id_cellier=${id_cellier}">
+                                                <div class="carte__contenu" data-js-bouteille="${id_bouteille}">
+                                                    <div class="carte__lien carte--flex">
+                                                        <div class="carte__img">
+                                                            <img src="${image_bouteille}" alt="bouteille">
+                                                        </div>
+                                                        
+                                                        <div class="carte__description">
+                                                            <div>
+                                                                <div class="carte--flex carte__titre">
+                                                                    <h4 class="">${nom_bouteille} - ${millesime_bouteille}</h4>
+                                                                </div>
+
+                                                                <div>
+                                                                    <div class="carte__texte">
+                                                                        ${description_bouteille}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <ul class="carte--haut">
+                                                                <li class="carte--aligne-droite">
+                                                                    <form data-js-id="${id_bouteille}">
+                                                                        <i><svg class="carte__icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M507.3 72.57l-67.88-67.88c-6.252-6.25-16.38-6.25-22.63 0l-22.63 22.62c-6.25 6.254-6.251 16.38-.0006 22.63l-76.63 76.63c-46.63-19.75-102.4-10.75-140.4 27.25l-158.4 158.4c-25 25-25 65.51 0 90.51l90.51 90.52c25 25 65.51 25 90.51 0l158.4-158.4c38-38 47-93.76 27.25-140.4l76.63-76.63c6.25 6.25 16.5 6.25 22.75 0l22.63-22.63C513.5 88.95 513.5 78.82 507.3 72.57zM179.3 423.2l-90.51-90.51l122-122l90.51 90.52L179.3 423.2z"></path></svg></i>    
+
+                                                                        <button class="bouton btnAjouter">
+                                                                            <i class="carte__icone-petit--espace"><svg class="carte__icone-petit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z"></path></svg></i>
+                                                                        </button>
+
+                                                                        <span data-js-quantite="">${quantite_bouteille}</span>
+                                                                        
+                                                                        <button class="bouton btnBoire">
+                                                                            <i class="carte__icone-petit--espace"><svg class="carte__icone-petit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM168 232C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H168z"></path></svg></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>`;
+
+                    elCarteContenant.insertAdjacentHTML("beforeend", carteBouteille);
+                });
+
+            }
 
         }).catch(erreur => {
             console.error(erreur);

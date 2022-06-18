@@ -1,9 +1,23 @@
 <?php
-if ($listeBouteille) {
-    $nbBouteilles = count($listeBouteille);
-}
+$_SESSION['utilisateur']['id'] = 1;
+$_SESSION['utilisateur']['nom'] = 'Test01';
+$_SESSION['utilisateur']['jeton'] = 'ad3f2f3ce073a77c3e1cfdbe5fec6572';
+$_SESSION['utilisateur']['estConnecte'] = true;
 
 $oRecherche = new Recherche();
+$listeBouteille = [];
+$erreur = "";
+
+if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+    $listeBouteille = $oRecherche->rechercherBouteilles([], []);
+
+    $nbBouteilles = count($listeBouteille);
+    $qteDeb = "1";
+    $qteFin = $nbBouteilles;
+    $qteMax = $nbBouteilles;
+} else {
+    $erreur = "Impossible de continuer. L'utilisateur n'est pas défini!";
+}
 
 $aAppellations = $oRecherche->lireAppellations();
 $aBouteilles = $oRecherche->lireBouteilles();
@@ -41,55 +55,18 @@ $aTypesVin = $oRecherche->lireTypesVin();
 </head>
 
 <body>
-    <section class="section-wrapper">
-        <div class="barre-tri">
-            <div class="burger-rechercher">
-                <input type="checkbox" class="burgerMenuRecherche" id="burgerMenuRecherche">
-                <label for="burgerMenuRecherche" class="sidebarIconToggle" title="ouvrir/fermer le menu de recherche">
-                    <div class="spinner diagonal part-1"></div>
-                    <div class="spinner horizontal"></div>
-                    <div class="spinner diagonal part-2"></div>
-                </label>
-            </div>
-            <div class="resultats">
-                <div class="resultat-total">Résultats 1-12 sur 3790</div>
-                <div class="qte-affichage-wrapper">
-                    <label class="qte-affichage-label" for="qte-affichage-options">
-                        <span>Afficher</span>
-                    </label>
-                    <div class="qte-affichage-container select-container">
-                        <select id="qte-affichage-options" class="qte-affichage-options">
-                            <option value="12"> 12 </option>
-                            <option value="12"> 12 </option>
-                            <option value="24"> 24 </option>
-                            <option value="48"> 48 </option>
-                        </select>
-                    </div>
-                    <div class="qte-affichage-text">
-                        <span class="qte-affichage-text">par page</span>
-                    </div>
-                </div>
-            </div>
-            <div class="tri-select-wrapper">
-                <div>Triée par:</div>
-                <div class="tri-container select-container">
-                    <select id="tri-select" class="tri-select-options">
-                        <?php for ($i = 0, $l = count($aOrdresTri); $i < $l; $i++) {
-                            $id = $aOrdresTri[$i]['id'];
-                            $nom = $aOrdresTri[$i]['nom'];
-                            $champ = $aOrdresTri[$i]['champ'];
-                            $ordre = $aOrdresTri[$i]['ordre'];
+    <section class="section-wrapper carte carte--bg-couleur">
+        <div class="carte__entete-bouton">
+            <h3 class="carte__entete"><?php echo $nom_cellier ?></h3>
 
-                            echo '
-                                <option value="' . $id . '" data-js-champ="' . $champ . '" data-js-ordre="' . $ordre . '">' . $nom . '</option>
-                            ';
-                        } ?>
-                    </select>
-                </div>
-                <button class="bouton bouton-primaire" title="Lancer le tri">Trier</button>
-            </div>
+            <a href="?requete=details&id_cellier=<?php echo $id_cellier; ?>">
+                <i class="carte--aligne-centre"> <svg class="carte__lien-icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z" />
+                    </svg></i>
+            </a>
+
         </div>
-        <div class="main">
+        <div class="detail">
             <div class="menuRecherche">
                 <div class="recherche-wrapper">
                     <div class="rechercher-action">
@@ -1027,6 +1004,106 @@ $aTypesVin = $oRecherche->lireTypesVin();
                             <?php } ?>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="barre-tri">
+                    <div class="resultats">
+                        <div class="resultat-total">Résultats <span data-js-qte-deb><?= $qteDeb ?></span>-<span data-js-qte-fin><?= $qteFin ?></span> sur <span data-js-qte-max><?= $qteMax ?></span></div>
+                        <div class="qte-affichage-wrapper">
+                            <label class="qte-affichage-label" for="qte-affichage-options">
+                                <span>Afficher</span>
+                            </label>
+                            <div class="qte-affichage-container select-container">
+                                <select id="qte-affichage-options" class="qte-affichage-options" data-js-qte-affichage>
+                                    <option value="<?= $nbBouteilles ?>"><?= $nbBouteilles ?></option>
+                                </select>
+                            </div>
+                            <div class="qte-affichage-text">
+                                <span class="qte-affichage-text">par page</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tri-select-wrapper">
+                        <div>Triée par:</div>
+                        <div class="tri-container select-container">
+                            <select id="tri-select" class="tri-select-options">
+                                <?php for ($i = 0, $l = count($aOrdresTri); $i < $l; $i++) {
+                                    $id = $aOrdresTri[$i]['id'];
+                                    $nom = $aOrdresTri[$i]['nom'];
+                                    $champ = $aOrdresTri[$i]['champ'];
+                                    $ordre = $aOrdresTri[$i]['ordre'];
+
+                                    echo '
+                                    <option value="' . $id . '" data-js-champ="' . $champ . '" data-js-ordre="' . $ordre . '">' . $nom . '</option>
+                                ';
+                                } ?>
+                            </select>
+                        </div>
+                        <button class="bouton bouton-primaire" title="Lancer le tri">Trier</button>
+                    </div>
+                </div>
+                <div class="carte__contenant" data-js-carte-contenant>
+                    <?php for ($i = 0, $l = count($listeBouteille); $i < $l; $i++) {
+                        $id_cellier = $listeBouteille[$i]["id_cellier"];
+                        $id_bouteille = $listeBouteille[$i]["id_bouteille"];
+                        $image_bouteille = $listeBouteille[$i]["image_bouteille"];
+                        $nom_bouteille = $listeBouteille[$i]["nom_bouteille"];
+                        $description_bouteille = $listeBouteille[$i]["description_bouteille"];
+                        $millesime_bouteille = $listeBouteille[$i]["millesime"];
+                        $quantite_bouteille = $listeBouteille[$i]["quantite_bouteille"];
+                    ?>
+                        <a class="carte__lien" href="?requete=details&id_cellier=<?php echo $id_cellier ?>">
+                            <div class="carte__contenu" data-js-bouteille="<?php echo $id_bouteille ?>">
+                                <div class="carte__lien carte--flex">
+                                    <div class="carte__img">
+                                        <img src="<?php echo $image_bouteille ?>" alt="bouteille">
+                                    </div>
+
+                                    <div class="carte__description">
+                                        <div>
+                                            <div class="carte--flex carte__titre">
+                                                <h4 class=""><?php echo $nom_bouteille ?> - <?php echo $millesime_bouteille ?></h4>
+                                            </div>
+
+                                            <div>
+                                                <div class="carte__texte">
+                                                    <?php echo $description_bouteille ?>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <ul class="carte--haut">
+                                            <li class="carte--aligne-droite">
+                                                <form data-js-id="<?php echo $id_bouteille ?>">
+                                                    <i><svg class="carte__icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                            <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                            <path d="M507.3 72.57l-67.88-67.88c-6.252-6.25-16.38-6.25-22.63 0l-22.63 22.62c-6.25 6.254-6.251 16.38-.0006 22.63l-76.63 76.63c-46.63-19.75-102.4-10.75-140.4 27.25l-158.4 158.4c-25 25-25 65.51 0 90.51l90.51 90.52c25 25 65.51 25 90.51 0l158.4-158.4c38-38 47-93.76 27.25-140.4l76.63-76.63c6.25 6.25 16.5 6.25 22.75 0l22.63-22.63C513.5 88.95 513.5 78.82 507.3 72.57zM179.3 423.2l-90.51-90.51l122-122l90.51 90.52L179.3 423.2z"></path>
+                                                        </svg></i>
+
+                                                    <button class="bouton btnAjouter">
+                                                        <i class="carte__icone-petit--espace"><svg class="carte__icone-petit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                                <path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z"></path>
+                                                            </svg></i>
+                                                    </button>
+
+                                                    <span data-js-quantite=""><?php echo $quantite_bouteille ?></span>
+
+                                                    <button class="bouton btnBoire">
+                                                        <i class="carte__icone-petit--espace"><svg class="carte__icone-petit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                                <path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM168 232C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H168z"></path>
+                                                            </svg></i>
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    <?php } ?>
                 </div>
             </div>
         </div>

@@ -3,11 +3,22 @@ input:focus {
 }
 
 .recherche-wrapper {
-    width: 400px;
+    width: 100%;
+}
+
+.detail {
+    display: flex;
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     position: relative;
+}
+
+.carte__contenant {
+    flex-grow: 1;
 }
 
 .multi-selection {
@@ -332,15 +343,19 @@ input[type=submit] {
     width: 1rem;
 }
 
-.rechercher-action {
+.recherche-wrapper {
     background-color: var(--couleur-accent);
+}
+
+.rechercher-action {
     display: flex;
+    height: 50px;
     justify-content: space-between;
-    padding: 15px;
+    padding: 5px 15px;
 }
 
 .rechercher-groupe {
-    border: 3px solid var(--couleur-accent);
+    padding: 0 3px 3px;
 }
 
 .nb-selections::before {
@@ -363,12 +378,6 @@ input[type=submit] {
     position: relative;
     display: flex;
     justify-content: space-between;
-}
-
-.burger-rechercher {
-    display: flex;
-    align-items: flex-end;
-    margin: 10px;
 }
 
 .resultats {
@@ -413,21 +422,8 @@ input[type=submit] {
 
 .menuRecherche {
     padding-bottom: var(--espace-l);
-    position: absolute;
     top: 1px;
-    transform: translateX(calc(-400px - var(--espace-l)));
-    transition: transform .3s ease-in-out;
-    width: 400px;
-}
-
-.menuRecherche.montrer {
-    transform: translateX(0);
-}
-
-.burgerMenuRecherche {
-    transition: all 0.3s;
-    box-sizing: border-box;
-    display: none;
+    width: 340px;
 }
 
 .sidebarIconToggle {
@@ -514,10 +510,10 @@ input[type=checkbox]:checked~.sidebarIconToggle>.diagonal.part-2 {
     width: 265px;
 }
 
-.select-container select {
-    display: none;
-    /*hide original SELECT element:*/
-}
+/* .select-container select { */
+/* display: none; */
+/*hide original SELECT element:*/
+/* } */
 
 /*style the arrow inside the select element:*/
 .select-selected:after {
