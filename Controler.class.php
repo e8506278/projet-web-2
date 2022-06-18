@@ -74,16 +74,20 @@ class Controler
 
     private function rechercher()
     {
-        include("vues/recherche.php");
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/recherche.php");
+        } else {
+            include("vues/connexion.php");
+        }
     }
 
 
     private function rechercherBouteilles()
     {
-        $_SESSION['utilisateur']['id'] = 1;
-        $_SESSION['utilisateur']['nom'] = 'Test01';
-        $_SESSION['utilisateur']['jeton'] = 'ad3f2f3ce073a77c3e1cfdbe5fec6572';
-        $_SESSION['utilisateur']['estConnecte'] = true;
+        // $_SESSION['utilisateur']['id'] = 1;
+        // $_SESSION['utilisateur']['nom'] = 'Test01';
+        // $_SESSION['utilisateur']['jeton'] = 'ad3f2f3ce073a77c3e1cfdbe5fec6572';
+        // $_SESSION['utilisateur']['estConnecte'] = true;
 
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $aDonnees = json_decode(file_get_contents('php://input'), true);
@@ -95,11 +99,10 @@ class Controler
             $listeBouteille = $recherche->rechercherBouteilles($tri, $filtres);
 
             $resultats = array("liste" => $listeBouteille);
+            echo json_encode($resultats);
         } else {
-            $resultats = array("erreur" => "Impossible de continuer. L'utilisateur n'est pas défini!");
+            include("vues/connexion.php");
         }
-
-        echo json_encode($resultats);
     }
 
 

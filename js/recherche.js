@@ -923,19 +923,6 @@ function initDonnees() {
     });
 }
 
-const elburgerMenuRecherche = document.querySelector('.burgerMenuRecherche');
-const elMenuRecherche = document.querySelector('.menuRecherche');
-
-elburgerMenuRecherche.addEventListener("change", () => {
-    if (elburgerMenuRecherche.checked) {
-        if (!elMenuRecherche.classList.contains("montrer")) {
-            elMenuRecherche.classList.add("montrer");
-        }
-    } else {
-        elMenuRecherche.classList.remove("montrer");
-    }
-});
-
 /**
  * 
  */
@@ -1024,7 +1011,22 @@ elburgerMenuRecherche.addEventListener("change", () => {
 const elBtnRechercher = document.querySelector('[data-js-rechercher]');
 elBtnRechercher.addEventListener("click", rechercher);
 
+const elBtnReInit = document.querySelector('[data-js-reinit]');
+elBtnReInit.addEventListener("click", rechercher);
+
+const elBtnTrier = document.querySelector('[data-js-trier]');
+elBtnTrier.addEventListener("click", rechercher);
+
 function rechercher() {
+    // On identifie l'ordre d'affichage lorsque le résultat de la recherche sera afficher.
+    const selectTri = document.querySelector('.tri-select-options').value;
+    const optionTri = document.querySelector('option[value="' + selectTri + '"]');
+
+    const champTri = optionTri.dataset.jsChamp;
+    const champOrdre = optionTri.dataset.jsOrdre;
+    const aTri = { 'champ': champTri, 'ordre': champOrdre };
+
+    // On passe à travers chacun des filtres pour récupérer les valeurs à traiter.
     let aDonnees = {},
         listeSelection = "";
 
@@ -1318,6 +1320,8 @@ function rechercher() {
         aDonnees['degre_alcool_nom'] = listeSelection;
     }
 
+    console.log(aDonnees);
+
     const entete = new Headers();
     entete.append("Content-Type", "application/json");
     entete.append("Accept", "application/json");
@@ -1325,7 +1329,7 @@ function rechercher() {
     const reqOptions = {
         method: "POST",
         headers: entete,
-        body: JSON.stringify({ 'tri': { 'champ': 'nom', 'ordre': 'asc' }, 'filtres': aDonnees })
+        body: JSON.stringify({ 'tri': aTri, 'filtres': aDonnees })
     };
     const requete = new Request("http://localhost/projet-web-2/index.php?requete=rechercherBouteilles", reqOptions);
 
@@ -1372,6 +1376,9 @@ function rechercher() {
                     let description_bouteille = bouteille["description_bouteille"];
                     let millesime_bouteille = bouteille["millesime"];
                     let quantite_bouteille = bouteille["quantite_bouteille"];
+                    let date_achat = bouteille["date_achat"];
+                    let prix_bouteille = bouteille["prix_bouteille"];
+                    let note = bouteille["note"];
 
                     let carteBouteille = `
                                             <a class="carte__lien" href="?requete=details&id_cellier=${id_cellier}">
@@ -1390,6 +1397,15 @@ function rechercher() {
                                                                 <div>
                                                                     <div class="carte__texte">
                                                                         ${description_bouteille}
+                                                                    </div>
+                                                                    <div class="carte__texte">
+                                                                        Acheté le ${date_achat}
+                                                                    </div>
+                                                                    <div class="carte__texte">
+                                                                        Au prix de ${prix_bouteille}
+                                                                    </div>
+                                                                    <div class="carte__texte">
+                                                                        Ma note est de ${note}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1425,3 +1441,22 @@ function rechercher() {
             console.error(erreur);
         });
 }
+
+const elOuvrirFiltres = document.querySelector('[data-js-ouvrir-filtres]');
+const elFermerFiltres = document.querySelector('[data-js-fermer-filtres]');
+const elMenuRecherche = document.querySelector('[data-js-menu-recherche]');
+
+elOuvrirFiltres.addEventListener("click", () => {
+    if (!elMenuRecherche.classList.contains("ouvert")) {
+        elMenuRecherche.classList.add("ouvert");
+    }
+
+    if (!elOuvrirFiltres.classList.contains("ferme")) {
+        elOuvrirFiltres.classList.add("ferme");
+    }
+});
+
+elFermerFiltres.addEventListener("click", () => {
+    elMenuRecherche.classList.remove("ouvert");
+    elOuvrirFiltres.classList.remove("ferme");
+});

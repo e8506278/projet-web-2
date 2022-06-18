@@ -467,7 +467,7 @@ class Recherche extends Modele
 
             // Types de cellier
             if (!$this->estVide($filtres, "type_cellier")) {
-                $where .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE type_cellier_id IN (" . $filtres["type_cellier"] . "))) OR ";
+                $where .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE type_cellier_id IN (SELECT id_type_cellier FROM vino__type_cellier WHERE nom_type_cellier IN (" . $filtres["type_cellier"] . ")))) OR ";
             }
 
             // Bouteilles
@@ -477,7 +477,7 @@ class Recherche extends Modele
 
             // Type de vin
             if (!$this->estVide($filtres, "type_de_vin_nom")) {
-                $where .= "(type_de_vin IN (" . $filtres["type_de_vin_nom"] . ")) OR ";
+                $where .= "(type_de_vin_nom IN (" . $filtres["type_de_vin_nom"] . ")) OR ";
             }
 
             // Pays
@@ -502,7 +502,7 @@ class Recherche extends Modele
 
             // Millésime
             if (!$this->estVide($filtres, "millesime")) {
-                $where .= "(millesime_nom IN (" . $filtres["millesime"] . ")) OR ";
+                $where .= "(millesime IN (" . $filtres["millesime"] . ")) OR ";
             }
 
             // Note
@@ -560,6 +560,13 @@ class Recherche extends Modele
 
         // Par défaut, on doit absolument choisir uniquement les bouteilles qui se retrouvent dans les celliers de l'utilisateur.
         $sql .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $id_usager . "))";
+
+        // On ajoute l'ordre de tri demandé par l'utilisateur (ou celui par défaut la première fois)
+        if (isset($tri) && count($tri) === 2) {
+            $sql .= " ORDER BY " . $tri["champ"]  . " " . strtoupper($tri["ordre"]);
+        } else {
+            $sql .= " ORDER BY nom_bouteille ASC";
+        }
 
         $result = mysqli_query($connection, $sql) or die(mysqli_error($connection));
         $lesBouteilles = [];

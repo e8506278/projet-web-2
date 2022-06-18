@@ -7,9 +7,10 @@ $_SESSION['utilisateur']['estConnecte'] = true;
 $oRecherche = new Recherche();
 $listeBouteille = [];
 $erreur = "";
+$aTri = array('champ' => 'nom_bouteille', 'ordre' => 'asc');
 
 if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-    $listeBouteille = $oRecherche->rechercherBouteilles([], []);
+    $listeBouteille = $oRecherche->rechercherBouteilles($aTri, []);
 
     $nbBouteilles = count($listeBouteille);
     $qteDeb = "1";
@@ -67,11 +68,22 @@ $aTypesVin = $oRecherche->lireTypesVin();
 
         </div>
         <div class="detail">
-            <div class="menuRecherche">
+            <div class="menuRecherche" data-js-menu-recherche>
                 <div class="recherche-wrapper">
-                    <div class="rechercher-action">
-                        <button class="bouton bouton-primaire" data-js-rechercher title="Lancer la recherche">Rechercher</button>
-                        <button class="bouton bouton-secondaire" data-js-reinit title="Vider tous les champs">Réinitialiser</button>
+                    <div class="recherche-top-nav">
+                        <div class="fermer-recherche" title="Fermer la barre de filtres">
+                            <button class="fermer-filtres" data-js-fermer-filtres>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                    <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="rechercher-action">
+                            <button class="bouton bouton-primaire" data-js-rechercher title="Lancer la recherche">Rechercher</button>
+                            <button class="bouton bouton-secondaire" data-js-reinit title="Vider tous les champs">Réinitialiser</button>
+                        </div>
                     </div>
 
                     <div class="rechercher-groupe">
@@ -1006,26 +1018,38 @@ $aTypesVin = $oRecherche->lireTypesVin();
                     </div>
                 </div>
             </div>
-            <div class="main">
+            <div class="main" id="main">
                 <div class="barre-tri">
+                    <div class="ouvrir-recherche" title="Ouvrir la barre de filtres">
+                        <button class="ouvrir-filtres" data-js-ouvrir-filtres>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                <path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z" />
+                            </svg>
+                        </button>
+                    </div>
                     <div class="resultats">
-                        <div class="resultat-total">Résultats <span data-js-qte-deb><?= $qteDeb ?></span>-<span data-js-qte-fin><?= $qteFin ?></span> sur <span data-js-qte-max><?= $qteMax ?></span></div>
+                        <div class="resultat-total">
+                            <span>Résultats</span>
+                            <span data-js-qte-deb><?= $qteDeb ?></span>
+                            <span>-</span>
+                            <span data-js-qte-fin><?= $qteFin ?></span>
+                            <span>sur</span>
+                            <span data-js-qte-max><?= $qteMax ?></span>
+                        </div>
                         <div class="qte-affichage-wrapper">
-                            <label class="qte-affichage-label" for="qte-affichage-options">
-                                <span>Afficher</span>
-                            </label>
+                            <span> - Afficher</span>
                             <div class="qte-affichage-container select-container">
                                 <select id="qte-affichage-options" class="qte-affichage-options" data-js-qte-affichage>
                                     <option value="<?= $nbBouteilles ?>"><?= $nbBouteilles ?></option>
                                 </select>
                             </div>
-                            <div class="qte-affichage-text">
-                                <span class="qte-affichage-text">par page</span>
-                            </div>
+                            <span class="qte-affichage-text">par page</span>
                         </div>
                     </div>
                     <div class="tri-select-wrapper">
-                        <div>Triée par:</div>
+                        <div class="select-libelle">Triée par:</div>
+
                         <div class="tri-container select-container">
                             <select id="tri-select" class="tri-select-options">
                                 <?php for ($i = 0, $l = count($aOrdresTri); $i < $l; $i++) {
@@ -1040,7 +1064,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                 } ?>
                             </select>
                         </div>
-                        <button class="bouton bouton-primaire" title="Lancer le tri">Trier</button>
+                        <button class="bouton bouton-secondaire" data-js-trier title="Lancer le tri">Trier</button>
                     </div>
                 </div>
                 <div class="carte__contenant" data-js-carte-contenant>
@@ -1052,6 +1076,9 @@ $aTypesVin = $oRecherche->lireTypesVin();
                         $description_bouteille = $listeBouteille[$i]["description_bouteille"];
                         $millesime_bouteille = $listeBouteille[$i]["millesime"];
                         $quantite_bouteille = $listeBouteille[$i]["quantite_bouteille"];
+                        $date_achat = $listeBouteille[$i]["date_achat"];
+                        $prix_bouteille = $listeBouteille[$i]["prix_bouteille"];
+                        $note = $listeBouteille[$i]["note"];
                     ?>
                         <a class="carte__lien" href="?requete=details&id_cellier=<?php echo $id_cellier ?>">
                             <div class="carte__contenu" data-js-bouteille="<?php echo $id_bouteille ?>">
@@ -1069,6 +1096,15 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                             <div>
                                                 <div class="carte__texte">
                                                     <?php echo $description_bouteille ?>
+                                                </div>
+                                                <div class="carte__texte">
+                                                    Acheté le <?php echo $date_achat ?>
+                                                </div>
+                                                <div class="carte__texte">
+                                                    Au prix de <?php echo $prix_bouteille ?>
+                                                </div>
+                                                <div class="carte__texte">
+                                                    Ma note est de <?php echo $note ?>
                                                 </div>
                                             </div>
                                         </div>

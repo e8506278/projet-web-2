@@ -33,7 +33,7 @@ input:focus {
 .filtre-autocomplete,
 .filtre-listbox {
     margin: 10px;
-    width: 370px;
+    width: 315px;
 }
 
 .filtre-autocomplete .choix-container,
@@ -208,10 +208,9 @@ input[type=submit] {
     border: 3px solid #5e6264;
     border-radius: 4px;
     margin: 0;
-    max-height: 131px;
-    min-width: 300px;
+    max-height: 93px;
     overflow-y: auto;
-    width: 100%;
+    width: 310px;
 }
 
 .liste-choix input {
@@ -224,7 +223,6 @@ input[type=submit] {
     justify-content: space-between;
     overflow: hidden;
     padding: 0 5px;
-    width: 281px;
 }
 
 .liste-choix label {
@@ -349,9 +347,11 @@ input[type=submit] {
 
 .rechercher-action {
     display: flex;
-    height: 50px;
-    justify-content: space-between;
-    padding: 5px 15px;
+    justify-content: flex-end;
+}
+
+.rechercher-action>*+* {
+    margin-left: 15px;
 }
 
 .rechercher-groupe {
@@ -378,12 +378,17 @@ input[type=submit] {
     position: relative;
     display: flex;
     justify-content: space-between;
+    padding: 5px 15px;
+}
+
+.barre-tri select {
+    padding: var(--espace-xp);
 }
 
 .resultats {
     flex-grow: 1;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: flex-start;
     margin: 0 20px;
 }
@@ -392,14 +397,18 @@ input[type=submit] {
     margin-left: 5px;
 }
 
-.resultat-total::after {
-    content: " - ";
+.resultat-total {
+    display: flex;
+    align-items: center;
+}
+
+.resultat-total>*+* {
+    margin-left: 5px;
 }
 
 .tri-select-wrapper {
+    align-items: stretch;
     display: flex;
-    align-items: center;
-    margin-right: 10px;
 }
 
 .tri-select-wrapper>*+* {
@@ -408,7 +417,12 @@ input[type=submit] {
 
 .qte-affichage-wrapper {
     display: flex;
+    align-items: stretch;
+}
+
+.qte-affichage-wrapper>span {
     align-items: center;
+    display: flex;
 }
 
 .qte-affichage-wrapper>*+* {
@@ -421,93 +435,61 @@ input[type=submit] {
 }
 
 .menuRecherche {
+    opacity: 0;
     padding-bottom: var(--espace-l);
-    top: 1px;
+    transition: opacity .1s, width .1s;
+    width: 0;
+}
+
+.menuRecherche.ouvert {
+    opacity: 1;
     width: 340px;
 }
 
-.sidebarIconToggle {
-    transition: all 0.3s;
-    box-sizing: border-box;
+.recherche-top-nav {
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    padding: 5px 15px;
+}
+
+.ouvrir-recherche,
+.fermer-recherche {
+    display: flex;
+}
+
+.ouvrir-filtres,
+.fermer-filtres {
+    background-color: transparent;
+    border: none;
     cursor: pointer;
-    /* position: absolute; */
-    z-index: 99;
-    height: 100%;
-    width: 100%;
-    top: 16px;
-    left: 16px;
-    height: 22px;
-    width: 22px;
+    display: block;
+    width: 36px;
 }
 
-.spinner {
-    transition: all 0.3s;
-    box-sizing: border-box;
-    position: absolute;
-    height: 3px;
-    width: 100%;
-    background-color: var(--couleur-intermediaire-pale);
-}
-
-.horizontal {
-    transition: all 0.3s;
-    box-sizing: border-box;
-    position: relative;
-    float: left;
-    margin-top: 3px;
-}
-
-.diagonal.part-1 {
-    position: relative;
-    transition: all 0.3s;
-    box-sizing: border-box;
-    float: left;
-}
-
-.diagonal.part-2 {
-    transition: all 0.3s;
-    box-sizing: border-box;
-    position: relative;
-    float: left;
-    margin-top: 3px;
-}
-
-input[type=checkbox]:checked~.sidebarIconToggle>.horizontal {
-    transition: all 0.3s;
-    box-sizing: border-box;
+.ouvrir-filtres.ferme {
     opacity: 0;
-}
-
-input[type=checkbox]:checked~.sidebarIconToggle>.diagonal.part-1 {
-    transition: all 0.3s;
-    box-sizing: border-box;
-    transform: rotate(135deg);
-    margin-top: 8px;
-}
-
-input[type=checkbox]:checked~.sidebarIconToggle>.diagonal.part-2 {
-    transition: all 0.3s;
-    box-sizing: border-box;
-    transform: rotate(-135deg);
-    margin-top: -9px;
 }
 
 /* Refaire les select avec plus de liberté graphique. Le code provient principalement de:
  * https: //www.w3schools.com/howto/tryit.asp?filename=tryhow_custom_select
 */
 
+.select-libelle {
+    /* text-align: center; */
+    /* vertical-align: middle; */
+    display: flex;
+    align-items: center;
+}
+
 /*the container must be positioned relative:*/
 .select-container {
+    display: flex;
     position: relative;
-    font-family: Arial;
 }
 
 .qte-affichage-container {
     width: 60px;
-}
-
-.tri-container {
-    width: 265px;
 }
 
 /* .select-container select { */
