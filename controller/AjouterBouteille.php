@@ -74,18 +74,17 @@ if($_POST['estCommentaire']){
 
 
     $message = "Opération réussie";
-    if(!$bouteille_id){
-        $query = "select id_bouteille from usager__bouteille order by id_bouteille desc limit 1";
-        $res = MonSQL::getInstance()->query($query) or die(mysqli_error(MonSQL::getInstance()));
-
-        $result = $res->fetch_assoc();
-//        print_r($result); die();
-        if(!$result){
-            $bouteille_id = 1;
-        }else{
-            $bouteille_id = $result['id_bouteille'] + 1;
-        }
-    }
+//    if(!$bouteille_id){
+//        $query = "select id_bouteille from usager__bouteille order by id_bouteille desc limit 1";
+//        $res = MonSQL::getInstance()->query($query) or die(mysqli_error(MonSQL::getInstance()));
+//
+//        $result = $res->fetch_assoc();
+//        if(!$result){
+//            $bouteille_id = 1;
+//        }else{
+//            $bouteille_id = $result['id_bouteille'] + 1;
+//        }
+//    }
 //    echo $bouteille_id;; die();
     foreach ( $_POST['celliers'] as  $key => $cellier){
 
@@ -93,13 +92,13 @@ if($_POST['estCommentaire']){
             $ub = $list->getUsagerBouteille( $bouteille_id, $cellier['id_cellier']);
 
         if($debug){
-                        echo "<br><br>";
+            echo "<br><br>";
             print_r($ub);
             echo "<br><br>";
         }
             if(!$ub){
                 $query_string = "INSERT INTO usager__bouteille(
-                            id_bouteille ,
+                         
                             id_cellier ,
                             nom_bouteille,
                             image_bouteille ,
@@ -134,7 +133,7 @@ if($_POST['estCommentaire']){
                             millesime
                               
                     ) VALUES (
-                          ".$bouteille_id.",
+                   
                           ".$cellier['id_cellier'].",
                            '".$_POST['nom_bouteille']."', 
                           '".$_POST['image_bouteille']."',
@@ -220,8 +219,7 @@ if($_POST['estCommentaire']){
 
 }
 
-echo "Traitement terminé avec succès !<br><br>";
-ECHO "Redirection ...";
+
 
 
 $returnpage = home_base_url()."?requete=bouteille";
@@ -236,7 +234,8 @@ if(isset($bouteille_id) && $bouteille_id != null){
 if(isset($message) && $message != null){
     $returnpage = $returnpage.'&message='.$message;
 }
-
+echo "Traitement terminé avec succès !<br><br>";
+ECHO "Redirection vers ".$returnpage;
 header("Location:".$returnpage);
 
 
