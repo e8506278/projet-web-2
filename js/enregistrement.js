@@ -146,7 +146,7 @@ elFormulaire.addEventListener('submit', (e) => {
         erreur = "Vous devez entrer votre courriel.";
     } else {
         const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        $courrielValide = res.test(String(elCourriel).toLowerCase());
+        $courrielValide = res.test(String(elCourriel.value).toLowerCase());
 
         if (!$courrielValide) {
             erreursTrouvees = true;
