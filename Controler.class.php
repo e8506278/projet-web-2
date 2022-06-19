@@ -84,11 +84,6 @@ class Controler
 
     private function rechercherBouteilles()
     {
-        // $_SESSION['utilisateur']['id'] = 1;
-        // $_SESSION['utilisateur']['nom'] = 'Test01';
-        // $_SESSION['utilisateur']['jeton'] = 'ad3f2f3ce073a77c3e1cfdbe5fec6572';
-        // $_SESSION['utilisateur']['estConnecte'] = true;
-
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $aDonnees = json_decode(file_get_contents('php://input'), true);
 

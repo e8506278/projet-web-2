@@ -1,9 +1,4 @@
 <?php
-$_SESSION['utilisateur']['id'] = 1;
-$_SESSION['utilisateur']['nom'] = 'Test01';
-$_SESSION['utilisateur']['jeton'] = 'ad3f2f3ce073a77c3e1cfdbe5fec6572';
-$_SESSION['utilisateur']['estConnecte'] = true;
-
 $oRecherche = new Recherche();
 $listeBouteille = [];
 $erreur = "";
@@ -48,25 +43,30 @@ $aTypesVin = $oRecherche->lireTypesVin();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Recherche de bouteilles</title>
-    <link rel="stylesheet" href="./css/styles.css" type="text/css" media="screen">
+
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&family=Poiret+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/styles.css" type="text/css" media="screen">
+
+    <base href="<?php echo BASEURL; ?>">
 
     <script src="./js/recherche.js" defer></script>
 </head>
 
 <body>
+    <header>
+        <nav class="nav">
+            <a href="?requete=accueil" class="nav__logo">VINO</a>
+            <ul class="nav__liste">
+                <li><a class="nav__lien" href="#"></a></li>
+                <li><a class="nav__lien" href="?requete=mesCelliers">Mes celliers</a></li>
+                <li><a class="nav__lien" href="?requete=deconnecter">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
     <section class="section-wrapper carte carte--bg-couleur">
-        <div class="carte__entete-bouton">
-            <h3 class="carte__entete"><?php echo $nom_cellier ?></h3>
-
-            <a href="?requete=details&id_cellier=<?php echo $id_cellier; ?>">
-                <i class="carte--aligne-centre"> <svg class="carte__lien-icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                        <path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z" />
-                    </svg></i>
-            </a>
-
-        </div>
         <div class="detail">
             <div class="menuRecherche" data-js-menu-recherche>
                 <div class="recherche-wrapper">
@@ -483,22 +483,19 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <div class="slider-groupe">
                                             <div class="slider-input-container">
                                                 <label for="qte_val_min">Min: </label>
-                                                <input class="slider-input" name="qte_val_min" id="qte_val_min" data-js-slider-input data-js-qte-val-min>
-                                            </div>
-                                            <div id="qte-unite">
-                                                <span>%</span>
+                                                <input class="slider-input" name="qte_val_min" id="qte_val_min" data-js-slider-input="entier" data-js-qte-val-min>
                                             </div>
                                             <div class="slider-item">
                                                 <input type="radio" name="qte_min" id="qte_min_1" value="" required>
                                                 <label for="qte_min_1" data-slider-value="vide"></label>
-                                                <input type="radio" name="qte_min" id="qte_min_2" value="0" required>
-                                                <label for="qte_min_2" data-slider-value="0"></label>
-                                                <input type="radio" name="qte_min" id="qte_min_3" value="5" required>
-                                                <label for="qte_min_3" data-slider-value="5"></label>
-                                                <input type="radio" name="qte_min" id="qte_min_4" value="10" required>
-                                                <label for="qte_min_4" data-slider-value="10"></label>
-                                                <input type="radio" name="qte_min" id="qte_min_5" value="20" required>
-                                                <label for="qte_min_5" data-slider-value="20"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_2" value="5" required>
+                                                <label for="qte_min_2" data-slider-value="5"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_3" value="10" required>
+                                                <label for="qte_min_3" data-slider-value="10"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_4" value="20" required>
+                                                <label for="qte_min_4" data-slider-value="20"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_5" value="50" required>
+                                                <label for="qte_min_5" data-slider-value="50"></label>
                                                 <div class="slider-pos"></div>
                                             </div>
                                         </div>
@@ -506,10 +503,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <div class="slider-groupe">
                                             <div class="slider-input-container">
                                                 <label for="qte_val_max">Max: </label>
-                                                <input class="slider-input" name="qte_val_max" id="qte_val_max" data-js-slider-input data-js-qte-val-max>
-                                            </div>
-                                            <div id="qte-unite">
-                                                <span>%</span>
+                                                <input class="slider-input" name="qte_val_max" id="qte_val_max" data-js-slider-input="entier" data-js-qte-val-max>
                                             </div>
                                             <div class="slider-item">
                                                 <input type="radio" name="qte_max" id="qte_max_1" value="" required>
@@ -1100,7 +1094,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                                     Au prix de <?php echo $prix_bouteille ?>
                                                 </div>
                                                 <div class="carte__texte">
-                                                    Ma note est de <?php echo $note ?>
+                                                    Ma note est de <?php echo $note ?>/10
                                                 </div>
                                             </div>
                                         </div>

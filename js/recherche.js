@@ -577,7 +577,7 @@ if (elDegreAlcool.length > 0) {
 
 
 /**
- * Traiter la liste de checkboxes des designations
+ * Traiter la liste de checkboxes des désignations
  */
 let elDesignation = document.querySelectorAll('[data-js-designation]');
 let elDesignationTous = document.querySelector('[data-js-designation-tous]');
@@ -724,7 +724,7 @@ if (elPrix.length > 0) {
 
 
 /**
- * Trairer la liste de checkboxes des produits du Québec
+ * Traiter la liste de checkboxes des produits du Québec
  */
 let elProduitsQc = document.querySelectorAll('[data-js-produit-qc]');
 let elProduitsQcTous = document.querySelector('[data-js-produit-qc-tous]');
@@ -827,9 +827,9 @@ if (elTypeVins.length > 0) {
 }
 
 
-/**************************************************
- * Gestion des sections de recherche en accordéon *
- **************************************************/
+/******************************************************************
+ * Gestion (ouvrir/fermer) des sections de recherche en accordéon *
+ ******************************************************************/
 let acc = document.querySelectorAll(".accordeon");
 
 for (let i = 0, l = acc.length; i < l; i++) {
@@ -855,6 +855,13 @@ let elInputQteMin = document.querySelector('[data-js-qte-val-min]'),
     elValeursQteMax = document.querySelectorAll('input[name="qte_max"]'),
     elQteIcone = document.querySelector('[data-js-quantite-icone]');
 
+function ajusterSlider(elInput, elValeurs) {
+    elValeurs.forEach(elValeur => {
+        if (elInput.value === elValeur.value) {
+            elValeur.checked = true;
+        }
+    });
+}
 
 function traiterSlider(elInput, elValeurs) {
     elValeurs.forEach(elValeur => {
@@ -865,45 +872,45 @@ function traiterSlider(elInput, elValeurs) {
     });
 }
 
-
-function validerQuantites(el, elMin, elMax) {
-
-    let valMin = elMin.value;
-    let valMax = elMax.value;
-
-    elMin.classList.remove("slider-erreur");
-    elMax.classList.remove("slider-erreur");
-
-    elQteIcone.classList.remove("erreur");
-
-    if (elMin && elMax && parseInt(valMin) > parseInt(valMax)) {
-        el.classList.add("slider-erreur");
-        elQteIcone.classList.add("erreur");
-    }
-
-    if (elMin || elMax) {
-        elQteIcone.classList.remove("hide");
-    }
-}
+elValeursQteMin.forEach(elValeur => {
+    console.log(elValeur.value);
+});
 
 
 traiterSlider(elInputQteMin, elValeursQteMin);
 traiterSlider(elInputQteMax, elValeursQteMax);
 
 
-elInputQteMin.addEventListener("change", (e) => {
-    validerQuantites(e.target, elInputQteMin, elInputQteMax);
-});
+function validerQuantites(el, elMin, elMax) {
+    let valMin = elMin.value.trim();
+    let valMax = elMax.value.trim();
 
-elInputQteMax.addEventListener("change", (e) => {
-    validerQuantites(e.target, elInputQteMin, elInputQteMax);
-});
+    elMin.classList.remove("slider-erreur");
+    elMax.classList.remove("slider-erreur");
+
+    elQteIcone.classList.remove("erreur");
+
+    if (valMin && valMax && parseInt(valMin) > parseInt(valMax)) {
+        el.classList.add("slider-erreur");
+        elQteIcone.classList.add("erreur");
+    }
+
+    if (!elQteIcone.classList.contains("hide")) {
+        elQteIcone.classList.add("hide");
+    }
+
+    if (valMin || valMax) {
+        elQteIcone.classList.remove("hide");
+    }
+}
 
 
 /**
- * 
+ * Force certains inputs à n'accepter que des entiers positifs
+ * Provient de: https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input
  */
-let elSliderInputs = document.querySelectorAll('[data-js-slider-input]');
+let elSliderInputs = document.querySelectorAll('[data-js-slider-input="entier"]');
+
 
 elSliderInputs.forEach(unSlider => {
     setInputFilter(unSlider, function (value) {
@@ -912,7 +919,6 @@ elSliderInputs.forEach(unSlider => {
 });
 
 
-https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input
 function setInputFilter(textbox, inputFilter, errMsg) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop", "focusout"].forEach(function (event) {
         textbox.addEventListener(event, function (e) {
@@ -925,6 +931,19 @@ function setInputFilter(textbox, inputFilter, errMsg) {
                 this.oldValue = this.value;
                 this.oldSelectionStart = this.selectionStart;
                 this.oldSelectionEnd = this.selectionEnd;
+
+                if (this.name === "qte_val_min" || this.name === "qte_val_max") {
+                    validerQuantites(this, elInputQteMin, elInputQteMax);
+
+                    if (this.name === "qte_val_min") {
+                        ajusterSlider(elInputQteMin, elValeursQteMin);
+                    }
+
+                    if (this.name === "qte_val_max") {
+                        ajusterSlider(elInputQteMax, elValeursQteMax);
+                    }
+
+                }
             } else if (this.hasOwnProperty("oldValue")) {
                 // Rejected value - restore the previous one
                 this.classList.add("slider-erreur");
@@ -944,12 +963,7 @@ function setInputFilter(textbox, inputFilter, errMsg) {
 /*********************************
  *  Réinitialisation des données *
  *********************************/
-
-/**
- * 
- * Réinitialisation des données
- */
-elBtnReinit = document.querySelector('[data-js-reinit]');
+const elBtnReinit = document.querySelector('[data-js-reinit]');
 
 elBtnReinit.addEventListener("click", (e) => {
     e.preventDefault();
@@ -958,11 +972,15 @@ elBtnReinit.addEventListener("click", (e) => {
 
 
 function initDonnees() {
-    elRechercheWrapper = document.querySelector('.recherche-wrapper');
-    let elCheckboxes = elRechercheWrapper.querySelectorAll('input[type="checkbox"]');
-    let elBtnsRadio = elRechercheWrapper.querySelectorAll('input[type="radio"]');
-    let elChoixGroupe = elRechercheWrapper.querySelectorAll('.choix-groupe');
-    let elChoixContainer = elRechercheWrapper.querySelectorAll('.choix-container');
+    let elRechercheWrapper = document.querySelector('.recherche-wrapper'),
+        elCheckboxes = elRechercheWrapper.querySelectorAll('input[type="checkbox"]'),
+        elBtnsRadio = elRechercheWrapper.querySelectorAll('input[type="radio"]'),
+        elChoixGroupe = elRechercheWrapper.querySelectorAll('.choix-groupe'),
+        elChoixContainer = elRechercheWrapper.querySelectorAll('.choix-container'),
+        elQteIcone = document.querySelector('[data-js-quantite-icone]'),
+        elInputQteMin = document.querySelector('[data-js-qte-val-min]'),
+        elInputQteMax = document.querySelector('[data-js-qte-val-max]');
+
 
     // les checkbox
     elCheckboxes.forEach(unCheckbox => {
@@ -986,6 +1004,15 @@ function initDonnees() {
             unContainer.classList.add('hide');
         }
     });
+
+    // Les icones et erreurs pour la quantité
+    elQteIcone.classList.remove("erreur");
+    elInputQteMin.classList.remove("slider-erreur");
+    elInputQteMax.classList.remove("slider-erreur");
+
+    if (!elQteIcone.classList.contains("hide")) {
+        elQteIcone.classList.add("hide");
+    }
 
     //
     let elNbSelections = elRechercheWrapper.querySelectorAll('.nb-selections');
@@ -1018,90 +1045,6 @@ function initDonnees() {
     });
 }
 
-/**
- * 
- */
-// var x, i, j, l, ll, selElmnt, a, b, c;
-
-// /*look for any elements with the class "select-container":*/
-// x = document.getElementsByClassName("select-container");
-// l = x.length;
-// for (i = 0; i < l; i++) {
-//     selElmnt = x[i].getElementsByTagName("select")[0];
-//     ll = selElmnt.length;
-//     /*for each element, create a new DIV that will act as the selected item:*/
-//     a = document.createElement("DIV");
-//     a.setAttribute("class", "select-selected");
-//     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-//     x[i].appendChild(a);
-//     /*for each element, create a new DIV that will contain the option list:*/
-//     b = document.createElement("DIV");
-//     b.setAttribute("class", "select-items select-hide");
-//     for (j = 1; j < ll; j++) {
-//         /*for each option in the original select element,
-//         create a new DIV that will act as an option item:*/
-//         c = document.createElement("DIV");
-//         c.innerHTML = selElmnt.options[j].innerHTML;
-//         c.addEventListener("click", function (e) {
-//             /*when an item is clicked, update the original select box,
-//             and the selected item:*/
-//             var y, i, k, s, h, sl, yl;
-//             s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-//             sl = s.length;
-//             h = this.parentNode.previousSibling;
-//             for (i = 0; i < sl; i++) {
-//                 if (s.options[i].innerHTML == this.innerHTML) {
-//                     s.selectedIndex = i;
-//                     h.innerHTML = this.innerHTML;
-//                     y = this.parentNode.getElementsByClassName("same-as-selected");
-//                     yl = y.length;
-//                     for (k = 0; k < yl; k++) {
-//                         y[k].removeAttribute("class");
-//                     }
-//                     this.setAttribute("class", "same-as-selected");
-//                     break;
-//                 }
-//             }
-//             h.click();
-//         });
-//         b.appendChild(c);
-//     }
-//     x[i].appendChild(b);
-//     a.addEventListener("click", function (e) {
-//         /*when the select box is clicked, close any other select boxes,
-//         and open/close the current select box:*/
-//         e.stopPropagation();
-//         closeAllSelect(this);
-//         this.nextSibling.classList.toggle("select-hide");
-//         this.classList.toggle("select-arrow-active");
-//     });
-// }
-
-// function closeAllSelect(elmnt) {
-//     /*a function that will close all select boxes in the document,
-//     except the current select box:*/
-//     var x, y, i, xl, yl, arrNo = [];
-//     x = document.getElementsByClassName("select-items");
-//     y = document.getElementsByClassName("select-selected");
-//     xl = x.length;
-//     yl = y.length;
-//     for (i = 0; i < yl; i++) {
-//         if (elmnt == y[i]) {
-//             arrNo.push(i)
-//         } else {
-//             y[i].classList.remove("select-arrow-active");
-//         }
-//     }
-//     for (i = 0; i < xl; i++) {
-//         if (arrNo.indexOf(i)) {
-//             x[i].classList.add("select-hide");
-//         }
-//     }
-// }
-
-// /*if the user clicks anywhere outside the select box,
-// then close all select boxes:*/
-// document.addEventListener("click", closeAllSelect);
 
 const elBtnRechercher = document.querySelector('[data-js-rechercher]');
 elBtnRechercher.addEventListener("click", rechercher);
@@ -1113,7 +1056,7 @@ const elBtnTrier = document.querySelector('[data-js-trier]');
 elBtnTrier.addEventListener("click", rechercher);
 
 function rechercher() {
-    // On identifie l'ordre d'affichage lorsque le résultat de la recherche sera afficher.
+    // On identifie l'ordre de tri des bouteilles lors de l'affichage.
     const selectTri = document.querySelector('.tri-select-options').value;
     const optionTri = document.querySelector('option[value="' + selectTri + '"]');
 
@@ -1275,7 +1218,6 @@ function rechercher() {
     }
 
     listeSelection = aQuantite.toString();
-    console.log(listeSelection);
 
     if (listeSelection) {
         aDonnees['quantite_bouteille'] = listeSelection;
@@ -1441,6 +1383,9 @@ function rechercher() {
         aDonnees['degre_alcool_nom'] = listeSelection;
     }
 
+    /**
+     * Récupération et affichage des données
+     */
     const entete = new Headers();
     entete.append("Content-Type", "application/json");
     entete.append("Accept", "application/json");
@@ -1561,6 +1506,9 @@ function rechercher() {
         });
 }
 
+/**
+ * Ouverture/fermeture de la boîte de filtres de recherche
+ */
 const elOuvrirFiltres = document.querySelector('[data-js-ouvrir-filtres]');
 const elFermerFiltres = document.querySelector('[data-js-fermer-filtres]');
 const elMenuRecherche = document.querySelector('[data-js-menu-recherche]');
