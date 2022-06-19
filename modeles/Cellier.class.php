@@ -42,14 +42,12 @@ class Cellier extends Modele
                 while ($row = $res->fetch_assoc()) {
                     $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
                     $row['nom_type_cellier'] = trim(utf8_encode($row['nom_type_cellier']));
-                   
+
                     $rows[] = $row;
-                    
                 }
             }
         } else {
             throw new Exception("Erreur de requête sur la base de donnée", 1);
-            
         }
         return $rows;
     }
@@ -66,7 +64,7 @@ class Cellier extends Modele
 
     public function getUnCellier($id)
     {
-       
+
         $rows = array();
         $requete = "SELECT *
                     FROM usager__cellier 
@@ -83,7 +81,7 @@ class Cellier extends Modele
         } else {
             throw new Exception("Erreur de requête sur la base de donnée", 1);
         }
-  
+
         return $rows;
     }
 
@@ -132,7 +130,7 @@ class Cellier extends Modele
                 $res = $this->_db->query($requete);
 
                 return $res;
-            else{
+            } else {
                 return $erreurs;
             }
         }
@@ -152,15 +150,15 @@ class Cellier extends Modele
         $nom_cellier = $data->nom_cellier;
         $description_cellier = $data->description_cellier;
         $type_cellier_id = $data->type_cellier_id;
-  
+
         // VALIDATION 
         $erreurs = array();
         $estValide = true;
 
         //Si il ya des données
-        if($data){
+        if ($data) {
             // VALIDATION NOM
-           // Réinitialisation du tableau d'erreur
+            // Réinitialisation du tableau d'erreur
             unset($erreurs['nom_cellier']);
             $regExp = '/^.+$/';
             if (!preg_match($regExp, $nom_cellier)) {
@@ -168,8 +166,8 @@ class Cellier extends Modele
                 $estValide = false;
             }
 
-             // VALIDATION type_cellier_id
-           // Réinitialisation du tableau d'erreur
+            // VALIDATION type_cellier_id
+            // Réinitialisation du tableau d'erreur
             unset($erreurs['type_cellier_id']);
             //Si est nul donc aucun choix de radio bouton
             if ($type_cellier_id == null) {
@@ -177,20 +175,18 @@ class Cellier extends Modele
                 $estValide = false;
             }
         }
-        
-        if($estValide){
-      
-        $requete = "UPDATE usager__cellier SET nom_cellier = '$nom_cellier' , description_cellier = '$description_cellier', type_cellier_id = '$type_cellier_id' 
-                    WHERE id_cellier = '$id'" ;
 
-        $res = $this->_db->query($requete);
+        if ($estValide) {
 
-        return $res;
-        }
-        else{
+            $requete = "UPDATE usager__cellier SET nom_cellier = '$nom_cellier' , description_cellier = '$description_cellier', type_cellier_id = '$type_cellier_id' 
+                    WHERE id_cellier = '$id'";
+
+            $res = $this->_db->query($requete);
+
+            return $res;
+        } else {
             return $erreurs;
         }
-        
     }
 
 
@@ -237,14 +233,14 @@ class Cellier extends Modele
      */
     public function deplacerBouteillesCellier($id, $bouteilles)
     {
-            foreach($bouteilles as $bouteille){
-                $id_bouteille = $bouteille['id_bouteille'];
-            
-                $requete = "UPDATE usager__bouteille SET id_cellier = '$id'
-                WHERE id_bouteille = '$id_bouteille'" ;
-    
-                $res = $this->_db->query($requete);
-            }
+        foreach ($bouteilles as $bouteille) {
+            $id_bouteille = $bouteille['id_bouteille'];
+
+            $requete = "UPDATE usager__bouteille SET id_cellier = '$id'
+                WHERE id_bouteille = '$id_bouteille'";
+
+            $res = $this->_db->query($requete);
+        }
 
         return $res;
     }
@@ -259,9 +255,9 @@ class Cellier extends Modele
      */
     public function supprimerCellier($id)
     {
-       
+
         $requete = "DELETE FROM usager__cellier WHERE id_cellier = '$id'";
-        $res = $this->_db->query($requete);   
+        $res = $this->_db->query($requete);
         return $res;
     }
 }
