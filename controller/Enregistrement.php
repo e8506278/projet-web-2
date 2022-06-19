@@ -41,6 +41,7 @@ if (isset($_POST["soumettre"])) {
     }
     if (isset($_POST["usager_naissance"])) {
         $naissance = $_POST["usager_naissance"];
+        var_dump($naissance);
     }
     if (isset($_POST["usager_courriel"])) {
         $courriel = $_POST["usager_courriel"];
@@ -63,7 +64,7 @@ if (isset($_POST["soumettre"])) {
         $mois  = $naissance['mois'];
         $annee = $naissance['annee'];
 
-        $date_naissance = $annee . "-" . $jour . "-" . $jour;
+        $date_naissance = $annee . "-" . $mois . "-" . $jour;
     }
 
     // Vérifier que les valeurs du formulaire ne soient pas vides

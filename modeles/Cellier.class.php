@@ -13,7 +13,7 @@
 class Cellier extends Modele
 {
     const TABLE = 'usager__cellier';
-   
+
     /**
      * Cette méthode récupère la liste des celliers d'un usagé
      * 
@@ -29,7 +29,7 @@ class Cellier extends Modele
         $rows = array();
         $requete = "SELECT usager__cellier.id_cellier, id_usager, nom_cellier, description_cellier, type_cellier_id, 
                     SUM(quantite_bouteille)as bouteille_total, 
-                    SUM(prix)as prix_total, vino__type_cellier.nom_type_cellier, vino__type_cellier.nom_commun_type_cellier, vino__type_cellier.id_type_cellier 
+                    SUM(prix_bouteille)as prix_total, vino__type_cellier.nom_type_cellier, vino__type_cellier.nom_commun_type_cellier, vino__type_cellier.id_type_cellier 
                     FROM usager__cellier 
                     INNER JOIN vino__type_cellier on type_cellier_id = vino__type_cellier.id_type_cellier 
                     LEFT OUTER JOIN usager__bouteille on usager__cellier.id_cellier = usager__bouteille.id_cellier 
@@ -40,7 +40,6 @@ class Cellier extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    
                     $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
                     $row['nom_type_cellier'] = trim(utf8_encode($row['nom_type_cellier']));
                    
@@ -83,7 +82,6 @@ class Cellier extends Modele
             }
         } else {
             throw new Exception("Erreur de requête sur la base de donnée", 1);
-            
         }
   
         return $rows;
@@ -104,9 +102,9 @@ class Cellier extends Modele
         $estValide = true;
 
         //Si il ya des données
-        if($data){
+        if ($data) {
             // VALIDATION NOM
-           // Réinitialisation du tableau d'erreur
+            // Réinitialisation du tableau d'erreur
             unset($erreurs['nom_cellier']);
             $regExp = '/^.+$/';
             if (!preg_match($regExp, $data->nom_cellier)) {
@@ -114,31 +112,30 @@ class Cellier extends Modele
                 $estValide = false;
             }
 
-             // VALIDATION type_cellier_id
-           // Réinitialisation du tableau d'erreur
+            // VALIDATION type_cellier_id
+            // Réinitialisation du tableau d'erreur
             unset($erreurs['type_cellier_id']);
             //Si est nul donc aucun choix de radio bouton
             if ($data->type_cellier_id == null) {
                 $erreurs['type_cellier_id'] = 'Choisir le type de cellier.';
                 $estValide = false;
             }
-            
+
             //Si tout est valide
-            if($estValide){
+            if ($estValide) {
                 $requete = "INSERT INTO usager__cellier(id_usager,nom_cellier,description_cellier,type_cellier_id) VALUES (" .
-                            "'" . $data->id_usager . "'," .
-                            "'" . $data->nom_cellier . "'," .
-                            "'" . $data->description_cellier . "'," .
-                            "'" . $data->type_cellier_id . "')";
+                    "'" . $data->id_usager . "'," .
+                    "'" . $data->nom_cellier . "'," .
+                    "'" . $data->description_cellier . "'," .
+                    "'" . $data->type_cellier_id . "')";
 
                 $res = $this->_db->query($requete);
 
                 return $res;
-            }
             else{
                 return $erreurs;
             }
-         }
+        }
     }
 
 
@@ -195,7 +192,7 @@ class Cellier extends Modele
         }
         
     }
-    
+
 
     /**
      * Cette méthode récupère le nombre de cellier que possède un usagé
@@ -209,20 +206,18 @@ class Cellier extends Modele
     public function nombreCellierUsager($id)
     {
         //Requête
-        $requete = "SELECT COUNT(id_usager) AS nombre_cellier FROM usager__cellier where id_usager = '$id'" ;
+        $requete = "SELECT COUNT(id_usager) AS nombre_cellier FROM usager__cellier where id_usager = '$id'";
 
         if (($res = $this->_db->query($requete)) == true) {
-             
+
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    
+
                     $rows[] = $row;
-                    
                 }
             }
         } else {
             throw new Exception("Erreur de requête sur la base de donnée", 1);
-            
         }
         //Extraire la donnée
         $valeur = $rows[0]["nombre_cellier"];
