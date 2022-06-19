@@ -846,6 +846,101 @@ for (let i = 0, l = acc.length; i < l; i++) {
 }
 
 
+/************************************
+ * Lancer le traitement des sliders *
+ ************************************/
+let elInputQteMin = document.querySelector('[data-js-qte-val-min]'),
+    elValeursQteMin = document.querySelectorAll('input[name="qte_min"]'),
+    elInputQteMax = document.querySelector('[data-js-qte-val-max]'),
+    elValeursQteMax = document.querySelectorAll('input[name="qte_max"]'),
+    elQteIcone = document.querySelector('[data-js-quantite-icone]');
+
+
+function traiterSlider(elInput, elValeurs) {
+    elValeurs.forEach(elValeur => {
+        elValeur.addEventListener('change', (e) => {
+            elInput.value = e.target.value;
+            validerQuantites(elInput, elInputQteMin, elInputQteMax);
+        });
+    });
+}
+
+
+function validerQuantites(el, elMin, elMax) {
+
+    let valMin = elMin.value;
+    let valMax = elMax.value;
+
+    elMin.classList.remove("slider-erreur");
+    elMax.classList.remove("slider-erreur");
+
+    elQteIcone.classList.remove("erreur");
+
+    if (elMin && elMax && parseInt(valMin) > parseInt(valMax)) {
+        el.classList.add("slider-erreur");
+        elQteIcone.classList.add("erreur");
+    }
+
+    if (elMin || elMax) {
+        elQteIcone.classList.remove("hide");
+    }
+}
+
+
+traiterSlider(elInputQteMin, elValeursQteMin);
+traiterSlider(elInputQteMax, elValeursQteMax);
+
+
+elInputQteMin.addEventListener("change", (e) => {
+    validerQuantites(e.target, elInputQteMin, elInputQteMax);
+});
+
+elInputQteMax.addEventListener("change", (e) => {
+    validerQuantites(e.target, elInputQteMin, elInputQteMax);
+});
+
+
+/**
+ * 
+ */
+let elSliderInputs = document.querySelectorAll('[data-js-slider-input]');
+
+elSliderInputs.forEach(unSlider => {
+    setInputFilter(unSlider, function (value) {
+        return /^\d*$/.test(value);
+    }, "Doit être un entier >= 0");
+});
+
+
+https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input
+function setInputFilter(textbox, inputFilter, errMsg) {
+    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop", "focusout"].forEach(function (event) {
+        textbox.addEventListener(event, function (e) {
+            if (inputFilter(this.value)) {
+                // Accepted value
+                if (["keydown", "mousedown", "focusout"].indexOf(e.type) >= 0) {
+                    this.classList.remove("slider-erreur");
+                    this.setCustomValidity("");
+                }
+                this.oldValue = this.value;
+                this.oldSelectionStart = this.selectionStart;
+                this.oldSelectionEnd = this.selectionEnd;
+            } else if (this.hasOwnProperty("oldValue")) {
+                // Rejected value - restore the previous one
+                this.classList.add("slider-erreur");
+                this.setCustomValidity(errMsg);
+                this.reportValidity();
+                this.value = this.oldValue;
+                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            } else {
+                // Rejected value - nothing to restore
+                this.value = "";
+            }
+        });
+    });
+}
+
+
 /*********************************
  *  Réinitialisation des données *
  *********************************/
@@ -1158,7 +1253,33 @@ function rechercher() {
         aDonnees['format_nom'] = listeSelection;
     }
 
-    // Quantité : A FAIRE
+    // Quantité
+    let elQteValMin = document.querySelector('[data-js-qte-val-min]'),
+        elQteValMax = document.querySelector('[data-js-qte-val-max]')
+    aQuantite = [];
+
+    if (elQteValMin) {
+        if (elQteValMin.value) {
+            aQuantite.push(elQteValMin.value);
+        } else {
+            aQuantite.push("min");
+        }
+    }
+
+    if (elQteValMax) {
+        if (elQteValMax.value) {
+            aQuantite.push(elQteValMax.value);
+        } else {
+            aQuantite.push("max");
+        }
+    }
+
+    listeSelection = aQuantite.toString();
+    console.log(listeSelection);
+
+    if (listeSelection) {
+        aDonnees['quantite_bouteille'] = listeSelection;
+    }
 
     // Millésime
     let elMillesime = document.querySelectorAll('[data-js-millesime]'),
@@ -1319,8 +1440,6 @@ function rechercher() {
     if (listeSelection) {
         aDonnees['degre_alcool_nom'] = listeSelection;
     }
-
-    console.log(aDonnees);
 
     const entete = new Headers();
     entete.append("Content-Type", "application/json");

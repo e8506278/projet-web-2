@@ -336,9 +336,18 @@ input[type=submit] {
     opacity: 0;
 }
 
-.accordeon-icon svg {
-    fill: green;
-    width: 1rem;
+.accordeon-icon::before {
+    content: "\f058";
+    color: green;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.accordeon-icon.erreur::before {
+    content: "\f057";
+    color: red;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
 }
 
 .recherche-wrapper {
@@ -370,15 +379,15 @@ input[type=submit] {
     opacity: 0;
 }
 
-
 .barre-tri {
     background-color: var(--couleur-accent);
     color: var(--couleur-secondaire);
-    height: 50px;
-    position: relative;
     display: flex;
+    height: 50px;
     justify-content: space-between;
+    margin-bottom: var(--espace-p);
     padding: 5px 15px;
+    position: relative;
 }
 
 .barre-tri select {
@@ -456,6 +465,11 @@ input[type=submit] {
 .ouvrir-recherche,
 .fermer-recherche {
     display: flex;
+}
+
+.ouvrir-filtres svg:hover,
+.fermer-filtres svg:hover {
+    fill: var(--couleur-primaire);
 }
 
 .ouvrir-filtres,

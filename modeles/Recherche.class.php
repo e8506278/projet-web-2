@@ -500,6 +500,21 @@ class Recherche extends Modele
                 $where .= "(format_nom IN (" . $filtres["format_nom"] . ")) OR ";
             }
 
+            // Quantité
+            if (!$this->estVide($filtres, "quantite_bouteille")) {
+                $aQtes = explode(",", $filtres["quantite_bouteille"]);
+                $qteMin = $aQtes[0];
+                $qteMax = $aQtes[1];
+
+                if ($qteMin != "min" && $qteMax != "max") {
+                    $where .= "(quantite_bouteille BETWEEN " . $qteMin . " AND " . $qteMax . ") OR ";
+                } else if ($qteMin != "min") {
+                    $where .= "(quantite_bouteille >= " . $qteMin . ") OR ";
+                } else if ($qteMax != "max") {
+                    $where .= "(quantite_bouteille <= " . $qteMax . ") OR ";
+                }
+            }
+
             // Millésime
             if (!$this->estVide($filtres, "millesime")) {
                 $where .= "(millesime IN (" . $filtres["millesime"] . ")) OR ";

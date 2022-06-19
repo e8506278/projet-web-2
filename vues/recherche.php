@@ -472,11 +472,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                         <!-- Quantité -->
                         <div class="rechercher-item">
                             <button class="accordeon accordeon-flex">
-                                <div class="accordeon-icon hide">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                        <path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM371.8 211.8C382.7 200.9 382.7 183.1 371.8 172.2C360.9 161.3 343.1 161.3 332.2 172.2L224 280.4L179.8 236.2C168.9 225.3 151.1 225.3 140.2 236.2C129.3 247.1 129.3 264.9 140.2 275.8L204.2 339.8C215.1 350.7 232.9 350.7 243.8 339.8L371.8 211.8z" />
-                                    </svg>
+                                <div class="accordeon-icon hide" data-js-quantite-icone>
                                 </div>
                                 <div>Quantité</div>
                             </button>
@@ -487,22 +483,22 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <div class="slider-groupe">
                                             <div class="slider-input-container">
                                                 <label for="qte_val_min">Min: </label>
-                                                <input class="slider-input" type="number" min="0" name="qte_val_min" id="qte_val_min" data-js-slider-input data-js-da-val-min>
+                                                <input class="slider-input" name="qte_val_min" id="qte_val_min" data-js-slider-input data-js-qte-val-min>
                                             </div>
-                                            <div id="da-unite">
+                                            <div id="qte-unite">
                                                 <span>%</span>
                                             </div>
                                             <div class="slider-item">
-                                                <input type="radio" name="qte_min" id="qte_min_1" value="0" required>
-                                                <label for="qte_min_1" data-slider-value="0"></label>
-                                                <input type="radio" name="qte_min" id="qte_min_2" value="5" required>
-                                                <label for="qte_min_2" data-slider-value="5"></label>
-                                                <input type="radio" name="qte_min" id="qte_min_3" value="10" required>
-                                                <label for="qte_min_3" data-slider-value="10"></label>
-                                                <input type="radio" name="qte_min" id="qte_min_4" value="20" required>
-                                                <label for="qte_min_4" data-slider-value="20"></label>
-                                                <input type="radio" name="qte_min" id="qte_min_5" value="50" required>
-                                                <label for="qte_min_5" data-slider-value="50"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_1" value="" required>
+                                                <label for="qte_min_1" data-slider-value="vide"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_2" value="0" required>
+                                                <label for="qte_min_2" data-slider-value="0"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_3" value="5" required>
+                                                <label for="qte_min_3" data-slider-value="5"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_4" value="10" required>
+                                                <label for="qte_min_4" data-slider-value="10"></label>
+                                                <input type="radio" name="qte_min" id="qte_min_5" value="20" required>
+                                                <label for="qte_min_5" data-slider-value="20"></label>
                                                 <div class="slider-pos"></div>
                                             </div>
                                         </div>
@@ -510,22 +506,22 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <div class="slider-groupe">
                                             <div class="slider-input-container">
                                                 <label for="qte_val_max">Max: </label>
-                                                <input class="slider-input" type="number" min="0" name="qte_val_max" id="qte_val_max" data-js-slider-input data-js-da-val-max>
+                                                <input class="slider-input" name="qte_val_max" id="qte_val_max" data-js-slider-input data-js-qte-val-max>
                                             </div>
-                                            <div id="da-unite">
+                                            <div id="qte-unite">
                                                 <span>%</span>
                                             </div>
                                             <div class="slider-item">
-                                                <input type="radio" name="qte_max" id="qte_max_1" value="5" required>
-                                                <label for="qte_max_1" data-slider-value="5"></label>
-                                                <input type="radio" name="qte_max" id="qte_max_2" value="10" required>
-                                                <label for="qte_max_2" data-slider-value="10"></label>
-                                                <input type="radio" name="qte_max" id="qte_max_3" value="20" required>
-                                                <label for="qte_max_3" data-slider-value="20"></label>
-                                                <input type="radio" name="qte_max" id="qte_max_4" value="50" required>
-                                                <label for="qte_max_4" data-slider-value="50"></label>
-                                                <input type="radio" name="qte_max" id="qte_max_5" value="+50" required>
-                                                <label for="qte_max_5" data-slider-value="+50"></label>
+                                                <input type="radio" name="qte_max" id="qte_max_1" value="" required>
+                                                <label for="qte_max_1" data-slider-value="vide"></label>
+                                                <input type="radio" name="qte_max" id="qte_max_2" value="5" required>
+                                                <label for="qte_max_2" data-slider-value="5"></label>
+                                                <input type="radio" name="qte_max" id="qte_max_3" value="10" required>
+                                                <label for="qte_max_3" data-slider-value="10"></label>
+                                                <input type="radio" name="qte_max" id="qte_max_4" value="20" required>
+                                                <label for="qte_max_4" data-slider-value="20"></label>
+                                                <input type="radio" name="qte_max" id="qte_max_5" value="50" required>
+                                                <label for="qte_max_5" data-slider-value="50"></label>
                                                 <div class="slider-pos"></div>
                                             </div>
                                         </div>

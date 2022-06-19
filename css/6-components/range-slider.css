@@ -174,7 +174,6 @@ input:focus {
     padding: 5px 10px;
     position: relative;
     transition: 0.2s;
-    width: 400px;
 }
 
 .slider-groupe {
@@ -195,7 +194,7 @@ input:focus {
 
 .slider-input {
     border: 3px solid #5e6264;
-    width: 100px;
+    width: 70px;
     height: 29px;
     margin: 0 3px;
     padding: 3px 7px;
@@ -207,4 +206,8 @@ input:focus {
 
 .filtre-slider label {
     width: 35px;
+}
+
+.slider-erreur {
+    border: 3px solid red !important;
 }
