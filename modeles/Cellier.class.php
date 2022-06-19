@@ -29,7 +29,7 @@ class Cellier extends Modele
         $rows = array();
         $requete = "SELECT usager__cellier.id_cellier, id_usager, nom_cellier, description_cellier, type_cellier_id, 
                     SUM(quantite_bouteille)as bouteille_total, 
-                    SUM(prix)as prix_total, vino__type_cellier.nom_type_cellier, vino__type_cellier.nom_commun_type_cellier, vino__type_cellier.id_type_cellier 
+                    SUM(prix_bouteille)as prix_total, vino__type_cellier.nom_type_cellier, vino__type_cellier.nom_commun_type_cellier, vino__type_cellier.id_type_cellier 
                     FROM usager__cellier 
                     INNER JOIN vino__type_cellier on type_cellier_id = vino__type_cellier.id_type_cellier 
                     LEFT OUTER JOIN usager__bouteille on usager__cellier.id_cellier = usager__bouteille.id_cellier 

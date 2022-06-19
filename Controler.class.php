@@ -21,31 +21,31 @@ class Controler
     public function gerer()
     {
         switch ($_GET['requete']) {
-            case 'mesCelliers':
+            case 'mesCelliers'://gm
                 $this->listeCelliers();
                 break;
-            case 'celliers':
+            case 'celliers'://gm
                 $this->liste();
                 break;
-            case 'ajouterNouveauCellier':
+            case 'ajouterNouveauCellier'://gm
                 $this->ajouterNouveauCellier();
                 break;
-            case 'modifierCellier':
+            case 'modifierCellier'://gm
                 $this->modifierCellier();
                 break;
-            case 'supprimerCellier':
+            case 'supprimerCellier'://gm
                 $this->supprimerCellier();
                 break;
-            case 'deplacerSupprimer':
+            case 'deplacerSupprimer'://gm
                 $this->deplacerSupprimer();
                 break;
-            case 'listeBouteilleCellier':
+            case 'listeBouteilleCellier'://gm
                 $this->listeBouteilleCellier();
                 break;
-            case 'ajouterQteBouteille':
+            case 'ajouterQteBouteille'://gm
                 $this->ajouterQteBouteille();
                 break;
-            case 'reduireQteBouteille':
+            case 'reduireQteBouteille'://gm
                 $this->reduireQteBouteille();
                 break;
             case 'autocompleteBouteille':
@@ -54,7 +54,7 @@ class Controler
             case 'ajouterNouvelleBouteilleCellier':
                 $this->ajouterNouvelleBouteilleCellier();
                 break;
-             case 'bouteille':
+             case 'bouteille'://fr
                 $this->ficheBouteille();
                 break;
             case 'ajouterBouteilleCellier':
@@ -66,7 +66,7 @@ class Controler
             case 'boireBouteilleCellier':
                 $this->boireBouteilleCellier();
                 break;
-            case 'getBouteille':
+            case 'getBouteille'://fr
                 $this->getBouteille();
                 break;
             case 'enregistrer':
@@ -87,17 +87,7 @@ class Controler
         }
     }
 
-    private function liste()
-    {
-        $id = $_SESSION['utilisateur']['id'];
-   
-        $celliers = new Cellier();
-        
-        $data = $celliers->getListeCellier($id);
-      
     
-        echo json_encode($data);
-    }
 
     private function enregistrerUtilisateur()
     {
@@ -242,6 +232,23 @@ class Controler
     }
 
     /**
+     * Cette méthode appelle la fonction pour récupérer la liste des celliers d'un usager
+     * selon les information rentrée par l'usagé ($body).
+     *  
+     */
+    private function liste()
+    {
+        $id = $_SESSION['utilisateur']['id'];
+   
+        $celliers = new Cellier();
+        
+        $data = $celliers->getListeCellier($id);
+      
+    
+        echo json_encode($data);
+    }
+
+    /**
      * Cette méthode appelle la fonction pour ajouter un nouveau cellier 
      * selon les information rentrée par l'usagé ($body).
      *  
@@ -330,11 +337,7 @@ class Controler
         include("vues/pied.php");
     }
 
-    /**
-     * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
-     *  selon l'id_cellier envoyé dans l'url 
-     *  
-     */
+  
     private function ajouterQteBouteille(){
         $body = json_decode(file_get_contents('php://input'));
         var_dump($body);
