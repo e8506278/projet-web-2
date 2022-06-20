@@ -2,6 +2,7 @@ import NouveauCellier from './NouveauCellier.js';
 import ModifierCellier from './ModifierCellier.js';
 import SupprimerCellier from './SupprimerCellier.js';
 import ModalCellier from './ModalCellier'; 
+import TrieCellier from './TrieCellier'; 
 import { fetchGetCellier } from './FetchCellier'; 
 (() => {
  
@@ -10,11 +11,24 @@ import { fetchGetCellier } from './FetchCellier';
         elSupprimerCellier = document.querySelectorAll('[data-js-supprimercellier]'),
         elTitreModal = document.querySelector('[data-js-titremodal]'),
         elBoutonModal = document.querySelector('[data-js-boutonmodal]'),
-        elModalContenu = document.querySelector('[data-js-modalcontenu]')
-       
-        
+        elModalContenu = document.querySelector('[data-js-modalcontenu]'),
+        elChoixTrie = document.querySelector('[data-js-triecellier]')
+     
 
-        let modal = new ModalCellier();
+    
+       
+            elChoixTrie.addEventListener('change',(e)=>{
+               console.log(elChoixTrie.value)
+                new TrieCellier(elChoixTrie.value);
+            })
+            
+    
+    
+
+
+
+    let modal = new ModalCellier();
+
     if(elNouveauCellier){
         elNouveauCellier.addEventListener('click', (e)=>{
             e.preventDefault();
@@ -27,9 +41,6 @@ import { fetchGetCellier } from './FetchCellier';
             new NouveauCellier(elBoutonModal.firstElementChild);
         })
     }
-        
-
-       
         
 
         for (let i = 0, l = elModifierCellier.length; i < l; i++) {
@@ -78,6 +89,7 @@ import { fetchGetCellier } from './FetchCellier';
                 //Récupérer le nom du cellier
                 let elNomCellier = elSupprimerCellier[i].parentNode.dataset.jsNomcellier,
                    elIdCellier = elSupprimerCellier[i].dataset.jsSupprimercellier
+             
                 
         
                 elModalContenu.innerHTML = `<h4 class=""><span class="carte__erreur">Supprimer le cellier</span> "${elNomCellier}" ?</h4>
@@ -88,8 +100,9 @@ import { fetchGetCellier } from './FetchCellier';
                                                 <h4 class="carte__entete carte--haut">Déplacer les bouteilles dans un autre cellier?</h4>
                                                 <label class="modal__texte" for="celliers">Choisir un cellier :
                                                     <select data-js-selectcellier >
-                                                        <option>Aucun cellier</option>
+                                                        <option value="0">---</option>
                                                     </select>
+                                                    <small class="carte__erreur"data-js-erreurchoix></small>
                                                 </label>
                                             </div>
                                             
@@ -99,13 +112,15 @@ import { fetchGetCellier } from './FetchCellier';
                                                 <button data-js-annulercellier class="bouton-secondaire">Annuler</button>
                                             </div> 
                                             `
-                    let selectCellier = document.querySelector('[data-js-selectcellier]')
-                    let requete = new Request(BaseURL + "?requete=celliers")
-                    fetchGetCellier(requete, selectCellier) 
-                
+                    let selectCellier = document.querySelector('[data-js-selectcellier]'),
                     elBoutonModal = document.querySelector('[data-js-boutonmodal]')
-                   let elBtnDeplacerSupprimer = elBoutonModal.firstElementChild,
+                    let elBtnDeplacerSupprimer = elBoutonModal.firstElementChild,
                     elBtnSupprimer = elBoutonModal.firstElementChild.nextElementSibling
+                    let requete = new Request(BaseURL + "?requete=celliers")
+                    fetchGetCellier(requete, selectCellier, elIdCellier,elBtnDeplacerSupprimer) 
+             
+                   
+                  
                
                     new SupprimerCellier(elBtnDeplacerSupprimer,elBtnSupprimer, selectCellier,elIdCellier);
             })

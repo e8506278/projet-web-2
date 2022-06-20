@@ -22,7 +22,7 @@ class FetchCellier{
             });
     }
 
-    fetchGetCellier = (requete, action)=>{
+    fetchGetCellier = (requete, action, id, bouton)=>{
         fetch(requete)
                 .then(response => {
                     if (response.status === 200) {
@@ -33,11 +33,21 @@ class FetchCellier{
                     }
                 })
                 .then(response => {
-
+                   
                     for (let key in response) {
-                    let option = `<option value="${response[key].id_cellier}">${response[key].nom_cellier}</option>`
-                    action.insertAdjacentHTML('beforeend', option);
-                }    
+                       if(response[key].id_cellier !== id){
+                     
+                            let option = `<option value="${response[key].id_cellier}">${response[key].nom_cellier}</option>`
+                            action.insertAdjacentHTML('beforeend', option);
+                 
+                       }
+                       if(response[key].id_cellier == id && response[key].bouteille_total == null){
+                          bouton.classList.add("carte--inactif")
+                          action.classList.add("carte--inactif")
+                       }
+                    
+                    }    
+                
                 }).catch(error => {
                     console.error(error);
                 });

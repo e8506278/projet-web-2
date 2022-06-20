@@ -55,7 +55,7 @@
 .carte__detail-info{
     display: flex;
     justify-content: space-between;
-    padding-top: var(--espace-p);
+    padding-top: var(--espace-xp);
     
 }
 @media only screen and (min-width: 500px) {
@@ -109,7 +109,7 @@
 /* || Titre*/
 .carte__titre{
     border-bottom: 1px solid var(--couleur-accent);
-    margin-bottom: var(--espace-xp);
+    margin-bottom: var(--espace-p);
     justify-content: space-between;
 }
 .carte__titre--largeur{
@@ -207,5 +207,10 @@
   }
   .radio{
       padding-right: var(--espace-xp);
+  }
+  .carte--inactif{
+    pointer-events:none;
+    opacity: 0.5;
+    
   }
 

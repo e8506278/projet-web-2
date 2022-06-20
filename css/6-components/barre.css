@@ -1,0 +1,7 @@
+.barre{
+    display: flex;
+    padding: var(--espace-p) 0;
+}
+.barre__icones{
+    padding-left: var(--espace-xp);
+}
