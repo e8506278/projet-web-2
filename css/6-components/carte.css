@@ -1,133 +1,154 @@
-.carte{
+.carte {
     display: flex;
     flex-direction: column;
 }
-.carte--bg-couleur{
+
+.carte--bg-couleur {
     background-color: var(--couleur-intermediaire-pale);
 }
 
 /* || Entete*/
-.carte__entete{
+.carte__entete {
     padding-bottom: var(--espace-p);
 }
-.carte__entete-bouton{
+
+.carte__entete-bouton {
     padding-bottom: var(--espace-p);
     display: flex;
     justify-content: space-between;
 }
 
 /* || Contenu*/
-.carte__contenu{
-    width:100%;
+.carte__contenu {
+    width: 100%;
     margin-bottom: var(--espace-p);
     padding: var(--espace-xp);
     background-color: white;
     justify-content: space-between;
 
 }
+
 @media only screen and (min-width: 500px) {
-    .carte__contenu{
+    .carte__contenu {
         padding: var(--espace-p);
     }
 }
-.carte__contenu:hover{
+
+.carte__contenu:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 /* || Liste*/
-.carte__liste{
+.carte__liste {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    
+
 }
+
 @media only screen and (min-width: 500px) {
-    .carte__liste{
+    .carte__liste {
         flex-direction: row;
     }
 }
 
 /* || Detail*/
-.carte__detail{
+.carte__detail {
     display: flex;
     align-items: center;
 }
-.carte__detail-info{
+
+.carte__detail-info {
     display: flex;
     justify-content: space-between;
     padding-top: var(--espace-xp);
     
 }
+
 @media only screen and (min-width: 500px) {
-    .carte__detail-info{
+    .carte__detail-info {
         padding-top: 0;
-       
+
     }
 }
 
 /* || Texte*/
-.carte__texte{
-    font-size: var(--police-xp); 
+.carte__texte {
+    font-size: var(--police-xp);
 }
+
+.carte__texte+.carte__texte {
+    margin-top: var(--espace-xp);
+}
+
 @media only screen and (min-width: 500px) {
-    .carte__texte{
+    .carte__texte {
         flex-direction: row;
-        padding-bottom:0;
-       
+        padding-bottom: 0;
+
     }
 }
-.carte__texte--esg{
+
+.carte__texte--esg {
     padding-left: var(--espace-xp);
 }
 
 /* || Icones*/
-.carte__icone{
+.carte__icone {
     width: 1rem;
 }
+
 @media only screen and (min-width: 500px) {
-    .carte__icone{
+    .carte__icone {
         width: 2.2rem;
         padding-left: var(--espace-p);
     }
 }
-.carte__icone--couleur-blanc{
+
+.carte__icone--couleur-blanc {
     fill: var(--couleur-primaire);
 }
 
 
-.carte__icone-petit{
+.carte__icone-petit {
     width: 0.9rem;
     cursor: pointer;
 }
-.carte__icone-petit:hover{
+
+.carte__icone-petit:hover {
     fill: var(--couleur-accent);
 }
-.carte__icone-petit--espace{
+
+.carte__icone-petit--espace {
     padding-left: var(--espace-xp);
 }
 
 /* || Titre*/
-.carte__titre{
+.carte__titre {
     border-bottom: 1px solid var(--couleur-accent);
     margin-bottom: var(--espace-p);
     justify-content: space-between;
 }
-.carte__titre--largeur{
+
+.carte__titre--largeur {
     width: 70vw;
 }
 
 /* || Lien */
-.carte__lien{
+.carte__lien {
     color: var(--couleur-secondaire);
 }
-.carte__lien-icone{
+
+.carte__lien-icone {
     width: 1.8rem;
     cursor: pointer;
 }
-.carte__lien-icone:hover{
+
+.carte__lien-icone:hover {
     fill: var(--couleur-accent);
 }
-.carte__vertical-icon{
+
+.carte__vertical-icon {
     vertical-align: text-bottom;
 }
 
@@ -138,54 +159,62 @@
 }
 
 /* || Décorateurs divers */
-.carte--aligne-centre{
+.carte--aligne-centre {
     align-self: center;
 }
-.carte--haut{
+
+.carte--haut {
     padding-top: var(--espace-p);
 }
-.carte--droite{
+
+.carte--droite {
     padding-right: var(--espace-xp);
 }
-.carte--aligne-droite{
+
+.carte--aligne-droite {
     text-align: end;
 }
-.carte--flex{
+
+.carte--flex {
     display: flex;
 }
-.carte--hauteur{
+
+.carte--hauteur {
     min-height: 400px;
 }
-.carte__lien--largeur{
+
+.carte__lien--largeur {
     width: 100%;
 }
-.carte__icone--bb{
+
+.carte__icone--bb {
     border-bottom: 1px solid var(--couleur-accent);
 }
+
 .carte--flex-grow{
     flex-grow: 1;
 }
+
 /* || image */
-.carte__img{
+.carte__img {
     width: 65px;
 
 }
 
 /* || Description */
-.carte__description{
+.carte__description {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex-grow:1;
+    flex-grow: 1;
     padding-left: var(--espace-p);
-    
+
 }
 
 /* || Erreur */
-.carte__erreur{
+.carte__erreur {
     color: red;
 }
-
 
 /* || Radio */
 .carte__radio-btn { 
@@ -214,3 +243,6 @@
     
   }
 
+.radio{
+  padding-right: var(--espace-xp);
+}
