@@ -1,0 +1,37 @@
+.vignette{
+    background-color: var(--couleur-primaire);
+}
+
+/* || Entete */
+.vignette__entete{
+    color: var(--couleur-secondaire);
+}
+
+/* || Wrapper */
+.vignette__wrapper{
+    position: relative;
+    display: flex;
+    overflow: hidden;
+}
+
+/* || Image */
+.vignette__img{
+    filter: brightness(0.6);
+}
+
+
+/* || Titre */
+.vignette__titre{
+    position: absolute;
+    color: var(--couleur-primaire);
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
+    font-size: var(--police-p);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* || Décorateur divers */
+.vignette--bgcouleur{
+    background-color: var(--couleur-intermediaire-pale);
+}

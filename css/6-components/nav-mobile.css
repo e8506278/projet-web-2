@@ -1,0 +1,31 @@
+.nav-mobile{
+    display: flex;
+    position: fixed;
+    bottom:0;
+    width: 100%;
+    background-color: var(--couleur-secondaire);
+    z-index:5;
+    padding: var(--espace-p) var(--espace-p) ;
+    border-top: 1px solid var(--couleur-intermediaire-foncee);
+}
+
+@media only screen and (min-width: 760px){
+    .nav-mobile{
+        display:none;
+    }
+}
+
+/* Liste */
+.nav-mobile__liste{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Icone */
+.nav-mobile__icone{
+    fill: var(--couleur-primaire);
+}
+.nav-mobile__icone-milieu{
+    fill: var(--couleur-accent);
+}

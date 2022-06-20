@@ -1,0 +1,136 @@
+.main-connexion {
+    height: 100vh;
+    padding: 0;
+    width: 100vw;
+}
+
+
+.main-connexion button {
+    font-size: 1rem;
+    height: calc(2.25rem + 2px);
+    width: 100%;
+}
+
+.main-connexion input {
+    width: auto;
+}
+
+.main-connexion select {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    transition: 0.3s;
+    background-color: var(--couleur-intermediaire-pale);
+    padding: var(--espace-xp);
+    width: 100%;
+}
+
+.main-connexion select:focus {
+    border-bottom: 1px solid var(--couleur-accent);
+}
+
+.main-connexion textarea {
+    min-height: 38px;
+    resize: vertical;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    transition: 0.3s;
+    background-color: var(--couleur-intermediaire-pale);
+    padding: var(--espace-xp);
+    width: 100%;
+}
+
+.main-connexion textarea:focus {
+    border-bottom: 1px solid var(--couleur-accent);
+}
+
+.main-connexion .hidden {
+    display: none;
+}
+
+.main-connexion .justify-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-connexion .wrapper-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.main-connexion .entete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+}
+
+.main-connexion .main-section {
+    width: max(50%, 600px);
+}
+
+.main-connexion .aucune-erreur {
+    display: none;
+}
+
+.main-connexion .message-erreur {
+    display: inline;
+    color: red;
+    margin: var(--espace-m) 0;
+}
+
+.main-connexion .form-group {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.main-connexion .form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.main-connexion .date-container {
+    display: flex;
+}
+
+.main-connexion .date-container>*+* {
+    margin-left: 0.25rem;
+}
+
+.main-connexion .groupe-de-2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-connexion .groupe-de-2>* {
+    width: 48%;
+}
+
+.main-connexion .conditions-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.main-connexion #accepter_conditions {
+    margin-right: 0.5rem;
+}
+
+.main-connexion .btn-group {
+    background: var(--couleur-intermediaire-pale);
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    margin: 0;
+    padding: 1rem 0;
+}

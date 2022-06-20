@@ -1,0 +1,39 @@
+.t-p{
+    background-color: var(--couleur-intermediaire-pale);
+}
+
+/* || Titre */
+.t-p__titre{
+    font-size: var(--police-l);
+    
+}
+
+/* || Image */
+@media only screen and (min-width: 760px){
+    .t-p__img{
+        padding-left: var(--espace-l);
+        padding-top: var(--espace-m);
+        width: 70vw;
+        
+    }
+}
+
+/* || Contenu */
+.t-p__contenu{
+    display: flex;
+    flex-direction: column;
+}
+@media only screen and (min-width: 1024px){
+    .t-p__contenu{
+        flex-direction: row;
+    }
+}
+
+/* || Texte */
+.t-p__texte{
+    padding: var(--espace-m) 0;
+    line-height: 30px;
+}
+.t-p__texte--gras{
+    font-weight: var(--police-xgras);
+}

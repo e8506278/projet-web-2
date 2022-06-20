@@ -1,0 +1,17 @@
+
+@media only screen and (min-width: 760px){
+    header{
+        padding: var(--espace-p) var(--espace-l) ;
+        background-color: var(--couleur-secondaire);
+    }
+}
+
+
+.entete__icone{
+    fill: var(--couleur-primaire);  
+}
+.entete__nav{
+    display: flex;
+    justify-content: right;
+    background-color:var(--couleur-secondaire);
+}
