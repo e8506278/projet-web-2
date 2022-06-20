@@ -7,6 +7,7 @@ export default class CellierValidation{
         this._elNom_cellier = this._el.querySelector("[name='nom_cellier']")
         this._elType_cellier_id = this._el.querySelectorAll("[name='type_cellier_id']")
         this._elDescription_cellier = this._el.querySelector("[name='description_cellier']")
+        
         this._radio = false
         this._estValide = true
         this.id_cellier = ""
@@ -22,12 +23,14 @@ export default class CellierValidation{
             this._elErreurnom.textContent = "Ce champs est obligatoire";
             this._estValide = false;
         }
+
         //Pour chaque radio bouton
         this._elType_cellier_id.forEach(element => {    
             if(element.checked){
                 this._radio = true;
             } 
         });
+
         // Si un bouton a été sélectionné
         if(this._radio){
             this._elErreurradio.textContent = '';
@@ -37,6 +40,7 @@ export default class CellierValidation{
             this._elErreurradio.textContent = 'Choisir un type.';
             this._estValide = false;
         }
+        
         
     }
 

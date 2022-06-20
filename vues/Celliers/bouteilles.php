@@ -12,7 +12,7 @@
 if($data){
 foreach ($data as $cle => $bouteille) {
 ?>
-<a class="carte__lien" href="?requete=details&id_cellier=<?php echo $id_cellier;?>">
+<a class="carte__lien" href="?requete=bouteille&id_bouteille=<?php echo $bouteille['id_bouteille'];?>&id_cellier=<?php echo $id_cellier;?>">
         <div class="carte__contenu" data-js-bouteille="<?php echo $bouteille['id_bouteille'] ?>">
             <div class="carte__lien carte--flex">
                 <div class="carte__img">
