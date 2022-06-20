@@ -1509,9 +1509,11 @@ function rechercher() {
 const elOuvrirFiltres = document.querySelector('[data-js-ouvrir-filtres]');
 const elFermerFiltres = document.querySelector('[data-js-fermer-filtres]');
 const elMenuRecherche = document.querySelector('[data-js-menu-recherche]');
-const elMain = document.querySelector('[data-js-main]');
+const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
 
 elOuvrirFiltres.addEventListener("click", () => {
+    elFermerFiltres.classList.remove("ferme");
+
     if (!elMenuRecherche.classList.contains("ouvert")) {
         elMenuRecherche.classList.add("ouvert");
     }
@@ -1520,13 +1522,17 @@ elOuvrirFiltres.addEventListener("click", () => {
         elOuvrirFiltres.classList.add("ferme");
     }
 
-    if (!elMain.classList.contains("ferme")) {
-        elMain.classList.add("ferme");
+    if (!elCarteContenant.classList.contains("ferme")) {
+        elCarteContenant.classList.add("ferme");
     }
 });
 
 elFermerFiltres.addEventListener("click", () => {
     elMenuRecherche.classList.remove("ouvert");
     elOuvrirFiltres.classList.remove("ferme");
-    elMain.classList.remove("ferme");
+    elCarteContenant.classList.remove("ferme");
+
+    if (!elFermerFiltres.classList.contains("ferme")) {
+        elFermerFiltres.classList.add("ferme");
+    }
 });

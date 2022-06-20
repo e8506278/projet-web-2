@@ -1,5 +1,5 @@
 <?php
- include('./controller/Connexion.php');
+include('./controller/Connexion.php');
 /**
  * Class Controler
  * Gère les requêtes HTTP
@@ -54,7 +54,7 @@ class Controler
             case 'ajouterNouvelleBouteilleCellier':
                 $this->ajouterNouvelleBouteilleCellier();
                 break;
-             case 'bouteille':
+            case 'bouteille':
                 $this->ficheBouteille();
                 break;
             case 'ajouterBouteilleCellier':
@@ -86,9 +86,9 @@ class Controler
                 break;
             case 'accueil':
                 $this->accueil();
-                 break;
+                break;
             default:
-            $this->connecterUtilisateur();
+                $this->connecterUtilisateur();
                 break;
         }
     }
@@ -96,9 +96,13 @@ class Controler
     private function rechercher()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/entete.php");
             include("vues/recherche.php");
+            include("vues/pied.php");
         } else {
+            include("vues/entete.php");
             include("vues/connexion.php");
+            include("vues/pied.php");
         }
     }
 
@@ -117,19 +121,21 @@ class Controler
             $resultats = array("liste" => $listeBouteille);
             echo json_encode($resultats);
         } else {
+            include("vues/entete.php");
             include("vues/connexion.php");
+            include("vues/pied.php");
         }
     }
 
     private function liste()
     {
         $id = $_SESSION['utilisateur']['id'];
-   
+
         $celliers = new Cellier();
-        
+
         $data = $celliers->getListeCellier($id);
-      
-    
+
+
         echo json_encode($data);
     }
 
@@ -137,14 +143,14 @@ class Controler
     {
         include("vues/entete.php");
         include("vues/enregistrement.php");
-        include("vues/pied.php");       
+        include("vues/pied.php");
     }
 
     private function connecterUtilisateur()
     {
         include("vues/entete.php");
         include("vues/connexion.php");
-        include("vues/pied.php");   
+        include("vues/pied.php");
     }
 
     private function deconnecterUtilisateur()
@@ -159,7 +165,7 @@ class Controler
     {
         include("vues/entete.php");
         include("vues/index.php");
-        include("vues/pied.php");          
+        include("vues/pied.php");
     }
 
     private function listeBouteille()
@@ -216,7 +222,6 @@ class Controler
 
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
-       
     }
 
     private function ajouterBouteilleCellier()
@@ -225,7 +230,6 @@ class Controler
 
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
-       
     }
 
     private function detruireBouteille()
@@ -235,7 +239,7 @@ class Controler
         $bte = new Bouteille();
         $resultat = $bte->deleteUsageBouteille($body->id_bouteille, $body->id_cellier);
 
-        if($resultat){
+        if ($resultat) {
             return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille, 'id_cellier' => $body->id_cellier, 'resultat' => $resultat]);
         }
         return $this->returnJsonHttpResponse(false, []);
@@ -266,12 +270,11 @@ class Controler
         } else {
             $erreur = "";
         }
-        
-         
+
+
         include("vues/entete.php");
         include("vues/Celliers/celliers.php");
         include("vues/pied.php");
-       
     }
 
     /**
@@ -298,12 +301,12 @@ class Controler
      *  selon l'id_cellier envoyé dans l'url
      *  
      */
-    private function modifierCellier(){
+    private function modifierCellier()
+    {
         $body = json_decode(file_get_contents('php://input'));
         if (!empty($body)) {
             $cellier = new Cellier();
             $resultat = $cellier->modifierCellier($body);
-
         } else {
             include("vues/entete.php");
             include("vues/Cellliers/celliers.php");
@@ -311,32 +314,32 @@ class Controler
         }
     }
 
-    private function deplacerSupprimer(){
+    private function deplacerSupprimer()
+    {
 
         $body = json_decode(file_get_contents('php://input'));
         $id = $body->id_cellierSupprime;
         if (!empty($body)) {
-          
+
             $bte = new Bouteille();
             $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
-            if($bouteilles){
-               
-               $cellier = new Cellier();
-                $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi,$bouteilles);
-                if($resultat){
-                 $resultat =   $cellier->supprimerCellier($id);
-                    
+            if ($bouteilles) {
+
+                $cellier = new Cellier();
+                $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
+                if ($resultat) {
+                    $resultat =   $cellier->supprimerCellier($id);
                 }
             }
         }
-       
     }
 
-    private function supprimerCellier(){
+    private function supprimerCellier()
+    {
         $body = json_decode(file_get_contents('php://input'));
-       
+
         if (!empty($body)) {
-          
+
             $cellier = new Cellier();
             $cellier->supprimerCellier($body->id);
         }
@@ -385,7 +388,7 @@ class Controler
 
     private function ficheBouteille()
     {
-        if(!$_SESSION['utilisateur']['id']){
+        if (!$_SESSION['utilisateur']['id']) {
             $this->deconnecterUtilisateur();
             return;
         }
@@ -394,10 +397,10 @@ class Controler
         $message = $_GET['message'];
 
 
-        if($id_bouteille){
+        if ($id_bouteille) {
             $bouteille = (new Bouteille());
             $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
-            if(is_array($bouteille) && count($bouteille)>0){
+            if (is_array($bouteille) && count($bouteille) > 0) {
                 $bouteille = $bouteille[0];
             }
         }
@@ -424,13 +427,13 @@ class Controler
 
 
         $celliers = $usager_celliers;
-        if(!is_array($celliers) || !(count($celliers)>0)){
+        if (!is_array($celliers) || !(count($celliers) > 0)) {
             $bouteille['celliers'] = [
                 'id_cellier' => null,
                 'nom_cellier' => '',
                 'quantite' => 0
             ];
-        }else{
+        } else {
             $bouteille['celliers'] = $celliers;
         }
 
@@ -450,7 +453,7 @@ class Controler
             $bouteille = new Bouteille();
 
             $resultat = $bouteille->getOneBouteilleByName($body->nom);
-            if(count($resultat)>0){
+            if (count($resultat) > 0) {
                 return $this->returnJsonHttpResponse(true, $resultat[0]);
             }
         }

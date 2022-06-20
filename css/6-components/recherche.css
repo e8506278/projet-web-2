@@ -30,31 +30,30 @@ input:focus {
 
 .detail {
     display: flex;
+    flex-direction: column;
 }
 
 .main {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-grow: 1;
     position: relative;
 }
 
-.main.ferme {
+.carte__contenant {
+    flex-grow: 1;
+    flex-direction: column;
+    margin: var(--espace-p) var(--espace-xp) var(--espace-xp);
+}
+
+.carte__contenant.ferme {
     display: none;
 }
 
 @media only screen and (min-width: 760px) {
-    .main.ferme {
+    .carte__contenant.ferme {
         display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        position: relative;
     }
-}
-
-.carte__contenant {
-    flex-grow: 1;
-    margin: 0 var(--espace-xp);
 }
 
 @media only screen and (min-width: 760px) {
@@ -75,7 +74,7 @@ input:focus {
 .filtre-autocomplete,
 .filtre-listbox {
     margin: 10px;
-    width: 315px;
+    width: calc(100% - 20px);
 }
 
 .filtre-autocomplete .choix-container,
@@ -238,7 +237,7 @@ input:focus {
     margin: 0;
     max-height: 93px;
     overflow-y: auto;
-    width: 330px;
+    width: 100%;
 }
 
 @media only screen and (min-width: 760px) {
@@ -388,17 +387,23 @@ input:focus {
     background-color: var(--couleur-accent);
 }
 
-.rechercher-action {
-    align-items: center;
+.recherche-top-nav {
     display: flex;
-    justify-content: flex-end;
+    padding: var(--espace-xp);
 }
 
-.rechercher-action>*+* {
+.recherche-action {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.recherche-action>*+* {
     margin-left: 15px;
 }
 
-.rechercher-groupe {
+.recherche-groupe {
     padding: 0 3px 3px;
 }
 
@@ -418,29 +423,34 @@ input:focus {
     background-color: var(--couleur-accent);
     color: var(--couleur-secondaire);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    margin-bottom: var(--espace-xp);
-    padding: 5px var(--espace-xp);
+    padding: var(--espace-p);
     position: relative;
 }
 
-@media only screen and (min-width: 760px) {
-    .barre-tri {
-        height: 80px;
-        padding: var(--espace-xp) var(--espace-p);
-    }
+.top-nav {
+    flex-grow: 1;
 }
 
-.barre-tri-ligne-1 {
+.top-nav-ligne-1 {
     display: flex;
     justify-content: center;
-    margin-bottom: var(--espace-xp);
+    margin: 0 0 var(--espace-p) 0;
 }
 
-.barre-tri-ligne-2 {
+.top-nav-ligne-2 {
+    align-items: center;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    margin: var(--espace-p) 0 0 0;
+}
+
+@media only screen and (min-width: 650px) {
+    .top-nav-ligne-2 {
+        flex-direction: row;
+    }
 }
 
 .barre-tri select {
@@ -469,12 +479,16 @@ input:focus {
     align-items: center;
 }
 
+.qte-wrapper {
+    margin-bottom: var(--espace-xp);
+}
+
 .main.ferme .qte-wrapper {
     display: none;
 }
 
 .page-titre {
-    font-size: var(--police-p);
+    font-size: var(--police-m);
     font-weight: 700;
 }
 
@@ -493,13 +507,12 @@ input:focus {
 .tri-select-wrapper {
     align-items: stretch;
     display: flex;
-    width: 100%;
     margin: 0;
+    width: 100%;
 }
 
-@media only screen and (min-width: 760px) {
+@media only screen and (min-width: 650px) {
     .tri-select-wrapper {
-        margin-left: 5px;
         width: auto;
     }
 }
@@ -528,6 +541,7 @@ input:focus {
 }
 
 .menuRecherche {
+    border-top: 1px solid transparent;
     opacity: 0;
     padding: 0;
     transition: opacity .1s, width .1s;
@@ -550,17 +564,10 @@ input:focus {
     }
 }
 
-.recherche-top-nav {
-    display: flex;
-    flex-direction: column;
-    height: 80px;
-    justify-content: space-between;
-    padding: 5px 15px;
-}
-
-.ouvrir-recherche,
-.fermer-recherche {
-    display: flex;
+.ouvrir-fermer {
+    top: var(--espace-p);
+    left: var(--espace-p);
+    position: absolute;
 }
 
 .ouvrir-filtres svg:hover,
@@ -577,7 +584,8 @@ input:focus {
     width: 36px;
 }
 
-.ouvrir-filtres.ferme {
+.ouvrir-filtres.ferme,
+.fermer-filtres.ferme {
     display: none;
 }
 
@@ -875,7 +883,7 @@ input:focus {
     padding: 0;
 }
 
-@media only screen and (min-width: 760px) {
+@media only screen and (min-width: 650px) {
     .section-wrapper {
         padding: var(--espace-m) var(--espace-p);
     }
