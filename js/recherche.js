@@ -863,6 +863,7 @@ function ajusterSlider(elInput, elValeurs) {
     });
 }
 
+
 function traiterSlider(elInput, elValeurs) {
     elValeurs.forEach(elValeur => {
         elValeur.addEventListener('change', (e) => {
@@ -871,10 +872,6 @@ function traiterSlider(elInput, elValeurs) {
         });
     });
 }
-
-elValeursQteMin.forEach(elValeur => {
-    console.log(elValeur.value);
-});
 
 
 traiterSlider(elInputQteMin, elValeursQteMin);
@@ -1421,13 +1418,13 @@ function rechercher() {
                 qteFin.innerHTML = nbBouteilles;
                 qteMax.innerHTML = nbBouteilles;
 
-                let qteAffichage = document.querySelector('[ data-js-qte-affichage]');
+                // let qteAffichage = document.querySelector('[ data-js-qte-affichage]');
 
-                while (qteAffichage.options.length > 0) {
-                    qteAffichage.remove(0);
-                }
+                // while (qteAffichage.options.length > 0) {
+                //     qteAffichage.remove(0);
+                // }
 
-                qteAffichage.options[0] = new Option(nbBouteilles, nbBouteilles);
+                // qteAffichage.options[0] = new Option(nbBouteilles, nbBouteilles);
 
                 const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
                 elCarteContenant.innerHTML = "";
@@ -1512,6 +1509,7 @@ function rechercher() {
 const elOuvrirFiltres = document.querySelector('[data-js-ouvrir-filtres]');
 const elFermerFiltres = document.querySelector('[data-js-fermer-filtres]');
 const elMenuRecherche = document.querySelector('[data-js-menu-recherche]');
+const elMain = document.querySelector('[data-js-main]');
 
 elOuvrirFiltres.addEventListener("click", () => {
     if (!elMenuRecherche.classList.contains("ouvert")) {
@@ -1521,9 +1519,14 @@ elOuvrirFiltres.addEventListener("click", () => {
     if (!elOuvrirFiltres.classList.contains("ferme")) {
         elOuvrirFiltres.classList.add("ferme");
     }
+
+    if (!elMain.classList.contains("ferme")) {
+        elMain.classList.add("ferme");
+    }
 });
 
 elFermerFiltres.addEventListener("click", () => {
     elMenuRecherche.classList.remove("ouvert");
     elOuvrirFiltres.classList.remove("ferme");
+    elMain.classList.remove("ferme");
 });
