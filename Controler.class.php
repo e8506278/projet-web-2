@@ -282,9 +282,10 @@ class Controler
             $this->deconnecterUtilisateur();
             return;
         }
-        $id_cellier = $_GET['id_cellier'];
-        $id_bouteille = $_GET['id_bouteille'];
-        $message = $_GET['message'];
+
+        $id_cellier = isset($_GET['id_cellier']) ?$_GET['id_cellier']: null;
+        $id_bouteille = isset($_GET['id_bouteille']) ?$_GET['id_bouteille']: null;
+        $message = isset($_GET['message']) ?$_GET['message']: null;
 
 
         if($id_bouteille){

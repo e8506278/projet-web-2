@@ -1,12 +1,13 @@
 <?php
+ob_start();
 if (!class_exists('Lists')) {
     require_once ('../modeles/Lists.class.php');
 }
 $debug = true;
 $message = null;
 
-$bouteille_id = $_POST['id_bouteille'];
-if($_POST['estCommentaire']){
+$bouteille_id = isset($_POST['id_bouteille'])?$_POST['id_bouteille']: null;
+if(isset($_POST['estCommentaire'])){
     $query_string = "UPDATE  usager__bouteille SET
                             commentaires = '".$_POST['commentaires']."',
                             note = '".$_POST['note']."'
@@ -43,7 +44,8 @@ if($_POST['estCommentaire']){
     if(count($designation) > 0){ $designation_id = $designation[0]['id'];} else { $designation_id = $list->creerNouveauElement('designation',  $_POST['nom_designation']);}
 
     $cepage = $list->findElementByName('cepages', $_POST['nom_cepages']);
-    if(count($cepage) > 0){ $cepages_id = $cepage[0]['id'];}  else { $cepages_id = $list->creerNouveauElement('cepages',  $_POST['cepages']);}
+
+    if(count($cepage) > 0){ $cepages_id = $cepage[0]['id'];}  else { $cepages_id = $list->creerNouveauElement('cepages',  $_POST['nom_cepages']);}
 
     $taux_de_sucre = $list->findElementByName('taux_de_sucre', $_POST['nom_taux_de_sucre']);
     if(count($taux_de_sucre) > 0){ $taux_de_sucre_id = $taux_de_sucre[0]['id'];}  else { $taux_de_sucre_id = $list->creerNouveauElement('taux_de_sucre',  $_POST['nom_taux_de_sucre']);}
@@ -74,31 +76,20 @@ if($_POST['estCommentaire']){
 
 
     $message = "Opération réussie";
-//    if(!$bouteille_id){
-//        $query = "select id_bouteille from usager__bouteille order by id_bouteille desc limit 1";
-//        $res = MonSQL::getInstance()->query($query) or die(mysqli_error(MonSQL::getInstance()));
-//
-//        $result = $res->fetch_assoc();
-//        if(!$result){
-//            $bouteille_id = 1;
-//        }else{
-//            $bouteille_id = $result['id_bouteille'] + 1;
-//        }
-//    }
+   
 //    echo $bouteille_id;; die();
     foreach ( $_POST['celliers'] as  $key => $cellier){
-
+        $ub = null;
         if($bouteille_id)
             $ub = $list->getUsagerBouteille( $bouteille_id, $cellier['id_cellier']);
 
         if($debug){
-            echo "<br><br>";
+             echo "<br><br>";
             print_r($ub);
             echo "<br><br>";
         }
             if(!$ub){
                 $query_string = "INSERT INTO usager__bouteille(
-                         
                             id_cellier ,
                             nom_bouteille,
                             image_bouteille ,
@@ -133,7 +124,6 @@ if($_POST['estCommentaire']){
                             millesime
                               
                     ) VALUES (
-                   
                           ".$cellier['id_cellier'].",
                            '".$_POST['nom_bouteille']."', 
                           '".$_POST['image_bouteille']."',
@@ -220,6 +210,8 @@ if($_POST['estCommentaire']){
 }
 
 
+echo "Traitement terminé avec succès !<br><br>";
+ECHO "Redirection ...";
 
 
 $returnpage = home_base_url()."?requete=bouteille";
@@ -234,81 +226,36 @@ if(isset($bouteille_id) && $bouteille_id != null){
 if(isset($message) && $message != null){
     $returnpage = $returnpage.'&message='.$message;
 }
-echo "Traitement terminé avec succès !<br><br>";
-ECHO "Redirection vers ".$returnpage;
-header("Location:".$returnpage);
-
-
+// exit(header("Location:".$returnpage));
+if (headers_sent()) {
+    die("Un issue avec la redirection, svp cliquer ici pour retourner à la page précédente: <a href=".$returnpage.">Page précédente</a>");
+}
+else{
+    exit(header("Location:".$returnpage));
+}
 /*
  *
  * Une fonction util pour avoir le base url
  *
  * */
-
 function home_base_url(){
-
-// first get http protocol if http or https
-
-    $base_url = (isset($_SERVER['HTTPS']) &&
-
-        $_SERVER['HTTPS']!='off') ? 'https://' : 'http://';
-
-// get default website root directory
-
+    $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off') ? 'https://' : 'http://';
     $tmpURL = dirname(__FILE__);
-
-// when use dirname(__FILE__) will return value like this "C:\xampp\htdocs\my_website",
-
-//convert value to http url use string replace,
-
-// replace any backslashes to slash in this case use chr value "92"
-
     $tmpURL = str_replace(chr(92),'/',$tmpURL);
-
-// now replace any same string in $tmpURL value to null or ''
-
-// and will return value like /localhost/my_website/ or just /my_website/
-
     $tmpURL = str_replace($_SERVER['DOCUMENT_ROOT'],'',$tmpURL);
-
-// delete any slash character in first and last of value
-
     $tmpURL = ltrim($tmpURL,'/');
-
     $tmpURL = rtrim($tmpURL, '/');
-
-
-// check again if we find any slash string in value then we can assume its local machine
-
     if (strpos($tmpURL,'/')){
-
-// explode that value and take only first value
-
         $tmpURL = explode('/',$tmpURL);
-
         $tmpURL = $tmpURL[0];
-
     }
-
-// now last steps
-
-// assign protocol in first value
-
     if ($tmpURL !== $_SERVER['HTTP_HOST'])
-
-// if protocol its http then like this
-
         $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
-
     else
-
-// else if protocol is https
-
-        $base_url .= $tmpURL.'/';
-
-// give return value
-
+     $base_url .= $tmpURL.'/';
     return $base_url;
 
 }
+ob_end_flush();
+?>
 

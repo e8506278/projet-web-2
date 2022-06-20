@@ -90,7 +90,8 @@ $form_values = [
 $erreur = "";
 
 
-if(isset($bouteille) && $bouteille != null && $bouteille['id_bouteille'] && strlen($bouteille['nom_bouteille'])){
+
+if(isset($bouteille) && isset($bouteille['id_bouteille']) && $bouteille != null && $bouteille['id_bouteille'] && strlen($bouteille['nom_bouteille'])){
     $form_values = $bouteille;
 }else{
     $bouteille = null;
