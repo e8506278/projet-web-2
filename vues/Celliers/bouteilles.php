@@ -20,6 +20,7 @@
         <p class="recherche-termes__note">Note: des chiffres et des lettres seulement; pas de mots composés; pas de caractères spéciaux</p>
     </div>
 
+
     <div class="carte__contenant" data-js-carte-contenant>
         <?php
         if ($data) {
@@ -80,6 +81,7 @@
                                         </form>
                                     </li>
                                 </ul>
+
                             </div>
                         </div>
                     </div>
@@ -93,6 +95,21 @@
         }
         ?>
     </div>
+
+<?php
+};
+}else{
+
+
+?>
+<p>Aucune bouteille</p>
+<?php
+}
+?> 
+</section>
+<div class="carte__remp carte--bg-couleur "></div>
+
 </section>
 
 <script src="./js/rechercherBouteillesCellier.js" defer></script>
+

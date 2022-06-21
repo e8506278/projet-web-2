@@ -1,5 +1,9 @@
+
 <?php
-include('./controller/Connexion.php');
+
+ include('./controller/Connexion.php');
+
+
 /**
  * Class Controler
  * Gère les requêtes HTTP
@@ -89,19 +93,103 @@ class Controler
                 break;
             case 'accueil':
                 $this->accueil();
-                break;
+
+                 break;
+            case '':
+                $this->accueil();
+                 break;
             default:
-                $this->connecterUtilisateur();
+                $this->erreurhttp();
                 break;
         }
+    }
+
+
+    private function erreurhttp(){
+        include("vues/entete.php");
+        include("vues/erreur.php");
+        include("vues/pied.php");     
+    }
+    private function rechercher()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/recherche.php");
+        } else {
+            include("vues/connexion.php");
+        }
+    }
+
+
+    private function rechercherBouteilles()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $aDonnees = json_decode(file_get_contents('php://input'), true);
+
+            $tri = $aDonnees['tri'];
+            $filtres = $aDonnees['filtres'];
+
+            $recherche = new Recherche();
+            $listeBouteille = $recherche->rechercherBouteilles($tri, $filtres);
+
+            $resultats = array("liste" => $listeBouteille);
+            echo json_encode($resultats);
+        } else {
+            include("vues/connexion.php");
+        }
+    }
+
+    
+
+    private function enregistrerUtilisateur()
+    {
+        include("vues/entete.php");
+
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/index.php");
+        } else {
+            include("vues/enregistrement.php");
+        }
+          
+        include("vues/pied.php");       
+    }
+
+    private function connecterUtilisateur()
+    {
+        include("vues/entete.php");
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/index.php");
+        } else {
+            include("vues/connexion.php");
+        }
+       
+        include("vues/pied.php");   
+    }
+
+    private function deconnecterUtilisateur()
+    {
+        unset($_SESSION['utilisateur']);
+        include("vues/entete.php");
+        include("vues/connexion.php");
+        include("vues/pied.php");
     }
 
 
     private function accueil()
     {
         include("vues/entete.php");
-        include("vues/index.php");
-        include("vues/pied.php");
+
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $id = $_SESSION['utilisateur']['id'];
+        $celliers = new Cellier();
+
+        $data = $celliers->getListeCellier($id);
+        $nombre_cellier = $celliers->nombreCellierUsager($id);
+            include("vues/index.php");
+        } else {
+            include("vues/connexion.php");
+        }
+        include("vues/pied.php");          
+
     }
 
 
@@ -192,9 +280,52 @@ class Controler
 
     private function connecterUtilisateur()
     {
+
+
+        $id = $_SESSION['utilisateur']['id'];
+
+        $celliers = new Cellier();
+
+        $data = $celliers->getListeCellier($id);
+        $nombre_cellier = $celliers->nombreCellierUsager($id);
+
+        // Si le nombre de cellier est égal à 10
+        if ($nombre_cellier == '10') {
+
+            $erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
+        } else {
+            $erreur = "";
+        }
+        
         include("vues/entete.php");
-        include("vues/connexion.php");
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/Celliers/celliers.php");
+        } else {
+            include("vues/connexion.php");
+        }
+       
+        
+
+      
         include("vues/pied.php");
+    }
+
+
+    /**
+     * Cette méthode appelle la fonction pour récupérer la liste des celliers d'un usager
+     * selon l'id de session.
+     *  
+     */
+    private function liste()
+    {
+        $id = $_SESSION['utilisateur']['id'];
+   
+        $celliers = new Cellier();
+        
+        $data = $celliers->getListeCellier($id);
+      
+    
+        echo json_encode($data);
     }
 
 
@@ -230,7 +361,18 @@ class Controler
 
     private function detruireBouteille()
     {
+
+        if (filter_has_var(INPUT_GET, 'id_cellier')) {
+         
+            $id_cellier = filter_var($_GET['id_cellier'], FILTER_SANITIZE_NUMBER_INT);
+        }
+     
+     
+        $nom_cellier = htmlspecialchars($_GET['nom_cellier']);
+     
+
         $body = json_decode(file_get_contents('php://input'));
+
 
         $bte = new Bouteille();
         $resultat = $bte->deleteUsageBouteille($body->id_bouteille, $body->id_cellier);
@@ -249,6 +391,28 @@ class Controler
         include("vues/enregistrement.php");
         include("vues/pied.php");
     }
+
+
+    /**
+     * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
+     *  selon l'id_cellier envoyé dans l'url 
+     *  
+     */
+    private function ajouterQteBouteille()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+        
+        $bte = new Bouteille();
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
+    }
+    private function reduireQteBouteille()
+    {
+        $body = json_decode(file_get_contents('php://input'));
+        $bte = new Bouteille();
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
+    }
+
+    /* FIN CELLIER */
 
 
     private function ficheBouteille()

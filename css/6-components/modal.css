@@ -32,3 +32,14 @@
 .modal__texte {
     padding: var(--espace-p) 0;
 }
+.modal__input{
+   
+    border-bottom: 1px solid ;
+    transition: 0.3s;
+    background-color: var(--couleur-intermediaire-pale);
+    padding: var(--espace-xp);
+    width: 100%;
+}
+.modal__input:focus{
+    border-bottom: 1px solid var(--couleur-accent);
+}

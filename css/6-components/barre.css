@@ -1,7 +1,14 @@
 .barre{
     display: flex;
+    justify-content: space-between;
+}
+.barre__contenant{
     padding: var(--espace-p) 0;
+    display:flex;
 }
 .barre__icones{
     padding-left: var(--espace-xp);
+}
+.barre--aligne-fin{
+    text-align: end;
 }

@@ -1063,12 +1063,15 @@ $aTypesVin = $oRecherche->lireTypesVin();
                             $prix_bouteille = $listeBouteille[$i]["prix_bouteille"];
                             $note = $listeBouteille[$i]["note"];
                     ?>
+
+
                             <a class="carte__lien" href="?requete=details&id_cellier=<?php echo $id_cellier ?>">
                                 <div class="carte__contenu" data-js-bouteille="<?php echo $id_bouteille ?>">
                                     <div class="carte__lien carte--flex">
                                         <div class="carte__img">
                                             <img src="<?php echo $image_bouteille ?>" alt="bouteille">
                                         </div>
+
 
                                         <div class="carte__description">
                                             <div>
