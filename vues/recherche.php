@@ -63,7 +63,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
 </head>
 
 <body>
-    <section class="section-wrapper carte carte--bg-couleur">
+    <section class="section-wrapper carte carte--bg-couleur recherche-wrapper">
         <div class="detail">
             <div class="barre-tri" data-js-barre-tri>
                 <div class="ouvrir-fermer">
