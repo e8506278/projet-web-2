@@ -89,6 +89,9 @@ if(isset($_POST['estCommentaire'])){
             echo "<br><br>";
         }
             if(!$ub){
+                if(!isset($cellier['quantite']) || !$cellier['quantite']){
+                    continue;
+                }
                 $query_string = "INSERT INTO usager__bouteille(
                             id_cellier ,
                             nom_bouteille,
