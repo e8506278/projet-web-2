@@ -1,5 +1,7 @@
+
 <?php
  include('./controller/Connexion.php');
+
 /**
  * Class Controler
  * Gère les requêtes HTTP
@@ -87,12 +89,20 @@ class Controler
             case 'accueil':
                 $this->accueil();
                  break;
+            case '':
+                $this->accueil();
+                 break;
             default:
-            $this->connecterUtilisateur();
+                $this->erreurhttp();
                 break;
         }
     }
 
+    private function erreurhttp(){
+        include("vues/entete.php");
+        include("vues/erreur.php");
+        include("vues/pied.php");     
+    }
     private function rechercher()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
@@ -121,29 +131,30 @@ class Controler
         }
     }
 
-    private function liste()
-    {
-        $id = $_SESSION['utilisateur']['id'];
-   
-        $celliers = new Cellier();
-        
-        $data = $celliers->getListeCellier($id);
-      
     
-        echo json_encode($data);
-    }
 
     private function enregistrerUtilisateur()
     {
         include("vues/entete.php");
-        include("vues/enregistrement.php");
+
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/index.php");
+        } else {
+            include("vues/enregistrement.php");
+        }
+          
         include("vues/pied.php");       
     }
 
     private function connecterUtilisateur()
     {
         include("vues/entete.php");
-        include("vues/connexion.php");
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/index.php");
+        } else {
+            include("vues/connexion.php");
+        }
+       
         include("vues/pied.php");   
     }
 
@@ -158,7 +169,16 @@ class Controler
     private function accueil()
     {
         include("vues/entete.php");
-        include("vues/index.php");
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $id = $_SESSION['utilisateur']['id'];
+        $celliers = new Cellier();
+
+        $data = $celliers->getListeCellier($id);
+        $nombre_cellier = $celliers->nombreCellierUsager($id);
+            include("vues/index.php");
+        } else {
+            include("vues/connexion.php");
+        }
         include("vues/pied.php");          
     }
 
@@ -267,14 +287,34 @@ class Controler
             $erreur = "";
         }
         
-         
         include("vues/entete.php");
-        include("vues/Celliers/celliers.php");
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include("vues/Celliers/celliers.php");
+        } else {
+            include("vues/connexion.php");
+        }
+       
+        
         include("vues/pied.php");
        
     }
 
+    /**
+     * Cette méthode appelle la fonction pour récupérer la liste des celliers d'un usager
+     * selon l'id de session.
+     *  
+     */
+    private function liste()
+    {
+        $id = $_SESSION['utilisateur']['id'];
+   
+        $celliers = new Cellier();
+        
+        $data = $celliers->getListeCellier($id);
+      
     
+        echo json_encode($data);
+    }
 
     /**
      * Cette méthode appelle la fonction pour ajouter un nouveau cellier 
@@ -351,9 +391,14 @@ class Controler
      */
     private function listeBouteilleCellier()
     {
-        $id_cellier = $_GET['id_cellier'];
-        $nom_cellier = $_GET['nom_cellier'];
-
+        if (filter_has_var(INPUT_GET, 'id_cellier')) {
+         
+            $id_cellier = filter_var($_GET['id_cellier'], FILTER_SANITIZE_NUMBER_INT);
+        }
+     
+     
+        $nom_cellier = htmlspecialchars($_GET['nom_cellier']);
+     
         $bte = new Bouteille();
 
         $data = $bte->getListeBouteilleCellier($id_cellier);
@@ -372,7 +417,7 @@ class Controler
     private function ajouterQteBouteille()
     {
         $body = json_decode(file_get_contents('php://input'));
-        var_dump($body);
+        
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
     }

@@ -14,18 +14,15 @@ foreach ($data as $cle => $bouteille) {
 ?>
 <a class="carte__lien" href="?requete=bouteille&id_bouteille=<?php echo $bouteille['id_bouteille'];?>&id_cellier=<?php echo $id_cellier;?>">
         <div class="carte__contenu" data-js-bouteille="<?php echo $bouteille['id_bouteille'] ?>">
-            <div class="carte__lien carte--flex">
+            <div class="carte__contenu-img-txt">
                 <div class="carte__img">
                     <img src="<?php echo $bouteille['image_bouteille']; ?>" alt="bouteille">
                 </div>
                 <div class="carte__description">
                     <div>
                         <div class="carte--flex carte__titre">
-                        <h4 class=""><?php echo $bouteille['nom_bouteille']; ?></h4>
-
-  
+                            <h4 class=""><?php echo $bouteille['nom_bouteille']; ?></h4>
                         </div>
-                        
                         <div>
                             <div class="carte__texte" >
                                 <?php echo $bouteille['description_bouteille'];?>
@@ -61,8 +58,6 @@ foreach ($data as $cle => $bouteille) {
 <p>Aucune bouteille</p>
 <?php
 }
-?>
-           
-
-    
+?> 
 </section>
+<div class="carte__remp carte--bg-couleur "></div>

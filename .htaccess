@@ -1,0 +1,6 @@
+RewriteEngine On
+ErrorDocument 404 /erreur.html
+ErrorDocument 500 /erreur.html
+ErrorDocument 403 /erreur.html
+ErrorDocument 400 /erreur.html
+ErrorDocument 401 /erreur.html
