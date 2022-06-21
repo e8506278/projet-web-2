@@ -25,38 +25,38 @@
         if ($data) {
             foreach ($data as $cle => $bouteille) {
         ?>
-                <a class="carte__lien" href="?requete=details&id_cellier=<?php echo $id_cellier ?>">
-                    <div class="carte__contenu" data-js-bouteille="<?php echo $bouteille['id_bouteille'] ?>">
+                <a class="carte__lien" href="?requete=bouteille&id_bouteille=<?php echo $bouteille['id_bouteille']; ?>&id_cellier=<?php echo $id_cellier; ?>">
+                    <div class="carte__contenu" data-js-bouteille="<?php echo $bouteille['id_bouteille']; ?>">
                         <div class="carte__lien carte--flex">
                             <div class="carte__img">
-                                <img src="<?php echo $bouteille['image_bouteille'] ?>" alt="bouteille">
+                                <img src="<?php echo $bouteille['image_bouteille']; ?>" alt="bouteille">
                             </div>
 
                             <div class="carte__description">
                                 <div>
                                     <div class="carte--flex carte__titre">
-                                        <h4 class=""><?php echo $bouteille['nom_bouteille'] ?> - <?php echo $bouteille['millesime'] ?></h4>
+                                        <h4 class=""><?php echo $bouteille['nom_bouteille']; ?> - <?php echo $bouteille['millesime']; ?></h4>
                                     </div>
 
                                     <div>
                                         <div class="carte__texte">
-                                            <?php echo $bouteille['description_bouteille'] ?>
+                                            <?php echo $bouteille['description_bouteille']; ?>
                                         </div>
                                         <div class="carte__texte">
-                                            Acheté le <?php echo $bouteille['date_achat'] ?>
+                                            Acheté le <?php echo $bouteille['date_achat']; ?>
                                         </div>
                                         <div class="carte__texte">
-                                            Au prix de <?php echo $bouteille['prix_bouteille'] ?>
+                                            Au prix de <?php echo $bouteille['prix_bouteille']; ?>
                                         </div>
                                         <div class="carte__texte">
-                                            Ma note est de <?php echo $bouteille['note'] ?>/10
+                                            Ma note est de <?php echo $bouteille['note']; ?>/10
                                         </div>
                                     </div>
                                 </div>
 
                                 <ul class="carte--haut">
                                     <li class="carte--aligne-droite">
-                                        <form data-js-id="<?php echo $bouteille['id_bouteille'] ?>">
+                                        <form data-js-id="<?php echo $bouteille['id_bouteille']; ?>">
                                             <i><svg class="carte__icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                     <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                                     <path d="M507.3 72.57l-67.88-67.88c-6.252-6.25-16.38-6.25-22.63 0l-22.63 22.62c-6.25 6.254-6.251 16.38-.0006 22.63l-76.63 76.63c-46.63-19.75-102.4-10.75-140.4 27.25l-158.4 158.4c-25 25-25 65.51 0 90.51l90.51 90.52c25 25 65.51 25 90.51 0l158.4-158.4c38-38 47-93.76 27.25-140.4l76.63-76.63c6.25 6.25 16.5 6.25 22.75 0l22.63-22.63C513.5 88.95 513.5 78.82 507.3 72.57zM179.3 423.2l-90.51-90.51l122-122l90.51 90.52L179.3 423.2z"></path>
@@ -69,7 +69,7 @@
                                                     </svg></i>
                                             </button>
 
-                                            <span data-js-quantite=""><?php echo $bouteille['quantite_bouteille'] ?></span>
+                                            <span data-js-quantite=""><?php echo $bouteille['quantite_bouteille']; ?></span>
 
                                             <button class="bouton btnBoire">
                                                 <i class="carte__icone-petit--espace"><svg class="carte__icone-petit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

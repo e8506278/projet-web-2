@@ -9,6 +9,9 @@ export default class SupprimerCellier extends ModalCellier{
         this._btnSupprimer = btnSupprimer;
         this._selectCellier = selectCellier
         this._idCellier = idCellier
+    
+        this._elErreurchoix = this._selectCellier.nextElementSibling
+        
        
         this.init()
 
@@ -17,13 +20,29 @@ export default class SupprimerCellier extends ModalCellier{
         
         this._btnDeplacerSupprimer.addEventListener('click', (e)=>{
             e.preventDefault();
-            let cellierAdeplacer = {
-                "id_cellierChoisi" : this._selectCellier.value,
-                "id_cellierSupprime": this._idCellier
+            let valide = true
+         
+            if(this._selectCellier.value !== "0"){
+           
+                this._elErreurchoix.textContent = '';
             }
-            
-            let requete = new Request(BaseURL + "?requete=deplacerSupprimer", { method: 'POST', body: JSON.stringify(cellierAdeplacer)});
-            fetchCellier(requete,this.ferme())
+            else{
+                // Sinon message d'erreur
+                this._elErreurchoix.textContent = 'Choisir un cellier.';
+               valide = false;
+            }
+     
+           
+            if(valide){
+                let cellierAdeplacer = {
+                    "id_cellierChoisi" : this._selectCellier.value,
+                    "id_cellierSupprime": this._idCellier
+                }
+               
+                let requete = new Request(BaseURL + "?requete=deplacerSupprimer", { method: 'POST', body: JSON.stringify(cellierAdeplacer)});
+                fetchCellier(requete,this.ferme())
+            }
+          
 
         })
         this._btnSupprimer.addEventListener('click', (e)=>{
