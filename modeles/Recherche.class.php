@@ -611,34 +611,4 @@ class Recherche extends Modele
 
         return $estVide;
     }
-
-    public function rechercheBouteilleCellier($filtres)
-    {
-        // Ouvrir une nouvelle connexion au serveur MySQL
-        $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
-        $sql = "SELECT id_bouteille, id_cellier, description_bouteille, prix_bouteille, date_achat, garde_jusqua, note, commentaires, quantite_bouteille, millesime, id_vino__bouteille, nom_bouteille, image_bouteille, pays_nom, region_nom, type_de_vin_nom FROM usager__bouteille ";
-
-        if ($filtres) {
-            $aTermes = explode(",", $filtres);
-            $lesTermes = "";
-
-            foreach ($aTermes as $terme) {
-                $lesTermes .= "*" . $terme . "* ";
-            }
-
-            if ($lesTermes) {
-                $lesTermes = substr($lesTermes, 0, -1);
-                $sql .= "WHERE MATCH( nom_bouteille, prix_bouteille, millesime, pays_nom, region_nom, type_de_vin_nom, format_nom, cepage_nom ) AGAINST('" . $lesTermes . "' IN BOOLEAN MODE)";
-            }
-        }
-
-        $result = mysqli_query($connection, $sql) or die(mysqli_error($connection));
-        $lesBouteilles = [];
-
-        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            $lesBouteilles[] = $row;
-        }
-
-        return $lesBouteilles;
-    }
 }

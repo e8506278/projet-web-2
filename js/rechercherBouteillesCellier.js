@@ -1,4 +1,4 @@
-var $baseUrl_without_parameters = window.location.href.split('?');//[0];
+let $baseUrl_without_parameters = window.location.href.split('?');//[0];
 $baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
 
 
@@ -9,6 +9,7 @@ elBtnRechercher.addEventListener("click", rechercher);
 function rechercher() {
     const elTermes = document.querySelector("[data-js-termes]").value;
     const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
+    const elIdCellier = document.querySelector('[data-js-id-cellier]').value;
 
     const entete = new Headers();
     entete.append("Content-Type", "application/json");
@@ -17,15 +18,14 @@ function rechercher() {
     const reqOptions = {
         method: "POST",
         headers: entete,
-        body: JSON.stringify({ 'filtres': elTermes })
+        body: JSON.stringify({ 'id_cellier': elIdCellier, 'filtres': elTermes })
     };
 
-    const requete = new Request($baseUrl_without_parameters + "?requete=rechercheBouteilleCellier", reqOptions);
+    const requete = new Request($baseUrl_without_parameters + "?requete=rechercherBouteillesCellier", reqOptions);
 
     fetch(requete)
         .then(response => {
             if (response.status === 200) {
-
                 return response.json()
             } else {
                 throw new Error('Erreur');
@@ -35,24 +35,26 @@ function rechercher() {
             if (donnees['erreur']) {
                 console.log(donnees['erreur']);
             } else if (donnees['liste']) {
-                const bouteilles = donnees['liste'];
-                const nbBouteilles = bouteilles.length;
-
+                const data = donnees['liste'];
                 elCarteContenant.innerHTML = "";
 
-                bouteilles.forEach(bouteille => {
-                    let id_cellier = bouteille["id_cellier"];
-                    let id_bouteille = bouteille["id_bouteille"];
-                    let image_bouteille = bouteille["image_bouteille"];
-                    let nom_bouteille = bouteille["nom_bouteille"];
-                    let description_bouteille = bouteille["description_bouteille"];
-                    let millesime_bouteille = bouteille["millesime"];
-                    let quantite_bouteille = bouteille["quantite_bouteille"];
-                    let date_achat = bouteille["date_achat"];
-                    let prix_bouteille = bouteille["prix_bouteille"];
-                    let note = bouteille["note"];
+                console.log(data);
+                if (!data.length) {
+                    elCarteContenant.innerHTML = `<p class="aucune-bouteille">Aucune bouteille trouvée</p>`;
+                } else {
+                    data.forEach(bouteille => {
+                        let id_cellier = bouteille["id_cellier"];
+                        let id_bouteille = bouteille["id_bouteille"];
+                        let image_bouteille = bouteille["image_bouteille"];
+                        let nom_bouteille = bouteille["nom_bouteille"];
+                        let description_bouteille = bouteille["description_bouteille"];
+                        let millesime_bouteille = bouteille["millesime"];
+                        let quantite_bouteille = bouteille["quantite_bouteille"];
+                        let date_achat = bouteille["date_achat"];
+                        let prix_bouteille = bouteille["prix_bouteille"];
+                        let note = bouteille["note"];
 
-                    let carteBouteille = `
+                        let carteBouteille = `
                                             <a class="carte__lien" href="?requete=details&id_cellier=${id_cellier}">
                                                 <div class="carte__contenu" data-js-bouteille="${id_bouteille}">
                                                     <div class="carte__lien carte--flex">
@@ -104,9 +106,9 @@ function rechercher() {
                                                 </div>
                                             </a>`;
 
-                    elCarteContenant.insertAdjacentHTML("beforeend", carteBouteille);
-                });
-
+                        elCarteContenant.insertAdjacentHTML("beforeend", carteBouteille);
+                    });
+                }
             }
 
         }).catch(erreur => {

@@ -30,7 +30,7 @@ class Bouteille extends Modele
     }
 
 
-     /**
+    /**
      * Cette méthode récupère la liste des bouteilles d'un cellier d'un usager
      *
      * @param int $id_cellier l'id du cellier de l'usagé
@@ -51,14 +51,11 @@ class Bouteille extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    $row['nom_bouteille'] = trim(utf8_encode($row['nom_bouteille']));
-                    $row['description_bouteille'] = trim(utf8_encode($row['description_bouteille']));
                     $rows[] = $row;
                 }
             }
         } else {
             throw new Exception("Erreur de requête sur la base de donnée", 1);
-
         }
         return $rows;
     }
@@ -134,9 +131,9 @@ class Bouteille extends Modele
                         LEFT JOIN vino__degre_alcool da ON da.id = ub.degre_alcool_id
                         LEFT JOIN vino__produit_du_quebec pc ON pc.id = ub.produit_du_quebec_id
                         LEFT JOIN vino__classification classif ON classif.id = ub.classification_id
-                       WHERE b.id_bouteille = '".$id_bouteille."'" ;
-        if($id_cellier){
-            $requete = $requete. " AND ub.id_cellier = '".$id_cellier."'" ;
+                       WHERE b.id_bouteille = '" . $id_bouteille . "'";
+        if ($id_cellier) {
+            $requete = $requete . " AND ub.id_cellier = '" . $id_cellier . "'";
         }
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
@@ -227,7 +224,7 @@ class Bouteille extends Modele
                         LEFT JOIN vino__produit_du_quebec pc ON pc.id = b.produit_du_quebec_id
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
 
-                       WHERE b.nom_bouteille = '".$nom."'" ;
+                       WHERE b.nom_bouteille = '" . $nom . "'";
 
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
@@ -321,29 +318,59 @@ class Bouteille extends Modele
     public function modifierQuantiteBouteilleCellier($id, $nombre)
     {
         $erreur = "";
-        if(is_numeric($id) && is_numeric($nombre)){
+        if (is_numeric($id) && is_numeric($nombre)) {
             $requete = "UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = " . $id;
             $res = $this->_db->query($requete);
-            
-        }
-        else{
+        } else {
             $erreur = "$id et $nombre doivent être numériques.";
             return $erreur;
         }
 
         return $res;
-        
-
-        
     }
 
 
-    public function deleteUsageBouteille($id_bouteille, $id_cellier){
-        $query_string ="DELETE from usager__bouteille WHERE id_bouteille = ".$id_bouteille." AND id_cellier = ".$id_cellier;
+    public function deleteUsageBouteille($id_bouteille, $id_cellier)
+    {
+        $query_string = "DELETE from usager__bouteille WHERE id_bouteille = " . $id_bouteille . " AND id_cellier = " . $id_cellier;
 
         $res = $this->_db->query($query_string);
 
         return $res;
     }
 
+
+    public function rechercherBouteillesCellier($id_cellier, $filtres)
+    {
+        $rows = [];
+        $requete = "SELECT id_bouteille, id_cellier, description_bouteille, prix_bouteille, date_achat, garde_jusqua, note, commentaires, quantite_bouteille, millesime, id_vino__bouteille, nom_bouteille, image_bouteille, pays_nom, region_nom, type_de_vin_nom ";
+        $requete .= "FROM usager__bouteille ";
+        $requete .= "WHERE id_cellier = " . $id_cellier;
+
+        if ($filtres) {
+            $aTermes = explode(",", $filtres);
+            $lesTermes = "";
+
+            foreach ($aTermes as $terme) {
+                $lesTermes .= "*" . $terme . "* ";
+            }
+
+            if ($lesTermes) {
+                $lesTermes = substr($lesTermes, 0, -1);
+                $requete .= " AND MATCH( nom_bouteille, prix_bouteille, millesime, pays_nom, region_nom, type_de_vin_nom, format_nom, cepage_nom ) AGAINST('" . $lesTermes . "' IN BOOLEAN MODE)";
+            }
+        }
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
 }
