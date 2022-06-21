@@ -96,16 +96,7 @@
         ?>
     </div>
 
-<?php
-};
-}else{
 
-
-?>
-<p>Aucune bouteille</p>
-<?php
-}
-?> 
 </section>
 <div class="carte__remp carte--bg-couleur "></div>
 
