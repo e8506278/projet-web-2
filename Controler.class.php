@@ -84,12 +84,33 @@ class Controler
             case 'rechercherBouteilles':
                 $this->rechercherBouteilles();
                 break;
+            case 'rechercheBouteilleCellier':
+                $this->rechercheBouteilleCellier();
+                break;
             case 'accueil':
                 $this->accueil();
                 break;
             default:
                 $this->connecterUtilisateur();
                 break;
+        }
+    }
+
+    private function rechercheBouteilleCellier()
+    {
+        $aDonnees = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($aDonnees)) {
+            $resultats = array("liste" => []);
+            include("vues/rechercheBouteilleCellier.php");
+        } else {
+            $filtres = $aDonnees['filtres'];
+
+            $recherche = new Recherche();
+            $listeBouteille = $recherche->rechercheBouteilleCellier($filtres);
+
+            $resultats = array("liste" => $listeBouteille);
+            echo json_encode($resultats);
         }
     }
 

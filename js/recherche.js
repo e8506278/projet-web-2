@@ -1,3 +1,7 @@
+var $baseUrl_without_parameters = window.location.href.split('?');//[0];
+$baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
+
+
 /**
  * Traiter les appellations du vin
  */
@@ -1392,7 +1396,7 @@ function rechercher() {
         headers: entete,
         body: JSON.stringify({ 'tri': aTri, 'filtres': aDonnees })
     };
-    const requete = new Request("http://localhost/projet-web-2/index.php?requete=rechercherBouteilles", reqOptions);
+    const requete = new Request($baseUrl_without_parameters + "?requete=rechercherBouteilles", reqOptions);
 
     fetch(requete)
         .then(response => {
@@ -1466,7 +1470,7 @@ function rechercher() {
                                                                         Au prix de ${prix_bouteille}
                                                                     </div>
                                                                     <div class="carte__texte">
-                                                                        Ma note est de ${note}
+                                                                        Ma note est de ${note}/10
                                                                     </div>
                                                                 </div>
                                                             </div>
