@@ -684,31 +684,12 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                     <div class="row">
                                         <div class="col-6 info-unit">
                                             <div class="label">Cellier</div>
-                                            <div class="value label-state">
-                                                <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
-                                            </div>
-                                            <div class="value input-state">
+                                            <div class="value">
                                                 <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
-                                                       name="celliers<?php echo "[".$key."]"?>[id_cellier]"
-                                                />
-                                                <select placeholder="Sélectionner ici"
-                                                        class="input select formulaire__champs boite-double__champs"
-                                                        name="celliers<?php echo "[".$key."]"?>[nom_cellier]" id="nom_cellier">
-                                                    <?php foreach ($usager_celliers as $element){ ?>
-                                                        <option value="<?php echo $element['nom_cellier'] ?>"  <?php if($element['nom_cellier']==$cellier['nom_cellier']) echo "selected" ?>><?php echo $element['nom_cellier'] ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                                <!--                                    <input list="usager_celliers"-->
-                                                <!--                                           value="--><?php //echo $form_values['nom_cellier']?><!--"-->
-                                                <!--                                           placeholder="Sélectionner ici"-->
-                                                <!--                                           class="input select formulaire__champs boite-double__champs"-->
-                                                <!--                                           name="nom_cellier" id="nom_cellier" >-->
-
-                                                <!--                                    <datalist id="usager_celliers">-->
-                                                <!--                                        --><?php //foreach ($usager_celliers as $element){ ?>
-                                                <!--                                            <option>--><?php //echo $element['nom_cellier'] ?><!--</option>-->
-                                                <!--                                        --><?php //} ?>
-                                                <!--                                    </datalist>-->
+                                                       name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
+                                                <input type="hidden" value="<?php echo $cellier['nom_cellier'] ?>"
+                                                       name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
+                                                <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
                                             </div>
                                         </div>
                                         <div class="col-6 info-unit">
@@ -1254,17 +1235,14 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 <div class="row">
                                     <div class="col-6 info-unit">
                                         <div class="label">Cellier</div>
-                                        <div class="value">
+                                        <div class="value ">
                                             <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                    name="celliers<?php echo "[".$key."]"?>[id_cellier]"
                                             />
-                                            <select placeholder="Sélectionner ici"
-                                                    class="input select formulaire__champs boite-double__champs"
-                                                    name="celliers<?php echo "[".$key."]"?>[nom_cellier]" id="nom_cellier">
-                                                <?php foreach ($usager_celliers as $element){ ?>
-                                                    <option value="<?php echo $element['nom_cellier'] ?>"  <?php if($element['nom_cellier']==$cellier['nom_cellier']) echo "selected" ?>><?php echo $element['nom_cellier'] ?></option>
-                                                <?php } ?>
-                                            </select>
+                                            <input type="hidden" value="<?php echo $cellier['nom_cellier'] ?>"
+                                                   name="celliers<?php echo "[".$key."]"?>[id_cellier]"
+                                            />
+                                            <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
                                         </div>
                                     </div>
                                     <div class="col-6 info-unit">
