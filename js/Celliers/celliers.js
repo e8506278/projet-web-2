@@ -15,20 +15,20 @@ import { fetchGetCellier } from './FetchCellier';
         elChoixTrie = document.querySelector('[data-js-triecellier]')
      
 
-    
-       
-            elChoixTrie.addEventListener('change',(e)=>{
-               console.log(elChoixTrie.value)
-                new TrieCellier(elChoixTrie.value);
-            })
+    /* CHOIX DE TRIE */
+
+    if(elChoixTrie){
+        elChoixTrie.addEventListener('change',(e)=>{
+            new TrieCellier(elChoixTrie.value);
+        })
+    }
             
-    
-    
 
-
-
+    /* MODIFIER, CRÉER , SUPPRIMER UN CELLIER */
+    // Classe Modal
     let modal = new ModalCellier();
 
+    // Créer un cellier
     if(elNouveauCellier){
         elNouveauCellier.addEventListener('click', (e)=>{
             e.preventDefault();
