@@ -687,7 +687,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                             <div class="value">
                                                 <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                        name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
-                                                <input type="hidden" value="<?php echo $cellier['nom_cellier'] ?>"
+                                                <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                        name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
                                                 <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
                                             </div>
@@ -1239,7 +1239,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                             <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                    name="celliers<?php echo "[".$key."]"?>[id_cellier]"
                                             />
-                                            <input type="hidden" value="<?php echo $cellier['nom_cellier'] ?>"
+                                            <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                    name="celliers<?php echo "[".$key."]"?>[id_cellier]"
                                             />
                                             <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
