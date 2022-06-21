@@ -1,0 +1,53 @@
+.aucune-bouteille-wrapper {
+    margin-top: var(--espace-p);
+}
+
+.aucune-bouteille {
+    display: flex;
+    justify-content: center;
+    font-size: var(--police-l);
+    color: var(--couleur-rouge);
+}
+
+.recherche-termes {
+    background-color: var(--couleur-accent);
+    margin: 0 0 var(--espace-m);
+}
+
+.recherche-termes__container {
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.recherche-termes__donnees {
+    border: 3px solid var(--couleur-accent);
+    border-right: none;
+    flex-grow: 1;
+    padding: 5px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+}
+
+.recherche-termes__donnees {
+    color: var(--couleur-accent);
+}
+
+.recherche-termes__bouton {
+    width: 40px;
+    height: 36px;
+    border: 1px solid var(--couleur-accent);
+    background-color: var(--couleur-accent);
+    background: var(--couleur-accent);
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.recherche-termes__note {
+    padding: 5px;
+    color: #fff;
+}

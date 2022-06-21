@@ -53,7 +53,7 @@ CREATE TABLE `generique_ordre_tri` (
   `champ` varchar(45) NOT NULL,
   `ordre` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,49 +62,9 @@ CREATE TABLE `generique_ordre_tri` (
 
 LOCK TABLES `generique_ordre_tri` WRITE;
 /*!40000 ALTER TABLE `generique_ordre_tri` DISABLE KEYS */;
-INSERT INTO `generique_ordre_tri` VALUES (1,'Nom de la bouteille (croissant)','nom','asc'),(2,'Nom de la bouteille (décroissant)','nom','desc'),(3,'Date d\'achat (croissante)','date_achat','asc'),(4,'Date d\'achat (décroissante)','date_achat','desc'),(5,'Prix (croissant)','prix','asc'),(6,'Prix (décroissant)','prix','desc'),(7,'Note (croissante)','note','asc'),(8,'Note (décroissante)','note','desc');
+INSERT INTO `generique_ordre_tri` VALUES (1,'Nom de la bouteille (croissant)','nom_bouteille','asc'),(2,'Nom de la bouteille (décroissant)','nom_bouteille','desc'),(3,'Date d\'achat (croissante)','date_achat','asc'),(4,'Date d\'achat (décroissante)','date_achat','desc'),(5,'Prix (croissant)','prix_bouteille','asc'),(6,'Prix (décroissant)','prix_bouteille','desc'),(7,'Note (croissante)','note','asc'),(8,'Note (décroissante)','note','desc'),(9,'Millésime (croissant)','millesime','asc'),(10,'Millésime (décroissant)','millesime','desc'),(11,'Quantité (croissante)','quantite_bouteille','asc'),(12,'Quantité (décroissante)','quantite_bouteille','desc');
 /*!40000 ALTER TABLE `generique_ordre_tri` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `saq_data`
---
-
-DROP TABLE IF EXISTS `saq_data`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `saq_data` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `link` varchar(200) DEFAULT NULL,
-  `pays` varchar(200) DEFAULT NULL,
-  `region` varchar(200) DEFAULT NULL,
-  `region_id` int(11) DEFAULT NULL,
-  `appellation` varchar(200) DEFAULT NULL,
-  `appellation_id` int(11) DEFAULT NULL,
-  `designation` varchar(200) DEFAULT NULL,
-  `designation_id` int(11) DEFAULT NULL,
-  `classification` varchar(200) DEFAULT NULL,
-  `classification_id` int(11) DEFAULT NULL,
-  `cepage` varchar(200) DEFAULT NULL,
-  `cepage_id` int(11) DEFAULT NULL,
-  `degre_alcool` varchar(200) DEFAULT NULL,
-  `degre_alcool_id` int(11) DEFAULT NULL,
-  `taux_de_sucre` varchar(200) DEFAULT NULL,
-  `taux_de_sucre_id` int(11) DEFAULT NULL,
-  `couleur` varchar(200) DEFAULT NULL,
-  `particularite` varchar(200) DEFAULT NULL,
-  `format` varchar(200) DEFAULT NULL,
-  `format_id` int(11) DEFAULT NULL,
-  `producteur` varchar(200) DEFAULT NULL,
-  `agent` varchar(200) DEFAULT NULL,
-  `code_saq` varchar(200) DEFAULT NULL,
-  `code_cup` varchar(200) DEFAULT NULL,
-  `produit_qc` varchar(200) DEFAULT NULL,
-  `produit_qc_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25034 DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `usager__bouteille`
@@ -162,7 +122,8 @@ CREATE TABLE `usager__bouteille` (
   `vin_nature` tinyint(1) DEFAULT NULL,
   `vin_orange` tinyint(1) DEFAULT NULL,
   `id_vino__bouteille` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_bouteille`)
+  PRIMARY KEY (`id_bouteille`),
+  FULLTEXT KEY `nom_bouteille` (`nom_bouteille`,`millesime`,`pays_nom`,`region_nom`,`type_de_vin_nom`,`format_nom`,`cepage_nom`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -172,7 +133,7 @@ CREATE TABLE `usager__bouteille` (
 
 LOCK TABLES `usager__bouteille` WRITE;
 /*!40000 ALTER TABLE `usager__bouteille` DISABLE KEYS */;
-INSERT INTO `usager__bouteille` VALUES (1,1,'1000 Stories Zinfandel Californie',4,29.99,'Vin rouge | 750 ml | États-Unis','https://www.saq.com/media/catalog/product/1/3/13584455-1_1578538222.png','2020-01-16',NULL,'5',NULL,'2016','13584455','00082896001453',13,'Autriche',45,'Californie',1,'Vin rouge','1000 Stories Vineyards','https://www.saq.com/fr/13584455','https://www.saq.com/media/catalog/product/1/3/13584455-1_1578538222.png',5,'750 ml',NULL,NULL,27,'Vin de table (VDT)',13,'Barrel fermented',205,'Zinfandel 100 %',104,'8 g/L',73,'15,5 %',NULL,NULL,0,0,0,0,0,0,0,0,1),(2,1,'1000 Stories Zinfandel Californie',11,29.99,'Vin rouge | 750 ml | États-Unis','https://www.saq.com/media/catalog/product/1/3/13584455-1_1578538222.png','2021-02-08',NULL,'6',NULL,'2020','13584455','00082896001453',13,'Autriche',45,'Californie',1,'Vin rouge','1000 Stories Vineyards','https://www.saq.com/fr/13584455','https://www.saq.com/media/catalog/product/1/3/13584455-1_1578538222.png',5,'750 ml',NULL,NULL,27,'Vin de table (VDT)',13,'Barrel fermented',205,'Zinfandel 100 %',104,'8 g/L',73,'15,5 %',NULL,NULL,0,0,0,0,0,0,0,0,2),(3,2,'11th Hour Cellars Pinot Noir',3,17.99,'Vin rouge | 750 ml | États-Unis','https://www.saq.com/media/catalog/product/1/3/13966470-1_1578546924.png','2020-03-04',NULL,'7',NULL,'1980','13966470','00684586010501',13,'Autriche',45,'Californie',1,'Vin rouge','Ironwood Cellars','https://www.saq.com/fr/13966470','https://www.saq.com/media/catalog/product/1/3/13966470-1_1578546924.png',5,'750 ml',NULL,NULL,27,'Vin de table (VDT)',NULL,NULL,NULL,NULL,69,'5,2 g/L',NULL,NULL,NULL,NULL,0,0,0,0,0,0,0,0,3),(4,1,'13th Street Winery Gamay 2019',12,20.99,'Vin rouge | 750 ml | Canada','https://www.saq.com/media/catalog/product/1/2/12705631-1_1582140016.png','2021-04-02',NULL,'8',NULL,'2011','12705631','00895770010010',9,'Arabie saoudite',162,'Ontario, Péninsule du Niagara',1,'Vin rouge','13th Street Winery','https://www.saq.com/fr/12705631','https://www.saq.com/media/catalog/product/1/2/12705631-1_1582140016.png',5,'750 ml',391,'Péninsule du Niagara',35,'Vin de table (VDT)',NULL,NULL,59,'Gamay 100 %',26,'2,4 g/L',20,'12,5 %',NULL,NULL,0,0,0,0,0,0,0,0,4),(5,2,'14 Hands Cabernet-Sauvignon Columbia Valley',1,16.99,'Vin rouge | 750 ml | États-Unis','https://www.saq.com/media/catalog/product/1/3/13876247-1_1582145731.png','2020-05-01',NULL,'5',NULL,'2019','13876247','00088586001895',13,'Autriche',276,'Washington',1,'Vin rouge','14 Hands Winery','https://www.saq.com/fr/13876247','https://www.saq.com/media/catalog/product/1/3/13876247-1_1582145731.png',5,'750 ml',135,'Columbia Valley',3,'American Viticultural Areas (AVA)',NULL,NULL,NULL,NULL,117,'9,3 g/L',39,'13,5 %',NULL,NULL,0,0,0,0,0,0,0,0,5),(6,1,'19 Crimes Cabernet-Sauvignon Limestone Coast',8,19.99,'Vin rouge | 750 ml | Australie','https://www.saq.com/media/catalog/product/1/2/12824197-1_1578411313.png','2021-06-30',NULL,'8',NULL,'2021','12824197','09311220004534',5,'Allemagne',19,'Australie-Méridionale, Barossa Valley',1,'Vin rouge','19 Crimes','https://www.saq.com/fr/12824197','https://www.saq.com/media/catalog/product/1/2/12824197-1_1578411313.png',5,'750 ml',NULL,NULL,27,'Vin de table (VDT)',NULL,NULL,27,'Cabernet-sauvignon 100 %',28,'2,6 g/L',NULL,NULL,NULL,NULL,0,0,0,0,0,0,0,0,6);
+INSERT INTO `usager__bouteille` VALUES (1,1,'1000 Stories Zinfandel Californie',4,'29.99','Vin rouge | 750 ml | États-Unis','https://www.saq.com/media/catalog/product/1/3/13584455-1_1578538222.png','2020-01-16',NULL,'5',NULL,'2016','13584455','00082896001453',13,'États-Unis',45,'Californie',1,'Vin rouge','1000 Stories Vineyards','https://www.saq.com/fr/13584455','https://www.saq.com/media/catalog/product/1/3/13584455-1_1578538222.png',5,'750 ml',NULL,NULL,27,'Vin de table (VDT)',13,'Barrel fermented',205,'Zinfandel 100 %',104,'8 g/L',73,'15,5 %',NULL,NULL,0,0,0,0,0,0,0,0,1),(2,1,'1000 Stories Zinfandel Californie',11,'29.99','Vin rouge | 750 ml | États-Unis','https://www.saq.com/media/catalog/product/1/3/13584455-1_1578538222.png','2021-02-08',NULL,'6',NULL,'2020','13584455','00082896001453',13,'États-Unis',45,'Californie',1,'Vin rouge','1000 Stories Vineyards','https://www.saq.com/fr/13584455','https://www.saq.com/media/catalog/product/1/3/13584455-1_1578538222.png',5,'750 ml',NULL,NULL,27,'Vin de table (VDT)',13,'Barrel fermented',205,'Zinfandel 100 %',104,'8 g/L',73,'15,5 %',NULL,NULL,0,0,0,0,0,0,0,0,2),(4,1,'13th Street Winery Gamay 2019',12,'20.99','Vin rouge | 750 ml | Canada','https://www.saq.com/media/catalog/product/1/2/12705631-1_1582140016.png','2021-04-02',NULL,'8',NULL,'2011','12705631','00895770010010',9,'Arabie saoudite',162,'Ontario, Péninsule du Niagara',1,'Vin rouge','13th Street Winery','https://www.saq.com/fr/12705631','https://www.saq.com/media/catalog/product/1/2/12705631-1_1582140016.png',5,'750 ml',391,'Péninsule du Niagara',35,'Vin de table (VDT)',NULL,NULL,59,'Gamay 100 %',26,'2,4 g/L',20,'12,5 %',NULL,NULL,0,0,0,0,0,0,0,0,4),(6,1,'19 Crimes Cabernet-Sauvignon Limestone Coast',8,'19.99','Vin rouge | 750 ml | Australie','https://www.saq.com/media/catalog/product/1/2/12824197-1_1578411313.png','2021-06-30',NULL,'8',NULL,'2021','12824197','09311220004534',5,'Allemagne',19,'Australie-Méridionale, Barossa Valley',1,'Vin rouge','19 Crimes','https://www.saq.com/fr/12824197','https://www.saq.com/media/catalog/product/1/2/12824197-1_1578411313.png',5,'750 ml',NULL,NULL,27,'Vin de table (VDT)',NULL,NULL,27,'Cabernet-sauvignon 100 %',28,'2,6 g/L',NULL,NULL,NULL,NULL,0,0,0,0,0,0,0,0,6);
 /*!40000 ALTER TABLE `usager__bouteille` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +194,7 @@ CREATE TABLE `usager__detail` (
 
 LOCK TABLES `usager__detail` WRITE;
 /*!40000 ALTER TABLE `usager__detail` DISABLE KEYS */;
-INSERT INTO `usager__detail` VALUES (7,'Toto Gingras','8592 rue de Reims\r\n','5148312405','roychristian2013@gmail.com',NULL,'2012-03-03','Montréal','2022-06-08 16:13:40','2022-06-08 16:13:40'),(11,'Toto Gingras','123 de la Commune','5145555555','roychristian2012@gmail.com',NULL,'2010-10-10','Montreal','2022-06-10 01:52:43','2022-06-10 01:52:43'),(12,'Toto Gingras','123 de la Commune','5145555555','roychristian2011@gmail.com',NULL,'2003-03-03','Montreal','2022-06-10 05:03:45','2022-06-10 05:03:45');
+INSERT INTO `usager__detail` VALUES (1,'Toto Gingras','123 de la Commune','5145555555','roychristian2013@gmail.com',NULL,'2010-10-10','Montreal','2022-06-10 01:52:43','2022-06-10 01:52:43'),(18,'Toto Gingras','8592 rue de Reims\\r\\n','5148312405','toto@gmail.com',NULL,'2009-08-13','Montréal','2022-06-19 22:27:27','2022-06-19 22:27:27');
 /*!40000 ALTER TABLE `usager__detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +214,7 @@ CREATE TABLE `usager__login` (
   `date_modification` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nom_utilisateur_unique` (`nom_utilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +223,7 @@ CREATE TABLE `usager__login` (
 
 LOCK TABLES `usager__login` WRITE;
 /*!40000 ALTER TABLE `usager__login` DISABLE KEYS */;
-INSERT INTO `usager__login` VALUES (7,'Test01','$2y$10$DVwZb0PQpFTEdCMu/TB3uur/VxKqTXym0vkG0APnboLmCaYfYTSZi','2b31c623cef291922d977f94cafab2fc','2022-06-08 16:13:40','2022-06-08 16:13:40'),(11,'Test03','$2y$10$b3y8BkSxrLBLOghmDtsTfORqx0pC9MWXgYspV/C15o85YZ6mB2.r2','ad3f2f3ce073a77c3e1cfdbe5fec6572','2022-06-10 01:52:43','2022-06-10 01:52:43'),(12,'Test99','$2y$10$De1JlRySpBXF/KwlpjCcM.lDJ3AwYvnPwuRjQjIibWgEFtQ8oJr4a','5bc642bdcb3f5c1be794ea2ed36e7d3f','2022-06-10 05:03:45','2022-06-10 05:03:45');
+INSERT INTO `usager__login` VALUES (1,'Test01','$2y$10$b3y8BkSxrLBLOghmDtsTfORqx0pC9MWXgYspV/C15o85YZ6mB2.r2','ad3f2f3ce073a77c3e1cfdbe5fec6572','2022-06-10 01:52:43','2022-06-10 01:52:43'),(18,'Test02','$2y$10$SVoH3gU.NIBr.6f6wUu85OT0nrP1fd/RQ7TdxEmdoGZ3iGihfVyui','14d81b04b7b4fb2baff2464160969975','2022-06-19 22:27:27','2022-06-19 22:27:27');
 /*!40000 ALTER TABLE `usager__login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -623,4 +584,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-17 19:27:59
+-- Dump completed on 2022-06-21 11:38:29

@@ -1,3 +1,7 @@
+var $baseUrl_without_parameters = window.location.href.split('?');//[0];
+$baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
+
+
 /**
  * Traiter les appellations du vin
  */
@@ -863,6 +867,7 @@ function ajusterSlider(elInput, elValeurs) {
     });
 }
 
+
 function traiterSlider(elInput, elValeurs) {
     elValeurs.forEach(elValeur => {
         elValeur.addEventListener('change', (e) => {
@@ -871,10 +876,6 @@ function traiterSlider(elInput, elValeurs) {
         });
     });
 }
-
-elValeursQteMin.forEach(elValeur => {
-    console.log(elValeur.value);
-});
 
 
 traiterSlider(elInputQteMin, elValeursQteMin);
@@ -1395,7 +1396,7 @@ function rechercher() {
         headers: entete,
         body: JSON.stringify({ 'tri': aTri, 'filtres': aDonnees })
     };
-    const requete = new Request("http://localhost/projet-web-2/index.php?requete=rechercherBouteilles", reqOptions);
+    const requete = new Request($baseUrl_without_parameters + "?requete=rechercherBouteilles", reqOptions);
 
     fetch(requete)
         .then(response => {
@@ -1412,39 +1413,39 @@ function rechercher() {
             } else if (donnees['liste']) {
                 const bouteilles = donnees['liste'];
                 const nbBouteilles = bouteilles.length;
+                console.log(nbBouteilles);
 
-                let qteDeb = document.querySelector('[ data-js-qte-deb]');
-                let qteFin = document.querySelector('[ data-js-qte-fin]');
-                let qteMax = document.querySelector('[ data-js-qte-max]');
+                let qteWrapper = document.querySelector('[ data-js-qte-wrapper]');
 
-                qteDeb.innerHTML = "1";
-                qteFin.innerHTML = nbBouteilles;
-                qteMax.innerHTML = nbBouteilles;
-
-                let qteAffichage = document.querySelector('[ data-js-qte-affichage]');
-
-                while (qteAffichage.options.length > 0) {
-                    qteAffichage.remove(0);
+                if (nbBouteilles) {
+                    qteWrapper.innerHTML = `
+                        <span>Résultat: </span>
+                        <span data-js-qte-deb>1</span>
+                        <span>-</span>
+                        <span data-js-qte-fin>${nbBouteilles}</span>
+                        <span>sur</span>
+                        <span data-js-qte-max>${nbBouteilles}</span>`;
+                } else {
+                    qteWrapper.innerHTML = `<span>Résultat: </span><span>Aucune bouteille trouvée</span>`;
                 }
-
-                qteAffichage.options[0] = new Option(nbBouteilles, nbBouteilles);
 
                 const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
                 elCarteContenant.innerHTML = "";
 
-                bouteilles.forEach(bouteille => {
-                    let id_cellier = bouteille["id_cellier"];
-                    let id_bouteille = bouteille["id_bouteille"];
-                    let image_bouteille = bouteille["image_bouteille"];
-                    let nom_bouteille = bouteille["nom_bouteille"];
-                    let description_bouteille = bouteille["description_bouteille"];
-                    let millesime_bouteille = bouteille["millesime"];
-                    let quantite_bouteille = bouteille["quantite_bouteille"];
-                    let date_achat = bouteille["date_achat"];
-                    let prix_bouteille = bouteille["prix_bouteille"];
-                    let note = bouteille["note"];
+                if (nbBouteilles) {
+                    bouteilles.forEach(bouteille => {
+                        let id_cellier = bouteille["id_cellier"];
+                        let id_bouteille = bouteille["id_bouteille"];
+                        let image_bouteille = bouteille["image_bouteille"];
+                        let nom_bouteille = bouteille["nom_bouteille"];
+                        let description_bouteille = bouteille["description_bouteille"];
+                        let millesime_bouteille = bouteille["millesime"];
+                        let quantite_bouteille = bouteille["quantite_bouteille"];
+                        let date_achat = bouteille["date_achat"];
+                        let prix_bouteille = bouteille["prix_bouteille"];
+                        let note = bouteille["note"];
 
-                    let carteBouteille = `
+                        let carteBouteille = `
                                             <a class="carte__lien" href="?requete=details&id_cellier=${id_cellier}">
                                                 <div class="carte__contenu" data-js-bouteille="${id_bouteille}">
                                                     <div class="carte__lien carte--flex">
@@ -1469,7 +1470,7 @@ function rechercher() {
                                                                         Au prix de ${prix_bouteille}
                                                                     </div>
                                                                     <div class="carte__texte">
-                                                                        Ma note est de ${note}
+                                                                        Ma note est de ${note}/10
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1496,8 +1497,14 @@ function rechercher() {
                                                 </div>
                                             </a>`;
 
-                    elCarteContenant.insertAdjacentHTML("beforeend", carteBouteille);
-                });
+                        elCarteContenant.insertAdjacentHTML("beforeend", carteBouteille);
+                    });
+                } else {
+                    elCarteContenant.innerHTML = `
+                        <div class="aucune-bouteille-wrapper">
+                            <p class="aucune-bouteille">Aucune bouteille trouvée</p>
+                        </div>`;
+                }
 
             }
 
@@ -1512,8 +1519,11 @@ function rechercher() {
 const elOuvrirFiltres = document.querySelector('[data-js-ouvrir-filtres]');
 const elFermerFiltres = document.querySelector('[data-js-fermer-filtres]');
 const elMenuRecherche = document.querySelector('[data-js-menu-recherche]');
+const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
 
 elOuvrirFiltres.addEventListener("click", () => {
+    elFermerFiltres.classList.remove("ferme");
+
     if (!elMenuRecherche.classList.contains("ouvert")) {
         elMenuRecherche.classList.add("ouvert");
     }
@@ -1521,9 +1531,18 @@ elOuvrirFiltres.addEventListener("click", () => {
     if (!elOuvrirFiltres.classList.contains("ferme")) {
         elOuvrirFiltres.classList.add("ferme");
     }
+
+    if (!elCarteContenant.classList.contains("ferme")) {
+        elCarteContenant.classList.add("ferme");
+    }
 });
 
 elFermerFiltres.addEventListener("click", () => {
     elMenuRecherche.classList.remove("ouvert");
     elOuvrirFiltres.classList.remove("ferme");
+    elCarteContenant.classList.remove("ferme");
+
+    if (!elFermerFiltres.classList.contains("ferme")) {
+        elFermerFiltres.classList.add("ferme");
+    }
 });
