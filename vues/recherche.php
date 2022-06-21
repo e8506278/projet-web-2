@@ -123,7 +123,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
             </div>
             <div class="main" id="main" data-js-main>
                 <div class="menuRecherche" data-js-menu-recherche>
-                    <div class="recherche-wrapper">
+                    <div class="recherche-container">
                         <div class="recherche-top-nav">
                             <div class="recherche-action">
                                 <button class="bouton bouton-primaire" data-js-rechercher title="Lancer la recherche">Rechercher</button>
