@@ -1413,39 +1413,39 @@ function rechercher() {
             } else if (donnees['liste']) {
                 const bouteilles = donnees['liste'];
                 const nbBouteilles = bouteilles.length;
+                console.log(nbBouteilles);
 
-                let qteDeb = document.querySelector('[ data-js-qte-deb]');
-                let qteFin = document.querySelector('[ data-js-qte-fin]');
-                let qteMax = document.querySelector('[ data-js-qte-max]');
+                let qteWrapper = document.querySelector('[ data-js-qte-wrapper]');
 
-                qteDeb.innerHTML = "1";
-                qteFin.innerHTML = nbBouteilles;
-                qteMax.innerHTML = nbBouteilles;
-
-                // let qteAffichage = document.querySelector('[ data-js-qte-affichage]');
-
-                // while (qteAffichage.options.length > 0) {
-                //     qteAffichage.remove(0);
-                // }
-
-                // qteAffichage.options[0] = new Option(nbBouteilles, nbBouteilles);
+                if (nbBouteilles) {
+                    qteWrapper.innerHTML = `
+                        <span>Résultat: </span>
+                        <span data-js-qte-deb>1</span>
+                        <span>-</span>
+                        <span data-js-qte-fin>${nbBouteilles}</span>
+                        <span>sur</span>
+                        <span data-js-qte-max>${nbBouteilles}</span>`;
+                } else {
+                    qteWrapper.innerHTML = `<span>Résultat: </span><span>Aucune bouteille trouvée</span>`;
+                }
 
                 const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
                 elCarteContenant.innerHTML = "";
 
-                bouteilles.forEach(bouteille => {
-                    let id_cellier = bouteille["id_cellier"];
-                    let id_bouteille = bouteille["id_bouteille"];
-                    let image_bouteille = bouteille["image_bouteille"];
-                    let nom_bouteille = bouteille["nom_bouteille"];
-                    let description_bouteille = bouteille["description_bouteille"];
-                    let millesime_bouteille = bouteille["millesime"];
-                    let quantite_bouteille = bouteille["quantite_bouteille"];
-                    let date_achat = bouteille["date_achat"];
-                    let prix_bouteille = bouteille["prix_bouteille"];
-                    let note = bouteille["note"];
+                if (nbBouteilles) {
+                    bouteilles.forEach(bouteille => {
+                        let id_cellier = bouteille["id_cellier"];
+                        let id_bouteille = bouteille["id_bouteille"];
+                        let image_bouteille = bouteille["image_bouteille"];
+                        let nom_bouteille = bouteille["nom_bouteille"];
+                        let description_bouteille = bouteille["description_bouteille"];
+                        let millesime_bouteille = bouteille["millesime"];
+                        let quantite_bouteille = bouteille["quantite_bouteille"];
+                        let date_achat = bouteille["date_achat"];
+                        let prix_bouteille = bouteille["prix_bouteille"];
+                        let note = bouteille["note"];
 
-                    let carteBouteille = `
+                        let carteBouteille = `
                                             <a class="carte__lien" href="?requete=details&id_cellier=${id_cellier}">
                                                 <div class="carte__contenu" data-js-bouteille="${id_bouteille}">
                                                     <div class="carte__lien carte--flex">
@@ -1497,8 +1497,14 @@ function rechercher() {
                                                 </div>
                                             </a>`;
 
-                    elCarteContenant.insertAdjacentHTML("beforeend", carteBouteille);
-                });
+                        elCarteContenant.insertAdjacentHTML("beforeend", carteBouteille);
+                    });
+                } else {
+                    elCarteContenant.innerHTML = `
+                        <div class="aucune-bouteille-wrapper">
+                            <p class="aucune-bouteille">Aucune bouteille trouvée</p>
+                        </div>`;
+                }
 
             }
 

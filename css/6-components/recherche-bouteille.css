@@ -1,3 +1,7 @@
+.aucune-bouteille-wrapper {
+    margin-top: var(--espace-p);
+}
+
 .aucune-bouteille {
     display: flex;
     justify-content: center;
