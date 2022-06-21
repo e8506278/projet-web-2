@@ -6,7 +6,17 @@ if (!class_exists('Lists')) {
 $debug = true;
 $message = null;
 
+$returnpage = home_base_url()."?requete=bouteille";
+$id_cellier  = $_POST['id_cellier'];
 $bouteille_id = isset($_POST['id_bouteille'])?$_POST['id_bouteille']: null;
+
+if(isset( $_POST['id_cellier']) &&  $_POST['id_cellier'] != null){
+    $returnpage = $returnpage.'&id_cellier='.$id_cellier;
+}
+if(isset($bouteille_id) && $bouteille_id != null){
+    $returnpage = $returnpage.'&id_bouteille='.$bouteille_id;
+}
+
 if(isset($_POST['estCommentaire'])){
     $query_string = "UPDATE  usager__bouteille SET
                             commentaires = '".$_POST['commentaires']."',
@@ -217,15 +227,7 @@ echo "Traitement terminé avec succès !<br><br>";
 ECHO "Redirection ...";
 
 
-$returnpage = home_base_url()."?requete=bouteille";
-$id_cellier  = $_POST['id_cellier'];
 
-if(isset( $_POST['id_cellier']) &&  $_POST['id_cellier'] != null){
-    $returnpage = $returnpage.'&id_cellier='.$id_cellier;
-}
-if(isset($bouteille_id) && $bouteille_id != null){
-    $returnpage = $returnpage.'&id_bouteille='.$bouteille_id;
-}
 if(isset($message) && $message != null){
     $returnpage = $returnpage.'&message='.$message;
 }
