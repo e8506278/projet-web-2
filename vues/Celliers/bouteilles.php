@@ -17,7 +17,7 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </div>
-        <p class="recherche-termes__note">Note: des chiffres et des lettres seulement; des mots entiers seulement; pas de mots composés; pas de caractères spéciaux</p>
+        <p class="recherche-termes__note">Note: des chiffres et des lettres seulement; pas de mots composés; pas de caractères spéciaux</p>
     </div>
 
     <div class="carte__contenant" data-js-carte-contenant>
