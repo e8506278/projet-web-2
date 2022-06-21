@@ -1,3 +1,7 @@
+var $baseUrl_without_parameters = window.location.href.split('?');//[0];
+$baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
+
+
 /**
  * Traiter les appellations du vin
  */
@@ -863,6 +867,7 @@ function ajusterSlider(elInput, elValeurs) {
     });
 }
 
+
 function traiterSlider(elInput, elValeurs) {
     elValeurs.forEach(elValeur => {
         elValeur.addEventListener('change', (e) => {
@@ -871,10 +876,6 @@ function traiterSlider(elInput, elValeurs) {
         });
     });
 }
-
-elValeursQteMin.forEach(elValeur => {
-    console.log(elValeur.value);
-});
 
 
 traiterSlider(elInputQteMin, elValeursQteMin);
@@ -1395,7 +1396,7 @@ function rechercher() {
         headers: entete,
         body: JSON.stringify({ 'tri': aTri, 'filtres': aDonnees })
     };
-    const requete = new Request("http://localhost/projet-web-2/index.php?requete=rechercherBouteilles", reqOptions);
+    const requete = new Request($baseUrl_without_parameters + "?requete=rechercherBouteilles", reqOptions);
 
     fetch(requete)
         .then(response => {
@@ -1421,13 +1422,13 @@ function rechercher() {
                 qteFin.innerHTML = nbBouteilles;
                 qteMax.innerHTML = nbBouteilles;
 
-                let qteAffichage = document.querySelector('[ data-js-qte-affichage]');
+                // let qteAffichage = document.querySelector('[ data-js-qte-affichage]');
 
-                while (qteAffichage.options.length > 0) {
-                    qteAffichage.remove(0);
-                }
+                // while (qteAffichage.options.length > 0) {
+                //     qteAffichage.remove(0);
+                // }
 
-                qteAffichage.options[0] = new Option(nbBouteilles, nbBouteilles);
+                // qteAffichage.options[0] = new Option(nbBouteilles, nbBouteilles);
 
                 const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
                 elCarteContenant.innerHTML = "";
@@ -1469,7 +1470,7 @@ function rechercher() {
                                                                         Au prix de ${prix_bouteille}
                                                                     </div>
                                                                     <div class="carte__texte">
-                                                                        Ma note est de ${note}
+                                                                        Ma note est de ${note}/10
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1512,8 +1513,11 @@ function rechercher() {
 const elOuvrirFiltres = document.querySelector('[data-js-ouvrir-filtres]');
 const elFermerFiltres = document.querySelector('[data-js-fermer-filtres]');
 const elMenuRecherche = document.querySelector('[data-js-menu-recherche]');
+const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
 
 elOuvrirFiltres.addEventListener("click", () => {
+    elFermerFiltres.classList.remove("ferme");
+
     if (!elMenuRecherche.classList.contains("ouvert")) {
         elMenuRecherche.classList.add("ouvert");
     }
@@ -1521,9 +1525,18 @@ elOuvrirFiltres.addEventListener("click", () => {
     if (!elOuvrirFiltres.classList.contains("ferme")) {
         elOuvrirFiltres.classList.add("ferme");
     }
+
+    if (!elCarteContenant.classList.contains("ferme")) {
+        elCarteContenant.classList.add("ferme");
+    }
 });
 
 elFermerFiltres.addEventListener("click", () => {
     elMenuRecherche.classList.remove("ouvert");
     elOuvrirFiltres.classList.remove("ferme");
+    elCarteContenant.classList.remove("ferme");
+
+    if (!elFermerFiltres.classList.contains("ferme")) {
+        elFermerFiltres.classList.add("ferme");
+    }
 });
