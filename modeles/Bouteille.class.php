@@ -357,7 +357,7 @@ class Bouteille extends Modele
 
             if ($lesTermes) {
                 $lesTermes = substr($lesTermes, 0, -1);
-                $requete .= " AND MATCH( nom_bouteille, prix_bouteille, millesime, pays_nom, region_nom, type_de_vin_nom, format_nom, cepage_nom ) AGAINST('" . $lesTermes . "' IN BOOLEAN MODE)";
+                $requete .= " AND MATCH( nom_bouteille, millesime, pays_nom, region_nom, type_de_vin_nom, format_nom, cepage_nom ) AGAINST('" . $lesTermes . "' IN BOOLEAN MODE)";
             }
         }
 
