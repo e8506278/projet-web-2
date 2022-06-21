@@ -24,7 +24,6 @@
     margin-bottom: var(--espace-p);
     padding: var(--espace-xp);
     background-color: white;
-    justify-content: space-between;
 
 }
 
@@ -37,7 +36,15 @@
 .carte__contenu:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
-
+.carte__contenu-img-txt{
+    display: flex;
+    flex-direction: column;
+}
+@media only screen and (min-width: 760px) {
+    .carte__contenu-img-txt {
+        flex-direction: row;
+    }
+}
 /* || Liste*/
 .carte__liste {
     display: flex;
@@ -197,10 +204,14 @@
 
 /* || image */
 .carte__img {
-    width: 65px;
-
+    width: 120px;
+    align-self: center;
 }
-
+@media only screen and (min-width: 760px) {
+    .carte__img {
+        width: 65px;
+    }
+}
 /* || Description */
 .carte__description {
     display: flex;
@@ -242,6 +253,10 @@
     opacity: 0.5;
     
   }
+.carte__remp{
+    padding: var(--espace-l) var(--espace-l);
+}
+
 
 .radio{
   padding-right: var(--espace-xp);

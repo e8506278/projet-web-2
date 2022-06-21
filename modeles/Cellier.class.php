@@ -26,6 +26,8 @@ class Cellier extends Modele
 
     public function getListeCellier($id)
     {
+
+      
         $rows = array();
         $requete = "SELECT usager__cellier.id_cellier, id_usager, nom_cellier, description_cellier, type_cellier_id, 
                     SUM(quantite_bouteille)as bouteille_total, 
