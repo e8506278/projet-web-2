@@ -516,7 +516,6 @@ if (elCellier.length > 0) {
     });
 }
 
-
 /**
  * Traiter la liste de checkboxes des cepages
  */
@@ -1413,7 +1412,6 @@ function rechercher() {
             } else if (donnees['liste']) {
                 const bouteilles = donnees['liste'];
                 const nbBouteilles = bouteilles.length;
-                console.log(nbBouteilles);
 
                 let qteWrapper = document.querySelector('[ data-js-qte-wrapper]');
 
@@ -1546,3 +1544,27 @@ elFermerFiltres.addEventListener("click", () => {
         elFermerFiltres.classList.add("ferme");
     }
 });
+
+
+/**
+ * La page peut être appellée avec l'id d'un cellier, on le sélectionne si c'est le cas.
+ * On montre aussi dans les filtres qu'un cellier a été sélectionné.
+ */
+const elIdAppellant = document.querySelector('[data-js-id-appellant]');
+const valIdAppellant = elIdAppellant.dataset.jsIdAppellant;
+const elAccCellier = document.querySelector('[data-js-accordeon-cellier]');
+
+if (valIdAppellant > 0) {
+    if (elCellier.length > 0) {
+        elCellier.forEach(unCellier => {
+            let idCellier = unCellier.dataset.jsCellier;
+
+            if (idCellier === valIdAppellant) {
+                unCellier.checked = true;
+                traiterCellier();
+                elOuvrirFiltres.click();
+                elAccCellier.click();
+            }
+        });
+    }
+}

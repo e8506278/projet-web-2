@@ -3,9 +3,16 @@ $oRecherche = new Recherche();
 $listeBouteille = [];
 $erreur = "";
 $aTri = array('champ' => 'nom_bouteille', 'ordre' => 'asc');
+$aDonnees = [];
+$id_appellant = -1;
+
+if (isset($_GET['id_cellier'])) {
+    $id_appellant = $_GET['id_cellier'];
+    $aDonnees['id_cellier'] = $id_appellant;
+}
 
 if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-    $listeBouteille = $oRecherche->rechercherBouteilles($aTri, []);
+    $listeBouteille = $oRecherche->rechercherBouteilles($aTri, $aDonnees);
 
     $nbBouteilles = count($listeBouteille);
     $qteDeb = "1";
@@ -95,8 +102,6 @@ $aTypesVin = $oRecherche->lireTypesVin();
                             <?php } ?>
                         </div>
                         <div class="tri-select-wrapper">
-                            <!-- <div class="select-libelle">Triée par:</div> -->
-
                             <div class="tri-container select-container">
                                 <select id="tri-select" class="tri-select-options">
                                     <?php for ($i = 0, $l = count($aOrdresTri); $i < $l; $i++) {
@@ -134,7 +139,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                         <p>Aucun cellier trouvé</p>
                                     </div>
                                 <?php } else { ?>
-                                    <button class="accordeon accordeon-flex">
+                                    <button class="accordeon accordeon-flex" data-js-accordeon-cellier>
                                         <div class="nb-cellier nb-selectionnes"><span class="nb-selections hide"></span></div>
                                         <div>Cellier</div>
                                     </button>
@@ -150,7 +155,8 @@ $aTypesVin = $oRecherche->lireTypesVin();
 
                                             <fieldset>
                                                 <div class="liste-choix">
-                                                    <?php for ($i = 0, $l = count($aCelliers); $i < $l; $i++) {
+                                                    <?php
+                                                    for ($i = 0, $l = count($aCelliers); $i < $l; $i++) {
                                                         $id = $aCelliers[$i]['id'];
                                                         $nom = $aCelliers[$i]['nom'] . " - " . ucfirst($aCelliers[$i]['description']);
                                                         $infoBulle = $aCelliers[$i]['nom'];
@@ -1048,6 +1054,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                         </div>
                     </div>
                 </div>
+                <input type="hidden" data-js-id-appellant="<?= $id_appellant ?>" />
                 <div class="carte__contenant" data-js-carte-contenant>
                     <?php
                     if (count($listeBouteille)) {
