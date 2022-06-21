@@ -38,7 +38,6 @@ function rechercher() {
                 const data = donnees['liste'];
                 elCarteContenant.innerHTML = "";
 
-                console.log(data);
                 if (!data.length) {
                     elCarteContenant.innerHTML = `<p class="aucune-bouteille">Aucune bouteille trouvée</p>`;
                 } else {
