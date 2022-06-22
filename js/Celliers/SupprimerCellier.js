@@ -1,6 +1,6 @@
-import ModalCellier from './ModalCellier';  
-import CellierValidation from './CellierValidation'; 
-import { fetchCellier } from './FetchCellier'; 
+import ModalCellier from './ModalCellier.js';  
+import CellierValidation from './CellierValidation.js'; 
+import { fetchCellier } from './FetchCellier.js'; 
 
 export default class SupprimerCellier extends ModalCellier{
     constructor(btnDeplacerSupprimer,btnSupprimer,selectCellier,idCellier){

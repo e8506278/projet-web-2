@@ -1,3 +1,5 @@
+
+
 <!--Page d'accueil non connecté-->
 <?php
 //    foreach ($product as $key => $value){
@@ -98,12 +100,15 @@ if(isset($bouteille) && isset($bouteille['id_bouteille']) && $bouteille != null 
 }
 
 foreach ($celliers as & $cellier_dans_le_compte){
+   
     foreach ($usager_bouteille as $ub){
+        $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
             $cellier_dans_le_compte['quantite'] = $ub['quantite_bouteille'];
         }
     }
 }
+
 //echo $_SESSION['utilisateur']['id'];
 //print_r($celliers);
 
@@ -130,12 +135,16 @@ foreach ($celliers as & $cellier_dans_le_compte){
                     <div class="product-photo">
                         <img src="<?php echo $form_values['image_bouteille']?>"
                              id="image_bouteille"
-                             onerror="document.getElementById('image_bouteille').src = $baseUrl_without_parameters+'assets/img/default_bouteille.png'; this.onerror=null;"
+                             onerror="document.getElementById('image_bouteille').src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png'; this.onerror=null;"
                              alt="degustation2">
                     </div>
 
                 </div>
                 <form class="formulaire info-details"  action="./controller/AjouterBouteille.php" method="POST">
+                <input type="hidden"
+                           name="nom_cellier"
+                           value="<?php echo $nom_cellier?>"
+                    />
                     <input type="hidden"
                            name="id_bouteille"
                            value="<?php echo $form_values['id_bouteille']?>"
@@ -788,7 +797,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                 <div class="product-photo">
                     <img src="<?php echo $form_values['image_bouteille']?>"
                          id="image_bouteille"
-                         onerror="document.getElementById('image_bouteille').src = $baseUrl_without_parameters+'assets/img/default_bouteille.png'; this.onerror=null;"
+                         onerror="document.getElementById('image_bouteille').src ='./assets/img/default_bouteille.png'; this.onerror=null;"
                          alt="degustation2">
                 </div>
 
@@ -1759,7 +1768,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
 				<figure class="vignette__wrapper">
 					<img class="vignette__img" src="./assets/img/etagere.jpg" alt="bouteilles">
-					<figcaption class="vignette__titre">Ma liste d'achat</figcaption>
+					<figcaption class="vignette__titre">Ma 
+                        
+                    d'achat</figcaption>
 				</figure>
 			</div>
 
