@@ -177,6 +177,9 @@ if(isset($_POST['estCommentaire'])){
                          '".($_POST['millesime'])."'
                     )";
             }else{
+                if($cellier['quantite'] < 0){
+                    $cellier['quantite'] = 0;
+                }
                 $query_string = "UPDATE  usager__bouteille SET 
                             nom_bouteille =  '".$_POST['nom_bouteille']."',
                             image_bouteille =  '".$_POST['image_bouteille']."',
