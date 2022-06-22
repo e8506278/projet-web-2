@@ -12,3 +12,6 @@
 .barre--aligne-fin{
     text-align: end;
 }
+.barre__icone{
+    cursor: pointer;
+}
