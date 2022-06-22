@@ -89,38 +89,40 @@ window.addEventListener('load', function () {
     const annulerDetruirebtn2 = document.getElementById("annulerDetruirebtn2");
     const fermerModalAnnulation = document.getElementById("fermerModalAnnulation");
 
-    if(fermerFormulaire){
-        fermerFormulaire.disabled = true;
-    }
+    // if(fermerFormulaire){
+    //     fermerFormulaire.disabled = true;
+    // }
 
     if(enregistrerFormulaire){
         enregistrerFormulaire.disabled = true;
     }
 
-    document.getElementById('ouvrirFormulaire').addEventListener('click', function (e){
-        etatModification  = true;
-        document.querySelectorAll(".input-state").forEach(element => {
-            element.style.display = "block";
+    if(modifier_bouton){
+        modifier_bouton.addEventListener('click', function (e){
+            etatModification  = true;
+            document.querySelectorAll(".input-state").forEach(element => {
+                element.style.display = "block";
+            });
+            document.querySelectorAll(".label-state").forEach(element => {
+                element.style.display = "none";
+            });
+
+            if(modifier_bouton){
+                modifier_bouton.disabled = true;
+            }
+            // if(fermerFormulaire){
+            //     fermerFormulaire.disabled = false;
+            // }
+
+            if(askDeleteBtn){
+                askDeleteBtn.disabled = true;
+            }
+
+            if(enregistrerFormulaire){
+                enregistrerFormulaire.disabled = false;
+            }
         });
-        document.querySelectorAll(".label-state").forEach(element => {
-            element.style.display = "none";
-        });
-
-        if(modifier_bouton){
-            modifier_bouton.disabled = true;
-        }
-        if(fermerFormulaire){
-            fermerFormulaire.disabled = false;
-        }
-
-        if(askDeleteBtn){
-            askDeleteBtn.disabled = true;
-        }
-
-        if(enregistrerFormulaire){
-            enregistrerFormulaire.disabled = false;
-        }
-    });
+    }
 
     if(fermerFormulaire){
 
@@ -138,9 +140,9 @@ window.addEventListener('load', function () {
                 modifier_bouton.disabled = false;
             }
 
-            if(fermerFormulaire){
-                fermerFormulaire.disabled = true;
-            }
+            // if(fermerFormulaire){
+            //     fermerFormulaire.disabled = true;
+            // }
 
             if(askDeleteBtn){
                 askDeleteBtn.disabled = false;

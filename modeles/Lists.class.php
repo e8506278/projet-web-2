@@ -196,6 +196,7 @@ class Lists
 
         $res = MonSQL::getInstance()->query($query_string);
 
+        $rows = [];
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
                 $rows[] = $row;
@@ -417,7 +418,7 @@ class Lists
             $query_string = $query_string." AND id_cellier = ".$id_cellier;
         }
         $res = MonSQL::getInstance()->query($query_string);
-
+        $rows = [];
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
                 $rows[] = $row;
