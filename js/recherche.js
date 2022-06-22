@@ -1,7 +1,6 @@
 var $baseUrl_without_parameters = window.location.href.split('?');//[0];
 $baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
 
-
 /**
  * Traiter les appellations du vin
  */
@@ -1555,6 +1554,15 @@ const valIdAppellant = elIdAppellant.dataset.jsIdAppellant;
 const elAccCellier = document.querySelector('[data-js-accordeon-cellier]');
 
 if (valIdAppellant > 0) {
+    const elPagePrecedente = document.querySelector('[data-js-page-precedente]');
+    const elParent = elPagePrecedente.closest('.page-precedente-container');
+
+    elParent.classList.remove("ferme");
+
+    elPagePrecedente.addEventListener('click', () => {
+        window.location.replace(document.referrer);
+    });
+
     if (elCellier.length > 0) {
         elCellier.forEach(unCellier => {
             let idCellier = unCellier.dataset.jsCellier;

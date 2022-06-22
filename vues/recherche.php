@@ -63,6 +63,13 @@ $aTypesVin = $oRecherche->lireTypesVin();
 </head>
 
 <body>
+    <div class="page-precedente-container ferme">
+        <button class="bouton bouton-secondaire page-precedente" data-js-page-precedente>
+            <i class="fa fa-chevron-left fleche-page-precedente" aria-hidden="true"></i>
+            Retour à la page précédente
+        </button>
+    </div>
+
     <section class="section-wrapper carte carte--bg-couleur recherche-wrapper">
         <div class="detail">
             <div class="barre-tri" data-js-barre-tri>
