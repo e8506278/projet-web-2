@@ -1,3 +1,4 @@
+
 <?php
 
 // Ouvrir une nouvelle connexion au serveur MySQL
@@ -24,6 +25,7 @@ if (!isset($lesMois)) {
 }
 
 if (isset($_POST["soumettre"])) {
+  
     if (isset($_POST["usager_nom"])) {
         $nom = $_POST["usager_nom"];
     }
@@ -41,7 +43,6 @@ if (isset($_POST["soumettre"])) {
     }
     if (isset($_POST["usager_naissance"])) {
         $naissance = $_POST["usager_naissance"];
-        var_dump($naissance);
     }
     if (isset($_POST["usager_courriel"])) {
         $courriel = $_POST["usager_courriel"];

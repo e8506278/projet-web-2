@@ -1,4 +1,4 @@
-
+<?php include('./controller/Enregistrement.php'); ?>
 
 <!--HERO-->
 <div class="hero hero--pad-haut">

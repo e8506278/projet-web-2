@@ -1,5 +1,6 @@
 <?php
 include('./controller/Connexion.php');
+include('./controller/Enregistrement.php');
 /**
  * Class Controler
  * Gère les requêtes HTTP
@@ -294,7 +295,7 @@ class Controler
 
         $id_cellier = isset($_GET['id_cellier']) ?$_GET['id_cellier']: null;
         $id_bouteille = isset($_GET['id_bouteille']) ?$_GET['id_bouteille']: null;
-        $nom_cellier = isset($_GET['nom_cellier']) ?$_GET['nom_cellier']: null;
+        
         $message = isset($_GET['message']) ?$_GET['message']: null;
 
        
@@ -313,7 +314,7 @@ class Controler
         $bouteilles = $list->getList('bouteille');
         $usager_celliers = $list->getList('usager_cellier');
         $usager_bouteille = $list->getList('usager_bouteille');
-
+  
         $pays = $list->getList('pays');
         $regions = $list->getList('region');
         $types = $list->getList('type');
@@ -336,9 +337,11 @@ class Controler
             ];
         } else {
             $bouteille['celliers'] = $celliers;
+            $nom_cellier = $_GET['nom_cellier'];
+     
         }
-
-
+        $id_cellier = $_GET['id_cellier'];
+        $nom_cellier = $_GET['nom_cellier'];
         $bouteille['id_cellier'] = $id_cellier;
        
         include("vues/entete.php");

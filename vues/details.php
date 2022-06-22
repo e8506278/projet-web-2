@@ -101,7 +101,7 @@ if(isset($bouteille) && isset($bouteille['id_bouteille']) && $bouteille != null 
 foreach ($celliers as & $cellier_dans_le_compte){
   
     foreach ($usager_bouteille as $ub){
-        $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
+       
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
             $cellier_dans_le_compte['quantite'] = $ub['quantite_bouteille'];
         }
@@ -810,12 +810,13 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
                 <input type="hidden"
                        name="id_cellier"
-                       value="<?php echo $cellier_dans_le_compte['id_cellier']?>"
+                       value="<?php echo $id_cellier?>"
                 />
                 <input type="hidden"
                        name="nom_cellier"
-                       value="<?php echo $cellier_dans_le_compte['nom_cellier']?>"
+                       value="<?php echo $nom_cellier?>"
                 />
+                
                 <div class="form-block">
                     <h6>Informations sur la bouteille</h6>
                     <div class="row">
