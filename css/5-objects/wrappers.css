@@ -3,6 +3,24 @@
 }
 @media only screen and (min-width: 760px){
     .section-wrapper{
+        padding: var(--espace-m) var(--espace-m);
+    }
+}
+@media only screen and (min-width: 1024px){
+    .section-wrapper{
         padding: var(--espace-l) var(--espace-l);
+    }
+}
+.nav-mobile-wrapper{
+    padding: var(--espace-p) var(--espace-p) ;
+}
+@media only screen and (min-width: 760px){
+    .nav-mobile-wrapper{
+        padding: var(--espace-p) var(--espace-m);
+    }
+}
+@media only screen and (min-width: 1024px){
+    .nav-mobile-wrapper{
+        padding: var(--espace-p) var(--espace-l);
     }
 }
