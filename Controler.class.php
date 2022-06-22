@@ -296,7 +296,7 @@ class Controler
         $id_bouteille = isset($_GET['id_bouteille']) ?$_GET['id_bouteille']: null;
         $message = isset($_GET['message']) ?$_GET['message']: null;
 
-
+       
         if ($id_bouteille) {
             $bouteille = (new Bouteille());
             $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
@@ -339,7 +339,7 @@ class Controler
 
 
         $bouteille['id_cellier'] = $id_cellier;
-
+       
         include("vues/entete.php");
         include("vues/details.php");
         include("vues/pied.php");

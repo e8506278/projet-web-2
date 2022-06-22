@@ -10,6 +10,11 @@
 
 //const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const nomCellier = urlParams.get('nom_cellier');
+
+
 var $baseUrl_without_parameters =  window.location.href.split('?');//[0];
 $baseUrl_without_parameters = $baseUrl_without_parameters.length>0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
 
@@ -24,7 +29,7 @@ window.addEventListener('load', function () {
         selectBouteilleInput.addEventListener('input', (e) => {
             console.log('selectBouteilleInput', e.target.value);
 
-            const requete = new Request($baseUrl_without_parameters + "index.php?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom:  e.target.value}) });
+            const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom:  e.target.value}) });
             fetch(requete)
                 .then(response => {
                     // if (response.status === 200) {
@@ -165,13 +170,13 @@ window.addEventListener('load', function () {
                 const id_bouteille = id_bouteille_input.value;
                 const id_cellier = id_cellier_input.value;
                 console.log('id_bouteille', id_bouteille);
-                const requete = new Request($baseUrl_without_parameters + "index.php?requete=detruireBouteille",
+                const requete = new Request($baseUrl_without_parameters + "?requete=detruireBouteille",
                     { method: 'POST', body: JSON.stringify({id_bouteille, id_cellier}) });
                 fetch(requete)
                     .then(response => {
                         if (response.status === 200) {
                             console.log('got result', response.json());
-                            window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier&id_cellier="+id_cellier);
+                            window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier="+e.target.value+"&nom_cellier="+nomCellier);
                         }
                         return response.json();
                     }).then(function (data) {
@@ -247,9 +252,9 @@ window.addEventListener('load', function () {
             if(e.target.value){
                 console.log("e.target.value", e.target.value);
                 if( e.target.value  === -1){
-                    window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier");
+                    window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier");
                 }else {
-                    window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier&id_cellier="+e.target.value);
+                    window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier="+e.target.value+"&nom_cellier="+nomCellier);
                 }
             }
         });
@@ -261,9 +266,9 @@ window.addEventListener('load', function () {
             if(e.target.value){
                 console.log("e.target.value", e.target.value);
                 if( e.target.value  === -1){
-                    window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier");
+                    window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier");
                 }else {
-                    window.location.replace($baseUrl_without_parameters + "index.php?requete=listeBouteilleCellier&id_cellier="+e.target.value);
+                    window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier="+e.target.value+"&nom_cellier="+nomCellier);
                 }
             }
         });
