@@ -1,4 +1,4 @@
-<?php include('./Controler.class.php'); ?>
+
 
 <?php
 ob_start();
@@ -11,6 +11,7 @@ $message = null;
 $returnpage = home_base_url()."?requete=bouteille";
 $id_cellier  = $_POST['id_cellier'];
 $nom_cellier = $_POST['nom_cellier'];
+
 $bouteille_id = isset($_POST['id_bouteille'])?$_POST['id_bouteille']: null;
 
 if(isset( $_POST['id_cellier']) &&  $_POST['id_cellier'] != null){

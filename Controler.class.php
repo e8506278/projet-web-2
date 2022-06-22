@@ -294,6 +294,7 @@ class Controler
 
         $id_cellier = isset($_GET['id_cellier']) ?$_GET['id_cellier']: null;
         $id_bouteille = isset($_GET['id_bouteille']) ?$_GET['id_bouteille']: null;
+        $nom_cellier = isset($_GET['nom_cellier']) ?$_GET['nom_cellier']: null;
         $message = isset($_GET['message']) ?$_GET['message']: null;
 
        
