@@ -1,4 +1,4 @@
-import { fetchGetCellier } from './FetchCellier'; 
+import { fetchGetCellier } from './FetchCellier.js'; 
 
 export default class TrieCellier{
     constructor(el){
