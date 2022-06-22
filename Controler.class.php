@@ -313,7 +313,7 @@ class Controler
         $bouteilles = $list->getList('bouteille');
         $usager_celliers = $list->getList('usager_cellier');
         $usager_bouteille = $list->getList('usager_bouteille');
-  
+
         $pays = $list->getList('pays');
         $regions = $list->getList('region');
         $types = $list->getList('type');
@@ -336,11 +336,9 @@ class Controler
             ];
         } else {
             $bouteille['celliers'] = $celliers;
-            $nom_cellier = $_GET['nom_cellier'];
-     
         }
-        $id_cellier = $_GET['id_cellier'];
-        $nom_cellier = $_GET['nom_cellier'];
+
+
         $bouteille['id_cellier'] = $id_cellier;
 
         include("vues/entete.php");

@@ -22,9 +22,9 @@
         <p class="recherche-termes__note">Note: au moins 3 caractères; des chiffres et des lettres seulement; pas de mots composés; pas de caractères spéciaux</p>
     </div>
 
-    <div class=" carte__contenant" data-js-carte-contenant>
+    <div class="carte__contenant" data-js-carte-contenant>
         <?php
-        if ($data) {
+        if (isset($data)) {
             foreach ($data as $cle => $bouteille) {
         ?>
                 <a class="carte__lien" href="?requete=bouteille&id_bouteille=<?php echo $bouteille['id_bouteille']; ?>&id_cellier=<?php echo $id_cellier; ?>&nom_cellier=<?php echo $nom_cellier; ?>">

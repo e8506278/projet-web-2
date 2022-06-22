@@ -43,6 +43,7 @@ if (isset($_POST["soumettre"])) {
     }
     if (isset($_POST["usager_naissance"])) {
         $naissance = $_POST["usager_naissance"];
+        
     }
     if (isset($_POST["usager_courriel"])) {
         $courriel = $_POST["usager_courriel"];
@@ -60,7 +61,7 @@ if (isset($_POST["soumettre"])) {
         $conditions = $_POST["accepter_conditions"];
     }
 
-    if ($naissance) {
+    if (isset($naissance)) {
         $jour  = $naissance['jour'];
         $mois  = $naissance['mois'];
         $annee = $naissance['annee'];

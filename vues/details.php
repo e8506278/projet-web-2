@@ -1,4 +1,5 @@
 
+
 <!--Page d'accueil non connecté-->
 <?php
 //    foreach ($product as $key => $value){
@@ -99,26 +100,25 @@ if(isset($bouteille) && isset($bouteille['id_bouteille']) && $bouteille != null 
 }
 
 foreach ($celliers as & $cellier_dans_le_compte){
-  
+   
     foreach ($usager_bouteille as $ub){
-       
+        $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
             $cellier_dans_le_compte['quantite'] = $ub['quantite_bouteille'];
         }
-
+    }
+}
 
 //echo $_SESSION['utilisateur']['id'];
 //print_r($celliers);
 
 ?>
-<?php }
-}?>
+
 <script src="./js/bouteille.js"  type="text/javascript"></script>
 <section class="section-wrapper">
     <h2>Informations</h2>
-    
+
     <?php if(isset($id_bouteille)) {?>
-        <p><?php echo $id_cellier; exit;?></p>
         <?php if(!$bouteille) {?>
             <!--  Le cas d'un id de bouteille inntrouvable dans la base de données-->
             <div class="warrning-message">
@@ -135,18 +135,16 @@ foreach ($celliers as & $cellier_dans_le_compte){
                     <div class="product-photo">
                         <img src="<?php echo $form_values['image_bouteille']?>"
                              id="image_bouteille"
-                             onerror="document.getElementById('image_bouteille').src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png'; this.onerror=null;"
+                             onerror="document.getElementById('image_bouteille').src = './assets/img/default_bouteille.png'; this.onerror=null;"
                              alt="degustation2">
                     </div>
-                   
+
                 </div>
                 <form class="formulaire info-details"  action="./controller/AjouterBouteille.php" method="POST">
-               
                 <input type="hidden"
                            name="nom_cellier"
                            value="<?php echo $nom_cellier?>"
                     />
-                   
                     <input type="hidden"
                            name="id_bouteille"
                            value="<?php echo $form_values['id_bouteille']?>"
@@ -810,13 +808,8 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
                 <input type="hidden"
                        name="id_cellier"
-                       value="<?php echo $id_cellier?>"
+                       value="<?php echo $form_values['id_cellier']?>"
                 />
-                <input type="hidden"
-                       name="nom_cellier"
-                       value="<?php echo $nom_cellier?>"
-                />
-                
                 <div class="form-block">
                     <h6>Informations sur la bouteille</h6>
                     <div class="row">
@@ -1271,7 +1264,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                                    required
                                                    min="0"
                                                    name="celliers<?php echo "[".$key."]"?>[quantite]"
-                                                   value="<?php echo(isset($cellier['quantite']) ? $cellier['quantite'] : 0) ?>"
+                                                   value="0"
                                                    class="input formulaire__champs boite-double__champs"
                                                    placeholder="Saisir ici"></div>
                                     </div>
@@ -1541,7 +1534,6 @@ foreach ($celliers as & $cellier_dans_le_compte){
         </form>
     </div>
 </section>
-
 <!--<section class="section-wrapper">-->
 <!--    <div class="boite-double flex-column">-->
 <!--        <div class="boite-double__contenant-form">-->
@@ -1738,8 +1730,6 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
 
 <input type="hidden" name="modifStatus" id="modifStatus" value='<?php echo isset($message) && $message != null && strlen($message) > 0 ? $message: null ?>'  />
-
-
 <!--
 <section class="section-wrapper banderole">
 			<div class="grille grille--3 ">
@@ -1790,4 +1780,3 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
 		</section>
 -->
-

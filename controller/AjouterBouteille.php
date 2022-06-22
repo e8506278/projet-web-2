@@ -1,4 +1,4 @@
-
+<?php include('./Controler.class.php'); ?>
 
 <?php
 ob_start();
@@ -11,7 +11,6 @@ $message = null;
 $returnpage = home_base_url()."?requete=bouteille";
 $id_cellier  = $_POST['id_cellier'];
 $nom_cellier = $_POST['nom_cellier'];
-
 $bouteille_id = isset($_POST['id_bouteille'])?$_POST['id_bouteille']: null;
 
 if(isset( $_POST['id_cellier']) &&  $_POST['id_cellier'] != null){
@@ -246,7 +245,6 @@ if (headers_sent()) {
     die("Un issue avec la redirection, svp cliquer ici pour retourner à la page précédente: <a href='../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier'>Page précédente</a>");
 }
 else{
-
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
     exit(header("Location:../index.php?requete=mesCelliers"));
 }
@@ -277,4 +275,3 @@ function home_base_url(){
 }
 ob_end_flush();
 ?>
-

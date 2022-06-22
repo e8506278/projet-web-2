@@ -19,7 +19,7 @@
                 <h2 class="">Vino - Enregistrement</h2>
             </div>
 
-            <form class="formulaire" action="./index.php?requete=connecter" method="POST">
+            <form class="formulaire" action="" method="POST">
                 <div class="form-group">
                     <input type="text" class="form-control" name="usager_nom" data-js-nom placeholder="Votre nom" value="<?php echo $nom ?>" />
 
