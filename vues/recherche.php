@@ -70,7 +70,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
         </button>
     </div>
 
-    <section class="section-wrapper carte carte--bg-couleur recherche-wrapper">
+    <section class="section-wrapper carte carte--bg-couleur ">
         <div class="detail">
             <div class="barre-tri" data-js-barre-tri>
                 <div class="ouvrir-fermer">
@@ -1079,7 +1079,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                     ?>
 
 
-                            <a class="carte__lien" href="?requete=details&id_cellier=<?php echo $id_cellier ?>">
+                            <a class="carte__lien" href="?requete=bouteille&id_cellier=<?php echo $id_cellier ?>">
                                 <div class="carte__contenu" data-js-bouteille="<?php echo $id_bouteille ?>">
                                     <div class="carte__lien carte--flex">
                                         <div class="carte__img">

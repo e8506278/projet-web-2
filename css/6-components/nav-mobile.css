@@ -5,7 +5,7 @@
     width: 100%;
     background-color: var(--couleur-secondaire);
     z-index:5;
-    padding: var(--espace-p) var(--espace-p) ;
+    
     border-top: 1px solid var(--couleur-intermediaire-foncee);
 }
 

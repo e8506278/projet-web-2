@@ -135,7 +135,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                     <div class="product-photo">
                         <img src="<?php echo $form_values['image_bouteille']?>"
                              id="image_bouteille"
-                             onerror="document.getElementById('image_bouteille').src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png'; this.onerror=null;"
+                             onerror="document.getElementById('image_bouteille').src = './assets/img/default_bouteille.png'; this.onerror=null;"
                              alt="degustation2">
                     </div>
 
@@ -1242,7 +1242,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
                 <?php if(!isset($id_cellier) || !$id_cellier) {?>
                     <div class="form-block" id="cellier-block">
-                        <h6>AMes celliers</h6>
+                        <h6>Mes celliers</h6>
                             <?php $key = 0; foreach ($celliers as $cellier) {?>
                                 <div class="row">
                                     <div class="col-6 info-unit">
@@ -1264,7 +1264,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                                    required
                                                    min="0"
                                                    name="celliers<?php echo "[".$key."]"?>[quantite]"
-                                                   value="<?php echo(isset($cellier['quantite']) ? $cellier['quantite'] : 0) ?>"
+                                                   value="0"
                                                    class="input formulaire__champs boite-double__champs"
                                                    placeholder="Saisir ici"></div>
                                     </div>
@@ -1780,4 +1780,3 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
 		</section>
 -->
-

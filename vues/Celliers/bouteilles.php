@@ -3,10 +3,11 @@
         <h3 class="carte__entete"><?php echo $nom_cellier ?></h3>
         <input type="hidden" value="<?php echo $id_cellier; ?>" data-js-id-cellier>
 
-        <a href="?requete=bouteille&id_cellier=<?php echo $id_cellier; ?>">
+        <a href="?requete=bouteille&id_cellier=<?php echo $id_cellier; ?>&nom_cellier=<?php echo $nom_cellier ?>">
             <i class="carte--aligne-centre"> <svg class="carte__lien-icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z" />
-                </svg></i></a>
+                </svg></i>
+        </a>
 
     </div>
 
@@ -21,18 +22,23 @@
         <p class="recherche-termes__note">Note: au moins 3 caractères; des chiffres et des lettres seulement; pas de mots composés; pas de caractères spéciaux</p>
     </div>
 
-    <div class=" carte__contenant" data-js-carte-contenant>
+    <div class="carte__contenant" data-js-carte-contenant>
         <?php
-        if ($data) {
+        if (isset($data)) {
             foreach ($data as $cle => $bouteille) {
         ?>
                 <a class="carte__lien" href="?requete=bouteille&id_bouteille=<?php echo $bouteille['id_bouteille']; ?>&id_cellier=<?php echo $id_cellier; ?>&nom_cellier=<?php echo $nom_cellier; ?>">
                     <div class="carte__contenu" data-js-bouteille="<?php echo $bouteille['id_bouteille']; ?>">
                         <div class="carte__lien carte--flex">
                             <div class="carte__img">
-                                <img src="<?php echo $bouteille['image_bouteille']; ?>" alt="bouteille">
-                            </div>
+                                <?php if($bouteille['image_bouteille']){ ?>
 
+                                <img src="<?php echo $bouteille['image_bouteille']; ?>" alt="bouteille">
+                                <?php }else{?>
+                                    <img src="./assets/img/default_bouteille.png">
+                                    <?php }?>
+                            </div>
+                            
                             <div class="carte__description">
                                 <div>
                                     <div class="carte--flex carte__titre">

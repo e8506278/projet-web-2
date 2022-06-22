@@ -1,14 +1,30 @@
 .barre{
     display: flex;
     justify-content: space-between;
+    background-color: var(--couleur-accent);
+    padding: var(--espace-xp);
+    margin-bottom: var(--espace-p);
 }
+
+@media only screen and (min-width: 500px){
+    .barre {
+        padding: var(--espace-p);
+    }
+}
+
+
 .barre__contenant{
-    padding: var(--espace-p) 0;
     display:flex;
 }
-.barre__icones{
-    padding-left: var(--espace-xp);
+
+@media only screen and (min-width: 360px){
+    .barre__icones {
+        padding-left: var(--espace-xp);
+    }
 }
 .barre--aligne-fin{
     text-align: end;
+}
+.barre__icone{
+    cursor: pointer;
 }

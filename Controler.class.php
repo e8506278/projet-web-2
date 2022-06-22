@@ -1,5 +1,6 @@
 <?php
 include('./controller/Connexion.php');
+include('./controller/Enregistrement.php');
 /**
  * Class Controler
  * Gère les requêtes HTTP
