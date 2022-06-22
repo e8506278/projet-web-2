@@ -4,6 +4,14 @@ use PHPUnit\phpDocumentor\Reflection\Element;
 
 class Recherche extends Modele
 {
+    public $id_usager;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->id_usager = $_SESSION['utilisateur']['id'];
+    }
+
     public function lireAppellations()
     {
         // Ouvrir une nouvelle connexion au serveur MySQL
@@ -11,7 +19,7 @@ class Recherche extends Modele
 
         $sql = "SELECT appellation_nom AS nom, COUNT(*) AS nbTrouve
                 FROM usager__bouteille
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND appellation_nom IS NOT NULL AND appellation_nom <> ''
                 GROUP BY appellation_nom
                 ORDER BY appellation_nom";
@@ -35,7 +43,7 @@ class Recherche extends Modele
 
         $sql = "SELECT nom_bouteille AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND nom_bouteille IS NOT NULL AND nom_bouteille <> ''
                 GROUP BY nom_bouteille
                 ORDER BY nom_bouteille";
@@ -59,7 +67,7 @@ class Recherche extends Modele
 
         $sql = "SELECT id_cellier AS id, nom_cellier AS nom, description_cellier AS description 
                 FROM usager__cellier 
-                WHERE id_usager = 1
+                WHERE id_usager = " . $this->id_usager . "
                 ORDER BY id_cellier";
 
         $result = mysqli_query($connection, $sql) or die(mysqli_error($connection));
@@ -81,7 +89,7 @@ class Recherche extends Modele
 
         $sql = "SELECT cepage_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND cepage_nom IS NOT NULL AND cepage_nom <> ''
                 GROUP BY cepage_nom
                 ORDER BY cepage_nom";
@@ -105,7 +113,7 @@ class Recherche extends Modele
 
         $sql = "SELECT classification_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND classification_nom IS NOT NULL AND classification_nom <> ''
                 GROUP BY classification_nom
                 ORDER BY classification_nom";
@@ -129,7 +137,7 @@ class Recherche extends Modele
 
         $sql = "SELECT degre_alcool_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND degre_alcool_nom IS NOT NULL AND degre_alcool_nom <> ''
                 GROUP BY degre_alcool_nom
                 ORDER BY degre_alcool_nom";
@@ -153,7 +161,7 @@ class Recherche extends Modele
 
         $sql = "SELECT designation_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND designation_nom IS NOT NULL AND designation_nom <> ''
                 GROUP BY designation_nom
                 ORDER BY designation_nom";
@@ -177,7 +185,7 @@ class Recherche extends Modele
 
         $sql = "SELECT format_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND format_nom IS NOT NULL AND format_nom <> ''
                 GROUP BY format_nom
                 ORDER BY format_nom";
@@ -201,7 +209,7 @@ class Recherche extends Modele
 
         $sql = "SELECT garde_jusqua AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND garde_jusqua IS NOT NULL AND garde_jusqua <> ''
                 GROUP BY garde_jusqua
                 ORDER BY garde_jusqua";
@@ -225,7 +233,7 @@ class Recherche extends Modele
 
         $sql = "SELECT millesime AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND millesime IS NOT NULL AND millesime <> ''
                 GROUP BY millesime
                 ORDER BY millesime";
@@ -249,7 +257,7 @@ class Recherche extends Modele
 
         $sql = "SELECT note AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND note IS NOT NULL AND note <> ''
                 GROUP BY note
                 ORDER BY note";
@@ -273,7 +281,7 @@ class Recherche extends Modele
 
         $sql = "SELECT pays_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND pays_nom IS NOT NULL AND pays_nom <> ''
                 GROUP BY pays_nom
                 ORDER BY pays_nom";
@@ -297,7 +305,7 @@ class Recherche extends Modele
 
         $sql = "SELECT prix_bouteille AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND prix_bouteille IS NOT NULL AND prix_bouteille <> ''
                 GROUP BY prix_bouteille
                 ORDER BY prix_bouteille";
@@ -321,7 +329,7 @@ class Recherche extends Modele
 
         $sql = "SELECT produit_du_quebec_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND produit_du_quebec_nom IS NOT NULL AND produit_du_quebec_nom <> ''
                 GROUP BY produit_du_quebec_nom
                 ORDER BY produit_du_quebec_nom";
@@ -362,7 +370,7 @@ class Recherche extends Modele
 
         $sql = "SELECT region_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND region_nom IS NOT NULL AND region_nom <> ''
                 GROUP BY region_nom
                 ORDER BY region_nom";
@@ -386,7 +394,7 @@ class Recherche extends Modele
 
         $sql = "SELECT taux_de_sucre_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND taux_de_sucre_nom IS NOT NULL AND taux_de_sucre_nom <> ''
                 GROUP BY taux_de_sucre_nom
                 ORDER BY taux_de_sucre_nom";
@@ -409,7 +417,7 @@ class Recherche extends Modele
 
         $sql = "SELECT type_de_vin_nom AS nom, count(*) AS nbTrouve 
                 FROM usager__bouteille 
-                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = 1)
+                WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . ")
                 AND type_de_vin_nom IS NOT NULL AND type_de_vin_nom <> ''
                 GROUP BY type_de_vin_nom
                 ORDER BY type_de_vin_nom";
@@ -434,9 +442,9 @@ class Recherche extends Modele
                 FROM vino__type_cellier AS T1 
                 INNER JOIN (SELECT type_cellier_id AS id, COUNT(*) AS nbTrouve 
                             FROM usager__cellier 
-                            WHERE id_usager = 1 
+                            WHERE id_usager = " . $this->id_usager . " 
                             GROUP BY id) AS T2
-                ON T1.id_type_cellier = t2.id
+                ON T1.id_type_cellier = T2.id
 				ORDER BY id";
 
         $result = mysqli_query($connection, $sql) or die(mysqli_error($connection));
@@ -457,7 +465,6 @@ class Recherche extends Modele
 
         $sql = "SELECT id_bouteille, id_cellier, description_bouteille, prix_bouteille, date_achat, garde_jusqua, note, commentaires, quantite_bouteille, millesime, id_vino__bouteille, nom_bouteille, image_bouteille, pays_nom, region_nom, type_de_vin_nom FROM usager__bouteille";
         $where = "";
-        $id_usager = $_SESSION['utilisateur']['id'];
 
         if (isset($filtres)) {
             // Cellier
@@ -574,7 +581,7 @@ class Recherche extends Modele
         }
 
         // Par défaut, on doit absolument choisir uniquement les bouteilles qui se retrouvent dans les celliers de l'utilisateur.
-        $sql .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $id_usager . "))";
+        $sql .= "(id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = " . $this->id_usager . "))";
 
         // On ajoute l'ordre de tri demandé par l'utilisateur (ou celui par défaut la première fois)
         if (isset($tri) && count($tri) === 2) {
