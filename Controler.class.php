@@ -339,6 +339,7 @@ class Controler
 
 
         $bouteille['id_cellier'] = $id_cellier;
+
        
         include("vues/entete.php");
         include("vues/details.php");
