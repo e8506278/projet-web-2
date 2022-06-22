@@ -674,6 +674,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                     />
                                     <input type="number"
                                            required
+                                           min="0"
                                            value="<?php echo $form_values['quantite']?>"
                                            placeholder="Sélectionner ici"
                                            class="input formulaire__champs boite-double__champs"
@@ -1226,6 +1227,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                         />
                                         <input type="number"
                                                required
+                                               min="0"
                                                value="<?php echo $form_values['quantite']?>"
                                                placeholder="Sélectionner ici"
                                                class="input formulaire__champs boite-double__champs"
