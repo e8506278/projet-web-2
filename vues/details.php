@@ -711,7 +711,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                                        required
                                                        min="0"
                                                        name="celliers<?php echo "[".$key."]"?>[quantite]"
-                                                          value="<?php echo $cellier['quantite']?>"
+                                                       value="<?php echo(isset($cellier['quantite']) ? $cellier['quantite'] : 0) ?>"
                                                           class="input formulaire__champs boite-double__champs"
                                                           placeholder="Saisir ici"></div>
                                         </div>
@@ -1262,7 +1262,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                                    required
                                                    min="0"
                                                    name="celliers<?php echo "[".$key."]"?>[quantite]"
-                                                   value="<?php echo $cellier['quantite']?>"
+                                                   value="<?php echo(isset($cellier['quantite']) ? $cellier['quantite'] : 0) ?>"
                                                    class="input formulaire__champs boite-double__champs"
                                                    placeholder="Saisir ici"></div>
                                     </div>
