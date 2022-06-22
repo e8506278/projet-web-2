@@ -177,7 +177,7 @@ class Controler
     private function ajouterQteBouteille()
     {
         $body = json_decode(file_get_contents('php://input'));
-        var_dump($body);
+
         $bte = new Bouteille();
         $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
     }
@@ -292,11 +292,11 @@ class Controler
             return;
         }
 
-        $id_cellier = isset($_GET['id_cellier']) ?$_GET['id_cellier']: null;
-        $id_bouteille = isset($_GET['id_bouteille']) ?$_GET['id_bouteille']: null;
-        $message = isset($_GET['message']) ?$_GET['message']: null;
+        $id_cellier = isset($_GET['id_cellier']) ? $_GET['id_cellier'] : null;
+        $id_bouteille = isset($_GET['id_bouteille']) ? $_GET['id_bouteille'] : null;
+        $message = isset($_GET['message']) ? $_GET['message'] : null;
 
-       
+
         if ($id_bouteille) {
             $bouteille = (new Bouteille());
             $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
@@ -339,7 +339,7 @@ class Controler
 
 
         $bouteille['id_cellier'] = $id_cellier;
-       
+
         include("vues/entete.php");
         include("vues/details.php");
         include("vues/pied.php");
