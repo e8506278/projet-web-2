@@ -11,43 +11,59 @@
 
 .recherche-termes {
     background-color: var(--couleur-accent);
+    display: flex;
+    flex-direction: column;
     margin: 0 0 var(--espace-m);
+    padding: var(--espace-xp);
+}
+
+.recherche-termes>*+* {
+    padding-top: var(--espace-xp);
 }
 
 .recherche-termes__container {
-    width: 100%;
-    position: relative;
     display: flex;
+    flex-direction: column;
 }
 
-.recherche-termes__donnees {
-    border: 3px solid var(--couleur-accent);
-    border-right: none;
-    flex-grow: 1;
-    padding: 5px;
-    border-radius: 5px 0 0 5px;
-    outline: none;
-    color: #9DBFAF;
+.recherche-termes__container>*+* {
+    padding-top: var(--espace-xp);
 }
 
 .recherche-termes__donnees {
     color: var(--couleur-accent);
+    flex-grow: 1;
+    padding: 5px;
+    outline: none;
 }
 
-.recherche-termes__bouton {
-    width: 40px;
-    height: 36px;
-    border: 1px solid var(--couleur-accent);
-    background-color: var(--couleur-accent);
-    background: var(--couleur-accent);
-    text-align: center;
-    color: #fff;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    font-size: 20px;
+.recherche-termes__boutons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.recherche-termes__boutons>button {
+    min-width: 100px;
+}
+
+.recherche-termes__boutons>*+* {
+    margin: 0 0 0 var(--espace-xp);
 }
 
 .recherche-termes__note {
-    padding: 5px;
     color: #fff;
+}
+
+@media only screen and (min-width: 650px) {
+    .recherche-termes__container {
+        flex-direction: row;
+    }
+
+    .recherche-termes__container>*+* {
+        padding-top: 0;
+    }
+
+    .recherche-termes__boutons {
+        margin-left: var(--espace-xp);
+    }
 }

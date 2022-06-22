@@ -1,15 +1,21 @@
 let $baseUrl_without_parameters = window.location.href.split('?');//[0];
 $baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
 
-
-const elBtnRechercher = document.querySelector('[data-js-rechercher]');
-elBtnRechercher.addEventListener("click", rechercher);
+const elIdCellier = document.querySelector('[data-js-id-cellier]').value;
 
 
-function rechercher() {
+const elBtnRechercheCellier = document.querySelector('[data-js-rechercher-bouteilles-cellier]');
+elBtnRechercheCellier.addEventListener("click", rechercherBouteillesCellier);
+
+const elBtnRechercheAvancee = document.querySelector('[data-js-recherche-avancee-bouteilles]');
+elBtnRechercheAvancee.addEventListener("click", () => {
+    window.location.replace($baseUrl_without_parameters + "?requete=rechercher&id_cellier=" + elIdCellier);
+});
+
+
+function rechercherBouteillesCellier() {
     const elTermes = document.querySelector("[data-js-termes]").value;
     const elCarteContenant = document.querySelector('[data-js-carte-contenant]');
-    const elIdCellier = document.querySelector('[data-js-id-cellier]').value;
 
     const entete = new Headers();
     entete.append("Content-Type", "application/json");

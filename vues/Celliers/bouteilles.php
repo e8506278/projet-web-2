@@ -13,15 +13,15 @@
     <div class="recherche-termes">
         <div class="recherche-termes__container">
             <input type="text" class="recherche-termes__donnees" data-js-termes placeholder="Nom, millesime, pays, region, type de vin, format ou cepage" title="Nom, millesime, pays, region, type de vin, format ou cepage">
-            <button type="submit" class="recherche-termes__bouton" data-js-rechercher>
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+            <div class="recherche-termes__boutons">
+                <button class="bouton bouton-primaire" data-js-rechercher-bouteilles-cellier title="Rechercher parmi les bouteilles de ce cellier">Filtrer</button>
+                <button class="bouton bouton-secondaire" data-js-recherche-avancee-bouteilles title="Rechercher parmi toutes les bouteilles">Recherche avancée</button>
+            </div>
         </div>
-        <p class="recherche-termes__note">Note: des chiffres et des lettres seulement; pas de mots composés; pas de caractères spéciaux</p>
+        <p class="recherche-termes__note">Note: au moins 3 caractères; des chiffres et des lettres seulement; pas de mots composés; pas de caractères spéciaux</p>
     </div>
 
-
-    <div class="carte__contenant" data-js-carte-contenant>
+    <div class=" carte__contenant" data-js-carte-contenant>
         <?php
         if ($data) {
             foreach ($data as $cle => $bouteille) {
@@ -103,4 +103,3 @@
 </section>
 
 <script src="./js/rechercherBouteillesCellier.js" defer></script>
-
