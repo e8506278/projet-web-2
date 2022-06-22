@@ -709,6 +709,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                             <div class="value input-state">
                                                 <input type="number"
                                                        required
+                                                       min="0"
                                                        name="celliers<?php echo "[".$key."]"?>[quantite]"
                                                           value="<?php echo $cellier['quantite']?>"
                                                           class="input formulaire__champs boite-double__champs"
@@ -1259,6 +1260,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                         <div class="value">
                                             <input type="number"
                                                    required
+                                                   min="0"
                                                    name="celliers<?php echo "[".$key."]"?>[quantite]"
                                                    value="<?php echo $cellier['quantite']?>"
                                                    class="input formulaire__champs boite-double__champs"
