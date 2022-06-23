@@ -18,13 +18,16 @@ export default class NouveauCellier extends ModalCellier{
     }
     init = () =>{
 
+        /************************
+         * AJOUTER CELLIER
+         ************************/
         this._el.addEventListener('click', (e)=>{
                 e.preventDefault();
-
+                // Validation
                 let validation = new CellierValidation(this._elContenu);
        
+                // Si tout est valide
                 if (validation.valide){
-
 
                     //Assigné les données à transmettre
                     let cellier = {
@@ -42,18 +45,13 @@ export default class NouveauCellier extends ModalCellier{
              
             }
         })
-    
 
-
-
+        /************************
+         * ANNULER
+         ************************/
         this.annule(this._el)
         
     }
-  
-    
-    
-    
-    
 
 }
 

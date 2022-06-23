@@ -101,6 +101,11 @@ class Controler
     }
 
 
+    /**
+     * Cette méthode renvoi selon si l'utilisateur est connecté ou non
+     * la bonne page d'accueil
+     *  
+     */
     private function accueil()
     {
         include("vues/entete.php");
@@ -227,7 +232,11 @@ class Controler
         include("vues/pied.php");
     }
 
-
+    /**
+     * Cette méthode déplace toutes les bouteilles d'un cellier à l'autre selon l'id_cellier choisi
+     * et supprime le cellier selon l'id_cellier envoyé dans l'url 
+     *  
+     */
     private function deplacerSupprimer()
     {
 
@@ -277,7 +286,10 @@ class Controler
         include("vues/pied.php");
     }
 
-
+    /**
+     * Cette méthode affiche une page d'erreur lorsque l'url est erronnée
+     *   
+     */
     private function erreurhttp()
     {
         include("vues/entete.php");
@@ -413,7 +425,10 @@ class Controler
         include("vues/pied.php");
     }
 
-
+     /**
+     * Cette méthode récupère la liste des celliers selon l'id de l'utilisateur
+     *  
+     */
     private function listerCelliers()
     {
         $id = $_SESSION['utilisateur']['id'];
@@ -494,7 +509,11 @@ class Controler
         echo json_encode($resultats);
     }
 
-
+    /**
+     * Cette méthode réduit la quantité d'une bouteille donnée dans un cellier
+     * 
+     *  
+     */
     private function reduireQteBouteille()
     {
         $body = json_decode(file_get_contents('php://input'));
