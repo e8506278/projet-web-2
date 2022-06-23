@@ -18,10 +18,16 @@ export default class ModifierCellier extends ModalCellier{
 
     init = () =>{
 
+        /************************
+         * MODIFIER
+         ************************/
         this._el.addEventListener('click', (e)=>{
-
             e.preventDefault();
+
+            //Validation
             let validation = new CellierValidation(this._elContenu);
+
+            // Si tout est valide
             if(validation.valide){
                 let cellier = {
                     "id_cellier": this._idCellier,
@@ -37,6 +43,9 @@ export default class ModifierCellier extends ModalCellier{
             }
         })
 
+        /************************
+         * ANNULER
+         ************************/
         this.annule(this._el)
     }
 }
