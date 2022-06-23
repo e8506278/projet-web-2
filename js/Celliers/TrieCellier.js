@@ -1,40 +1,35 @@
-import { fetchGetCellier } from './FetchCellier.js'; 
 
 export default class TrieCellier{
     constructor(el){
         this._el = el;
         this._elBtnTrieCellier = document.querySelectorAll('[data-js-btntriecellier]')
         this._elCartes = document.querySelectorAll('[data-js-carte]')
-        
-     
-         this._elContenant = document.querySelector('[data-js-contenant]')
+        this._elContenant = document.querySelector('[data-js-contenant]')
         this.init()
     }
 
 
-
     init = () =>{
         
-
+        // Au choix du select affiche ASC par défault
         let requete = new Request(BaseURL + "?requete=celliers")
         this.requete(requete)
+
+        // Au click des boutons fleche asc ou desc
         for (let i = 0, l = this._elBtnTrieCellier.length; i < l; i++){
             this._elBtnTrieCellier[i].addEventListener('click',(e)=>{
-
+                
+                //Ordre choisi
                 let ordre = this._elBtnTrieCellier[i].dataset.jsBtntriecellier
-               
+               // Requête
                 let requete = new Request(BaseURL + "?requete=celliers")
 
                 this.requete(requete,ordre)
-
-               
-     
             })
-
-            
         }   
     }
 
+    // FETCH, envoie la requete et l'ordre de tri
     requete = (requete,ordre) =>{
         fetch(requete)
         .then(response => {
@@ -46,9 +41,12 @@ export default class TrieCellier{
             }
         })
         .then(response => {
+
             response.forEach(element => {
+                // Valeur du cellier
                 let valeur = Math.round(parseInt(element.bouteille_total * element.prix_total)).toFixed(2);
                 element.valeur = valeur
+                // Si total nul mettre à zéro
                 if(element.bouteille_total == null){
                     element.bouteille_total = 0;
                 }
@@ -123,6 +121,9 @@ export default class TrieCellier{
         
     }
 
+    /*
+    * Ordre ASC ou DESC
+    */
     ordre = (tableau,ordre) =>{
         if(ordre == "desc")
         {
@@ -131,6 +132,10 @@ export default class TrieCellier{
        
         return tableau
     }
+
+    /*
+    * Carte des celliers - injection DOM
+    */
     carte = (element) =>{
        
         let icone =``
@@ -226,10 +231,9 @@ export default class TrieCellier{
                         </a>  
                     </div>  
                  `
+
+        // Injection dans le DOM
         this._elContenant.insertAdjacentHTML('beforeend', carte);
     }
-
-    
-    
 
 }
