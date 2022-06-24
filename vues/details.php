@@ -1717,10 +1717,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
             <h4 class="text-center">Annulation réussie, Voulez-vous rester sur catte page?</h4>
 
             <div class="submit-bloc">
-                <button type="button"
-                        value="<?php echo ($form_values['id_cellier'] ?: -1) ;?>"
-                        class="bouton-secondaire" id="gobackbtn2" >
-                    Retour sur la page précédente</button>
+                <button onclick="history.back()" type="button" class="bouton-secondaire">Retour sur la page précédente</button>
                 <button data-js-boutonFerme class="bouton-secondaire" id="fermerModalAnnulation">Oui, rester</button>
             </div>
 
