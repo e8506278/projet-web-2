@@ -1,7 +1,7 @@
 .nav{
     display: none;  
 }
-@media only screen and (min-width: 760px){
+@media only screen and (min-width: 1024px){
     .nav{
         display: flex;
         color: var(--couleur-primaire);
@@ -22,7 +22,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 45%;
+    width: 55%;
 }
 .nav__lien{
     color: var(--couleur-primaire);

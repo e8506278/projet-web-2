@@ -1,3 +1,4 @@
+
 <?php
 
 // Ouvrir une nouvelle connexion au serveur MySQL
@@ -7,9 +8,24 @@ $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion �
 global $erreurs;
 
 // Les champs à valider
-$nom = $adresse = $ville = $utilisateur = $motDePasse = $confirmerMdp = $pays = $telephone = $jour = $mois = $annee = $courriel = $conditions =  "";
+$nom = $adresse = $ville = $utilisateur = $motDePasse = $confirmerMdp = $pays_id = $telephone = $jour = $mois = $annee = $courriel = $conditions =  "";
+
+if (!isset($lesPays)) {
+    $sql = "SELECT id, nom FROM generique__pays ORDER BY id";
+    $result = mysqli_query($connection, $sql) or die(mysqli_error($connection));
+    $lesPays = [];
+
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $lesPays[] = $row;
+    }
+}
+
+if (!isset($lesMois)) {
+    $lesMois = ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"];
+}
 
 if (isset($_POST["soumettre"])) {
+  
     if (isset($_POST["usager_nom"])) {
         $nom = $_POST["usager_nom"];
     }
@@ -19,14 +35,15 @@ if (isset($_POST["soumettre"])) {
     if (isset($_POST["usager_ville"])) {
         $ville = $_POST["usager_ville"];
     }
-    if (isset($_POST["usager_pays"])) {
-        $pays = $_POST["usager_pays"];
+    if (isset($_POST["usager_pays_id"])) {
+        $pays_id = $_POST["usager_pays_id"];
     }
     if (isset($_POST["usager_telephone"])) {
         $telephone = $_POST["usager_telephone"];
     }
     if (isset($_POST["usager_naissance"])) {
         $naissance = $_POST["usager_naissance"];
+        
     }
     if (isset($_POST["usager_courriel"])) {
         $courriel = $_POST["usager_courriel"];
@@ -44,21 +61,21 @@ if (isset($_POST["soumettre"])) {
         $conditions = $_POST["accepter_conditions"];
     }
 
-    if ($naissance) {
+    if (isset($naissance)) {
         $jour  = $naissance['jour'];
         $mois  = $naissance['mois'];
         $annee = $naissance['annee'];
 
-        $date_naissance = $annee . "-" . $jour . "-" . $jour;
+        $date_naissance = $annee . "-" . $mois . "-" . $jour;
     }
 
     // Vérifier que les valeurs du formulaire ne soient pas vides
-    if (!empty($nom) && !empty($adresse) && !empty($ville) && !empty($pays) && !empty($telephone) && !empty($jour) && !empty($mois) && !empty($annee) && !empty($courriel) && !empty($utilisateur) && !empty($motDePasse) && !empty($confirmerMdp) && !empty($conditions)) {
+    if (!empty($nom) && !empty($adresse) && !empty($ville) && !empty($pays_id) && !empty($telephone) && !empty($jour) && !empty($mois) && !empty($annee) && !empty($courriel) && !empty($utilisateur) && !empty($motDePasse) && !empty($confirmerMdp) && !empty($conditions)) {
         // Nettoyer les données du formulaire avant de les envoyer à la base de données
         $nom            = mysqli_real_escape_string($connection, $nom);
         $adresse        = mysqli_real_escape_string($connection, $adresse);
         $ville          = mysqli_real_escape_string($connection, $ville);
-        $pays           = mysqli_real_escape_string($connection, $pays);
+        $pays_id        = mysqli_real_escape_string($connection, $pays_id);
         $telephone      = mysqli_real_escape_string($connection, $telephone);
         $jour           = mysqli_real_escape_string($connection, $jour);
         $mois           = mysqli_real_escape_string($connection, $mois);
@@ -146,8 +163,8 @@ if (isset($_POST["soumettre"])) {
         if (empty($ville)) {
             $erreurs['usager_ville'] = "Vous devez entrer votre ville.";
         }
-        if (empty($pays)) {
-            $erreurs['usager_pays'] = "Vous devez entrer votre pays.";
+        if (empty($pays_id)) {
+            $erreurs['usager_pays_id'] = "Vous devez entrer votre pays.";
         }
         if (empty($telephone)) {
             $erreurs['usager_telephone'] = "Vous devez entrer votre téléphone.";

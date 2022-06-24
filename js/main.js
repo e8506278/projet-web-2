@@ -8,61 +8,13 @@
  *
  */
 
-//const BaseURL = "https://jmartel.webdev.cmaisonneuve.qc.ca/n61/vino/";
+
 const BaseURL = document.baseURI;
-console.log(BaseURL);
+
 window.addEventListener('load', function () {
-    console.log("load");
-    document.querySelectorAll(".btnBoire").forEach(function (element) {
-        console.log(element);
-        element.addEventListener("click", function (evt) {
-            let id = evt.target.parentElement.dataset.id;
-            let requete = new Request(BaseURL + "index.php?requete=boireBouteilleCellier", { method: 'POST', body: '{"id": ' + id + '}' });
 
-            fetch(requete)
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.json();
-                    } else {
-                        throw new Error('Erreur');
-                    }
-                })
-                .then(response => {
-                    console.debug(response);
-                    //reload page
-                    location.reload();
-                }).catch(error => {
-                    console.error(error);
-                });
-        })
 
-    });
-
-    document.querySelectorAll(".btnAjouter").forEach(function (element) {
-        console.log(element);
-        element.addEventListener("click", function (evt) {
-            let id = evt.target.parentElement.dataset.id;
-            let requete = new Request(BaseURL + "index.php?requete=ajouterBouteilleCellier", { method: 'POST', body: '{"id": ' + id + '}' });
-
-            fetch(requete)
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.json();
-                    } else {
-                        throw new Error('Erreur');
-                    }
-                })
-                .then(response => {
-                    console.debug(response);
-                    //reload page
-                    location.reload();
-                }).catch(error => {
-                    console.error(error);
-                });
-        })
-
-    });
-
+/*
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
 
     let liste = document.querySelector('.listeAutoComplete');
@@ -93,10 +45,8 @@ window.addEventListener('load', function () {
                         console.error(error);
                     });
             }
-
-
         });
-
+      
         let bouteille = {
             nom: document.querySelector(".nom_bouteille"),
             millesime: document.querySelector("[name='millesime']"),
@@ -108,17 +58,19 @@ window.addEventListener('load', function () {
         };
 
 
-        liste.addEventListener("click", function (evt) {
-            console.dir(evt.target)
-            if (evt.target.tagName == "LI") {
-                bouteille.nom.dataset.id = evt.target.dataset.id;
-                bouteille.nom.innerHTML = evt.target.innerHTML;
+        if(liste){ // J'ai ajouté cette condition parceque ça bug quand c'est null
+            liste.addEventListener("click", function (evt) {
+                console.dir(evt.target)
+                if (evt.target.tagName == "LI") {
+                    bouteille.nom.dataset.id = evt.target.dataset.id;
+                    bouteille.nom.innerHTML = evt.target.innerHTML;
 
-                liste.innerHTML = "";
-                inputNomBouteille.value = "";
+                    liste.innerHTML = "";
+                    inputNomBouteille.value = "";
 
-            }
-        });
+                }
+            });
+        }
 
         let btnAjouter = document.querySelector("[name='ajouterBouteilleCellier']");
         if (btnAjouter) {
@@ -153,98 +105,10 @@ window.addEventListener('load', function () {
 
     }
 
-    /*AJOUT D'UN CELLIER*/
 
-    let elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]'),
-        usager =  document.querySelector("[data-js-usager]"),    
-        erreurnom =  document.querySelector("[data-js-erreurNom]"),
-        erreurradio =  document.querySelector("[data-js-erreurRadio]") 
-       
-    if(elBtnAjouterCellier){
 
-        elBtnAjouterCellier.addEventListener('click', (e) => {
 
-            e.preventDefault();
-            // Récupération des champs
-            let nom_cellier = document.querySelector("[name='nom_cellier']"),
-                type_cellier_id = document.querySelectorAll("[name='type_cellier_id']"),
-                description_cellier = document.querySelector("[name='description_cellier']").value,
-                radio = false,
-                estValide = true
-                // Si le nom du cellier n'est pas vide
-                if(nom_cellier.value !== ""){
-                
-                    erreurnom.textContent = '';
-                    // Assigné la valeur à la variable
-                    nom_cellier = nom_cellier.value
-                }
-                else{
-                    // Sinon message d'erreur
-                    erreurnom.textContent = "Ce champs est obligatoire";
-                    estValide = false;
-                }
-                //Pour chaque radio bouton
-                type_cellier_id.forEach(element => {
-                    
-                    if(element.checked){
-                        radio = true;
-                    }
-                    
-                });
-                // Si un bouton a été sélectionné
-                if(radio){
-                    
-                        erreurradio.textContent = '';
-                        // Assigner la valeur
-                        type_cellier_id = document.querySelector('input[name="type_cellier_id"]:checked').value;
-                }
-                else{
-                    // Sinon message d'erreur
-                    erreurradio.textContent = 'Choisir un type.';
-                    estValide = false;
-                }
-                
-                // Si tout est valide
-                if(estValide){
-                    //Assigné les données à transmettre
-                    let cellier = {
-        
-                        "id_usager": usager.dataset.jsUsager,
-                        "nom_cellier": nom_cellier,
-                        "type_cellier_id": type_cellier_id,
-                        "description_cellier": description_cellier
-                    };  
-                    
-                    // Requête fetch
-                    let requete = new Request(BaseURL + "?requete=ajouterNouveauCellier", { method: 'POST', body: JSON.stringify(cellier) });
-                    console.log(requete)
-                            fetch(requete)
-                                .then(response => {
-                                    if (response.status === 200) {
-                                        // si ok fermeture du modal
-                                        elModal = document.querySelector('[data-js-modal]')
-                                        if (elModal.classList.contains('modal--ouvre')) {
-                                            elModal.classList.replace('modal--ouvre', 'modal--ferme');
-                                            
-                                            document.documentElement.classList.remove('overflow-y--hidden');
-                                            document.body.classList.remove('overflow-y--hidden');
-                                        }
-                                        // Rafraîchir la page
-                                        location.reload();
-                                        return response.json();
-                                    } else {
-                                        throw new Error('Erreur');
-                                    }
-                                })
-                                .then(response => {
-                                    console.log(response);
-                                    
-                                }).catch(error => {
-                                    console.error(error);
-                                });
-                }
-
-            });
-
-    }
+    
+    */
+  
 });

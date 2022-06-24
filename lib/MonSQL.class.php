@@ -1,5 +1,8 @@
 <?php
 
+if (!defined('HOST')) {
+    require_once ('../dataconf.php');
+}
 /**
  * Class MonSQL
  * Classe qui génère ma connection à MySQL à travers un singleton

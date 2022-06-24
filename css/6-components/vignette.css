@@ -12,13 +12,18 @@
     position: relative;
     display: flex;
     overflow: hidden;
+
 }
 
 /* || Image */
 .vignette__img{
     filter: brightness(0.6);
+    transition: 0.3s;
 }
 
+.vignette__wrapper:hover .vignette__img{
+    filter: brightness(0.2);
+}
 
 /* || Titre */
 .vignette__titre{
