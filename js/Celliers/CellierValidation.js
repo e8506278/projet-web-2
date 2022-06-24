@@ -40,8 +40,6 @@ export default class CellierValidation{
             this._elErreurradio.textContent = 'Choisir un type.';
             this._estValide = false;
         }
-        
-        
     }
 
   

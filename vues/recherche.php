@@ -70,7 +70,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
         </button>
     </div>
 
-    <section class="section-wrapper carte carte--bg-couleur recherche-wrapper">
+    <section class="section-wrapper carte carte--bg-couleur ">
         <div class="detail">
             <div class="barre-tri" data-js-barre-tri>
                 <div class="ouvrir-fermer">
@@ -540,7 +540,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                                 </div>
                                                 <div class="slider-item">
                                                     <input type="radio" name="qte_min" id="qte_min_1" value="" required>
-                                                    <label for="qte_min_1" data-slider-value="vide"></label>
+                                                    <label for="qte_min_1" data-slider-value="aucun"></label>
                                                     <input type="radio" name="qte_min" id="qte_min_2" value="5" required>
                                                     <label for="qte_min_2" data-slider-value="5"></label>
                                                     <input type="radio" name="qte_min" id="qte_min_3" value="10" required>
@@ -560,7 +560,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                                 </div>
                                                 <div class="slider-item">
                                                     <input type="radio" name="qte_max" id="qte_max_1" value="" required>
-                                                    <label for="qte_max_1" data-slider-value="vide"></label>
+                                                    <label for="qte_max_1" data-slider-value="aucun"></label>
                                                     <input type="radio" name="qte_max" id="qte_max_2" value="5" required>
                                                     <label for="qte_max_2" data-slider-value="5"></label>
                                                     <input type="radio" name="qte_max" id="qte_max_3" value="10" required>
@@ -1079,7 +1079,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                     ?>
 
 
-                            <a class="carte__lien" href="?requete=details&id_cellier=<?php echo $id_cellier ?>">
+                            <a class="carte__lien">
                                 <div class="carte__contenu" data-js-bouteille="<?php echo $id_bouteille ?>">
                                     <div class="carte__lien carte--flex">
                                         <div class="carte__img">

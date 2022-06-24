@@ -14,7 +14,7 @@ const BaseURL = document.baseURI;
 window.addEventListener('load', function () {
 
 
-
+/*
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
 
     let liste = document.querySelector('.listeAutoComplete');
@@ -46,7 +46,7 @@ window.addEventListener('load', function () {
                     });
             }
         });
-
+      
         let bouteille = {
             nom: document.querySelector(".nom_bouteille"),
             millesime: document.querySelector("[name='millesime']"),
@@ -109,6 +109,6 @@ window.addEventListener('load', function () {
 
 
     
-    
+    */
   
 });

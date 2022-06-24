@@ -13,7 +13,6 @@
     background-color: #f1f1f1;
     padding: 10px;
     font-size: 16px;
-    width: auto;
 }
 
 .recherche-wrapper input[type=submit] {
@@ -54,7 +53,7 @@
 .carte__contenant {
     flex-grow: 1;
     flex-direction: column;
-    margin: var(--espace-p) var(--espace-xp) var(--espace-xp);
+    
 }
 
 .carte__contenant.ferme {
@@ -434,6 +433,7 @@
     justify-content: space-between;
     padding: var(--espace-p);
     position: relative;
+    margin-bottom: var(--espace-p);
 }
 
 .top-nav {
@@ -558,7 +558,7 @@
 .menuRecherche.ouvert {
     opacity: 1;
     width: 100%;
-
+    margin-right: var(--espace-p);
 }
 
 @media only screen and (min-width: 760px) {

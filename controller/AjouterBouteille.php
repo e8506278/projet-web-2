@@ -245,8 +245,8 @@ if (headers_sent()) {
     die("Un issue avec la redirection, svp cliquer ici pour retourner à la page précédente: <a href='../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier'>Page précédente</a>");
 }
 else{
-    exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
-    
+    //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
+    exit(header("Location:../index.php?requete=mesCelliers"));
 }
 /*
  *
@@ -275,4 +275,3 @@ function home_base_url(){
 }
 ob_end_flush();
 ?>
-

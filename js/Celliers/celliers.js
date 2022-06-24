@@ -1,3 +1,15 @@
+ /********************************************************************************************************** */
+/*                                     GESTION   -   CELLIER  -  VUE CELLIERS
+/*
+/*    - Tri des celliers
+/*    - Gestions des modals de la page cellier
+/*    - Nouveau cellier
+/*    - Modifier cellier
+/*    - Supprimer cellier                                      
+/********************************************************************************************************** */
+
+
+
 import NouveauCellier from './NouveauCellier.js';
 import ModifierCellier from './ModifierCellier.js';
 import SupprimerCellier from './SupprimerCellier.js';
@@ -15,8 +27,10 @@ import { fetchGetCellier } from './FetchCellier.js';
         elChoixTrie = document.querySelector('[data-js-triecellier]')
 
 
-    /* CHOIX DE TRIE */
-
+        
+    /*********************************************** */
+    /*  TRIE DES CELLIERS 
+    /************************************************ */
     if (elChoixTrie) {
         elChoixTrie.addEventListener('change', (e) => {
             new TrieCellier(elChoixTrie.value);
@@ -24,7 +38,9 @@ import { fetchGetCellier } from './FetchCellier.js';
     }
 
 
-    /* MODIFIER, CRÉER , SUPPRIMER UN CELLIER */
+   /*********************************************** */
+    /*  CRÉER UN CELLIER
+    /************************************************ */
     // Classe Modal
     let modal = new ModalCellier();
 
@@ -43,6 +59,10 @@ import { fetchGetCellier } from './FetchCellier.js';
     }
 
 
+
+    /*********************************************** */
+    /*  MODIFIER UN CELLIER
+    /************************************************ */
     for (let i = 0, l = elModifierCellier.length; i < l; i++) {
         elModifierCellier[i].addEventListener('click', (e) => {
             e.preventDefault();
@@ -51,6 +71,7 @@ import { fetchGetCellier } from './FetchCellier.js';
             let elNomCellier = elModifierCellier[i].parentNode.dataset.jsNomcellier
             let elCarte = elModifierCellier[i].parentNode.parentNode.parentNode
 
+            //Contenu des champs du modal
             let elNomCellierChamps = elModalContenu.querySelector("[name='nom_cellier']"),
                 elTypeCellierIdChamps = elModalContenu.querySelectorAll("[name='type_cellier_id']"),
                 elDescriptionCellierChamps = elModalContenu.querySelector("[name='description_cellier']"),
@@ -63,24 +84,28 @@ import { fetchGetCellier } from './FetchCellier.js';
             elBoutonModal.insertAdjacentHTML("afterbegin", `<button  class="bouton-secondaire" data-js-modifierInfosCellier>Modifier</button>`)
 
             elNomCellierChamps.value = elCarte.querySelector('[data-js-nomcellier]').textContent,
-                elDescriptionCellierChamps.value = elCarte.querySelector('[data-js-descriptioncellier]').textContent,
+            elDescriptionCellierChamps.value = elCarte.querySelector('[data-js-descriptioncellier]').textContent,
 
-                // Type de cellier (Radio)
-                elTypeCellierIdChamps.forEach(function (element) {
-                    if (elCellierType.classList.contains("cave")) {
-                        if (element.value == "1") {
-                            element.checked = true;
-                        }
-                    }
-                    else {
+            // Type de cellier (Radio)
+            elTypeCellierIdChamps.forEach(function (element) {
+                if (elCellierType.classList.contains("cave")) {
+                    if (element.value == "1") {
                         element.checked = true;
                     }
-                })
+                }
+                else {
+                    element.checked = true;
+                }
+            })
 
             new ModifierCellier(elBoutonModal.firstElementChild, elIdCellier);
         })
 
     }
+
+    /*********************************************** */
+    /* SUPPRESSION D'UN CELLIER
+    /************************************************ */
     for (let i = 0, l = elSupprimerCellier.length; i < l; i++) {
         elSupprimerCellier[i].addEventListener('click', (e) => {
             e.preventDefault();
@@ -91,7 +116,7 @@ import { fetchGetCellier } from './FetchCellier.js';
                 elIdCellier = elSupprimerCellier[i].dataset.jsSupprimercellier
 
 
-
+            //Injection dans le modal du contenu
             elModalContenu.innerHTML = `<h4 class=""><span class="carte__erreur">Supprimer le cellier</span> "${elNomCellier}" ?</h4>
 
                                             <p class="modal__texte">Cette action entraînera la suppression du cellier et de toutes ces bouteilles</p>
@@ -112,15 +137,15 @@ import { fetchGetCellier } from './FetchCellier.js';
                                                 <button data-js-annulercellier class="bouton-secondaire">Annuler</button>
                                             </div> 
                                             `
+
             let selectCellier = document.querySelector('[data-js-selectcellier]'),
-                elBoutonModal = document.querySelector('[data-js-boutonmodal]')
-            let elBtnDeplacerSupprimer = elBoutonModal.firstElementChild,
+                elBoutonModal = document.querySelector('[data-js-boutonmodal]'),
+                elBtnDeplacerSupprimer = elBoutonModal.firstElementChild,
                 elBtnSupprimer = elBoutonModal.firstElementChild.nextElementSibling
+            
+            // Requête fetch
             let requete = new Request(BaseURL + "?requete=celliers")
             fetchGetCellier(requete, selectCellier, elIdCellier, elBtnDeplacerSupprimer)
-
-
-
 
             new SupprimerCellier(elBtnDeplacerSupprimer, elBtnSupprimer, selectCellier, elIdCellier);
         })

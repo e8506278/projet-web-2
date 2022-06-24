@@ -46,24 +46,20 @@
 						<figcaption class="vignette__titre">Mes celliers</figcaption>
 					</figure>
 				</a>
-				<?php if($data){?>
+				
 				<a href="?requete=bouteille">
 					<figure class="vignette__wrapper">
 						<img class="vignette__img" src="./assets/img/bouchonblanc.jpg" alt="bouteilles">
 						<figcaption class="vignette__titre">Ajouter une bouteille</figcaption>
 					</figure>
 				</a>
-					<?php foreach($data as $cellier){ if($cellier['bouteille_total'] != null){ $bouteille = true;?>
-					
-					<?php };} ?>
-					<?php if($bouteille){?>
-						<a href="?requete=rechercher">
-							<figure class="vignette__wrapper">
-								<img class="vignette__img" src="./assets/img/bouteilles1.jpg" alt="bouteille">
-								<figcaption class="vignette__titre">Mes bouteilles</figcaption>
-							</figure>
-						</a>
-				<?php } }?>
+				
+				<a href="?requete=rechercher">
+					<figure class="vignette__wrapper">
+						<img class="vignette__img" src="./assets/img/bouteilles1.jpg" alt="bouteille">
+						<figcaption class="vignette__titre">Mes bouteilles</figcaption>
+					</figure>
+				</a>				
 </div>
 </section>
 			<!--	
