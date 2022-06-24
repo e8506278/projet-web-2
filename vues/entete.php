@@ -45,6 +45,7 @@
 					<li><a class="nav__lien" href="?requete=deconnecter">Déconnexion</a></li>
 					<!--Non Connecté-->
 					<?php  }}else if(!$_SESSION) {?>
+					<li></li>
 					<li><a class="nav__lien" href="?requete=connecter">Connexion</a></li>
 					<li><a class="nav__lien" href="?requete=enregistrer">S'enregistrer</a></li>
 					<?php };?>

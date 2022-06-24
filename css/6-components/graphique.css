@@ -1,0 +1,55 @@
+.graphique{
+    width: 50%;
+}
+
+.graphique li { 
+    position: relative;
+    display: block; 
+}
+.graphique .graphique__qte { 
+display: block; 
+position: absolute; 
+top: 0; 
+right: 0; 
+margin: 0 0.3em; 
+text-align: right; 
+font-weight: bold; 
+}
+.graphique li{ 
+display: flex; 
+position: relative; 
+z-index: 2; 
+margin: var(--espace-xp);
+}
+.graphique div{
+    width: 70px;
+}
+.graphique .index { 
+display: block;  
+top: 0; 
+left: 0; 
+height: 100%; 
+background-color: var(--couleur-accent);
+text-indent: -9999px; 
+overflow: hidden; 
+}
+
+.graphique-vertical{
+display:table;
+table-layout: fixed;   
+
+}   
+.graphique-vertical li{
+    position:relative;
+    display:table-cell;
+    vertical-align:bottom;
+    height:200px;
+}
+.graphique-vertical span{
+    margin: 0 var(--espace-xp);
+    display: block;
+}
+.graphique--vertical--couleur{
+    background-color: var(--couleur-accent);
+}
+   

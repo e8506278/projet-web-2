@@ -88,6 +88,12 @@ class Controler
             case 'rechercherBouteillesCellier':
                 $this->rechercherBouteillesCellier();
                 break;
+            case 'profil':
+                $this->profilUtilisateur();
+                break;
+            case 'statistiques':
+                $this->statistiquesUtilisateur();
+                break;
             case 'accueil':
                 $this->accueil();
                 break;
@@ -460,6 +466,17 @@ class Controler
         }
     }
 
+    /**
+     * Cette méthode affiche la page du profil de l'utilisateur
+     *  
+     */
+    private function profilUtilisateur(){
+
+        include("vues/entete.php");
+        include("vues/profil.php");
+        include("vues/pied.php");
+    }
+
 
     private function rechercher()
     {
@@ -551,7 +568,22 @@ class Controler
         exit();
     }
 
+    /**
+     * Cette méthode affiche les statistiques d'un usager
+     *  
+     */
+    private function statistiquesUtilisateur(){
 
+        
+        include("vues/entete.php");
+        include("vues/statistiques.php");
+        include("vues/pied.php");
+    }
+
+    /**
+     * Cette méthode supprime un cellier selon l'id envoyé dans l'url
+     *  
+     */
     private function supprimerCellier()
     {
         $body = json_decode(file_get_contents('php://input'));
