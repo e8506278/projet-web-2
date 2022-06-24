@@ -104,10 +104,12 @@ foreach ($celliers as & $cellier_dans_le_compte){
     foreach ($usager_bouteille as $ub){
         $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
-            $cellier_dans_le_compte['quantite'] = $ub['quantite_bouteille'];
+            $cellier_dans_le_compte['quantite'] = $bouteille ? $ub['quantite_bouteille']: 0;
         }
     }
 }
+
+
 
 //echo $_SESSION['utilisateur']['id'];
 //print_r($celliers);
@@ -1717,10 +1719,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
             <h4 class="text-center">Annulation réussie, Voulez-vous rester sur catte page?</h4>
 
             <div class="submit-bloc">
-                <button type="button"
-                        value="<?php echo ($form_values['id_cellier'] ?: -1) ;?>"
-                        class="bouton-secondaire" id="gobackbtn2" >
-                    Retour sur la page précédente</button>
+                <button onclick="history.back()" type="button" class="bouton-secondaire">Retour sur la page précédente</button>
                 <button data-js-boutonFerme class="bouton-secondaire" id="fermerModalAnnulation">Oui, rester</button>
             </div>
 
