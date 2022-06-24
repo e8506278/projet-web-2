@@ -76,7 +76,7 @@ class Cellier extends Modele
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
                     $row['nom_cellier'] = trim(utf8_encode($row['nom_cellier']));
-                    $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
+                   // $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
                     $rows[] = $row;
                 }
             }
@@ -107,6 +107,7 @@ class Cellier extends Modele
             // Réinitialisation du tableau d'erreur
             unset($erreurs['nom_cellier']);
             $regExp = '/^.+$/';
+            $data->nom_cellier = trim($data->nom_cellier);
             if (!preg_match($regExp, $data->nom_cellier)) {
                 $erreurs['nom_cellier'] = 'Au moins un caractère.';
                 $estValide = false;
@@ -120,7 +121,7 @@ class Cellier extends Modele
                 $erreurs['type_cellier_id'] = 'Choisir le type de cellier.';
                 $estValide = false;
             }
-
+            $data->description_cellier = trim($data->description_cellier);
             //Si tout est valide
             if ($estValide) {
                 $requete = "INSERT INTO usager__cellier(id_usager,nom_cellier,description_cellier,type_cellier_id) VALUES (" .
