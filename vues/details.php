@@ -104,10 +104,12 @@ foreach ($celliers as & $cellier_dans_le_compte){
     foreach ($usager_bouteille as $ub){
         $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
-            $cellier_dans_le_compte['quantite'] = $ub['quantite_bouteille'];
+            $cellier_dans_le_compte['quantite'] = $bouteille ? $ub['quantite_bouteille']: 0;
         }
     }
 }
+
+
 
 //echo $_SESSION['utilisateur']['id'];
 //print_r($celliers);
