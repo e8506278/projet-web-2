@@ -260,7 +260,10 @@ class Cellier extends Modele
     {
 
         $requete = "DELETE FROM usager__cellier WHERE id_cellier = '$id'";
+
         $res = $this->_db->query($requete);
         return $res;
+
+        
     }
 }

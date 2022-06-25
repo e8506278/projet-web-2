@@ -305,6 +305,7 @@ class Bouteille extends Modele
         return $res;
     }
 
+    
 
     /**
      * Cette méthode change la quantité d'une bouteille en particulier dans le cellier
@@ -317,7 +318,7 @@ class Bouteille extends Modele
      */
     public function modifierQuantiteBouteilleCellier($id, $nombre, $action)
     {
-        $erreur = "";
+       
         $this->_db->begin_transaction();
         try{
 

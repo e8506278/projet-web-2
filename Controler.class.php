@@ -136,7 +136,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1);
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1 , "a");
     }
 
 
@@ -212,7 +212,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, -1);
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1, "d");
     }
 
 
@@ -586,12 +586,21 @@ class Controler
      */
     private function supprimerCellier()
     {
-        $body = json_decode(file_get_contents('php://input'));
 
+        $body = json_decode(file_get_contents('php://input'));
+        $id = $body->id_cellierSupprime;
         if (!empty($body)) {
 
-            $cellier = new Cellier();
-            $cellier->supprimerCellier($body->id);
+            $bte = new Bouteille();
+            $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
+            if ($bouteilles) {
+
+                $cellier = new Cellier();
+                $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
+                if ($resultat) {
+                    $resultat =   $cellier->supprimerCellier($id);
+                }
+            }
         }
     }
 }
