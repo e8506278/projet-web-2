@@ -318,15 +318,28 @@ class Bouteille extends Modele
     public function modifierQuantiteBouteilleCellier($id, $nombre, $action)
     {
         $erreur = "";
-        if (is_numeric($id) && is_numeric($nombre)) {
-            $requete = "INSERT INTO bouteille_action SET id_bouteille = '$id', quantite_bouteille =  '$nombre', action = '$action'";
-            $res = $this->_db->query($requete);
-        } else {
-            $erreur = "$id et $nombre doivent être numériques.";
-            return $erreur;
-        }
+        $this->_db->begin_transaction();
+        try{
 
-        return $res;
+            if (is_numeric($id) && is_numeric($nombre)) {
+                $this->_db->query("INSERT INTO bouteille_action SET id_bouteille = '$id', quantite_bouteille =  '$nombre', action = '$action'");
+                if($action == "a"){
+                    $nombre = 1;
+                }else{
+                    $nombre = -1;
+                }
+                $this->_db->query("UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = '$id'");
+
+                $this->_db->commit();
+            
+            }   
+
+        }catch(\Throwable $e){
+            $this->_db->rollback();
+        throw $e;
+        }
+        
+
     }
 
 
