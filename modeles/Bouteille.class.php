@@ -315,11 +315,11 @@ class Bouteille extends Modele
      * @return String Si les id et nombre ne sont pas des caractères numériques
      *
      */
-    public function modifierQuantiteBouteilleCellier($id, $nombre)
+    public function modifierQuantiteBouteilleCellier($id, $nombre, $action)
     {
         $erreur = "";
         if (is_numeric($id) && is_numeric($nombre)) {
-            $requete = "UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = " . $id;
+            $requete = "INSERT INTO bouteille_action SET id_bouteille = '$id', quantite_bouteille =  '$nombre', action = '$action'";
             $res = $this->_db->query($requete);
         } else {
             $erreur = "$id et $nombre doivent être numériques.";

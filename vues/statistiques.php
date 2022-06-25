@@ -26,6 +26,24 @@
         <!--2-BUES-->
         <div>
             <h4>Bouteilles consommées</h4>
+            <ul class="graphique-vertical">
+  <li>
+    <span class="graphique--vertical--couleur" style="height:5%"></span>
+    <span>Jan</span>
+  </li>
+  <li>
+    <span class="graphique--vertical--couleur" style="height:70%"></span>
+    <span>Fev</span>
+  </li>
+  <li>
+    <span class="graphique--vertical--couleur" style="height:50%"></span>
+    <span>Mar</span>
+  </li>
+  <li>
+    <span class="graphique--vertical--couleur" style="height:15%"></span>
+    <span>Avr</span>
+  </li>
+</ul>    
         </div>
         <!--3-VALEUR DES DIFFÉRENTS CELLIERS-->
         <div>
