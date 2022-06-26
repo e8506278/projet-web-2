@@ -24,12 +24,13 @@ DROP TABLE IF EXISTS `bouteille_action`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bouteille_action` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usager` int(11) NOT NULL,
   `id_bouteille` int(11) NOT NULL,
   `date_creation` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `action` varchar(1) NOT NULL,
   `quantite_bouteille` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +39,7 @@ CREATE TABLE `bouteille_action` (
 
 LOCK TABLES `bouteille_action` WRITE;
 /*!40000 ALTER TABLE `bouteille_action` DISABLE KEYS */;
+INSERT INTO `bouteille_action` VALUES (1,0,1,'2022-06-26 19:38:55','a',20),(2,0,1,'2022-06-26 19:38:55','d',5),(3,0,1,'2022-06-26 19:38:55','d',11);
 /*!40000 ALTER TABLE `bouteille_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -651,4 +653,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-24 13:17:39
+-- Dump completed on 2022-06-26 18:18:58
