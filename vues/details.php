@@ -64,17 +64,29 @@ $form_values = [
     'vin_nature'  => false,
     'vin_orange'  => false,
 
-    'nom_pays' => null,
-    'nom_region' => null,
-    'nom_type' => null,
-    'nom_format' => null,
-    'nom_appellation'  => null,
-    'nom_designation' => null,
-    'nom_cepages' => null,
-    'nom_taux_de_sucre'  => null,
-    'nom_degre_alcool' => null,
-    'nom_produit_du_quebec'  => null,
-    'nom_classification'  => null,
+    'pays_nom' => null,
+    'region_nom' => null,
+    'type_de_vin_nom' => null,
+    'format_nom' => null,
+    'appellation_nom'  => null,
+    'designation_nom' => null,
+    'cepage_nom' => null,
+    'taux_de_sucre_nom'  => null,
+    'degre_alcool_nom' => null,
+    'produit_du_quebec_nom'  => null,
+    'classification_nom'  => null,
+
+    'pays_revision' => null,
+    'region_revision' => null,
+    'type_de_vin_revision' => null,
+    'format_revision' => null,
+    'appellation_revision' => null,
+    'designation_revision' => null,
+    'classification_revision' => null,
+    'cepage_revision' => null,
+    'taux_de_sucre_revision' => null,
+    'degre_alcool_revision' => null,
+    'produit_du_quebec_revision' => null,
 
     'date_achat' => null,
     'garde_jusqua' => null,
@@ -383,15 +395,15 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Pays(*)</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_pays']  ?: 'Non défini'?>
+                                    <?php echo $form_values['pays_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="pays"
                                            required
                                            placeholder="Sélectionner ici"
-                                           value="<?php echo $form_values['nom_pays']?>"
+                                           value="<?php echo $form_values['pays_nom']?>"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_pays" id="nom_pays">
+                                           name="pays_nom" id="pays_nom">
 
                                     <datalist id="pays">
                                         <?php foreach ($pays as $element){ ?>
@@ -403,15 +415,15 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Region(*)</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_region']  ?: 'Non défini'?>
+                                    <?php echo $form_values['region_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="regions"
                                            required
-                                           value="<?php echo $form_values['nom_region']?>"
+                                           value="<?php echo $form_values['region_nom']?>"
                                            placeholder="Sélectionner ici"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_region" id="nom_region" >
+                                           name="region_nom" id="region_nom" >
 
                                     <datalist id="regions">
                                         <?php foreach ($regions as $element){ ?>
@@ -426,15 +438,15 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Type(*)</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_type']  ?: 'Non défini'?>
+                                    <?php echo $form_values['type_de_vin_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="types"
                                            required
                                            placeholder="Sélectionner ici"
-                                           value="<?php echo $form_values['nom_type']?>"
+                                           value="<?php echo $form_values['type_de_vin_nom']?>"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_type" id="nom_type" >
+                                           name="type_de_vin_nom" id="type_de_vin_nom" >
 
                                     <datalist id="types">
                                         <?php foreach ($types as $element){ ?>
@@ -446,15 +458,15 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Format(*)</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_format']  ?: 'Non défini'?>
+                                    <?php echo $form_values['format_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="formats"
                                            required
                                            placeholder="Sélectionner ici"
-                                           value="<?php echo $form_values['nom_format']?>"
+                                           value="<?php echo $form_values['format_nom']?>"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_format" id="nom_format" >
+                                           name="format_nom" id="format_nom" >
 
                                     <datalist id="formats">
                                         <?php foreach ($formats as $element){ ?>
@@ -469,14 +481,14 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Appellation</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_appellation']  ?: 'Non défini'?>
+                                    <?php echo $form_values['appellation_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="appellations"
                                            placeholder="Sélectionner ici"
-                                           value="<?php echo $form_values['nom_appellation']?>"
+                                           value="<?php echo $form_values['appellation_nom']?>"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_appellation" id="nom_appellation" >
+                                           name="appellation_nom" id="appellation_nom" >
 
                                     <datalist id="appellations">
                                         <?php foreach ($appellations as $element){ ?>
@@ -488,14 +500,14 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Designation</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_designation']  ?: 'Non défini'?>
+                                    <?php echo $form_values['designation_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="designations"
                                            placeholder="Sélectionner ici"
-                                           value="<?php echo $form_values['nom_designation']?>"
+                                           value="<?php echo $form_values['designation_nom']?>"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_designation" id="nom_designation" >
+                                           name="designation_nom" id="designation_nom" >
 
                                     <datalist id="designations">
                                         <?php foreach ($designations as $element){ ?>
@@ -510,14 +522,14 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Cepages</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_cepages']  ?: 'Non défini'?>
+                                    <?php echo $form_values['cepage_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="cepages"
                                            placeholder="Sélectionner ici"
-                                           value="<?php echo $form_values['nom_cepages']?>"
+                                           value="<?php echo $form_values['cepage_nom']?>"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_cepages" id="nom_cepages" >
+                                           name="cepage_nom" id="cepage_nom" >
 
                                     <datalist id="cepages">
                                         <?php foreach ($cepages as $element){ ?>
@@ -529,15 +541,15 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Taux de sucre(*)</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_taux_de_sucre']  ?: 'Non défini'?>
+                                    <?php echo $form_values['taux_de_sucre_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="taux_de_sucres"
                                            placeholder="Sélectionner ici"
                                            required
-                                           value="<?php echo $form_values['nom_taux_de_sucre']?>"
+                                           value="<?php echo $form_values['taux_de_sucre_nom']?>"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_taux_de_sucre" id="nom_taux_de_sucre" />
+                                           name="taux_de_sucre_nom" id="taux_de_sucre_nom" />
 
                                     <datalist id="taux_de_sucres">
                                         <?php foreach ($taux_de_sucres as $element){ ?>
@@ -551,14 +563,14 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Degre d'alcool</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_degre_alcool']  ?: 'Non défini'?>
+                                    <?php echo $form_values['degre_alcool_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="degre_alcools"
-                                           value="<?php echo $form_values['nom_degre_alcool']?>"
+                                           value="<?php echo $form_values['degre_alcool_nom']?>"
                                            placeholder="Sélectionner ici"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_degre_alcool" id="nom_degre_alcool" />
+                                           name="degre_alcool_nom" id="degre_alcool_nom" />
 
                                     <datalist id="degre_alcools">
                                         <?php foreach ($degre_alcools as $element){ ?>
@@ -570,14 +582,14 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Produit du quebec</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_produit_du_quebec']  ?: 'Non défini'?>
+                                    <?php echo $form_values['produit_du_quebec_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="produit_du_quebecs"
                                            placeholder="Sélectionner ici"
-                                           value="<?php echo $form_values['nom_produit_du_quebec']?>"
+                                           value="<?php echo $form_values['produit_du_quebec_nom']?>"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_produit_du_quebec" id="nom_produit_du_quebec" />
+                                           name="produit_du_quebec_nom" id="produit_du_quebec_nom" />
 
                                     <datalist id="produit_du_quebecs">
                                         <?php foreach ($produit_du_quebecs as $element){ ?>
@@ -591,14 +603,14 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="col-6 info-unit">
                                 <div class="label">Classification</div>
                                 <div class="value label-state">
-                                    <?php echo $form_values['nom_classification']  ?: 'Non défini'?>
+                                    <?php echo $form_values['classification_nom']  ?: 'Non défini'?>
                                 </div>
                                 <div class="value input-state">
                                     <input list="classifications"
-                                           value="<?php echo $form_values['nom_classification']?>"
+                                           value="<?php echo $form_values['classification_nom']?>"
                                            placeholder="Sélectionner ici"
                                            class="input select formulaire__champs boite-double__champs"
-                                           name="nom_classification" id="nom_classification" />
+                                           name="classification_nom" id="classification_nom" />
 
                                     <datalist id="classifications">
                                         <?php foreach ($classifications as $element){ ?>
@@ -998,9 +1010,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 <input list="pays"
                                        required
                                        placeholder="Sélectionner ici"
-                                       value="<?php echo $form_values['nom_pays']?>"
+                                       value="<?php echo $form_values['pays_nom']?>"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_pays" id="nom_pays">
+                                       name="pays_nom" id="pays_nom">
 
                                 <datalist id="pays">
                                     <?php foreach ($pays as $element){ ?>
@@ -1014,10 +1026,10 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="value">
                                 <input list="regions"
                                        required
-                                       value="<?php echo $form_values['nom_region']?>"
+                                       value="<?php echo $form_values['region_nom']?>"
                                        placeholder="Sélectionner ici"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_region" id="nom_region" >
+                                       name="region_nom" id="region_nom" >
 
                                 <datalist id="regions">
                                     <?php foreach ($regions as $element){ ?>
@@ -1035,9 +1047,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 <input list="types"
                                        required
                                        placeholder="Sélectionner ici"
-                                       value="<?php echo $form_values['nom_type']?>"
+                                       value="<?php echo $form_values['type_de_vin_nom']?>"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_type" id="nom_type" >
+                                       name="type_de_vin_nom" id="type_de_vin_nom" >
 
                                 <datalist id="types">
                                     <?php foreach ($types as $element){ ?>
@@ -1052,9 +1064,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 <input list="formats"
                                        required
                                        placeholder="Sélectionner ici"
-                                       value="<?php echo $form_values['nom_format']?>"
+                                       value="<?php echo $form_values['format_nom']?>"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_format" id="nom_format" >
+                                       name="format_nom" id="format_nom" >
 
                                 <datalist id="formats">
                                     <?php foreach ($formats as $element){ ?>
@@ -1071,9 +1083,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="value">
                                 <input list="appellations"
                                        placeholder="Sélectionner ici"
-                                       value="<?php echo $form_values['nom_appellation']?>"
+                                       value="<?php echo $form_values['appellation_nom']?>"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_appellation" id="nom_appellation" >
+                                       name="appellation_nom" id="appellation_nom" >
 
                                 <datalist id="appellations">
                                     <?php foreach ($appellations as $element){ ?>
@@ -1087,9 +1099,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="value">
                                 <input list="designations"
                                        placeholder="Sélectionner ici"
-                                       value="<?php echo $form_values['nom_designation']?>"
+                                       value="<?php echo $form_values['designation_nom']?>"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_designation" id="nom_designation" >
+                                       name="designation_nom" id="designation_nom" >
 
                                 <datalist id="designations">
                                     <?php foreach ($designations as $element){ ?>
@@ -1106,9 +1118,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="value">
                                 <input list="cepages"
                                        placeholder="Sélectionner ici"
-                                       value="<?php echo $form_values['nom_cepages']?>"
+                                       value="<?php echo $form_values['cepage_nom']?>"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_cepages" id="nom_cepages" >
+                                       name="cepage_nom" id="cepage_nom" >
 
                                 <datalist id="cepages">
                                     <?php foreach ($cepages as $element){ ?>
@@ -1123,9 +1135,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                 <input list="taux_de_sucres"
                                        placeholder="Sélectionner ici"
                                        required
-                                       value="<?php echo $form_values['nom_taux_de_sucre']?>"
+                                       value="<?php echo $form_values['taux_de_sucre_nom']?>"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_taux_de_sucre" id="nom_taux_de_sucre" />
+                                       name="taux_de_sucre_nom" id="taux_de_sucre_nom" />
 
                                 <datalist id="taux_de_sucres">
                                     <?php foreach ($taux_de_sucres as $element){ ?>
@@ -1140,10 +1152,10 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="label">Degre d'alcool</div>
                             <div class="value">
                                 <input list="degre_alcools"
-                                       value="<?php echo $form_values['nom_degre_alcool']?>"
+                                       value="<?php echo $form_values['degre_alcool_nom']?>"
                                        placeholder="Sélectionner ici"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_degre_alcool" id="nom_degre_alcool" />
+                                       name="degre_alcool_nom" id="degre_alcool_nom" />
 
                                 <datalist id="degre_alcools">
                                     <?php foreach ($degre_alcools as $element){ ?>
@@ -1157,9 +1169,9 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="value">
                                 <input list="produit_du_quebecs"
                                        placeholder="Sélectionner ici"
-                                       value="<?php echo $form_values['nom_produit_du_quebec']?>"
+                                       value="<?php echo $form_values['produit_du_quebec_nom']?>"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_produit_du_quebec" id="nom_produit_du_quebec" />
+                                       name="produit_du_quebec_nom" id="produit_du_quebec_nom" />
 
                                 <datalist id="produit_du_quebecs">
                                     <?php foreach ($produit_du_quebecs as $element){ ?>
@@ -1174,10 +1186,10 @@ foreach ($celliers as & $cellier_dans_le_compte){
                             <div class="label">Classification</div>
                             <div class="value">
                                 <input list="classifications"
-                                       value="<?php echo $form_values['nom_classification']?>"
+                                       value="<?php echo $form_values['classification_nom']?>"
                                        placeholder="Sélectionner ici"
                                        class="input select formulaire__champs boite-double__champs"
-                                       name="nom_classification" id="nom_classification" />
+                                       name="classification_nom" id="classification_nom" />
 
                                 <datalist id="classifications">
                                     <?php foreach ($classifications as $element){ ?>
