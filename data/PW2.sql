@@ -214,15 +214,15 @@ DROP TABLE IF EXISTS `usager__detail`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usager__detail` (
   `id` int(11) NOT NULL,
-  `nom` varchar(100) NOT NULL,
-  `adresse` varchar(100) NOT NULL,
-  `telephone` varchar(25) NOT NULL,
-  `courriel` varchar(100) NOT NULL,
+  `nom` varchar(100) DEFAULT NULL,
+  `adresse` varchar(100) DEFAULT NULL,
+  `telephone` varchar(25) DEFAULT NULL,
+  `courriel` varchar(100) DEFAULT NULL,
   `verification_courriel` timestamp NULL DEFAULT NULL,
-  `date_naissance` date NOT NULL,
-  `ville` varchar(100) NOT NULL,
-  `nom_utilisateur` varchar(100) NOT NULL,
-  `mot_de_passe` varchar(255) NOT NULL,
+  `date_naissance` date DEFAULT NULL,
+  `ville` varchar(100) DEFAULT NULL,
+  `nom_utilisateur` varchar(100) DEFAULT NULL,
+  `mot_de_passe` varchar(255) DEFAULT NULL,
   `type_utilisateur` int(11) DEFAULT NULL,
   `jeton` varchar(255) DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
@@ -653,4 +653,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-26 18:18:58
+-- Dump completed on 2022-06-27 11:52:27
