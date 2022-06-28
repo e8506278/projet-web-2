@@ -46,95 +46,16 @@
         <div>
             <h4 class="graphique__titre">Bouteilles consommées</h4>
 
-          
-            
             <ul class="graphique-vertical">
-            <?php foreach ($mois as $cle =>$valeur) { 
+            <?php foreach ($moisBue as $cle =>$valeur) { 
                 foreach($valeur as $col =>$nbre){ ?>
                 <li> 
-                    <span class="graphique--police"><?php echo round(($nbre/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($nbre/$bouteille_total)*100 ?>%"></span>
+                    <span class="graphique--police"><?php echo $nbre ?></span>
+                    <span class="graphique-vertical--couleur" style="height:<?php echo ($nbre/$bouteilles_bues)*100?>%"></span>
                     <span><?php echo $col?></span>
                 </li>
-               
-                <?php }}?>
-        <!--
-                <li>
-                   
-                    <span class="graphique--police"><?php echo round(($jan/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($jan/$bouteille_total)*100 ?>%"></span>
-                    <span>Jan</span>
-                </li>
-
-                <li>
-                <span class="graphique--police"><?php echo round(($fev/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($fev/$bouteille_total)*100 ?>%"></span>
-                    <span>Fev</span>
-                </li>
-               
-                <li>
-                <span class="graphique--police"><?php echo round(($mar/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($mar/$bouteille_total)*100 ?>%"></span>
-                    <span>Mar</span>
-                </li>
-        
-                <li>
-                <span class="graphique--police"><?php echo round(($avr/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($avr/$bouteille_total)*100 ?>%"></span>
-                    <span>Avr</span>
-                </li>
-               
-                <li>
-                <span class="graphique--police"><?php echo round(($mai/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($mai/$bouteille_total)*100  ?>%"></span>
-                    <span>Mai</span>
-                </li>
-             
-                <li>
-                <span class="graphique--police"><?php echo round(($jun/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($jun/$bouteille_total)*100 ?>%"></span>
-                    <span>Jun</span>
-                </li>
-            
-                <li>
-                <span class="graphique--police"><?php echo round(($jui/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($jui/$bouteille_total)*100 ?>%"></span>
-                    <span>Juill</span>
-                </li>
-
-                <li>
-                <span class="graphique--police"><?php echo round(($aout/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($aout/$bouteille_total)*100 ?>%"></span>
-                    <span>Aout</span>
-                </li>
-               
-                <li>
-                <span class="graphique--police"><?php echo round(($sept/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($sept/$bouteille_total)*100 ?>%"></span>
-                    <span>Sept</span>
-                </li>
-           
-                <li>
-                <span class="graphique--police"><?php echo round(($oct/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($oct/$bouteille_total)*100 ?>%"></span>
-                    <span>Oct</span>
-                </li>
-
-                <li>
-                <span class="graphique--police"><?php echo round(($nov/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($nov/$bouteille_total)*100 ?>%"></span>
-                    <span>Nov</span>
-                </li>
-              
-                <li>
-                <span class="graphique--police"><?php echo round(($dec/$bouteille_total)*100,2) ?>%</span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($dec/$bouteille_total)*100 ?>%"></span>
-                    <span>Dec</span>
-                </li>
-
-                -->
-                
-                </ul>    
+            <?php }}?>
+            </ul>    
         </div>
         <!--3-VALEUR DES DIFFÉRENTS CELLIERS-->
         <div>
@@ -143,7 +64,23 @@
         <!--4-AJOUT DE BOUTEILLE-->
         <div>
             <h4>Bouteilles ajoutée</h4>
+
+            <ul class="graphique-vertical">
+            <?php foreach ($mois as $cle =>$valeur) { 
+                foreach($valeur as $col =>$nbre){ ?>
+                <li> 
+                    <span class="graphique--police"><?php echo $nbre ?></span>
+                    <span class="graphique-vertical--couleur" style="height:<?php echo ($nbre/$bouteilles_achat)*100?>%"></span>
+                    <span><?php echo $col?></span>
+                </li>
+            <?php }}?>
+            </ul>    
         </div>
     </div>
     
+
+
+
+   
+                
 </section>

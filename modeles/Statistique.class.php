@@ -90,22 +90,53 @@ class Statistique extends Modele
     }
 
     public function getBouteilleBues($id_usager){
-        $quantite_bouteille=0;
+
         $rows = array();
 
         $res = $this->_db->query("SELECT * FROM bouteille_action WHERE id_usager = '$id_usager' AND action = 'd'");
            
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
-               
-                
+
                 $row['date_creation'] = explode("-", $row['date_creation']);
                 $rows[] = $row; 
 
             }
         }
-      
         return $rows;
-    }
+    }   
     
+    
+    public function getBouteilleAjouts($id_usager){
+
+        $rows = array();
+
+        $res = $this->_db->query("SELECT * FROM bouteille_action WHERE id_usager = '$id_usager' AND action = 'a'");
+           
+        if ($res->num_rows) {
+            while ($row = $res->fetch_assoc()) {
+
+                $row['date_creation'] = explode("-", $row['date_creation']);
+                $rows[] = $row; 
+
+            }
+        }
+        return $rows;
+    }    
+    public function getBouteilleActionTotal($id_usager){
+
+        $rows = array();
+
+        $res = $this->_db->query("SELECT SUM(quantite_bouteille) FROM bouteille_action WHERE id_usager = '$id_usager' ");
+           
+        if ($res->num_rows) {
+            while ($row = $res->fetch_assoc()) {
+
+                $rows[] = $row; 
+
+            }
+        }
+        $total = intval($rows[0]['SUM(quantite_bouteille)']);
+        return $total;
+    }    
 }
