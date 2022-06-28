@@ -15,6 +15,52 @@ class Bouteille extends Modele
 {
     const TABLE = 'vino__bouteille';
 
+
+    public function getAdminBouteilles()
+    {
+        $rows = array();
+
+        $requete = "SELECT id_bouteille, id_cellier, nom_bouteille, url_saq
+                    FROM usager__bouteille 
+                    ORDER BY id_bouteille";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
+    public function getAdminRevisions()
+    {
+        $rows = array();
+
+        $requete = "SELECT id_bouteille, id_cellier, nom_bouteille, url_saq
+                    FROM usager__bouteille
+                    WHERE  id_bouteille = 1000000
+                    ORDER BY id_bouteille";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
     public function getListeBouteille()
     {
 
@@ -47,27 +93,6 @@ class Bouteille extends Modele
                     WHERE usager__bouteille.id_cellier = '$id_cellier' 
                     AND usager__bouteille.quantite_bouteille > 0 
                     ORDER BY id_bouteille DESC ";
-
-        if (($res = $this->_db->query($requete)) == true) {
-            if ($res->num_rows) {
-                while ($row = $res->fetch_assoc()) {
-                    $rows[] = $row;
-                }
-            }
-        } else {
-            throw new Exception("Erreur de requête sur la base de donnée", 1);
-        }
-        return $rows;
-    }
-
-
-    public function getAdminBouteilles()
-    {
-        $rows = array();
-
-        $requete = "SELECT id_bouteille, id_cellier, nom_bouteille, url_saq, quantite_bouteille, prix_bouteille, date_achat, millesime 
-                    FROM usager__bouteille 
-                    ORDER BY id_bouteille";
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {

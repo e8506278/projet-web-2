@@ -100,11 +100,17 @@ class Controler
             case 'lireAdminBouteilles':
                 $this->lireAdminBouteilles();
                 break;
+            case 'lireAdminCelliers':
+                $this->lireAdminCelliers();
+                break;
+            case 'lireAdminRevisions':
+                $this->lireAdminRevisions();
+                break;
+            case 'lireAdminUsagers':
+                $this->lireAdminUsagers();
+                break;
             case 'accueil':
                 $this->accueil();
-                break;
-            case 'test':
-                $this->test();
                 break;
             case '':
                 $this->accueil();
@@ -114,12 +120,6 @@ class Controler
                 break;
         }
     }
-
-    private function test()
-    {
-        include("vues/test.php");
-    }
-
 
     /**
      * Cette méthode renvoi selon si l'utilisateur est connecté ou non
@@ -408,8 +408,50 @@ class Controler
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $bte = new Bouteille();
-            $listeBouteille = $bte->getAdminBouteilles();
-            echo json_encode($listeBouteille);
+            $listeBouteilles = $bte->getAdminBouteilles();
+            echo json_encode($listeBouteilles);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminCelliers()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $celliers = new Cellier();
+            $listeCelliers = $celliers->getAdminCelliers();
+            echo json_encode($listeCelliers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminRevisions()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $bte = new Bouteille();
+            $listeRevisions = $bte->getAdminRevisions();
+            echo json_encode($listeRevisions);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUsagers()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $usagers = new Usager();
+            $listeUsagers = $usagers->getAdminUsagers();
+            echo json_encode($listeUsagers);
         } else {
             include("vues/entete.php");
             include("vues/connexion.php");

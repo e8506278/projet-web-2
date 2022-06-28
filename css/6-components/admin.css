@@ -64,7 +64,7 @@
 }
 
 body {
-    background-color: rgb(42, 43, 61);
+    background-color: #524E47;
     margin: 0;
     padding: 0;
 }
@@ -72,37 +72,42 @@ body {
 svg {
     fill: #f3f4f6;
     width: 75px;
-    margin: 0 1rem;
 }
 
 .card {
     display: flex;
+    padding: var(--espace-p);
+}
+
+.card>*+* {
+    margin-left: var(--espace-p);
 }
 
 .card .box {
+    align-items: center;
+    border-radius: 3px;
     display: flex;
     flex-direction: column;
-    position: relative;
-    overflow: hidden;
-    border-radius: 3px;
     flex-grow: 1;
     justify-content: center;
+    overflow: hidden;
+    position: relative;
 }
 
+.card .box h1,
 .card .box h3 {
-    font-size: 1.5rem;
-    margin: 1rem 00;
+    display: flex;
+    justify-content: center;
+    margin: 0;
     padding: 0;
 }
 
-.card .box h3::after {
-    content: "";
-    height: 2px;
-    width: 90%;
-    margin: auto;
-    background-color: rgba(255, 255, 255, 0.12);
-    display: block;
-    margin-top: 1rem;
+.card .box h1 {
+    font-size: var(--espace-l);
+}
+
+.card .box h3 {
+    font-size: var(--espace-p);
 }
 
 .card .box p {
@@ -158,23 +163,34 @@ svg {
     }
 }
 
-.bg-revision {
+.card {
     background-color: #44413B;
+    color: #f3f4f6;
+    cursor: pointer;
+    height: 140px;
+}
+
+.carte-bouteille.selected,
+.err-bouteille {
+    background-color: #04AA6D;
     color: #f3f4f6;
 }
 
-.bg-usager {
-    background-color: #44413B;
+.carte-cellier.selected,
+.err-cellier {
+    background-color: #276880;
     color: #f3f4f6;
 }
 
-.bg-cellier {
-    background-color: #44413B;
+.carte-revision.selected,
+.err-revision {
+    background-color: #c21858;
     color: #f3f4f6;
 }
 
-.bg-bouteille {
-    background-color: #44413B;
+.carte-usager.selected,
+.err-usager {
+    background-color: #572780;
     color: #f3f4f6;
 }
 
@@ -205,17 +221,6 @@ input[type="color"]:focus {
     border-radius: 0;
 }
 
-/* Component level style */
-input[type="text"],
-input[type="text"]:focus {
-    border: none;
-    border-bottom: 3px solid #ddd;
-    border-radius: 0;
-    height: 70px;
-    font-size: 32px;
-    padding: 5px;
-}
-
 ::placeholder {
     /* Firefox, Chrome, Opera */
     color: #ddd !important;
@@ -237,12 +242,10 @@ h1 {
 }
 
 .err {
-    display: none;
     font-size: 18px;
     padding: 15px;
-    border-bottom: 5px solid black;
-    background-color: #fcf113;
-    border-radius: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .dev-signature ul {
@@ -260,12 +263,6 @@ h1 {
 
 /* Very basic media queries */
 @media (max-width: 1200px) {
-
-    .speech-bubble-left,
-    .speech-bubble-right {
-        display: none !important;
-    }
-
     table {
         font-size: 12px;
         overflow: hidden;
@@ -286,40 +283,67 @@ h1 {
     }
 }
 
+.filtre-wrapper {
+    background-color: #04AA6D;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin: var(--espace-p) 0;
+}
+
+.filtre-wrapper>*:first-child {
+    margin: 0 var(--espace-p);
+}
+
+.filtre-table {
+    flex-grow: 1;
+    line-height: 1.5;
+    padding: var(--espace-xp);
+}
+
 .table-wrapper {
     display: flex;
 }
 
-.table-wrapper .table {
+.table-wrapper>div {
+    width: 100%;
+}
+
+.table-wrapper table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.table-wrapper .table td,
-.table-wrapper .table th {
+.table-wrapper table td,
+.table-wrapper table th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-.table-wrapper .table tr {
+.table-wrapper table tr {
     background-color: #ffffff;
 }
 
-.table-wrapper .table tr:nth-child(even) {
+.table-wrapper table tr:nth-child(even) {
     background-color: #cfcfcf;
 }
 
-.table-wrapper .table tr:hover {
+.table-wrapper table tr:hover {
     background-color: #019879;
     color: #ffffff;
 }
 
-.table-wrapper .table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
+.table-wrapper table th {
     background-color: #04AA6D;
     color: white;
-    text-align: left;
     cursor: pointer;
+    padding: 0;
+    text-align: left;
+}
+
+.table-wrapper table th span {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
 }
