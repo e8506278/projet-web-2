@@ -103,7 +103,7 @@ DROP TABLE IF EXISTS `usager__bouteille`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usager__bouteille` (
   `id_bouteille` int(11) NOT NULL AUTO_INCREMENT,
-  `id_cellier` int(11) NOT NULL,
+  `id_cellier` int(11) DEFAULT NULL,
   `nom_bouteille` varchar(200) DEFAULT NULL,
   `quantite_bouteille` int(11) DEFAULT NULL,
   `prix_bouteille` varchar(10) DEFAULT NULL,
