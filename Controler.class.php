@@ -136,7 +136,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1 , "a");
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager,$body->id, 1 , "a");
     }
 
 
@@ -213,7 +213,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1, "d");
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager,$body->id, 1, "d");
     }
 
 
