@@ -14,6 +14,31 @@ class Cellier extends Modele
 {
     const TABLE = 'usager__cellier';
 
+
+    public function getAdminCelliers()
+    {
+        $rows = array();
+
+        $requete = "SELECT id_cellier, id_usager, nom_cellier, T2.nom_type_cellier AS type_cellier
+                    FROM usager__cellier AS T1 
+                    LEFT JOIN vino__type_cellier AS T2 
+                    ON T1.type_cellier_id = T2.id_type_cellier
+                    ORDER BY id_cellier";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
     /**
      * Cette méthode récupère la liste des celliers d'un usagé
      * 
@@ -27,7 +52,7 @@ class Cellier extends Modele
     public function getListeCellier($id)
     {
 
-      
+
         $rows = array();
         $requete = "SELECT usager__cellier.id_cellier, id_usager, nom_cellier, description_cellier, type_cellier_id, 
                     SUM(quantite_bouteille)as bouteille_total, 
@@ -76,7 +101,7 @@ class Cellier extends Modele
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
                     $row['nom_cellier'] = trim(utf8_encode($row['nom_cellier']));
-                   // $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
+                    // $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
                     $rows[] = $row;
                 }
             }
