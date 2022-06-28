@@ -188,10 +188,11 @@ class Controler
      */
     private function ajouterQteBouteille()
     {
+        $id_usager = $_SESSION['utilisateur']['id'];
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1, "a");
+        $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager,$body->id, 1, "a");
     }
 
 
@@ -388,6 +389,7 @@ class Controler
      */
     private function listerBouteilleCellier()
     {
+        $id_usager = $_SESSION['utilisateur']['id'];
         if (filter_has_var(INPUT_GET, 'id_cellier')) {
 
             $id_cellier = filter_var($_GET['id_cellier'], FILTER_SANITIZE_NUMBER_INT);
@@ -533,9 +535,10 @@ class Controler
      */
     private function reduireQteBouteille()
     {
+        $id_usager = $_SESSION['utilisateur']['id'];
         $body = json_decode(file_get_contents('php://input'));
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id, 1,"d");
+        $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager,$body->id, 1,"d");
     }
 
 
@@ -574,7 +577,110 @@ class Controler
      */
     private function statistiquesUtilisateur(){
 
+        $jan = $fev = $mar = $avr = $mai = $jun = $jui = $aout = $sept = $oct = $nov = $dec = 0;
+        $mois = [
+            '01' => ['Jan' => $jan],
+            '02' => ['Fev' => $fev],
+            '03' => ['Mar' => $mar],
+            '04' => ['Avr' => $avr],
+            '05' => ['Mai' => $mai],
+            '06' => ['Juin' => $jun],
+            '07' => ['Juill' => $jui],
+            '08' => ['Août' => $aout],
+            '09' => ['Sept' => $sept],
+            '10' => ['Oct' => $oct],
+            '11' => ['Nov' => $nov],
+            '12' => ['Dec' => $dec],
+            
+        ];
+        /*
+        $mois = ['01' ['Jan'=> $jan],
+                '02'['Fev'=> $fev],
+                '03'['Mar'=>$mar],
+                '04'=>$avr, '05'=>$mai ,'06'=>$jun ,'07'=>$jui, '08'=>$aout, '09'=>$sept,'10'=> $oct,'11'=>$nov, '12'=>$dec];
+        */
+        $id_cellier = 0;
+        $bouteille_total = 0;
+        $id_usager = $_SESSION['utilisateur']['id'];
+      
+        $celliers = new Cellier();
+
+        $data = $celliers->getListeCellier($id_usager);
+
+        //echo json_encode($data);
+
+  
+        $stats = new Statistique();
+        //TYPE DE VIN
+        $types = $stats->getTypeVinCellier($id_usager,$id_cellier);
         
+        // BOUTEILLES BUES
+        $actions = $stats->getBouteilleBues($id_usager);
+       
+        foreach($actions as $action){
+            $bouteille_total += $action['quantite_bouteille'];
+            foreach($mois as $cle =>$valeur){
+                
+                if($action['date_creation'][1] === $cle){
+                    foreach($valeur as $val =>$nbre){
+                        
+                        $nbre += $action['quantite_bouteille'];
+                        $mois[$cle][$val] = $nbre;
+                     
+                    }
+                  
+                    
+                    
+                       
+                    /*
+                    $valeur += $action['quantite_bouteille'];
+                    $mois[$cle] = $valeur;
+                    */
+                }
+            }
+            
+           
+           /*
+            if($action['date_creation'][1] == "01"){
+                $jan += $action['quantite_bouteille'];
+            }
+            if($action['date_creation'][1] == "02"){
+                $fev += $action['quantite_bouteille'];
+            }
+            if($action['date_creation'][1] == "03"){
+                $mar += $action['quantite_bouteille'];
+            }            
+            if($action['date_creation'][1] == "04"){
+                $avr += $action['quantite_bouteille'];
+            }
+            if($action['date_creation'][1] == "05"){
+                $mai += $action['quantite_bouteille']; 
+            }           
+            if($action['date_creation'][1] == "06"){
+                $jun += $action['quantite_bouteille']; 
+            }
+            if($action['date_creation'][1] == "07"){
+                $jui += $action['quantite_bouteille'];
+            }  
+            if($action['date_creation'][1] == "08"){
+                $aout += $action['quantite_bouteille'];
+            }
+            if($action['date_creation'][1] == "09"){
+                $sept += $action['quantite_bouteille'];
+            }  
+            if($action['date_creation'][1] == "10"){
+                $oct += $action['quantite_bouteille'];
+            }  
+            if($action['date_creation'][1] == "11"){
+                $nov += $action['quantite_bouteille'];
+            }  
+            if($action['date_creation'][1] == "12"){
+                $dec += $action['quantite_bouteille'];
+            }               
+            */
+        }
+        
+
         include("vues/entete.php");
         include("vues/statistiques.php");
         include("vues/pied.php");

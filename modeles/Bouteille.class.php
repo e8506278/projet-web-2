@@ -310,37 +310,27 @@ class Bouteille extends Modele
     /**
      * Cette méthode change la quantité d'une bouteille en particulier dans le cellier
      *
+     * @param int $id_usager , id de session de l'usager
      * @param int $id id de la bouteille
+     * 
      * @param int $nombre Nombre de bouteille a ajouter ou retirer
      * 
      * @return String Si les id et nombre ne sont pas des caractères numériques
      *
      */
-    public function modifierQuantiteBouteilleCellier($id, $nombre, $action)
+    public function modifierQuantiteBouteilleCellier($id_usager,$id, $nombre, $action)
     {
-       
-        $this->_db->begin_transaction();
-        try{
-
-            if (is_numeric($id) && is_numeric($nombre)) {
-                $this->_db->query("INSERT INTO bouteille_action SET id_bouteille = '$id', quantite_bouteille =  '$nombre', action = '$action'");
+            if (is_numeric($id_usager) && is_numeric($id) && is_numeric($nombre)) {
+                $requete = $this->_db->query("INSERT INTO bouteille_action SET id_usager = '$id_usager', id_bouteille = '$id', quantite_bouteille =  '$nombre', action = '$action'");
                 if($action == "a"){
                     $nombre = 1;
                 }else{
                     $nombre = -1;
                 }
-                $this->_db->query("UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = '$id'");
-
-                $this->_db->commit();
-            
+               
+                $modele = new Modele();
+                $res = $modele->ajusterQuantiteBouteille($id);
             }   
-
-        }catch(\Throwable $e){
-            $this->_db->rollback();
-        throw $e;
-        }
-        
-
     }
 
 

@@ -125,7 +125,7 @@ import { fetchGetCellier } from './FetchCellier.js';
                                                 <h4 class="carte__entete carte--haut">Déplacer les bouteilles dans un autre cellier?</h4>
                                                 <label class="modal__texte" for="celliers">Choisir un cellier :
                                                     <select data-js-selectcellier >
-                                                        <option value="0">---</option>
+                                                        <option value="null">---</option>
                                                     </select>
                                                     <small class="carte__erreur"data-js-erreurchoix></small>
                                                 </label>

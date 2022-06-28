@@ -18,7 +18,7 @@
 		<base href="<?php echo BASEURL; ?>">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 		<!--<script src="./js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
-		
+		<script  src="./js/Statistiques/statistiques.js"defer></script>
 		<script  src="./js/connexion.js"defer></script>
 		<script  src="./js/enregistrement.js" defer></script>
     <script type="module" src="./js/Celliers/celliers.js" defer></script>
