@@ -74,6 +74,7 @@ class Bouteille extends Modele
                           ub.image_bouteille,
                           ub.code_saq,
                           ub.code_cup,
+       
                           ub.pays_id,
                           ub.region_id,
                           ub.type_de_vin_id,
@@ -90,6 +91,8 @@ class Bouteille extends Modele
                           ub.taux_de_sucre_id,
                           ub.degre_alcool_id,
                           ub.produit_du_quebec_id,
+       
+       
                           ub.biodynamique,
                           ub.casher,
                           ub.desalcoolise,
@@ -104,17 +107,17 @@ class Bouteille extends Modele
                          ub.prix_bouteille, 
                           ub.note, 
               
-                         pays.nom AS nom_pays,
-                         region.nom as nom_region,
-                         typ.nom as nom_type,
-                         format.nom as nom_format,
-                         appel.nom as nom_appellation,
-                         designation.nom as nom_designation,
-                         cepages.nom as nom_cepages,
-                         ts.nom as nom_taux_de_sucre,
-                         da.nom as nom_degre_alcool,
-                         pc.nom as nom_produit_du_quebec,
-                         classif.nom as nom_classification
+                         ub.pays_nom,
+                         ub.region_nom,
+                         ub.type_de_vin_nom ,
+                         ub.format_nom ,
+                         ub.appellation_nom ,
+                         ub.designation_nom,
+                         ub.cepage_nom,
+                         ub.taux_de_sucre_nom,
+                         ub.degre_alcool_nom ,
+                         ub.produit_du_quebec_nom,
+                         ub.classification_nom
 
                         from vino__bouteille b
                         LEFT JOIN usager__bouteille ub ON ub.id_bouteille = b.id_bouteille
@@ -164,7 +167,33 @@ class Bouteille extends Modele
 						ub.commentaires, 
 						ub.note, 
        
-                        uc.nom_cellier as nom_cellier,
+                        ub.pays_revision,
+                        ub.region_revision,
+                        ub.type_de_vin_revision,
+                        ub.format_revision,
+                        ub.appellation_revision,
+                        ub.designation_revision,
+                        ub.classification_revision,
+                        ub.cepage_revision,
+                        ub.taux_de_sucre_revision,
+                        ub.degre_alcool_revision,
+                        ub.produit_du_quebec_revision,
+       
+       
+                         pays.nom AS pays_nom,
+                         region.nom as region_nom,
+                         typ.nom as type_de_vin_nom,
+                         format.nom as format_nom,
+                         appel.nom as appellation_nom,
+                         designation.nom as designation_nom,
+                         cepages.nom as cepage_nom,
+                         ts.nom as taux_de_sucre_nom,
+                         da.nom as degre_alcool_nom,
+                         pc.nom as produit_du_quebec_nom,
+                         classif.nom as classification_nom,
+                        
+                        
+                         uc.nom_cellier as nom_cellier,
 					
                           b.id_bouteille,
                           b.nom_bouteille,

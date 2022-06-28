@@ -37,40 +37,39 @@ if(isset($_POST['estCommentaire'])){
 
     $list = new Lists();
 
-    $pays = $list->findElementByName('pays', $_POST['nom_pays']);
-    if(count($pays) > 0){ $pays_id  = $pays[0]['id'];} else { $pays_id = $list->creerNouveauElement('pays',  $_POST['nom_pays']);}
+    $pays = $list->findElementByName('pays', $_POST['pays_nom']);
+    if(count($pays) > 0){ $pays_id  = $pays[0]['id'];}// else { $pays_id = $list->creerNouveauElement('pays',  $_POST['pays_nom']);}
 
-    $region = $list->findElementByName('region', $_POST['nom_region']);
-    if(count($region) > 0){ $region_id = $region[0]['id'];} else { $region_id = $list->creerNouveauElement('region',  $_POST['nom_region']);}
+    $region = $list->findElementByName('region', $_POST['region_nom']);
+    if(count($region) > 0){ $region_id = $region[0]['id'];} //else { $region_id = $list->creerNouveauElement('region',  $_POST['region_nom']);}
 
 
-    $type = $list->findElementByName('type', $_POST['nom_type']);
-    if(count($type) > 0){ $type_id = $type[0]['id'];} else { $type_id = $list->creerNouveauElement('type',  $_POST['nom_type']);}
+    $type = $list->findElementByName('type', $_POST['type_de_vin_nom']);
+    if(count($type) > 0){ $type_id = $type[0]['id'];}// else { $type_id = $list->creerNouveauElement('type',  $_POST['type_de_vin_nom']);}
 
-    $format = $list->findElementByName('format', $_POST['nom_format']);
-    if(count($format) > 0){ $format_id = $format[0]['id'];} else { $format_id = $list->creerNouveauElement('format',  $_POST['nom_format']);}
+    $format = $list->findElementByName('format', $_POST['format_nom']);
+    if(count($format) > 0){ $format_id = $format[0]['id'];}// else { $format_id = $list->creerNouveauElement('format',  $_POST['format_nom']);}
 
-    $appellation = $list->findElementByName('appellation', $_POST['nom_appellation']);
-    if(count($appellation) > 0){ $appellation_id = $appellation[0]['id'];} else { $appellation_id = $list->creerNouveauElement('appellation',  $_POST['nom_appellation']);}
+    $appellation = $list->findElementByName('appellation', $_POST['appellation_nom']);
+    if(count($appellation) > 0){ $appellation_id = $appellation[0]['id'];} //else { $appellation_id = $list->creerNouveauElement('appellation',  $_POST['appellation_nom']);}
 
-    $designation = $list->findElementByName('designation', $_POST['nom_designation']);
-    if(count($designation) > 0){ $designation_id = $designation[0]['id'];} else { $designation_id = $list->creerNouveauElement('designation',  $_POST['nom_designation']);}
+    $designation = $list->findElementByName('designation', $_POST['designation_nom']);
+    if(count($designation) > 0){ $designation_id = $designation[0]['id'];}// else { $designation_id = $list->creerNouveauElement('designation',  $_POST['designation_nom']);}
 
-    $cepage = $list->findElementByName('cepages', $_POST['nom_cepages']);
+    $cepage = $list->findElementByName('cepages', $_POST['cepage_nom']);
+    if(count($cepage) > 0){ $cepages_id = $cepage[0]['id'];} // else { $cepages_id = $list->creerNouveauElement('cepages',  $_POST['cepage_nom']);}
 
-    if(count($cepage) > 0){ $cepages_id = $cepage[0]['id'];}  else { $cepages_id = $list->creerNouveauElement('cepages',  $_POST['nom_cepages']);}
+    $taux_de_sucre = $list->findElementByName('taux_de_sucre', $_POST['taux_de_sucre_nom']);
+    if(count($taux_de_sucre) > 0){ $taux_de_sucre_id = $taux_de_sucre[0]['id'];} // else { $taux_de_sucre_id = $list->creerNouveauElement('taux_de_sucre',  $_POST['taux_de_sucre_nom']);}
 
-    $taux_de_sucre = $list->findElementByName('taux_de_sucre', $_POST['nom_taux_de_sucre']);
-    if(count($taux_de_sucre) > 0){ $taux_de_sucre_id = $taux_de_sucre[0]['id'];}  else { $taux_de_sucre_id = $list->creerNouveauElement('taux_de_sucre',  $_POST['nom_taux_de_sucre']);}
+    $degre_alcool = $list->findElementByName('degre_alcool', $_POST['degre_alcool_nom']);
+    if(count($degre_alcool) > 0){ $degre_alcool_id = $degre_alcool[0]['id'];} //else { $degre_alcool_id = $list->creerNouveauElement('degre_alcool',  $_POST['degre_alcool_nom']);}
 
-    $degre_alcool = $list->findElementByName('degre_alcool', $_POST['nom_degre_alcool']);
-    if(count($degre_alcool) > 0){ $degre_alcool_id = $degre_alcool[0]['id'];} else { $degre_alcool_id = $list->creerNouveauElement('degre_alcool',  $_POST['nom_degre_alcool']);}
+    $produit_du_quebec = $list->findElementByName('produit_du_quebec', $_POST['produit_du_quebec_nom']);
+    if(count($produit_du_quebec) > 0){ $produit_du_quebec_id = $produit_du_quebec[0]['id'];}// else { $produit_du_quebec_id = $list->creerNouveauElement('produit_du_quebec',  $_POST['produit_du_quebec_nom']);}
 
-    $produit_du_quebec = $list->findElementByName('produit_du_quebec', $_POST['nom_produit_du_quebec']);
-    if(count($produit_du_quebec) > 0){ $produit_du_quebec_id = $produit_du_quebec[0]['id'];} else { $produit_du_quebec_id = $list->creerNouveauElement('produit_du_quebec',  $_POST['nom_produit_du_quebec']);}
-
-    $classification = $list->findElementByName('classifications', $_POST['nom_classification']);
-    if(count($classification) > 0){ $classification_id = $classification[0]['id'];} else { $classification_id = $list->creerNouveauElement('classifications',  $_POST['nom_classification']);}
+    $classification = $list->findElementByName('classifications', $_POST['classification_nom']);
+    if(count($classification) > 0){ $classification_id = $classification[0]['id'];}// else { $classification_id = $list->creerNouveauElement('classifications',  $_POST['classification_nom']);}
 
 
 
@@ -126,17 +125,28 @@ if(isset($_POST['estCommentaire'])){
                             produit_bio,
                             vin_nature,
                             vin_orange,
-                            pays_id,
-                            region_id,
-                            type_de_vin_id,
-                            format_id,
-                            appellation_id,
-                            designation_id,
-                            cepage_id,
-                            taux_de_sucre_id,
-                            degre_alcool_id,
-                            produit_du_quebec_id,
-                            classification_id, 
+                            pays_revision,
+                            pays_nom,
+                            region_revision,
+                            region_nom,
+                            type_de_vin_revision,
+                            type_de_vin_nom,
+                            format_revision,
+                            format_nom,
+                            appellation_revision,
+                            appellation_nom,
+                            designation_revision,
+                            designation_nom,
+                            cepage_revision,
+                            cepage_nom,
+                            taux_de_sucre_revision,
+                            taux_de_sucre_nom,
+                            degre_alcool_revision,
+                            degre_alcool_nom,
+                            produit_du_quebec_revision,
+                            produit_du_quebec_nom,
+                            classification_revision, 
+                            classification_nom, 
                             quantite_bouteille ,
                             date_achat ,
                             garde_jusqua ,
@@ -160,17 +170,39 @@ if(isset($_POST['estCommentaire'])){
                           ".(isset($_POST['produit_bio'])? 1: 0).",
                           ".(isset($_POST['vin_nature'])? 1: 0).",
                           ".(isset($_POST['vin_orange'])? 1: 0).",
-                          ".($pays_id ?: 'NULL').",
-                          ".($region_id?: 'NULL').",
-                          ".($type_id ?: 'NULL').",
-                          ".($format_id ?: 'NULL').",
-                          ".($appellation_id ?: 'NULL').",
-                          ".($designation_id ?: 'NULL').",
-                          ".($cepages_id ?: 'NULL').",
-                          ".($taux_de_sucre_id ?: 'NULL').",
-                          ".($degre_alcool_id ?: 'NULL').",
-                          ".($produit_du_quebec_id ?: 'NULL').",
-                          ".($classification_id ?: 'NULL').",
+                          ".($pays_id ? 'NULL': 1).",
+                          '".$_POST['pays_nom']."',
+                          
+                          ".($region_id? 'NULL': 1).",
+                          '".$_POST['region_nom']."',
+                          
+                          ".($type_id ? 'NULL': 1).",
+                           '".$_POST['type_de_vin_nom']."',
+                         
+                          ".($format_id ? 'NULL': 1).",
+                           '".$_POST['format_nom']."',
+                           
+                          ".($appellation_id ? 'NULL': 1).",
+                            '".$_POST['appellation_nom']."',
+                            
+                          ".($designation_id ? 'NULL': 1).",
+                           '".$_POST['designation_nom']."',
+                          
+                          ".($cepages_id ? 'NULL': 1).",
+                          '".$_POST['cepage_nom']."',
+                          
+                          ".($taux_de_sucre_id ? 'NULL': 1).",
+                           '".$_POST['taux_de_sucre_nom']."',
+                          
+                          ".($degre_alcool_id ? 'NULL': 1).",
+                           '".$_POST['degre_alcool_nom']."',
+                           
+                          ".($produit_du_quebec_id ? 'NULL': 1).",
+                          '".$_POST['produit_du_quebec_nom']."',
+                          
+                          ".($classification_id ? 'NULL': 1).",
+                          '".$_POST['classification_nom']."',
+                          
                           '".($cellier['quantite'] ?: 0)."',
                           ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
                           ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
@@ -197,17 +229,30 @@ if(isset($_POST['estCommentaire'])){
                             produit_bio=  ".(isset($_POST['produit_bio']) ? 1: 0).",
                             vin_nature=  ".(isset($_POST['vin_nature']) ? 1: 0).",
                             vin_orange=  ".(isset($_POST['vin_orange']) ? 1: 0).",
-                            pays_id=  ".($pays_id?: 'NULL').",
-                            region_id=  ".($region_id ?: 'NULL').",
-                            type_de_vin_id=  ".($type_id ?: 'NULL').",
-                            format_id=  ".($format_id ?: 'NULL').",
-                            appellation_id=  ".($appellation_id ?: 'NULL').",
-                            designation_id=  ".($designation_id ?: 'NULL').",
-                            cepage_id=  ".($cepages_id ?: 'NULL').",
-                            taux_de_sucre_id=  ".($taux_de_sucre_id ?: 'NULL').",
-                            degre_alcool_id=  ".($degre_alcool_id ?: 'NULL').",
-                            produit_du_quebec_id=  ".($produit_du_quebec_id ?: 'NULL').",
-                            classification_id  =  ".($classification_id ?: 'NULL').",
+                          
+                            pays_revision=  ".($pays_id ? 'NULL': 1).",
+                            pays_nom=  '".$_POST['pays_nom']."',
+                            region_revision=  ".($region_id ? 'NULL': 1).",
+                            region_nom=  '".$_POST['region_nom']."',
+                            type_de_vin_revision=  ".($type_id ? 'NULL': 1).",
+                            type_de_vin_nom= '".$_POST['type_de_vin_nom']."',
+                            format_revision=  ".($format_id ? 'NULL': 1).",
+                            format_nom= '".$_POST['format_nom']."',
+                            appellation_revision=  ".($appellation_id ? 'NULL': 1).",
+                            appellation_nom= '".$_POST['appellation_nom']."',
+                            designation_revision=  ".($designation_id ? 'NULL': 1).",
+                            designation_nom=  '".$_POST['designation_nom']."',
+                            cepage_revision=  ".($cepages_id ? 'NULL': 1).",
+                            cepage_nom= '".$_POST['cepage_nom']."',
+                            taux_de_sucre_revision=  ".($taux_de_sucre_id ? 'NULL': 1).",
+                            taux_de_sucre_nom= '".$_POST['taux_de_sucre_nom']."',
+                            degre_alcool_revision=  ".($degre_alcool_id ? 'NULL': 1).",
+                            degre_alcool_nom= '".$_POST['degre_alcool_nom']."',
+                            produit_du_quebec_revision=  ".($produit_du_quebec_id ?  'NULL': 1).",
+                            produit_du_quebec_nom=  '".$_POST['produit_du_quebec_nom']."',
+                            classification_revision  =  ".($classification_id ? 'NULL': 1).",
+                            classification_nom  =  '".$_POST['classification_nom']."',
+                           
                             quantite_bouteille = '".($cellier['quantite'] ?: 0)."',
                             date_achat = ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
                             garde_jusqua = ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
