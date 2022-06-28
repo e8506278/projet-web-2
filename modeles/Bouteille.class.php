@@ -61,6 +61,27 @@ class Bouteille extends Modele
     }
 
 
+    public function getAdminBouteilles()
+    {
+        $rows = array();
+
+        $requete = "SELECT id_bouteille, id_cellier, nom_bouteille, url_saq, quantite_bouteille, prix_bouteille, date_achat, millesime 
+                    FROM usager__bouteille 
+                    ORDER BY id_bouteille";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+        return $rows;
+    }
+
+
     public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();
