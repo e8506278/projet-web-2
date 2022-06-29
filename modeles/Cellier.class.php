@@ -39,6 +39,46 @@ class Cellier extends Modele
     }
 
 
+    public function getAdminNbCelliers()
+    {
+        $nbTrouve = 0;
+        $requete = "SELECT COUNT(*) AS nbTrouve FROM usager__cellier";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                $row = $res->fetch_assoc();
+                $nbTrouve = $row['nbTrouve'];
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $nbTrouve;
+    }
+
+
+    public function getAdminUnCellier($id_cellier)
+    {
+        $rows = array();
+
+        $requete = "SELECT id_cellier, id_usager, nom_cellier, description_cellier, type_cellier_id
+                    FROM usager__cellier
+                    WHERE id_cellier = " . $id_cellier;
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
     /**
      * Cette méthode récupère la liste des celliers d'un usagé
      * 

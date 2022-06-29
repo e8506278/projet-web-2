@@ -13,6 +13,44 @@
  */
 class Usager extends Modele
 {
+    public function getAdminNbUsagers()
+    {
+        $nbTrouve = 0;
+        $requete = "SELECT COUNT(*) AS nbTrouve FROM usager__detail";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                $row = $res->fetch_assoc();
+                $nbTrouve = $row['nbTrouve'];
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $nbTrouve;
+    }
+
+
+    public function getAdminUnUsager($id_usager)
+    {
+        $requete = "SELECT id, nom, adresse, telephone, courriel, date_naissance, ville, nom_utilisateur, type_utilisateur, date_creation, date_modification, dernier_access
+                    FROM usager__detail
+                    WHERE id = " . $id_usager;
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
     public function getAdminUsagers()
     {
         $rows = array();

@@ -106,6 +106,15 @@ class Controler
             case 'lireAdminRevisions':
                 $this->lireAdminRevisions();
                 break;
+            case 'lireAdminUneBouteille':
+                $this->lireAdminUneBouteille();
+                break;
+            case 'lireAdminUnCellier':
+                $this->lireAdminUnCellier();
+                break;
+            case 'lireAdminUnUsager':
+                $this->lireAdminUnUsager();
+                break;
             case 'lireAdminUsagers':
                 $this->lireAdminUsagers();
                 break;
@@ -410,6 +419,54 @@ class Controler
             $bte = new Bouteille();
             $listeBouteilles = $bte->getAdminBouteilles();
             echo json_encode($listeBouteilles);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUneBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'), true);
+
+            $bte = new Bouteille();
+            $listeBouteilles = $bte->getAdminUneBouteille($body["id_bouteille"]);
+            echo json_encode($listeBouteilles);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUnCellier()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'), true);
+
+            $celliers = new Cellier();
+            $listeCelliers = $celliers->getAdminUnCellier($body["id_cellier"]);
+            echo json_encode($listeCelliers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUnUsager()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'), true);
+
+            $usagers = new Usager();
+            $listeUsagers = $usagers->getAdminUnUsager($body["id_usager"]);
+            echo json_encode($listeUsagers);
         } else {
             include("vues/entete.php");
             include("vues/connexion.php");

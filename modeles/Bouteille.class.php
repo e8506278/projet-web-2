@@ -38,6 +38,50 @@ class Bouteille extends Modele
     }
 
 
+    public function getAdminNbBouteilles()
+    {
+        $nbTrouve = 0;
+        $requete = "SELECT COUNT(*) AS nbTrouve FROM usager__bouteille";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                $row = $res->fetch_assoc();
+                $nbTrouve = $row['nbTrouve'];
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $nbTrouve;
+    }
+
+
+    public function getAdminUneBouteille($id_bouteille)
+    {
+        $rows = array();
+
+        $requete = "SELECT id_bouteille, id_cellier, nom_bouteille, quantite_bouteille, prix_bouteille, description_bouteille, 
+                            date_achat, garde_jusqua, note, commentaires, millesime, favori_bouteille, essayer_bouteille, code_saq, code_cup, pays_nom, region_nom,
+                            type_de_vin_nom, producteur, url_saq, url_img, format_nom, appellation_nom, designation_nom, classification_nom, cepage_nom, taux_de_sucre_nom,
+                            degre_alcool_nom, produit_du_quebec_nom, biodynamique, casher, desalcoolise, equitable, faible_taux_alcool, produit_bio, vin_nature, vin_orange,
+                            id_vino__bouteille 
+                    FROM usager__bouteille
+                    WHERE id_bouteille = " . $id_bouteille;
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
     public function getAdminRevisions()
     {
         $rows = array();

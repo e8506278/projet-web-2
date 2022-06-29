@@ -170,6 +170,12 @@ svg {
     height: 140px;
 }
 
+.carte-vino.selected,
+.err-vino {
+    background-color: rgb(126, 0, 63);
+    color: #f3f4f6;
+}
+
 .carte-bouteille.selected,
 .err-bouteille {
     background-color: #04AA6D;
@@ -179,12 +185,6 @@ svg {
 .carte-cellier.selected,
 .err-cellier {
     background-color: #276880;
-    color: #f3f4f6;
-}
-
-.carte-revision.selected,
-.err-revision {
-    background-color: #c21858;
     color: #f3f4f6;
 }
 
@@ -314,6 +314,27 @@ h1 {
     width: 100%;
 }
 
+.lien-externe {
+    display: flex;
+    justify-content: space-between;
+}
+
+.lien-externe a:link,
+.lien-externe a:visited,
+.lien-externe a:hover,
+.lien-externe a:active {
+    color: rgb(0, 0, 238);
+}
+
+.lien-externe svg {
+    fill: #44413B;
+    width: 20px;
+}
+
+.table-wrapper table tr:hover .lien-externe svg {
+    fill: #ffffff;
+}
+
 .table-wrapper table td,
 .table-wrapper table th {
     border: 1px solid #ddd;
@@ -346,4 +367,95 @@ h1 {
     height: 40px;
     line-height: 40px;
     text-align: center;
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-wrapper>div {
+    width: 100%;
+}
+
+.detail-wrapper table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.detail-wrapper table td,
+.detail-wrapper table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.detail-wrapper table tr {
+    background-color: #ffffff;
+}
+
+.detail-wrapper table tr:nth-child(even) {
+    background-color: #cfcfcf;
+}
+
+.detail-wrapper table tr:hover {
+    background-color: #019879;
+    color: #ffffff;
+}
+
+.detail-wrapper table th {
+    background-color: #04AA6D;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+}
+
+.detail-wrapper table th span {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.detail-boutons {
+    display: flex;
+    justify-content: flex-end;
+    margin: var(--espace-l) 0 var(--espace-xp) 0;
+}
+
+.detail-boutons>* {
+    border: 1px solid #f3f4f6;
+    cursor: pointer;
+    padding: var(--espace-xp);
+}
+
+.detail-boutons>*:hover {
+    background-color: #f3f4f6;
+    border: 1px solid transparent;
+}
+
+.detail-boutons>*+* {
+    margin-left: var(--espace-p);
+}
+
+.detail-boutons svg {
+    fill: #f3f4f6;
+    width: 20px;
+}
+
+.detail-boutons>*:hover svg {
+    fill: #44413B;
+}
+
+.vino-wrapper {
+    padding: var(--espace-l) 0;
+}
+
+.vino-wrapper>*+* {
+    margin-left: var(--espace-p);
+}
+
+#selection-table-vino {
+    line-height: 1.5;
+    padding: var(--espace-xp);
 }
