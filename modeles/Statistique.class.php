@@ -80,6 +80,7 @@ class Statistique extends Modele
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
                 $row['nom_bouteille'] = trim(utf8_encode($row['nom_bouteille']));
+                $row['pays_nom'] = trim(utf8_encode($row['pays_nom']));
                 $rows[] = $row;
                 
                
@@ -123,20 +124,6 @@ class Statistique extends Modele
         }
         return $rows;
     }    
-    public function getBouteilleActionTotal($id_usager){
-
-        $rows = array();
-
-        $res = $this->_db->query("SELECT SUM(quantite_bouteille) FROM bouteille_action WHERE id_usager = '$id_usager' ");
-           
-        if ($res->num_rows) {
-            while ($row = $res->fetch_assoc()) {
-
-                $rows[] = $row; 
-
-            }
-        }
-        $total = intval($rows[0]['SUM(quantite_bouteille)']);
-        return $total;
-    }    
+    
+    
 }

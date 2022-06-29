@@ -122,6 +122,14 @@ class Controler
 
             $data = $celliers->getListeCellier($id);
             $nombre_cellier = $celliers->nombreCellierUsager($id);
+            $bouteille_total = 0;
+            $prix_total = 0;
+            foreach($data as $cellier){        
+                $bouteille_total += $cellier['bouteille_total'];
+                $prix_total += $cellier['prix_total'];
+            }
+            $total = $prix_total*$bouteille_total;
+
             include("vues/index.php");
         } else {
             include("vues/connexion.php");
@@ -602,10 +610,19 @@ class Controler
         $id_usager = $_SESSION['utilisateur']['id'];
         $bouteilles_bues = 0;
         $bouteilles_achat = 0;
+
         $celliers = new Cellier();
-       
         $data = $celliers->getListeCellier($id_usager);
-        
+
+        // Valeur de tous les celliers
+        $bouteille_total = 0;
+        $prix_total = 0;
+        foreach($data as $cellier){        
+            $bouteille_total += $cellier['bouteille_total'];
+            $prix_total += $cellier['prix_total'];
+        }
+        $total = $prix_total*$bouteille_total;
+   
         //echo json_encode($data);
 
   
@@ -650,8 +667,7 @@ class Controler
                 }
             }
         }
-       
-        
+        $bouteilles = $stats->getInfosBouteilleUsager($id_usager,$id_cellier);
         include("vues/entete.php");
         include("vues/statistiques.php");
         include("vues/pied.php");

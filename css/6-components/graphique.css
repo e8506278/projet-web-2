@@ -29,7 +29,7 @@ z-index: 2;
 margin: var(--espace-xp) 0;
 }
 .graphique div{
-    width: 30%;
+    min-width: 70px;
 }
 .graphique .index { 
 display: block;  
@@ -60,11 +60,13 @@ margin-top: 50px;
     text-align: center;
 }
 .graphique-vertical--couleur{
-    background-color: var(--couleur-accent);
+    background-color: #006A4E ;
+    opacity: 0.7;
 }
    
-.graphique--policexp{
+.graphique--police{
     font-size: var(--police-xp);
+    padding-left: var(--espace-xp);
 }
 
 
