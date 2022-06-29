@@ -1,12 +1,31 @@
-import { orders } from './orders.js';
-
 var $baseUrl_without_parameters = window.location.href.split('?');//[0];
 $baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
 
-var caretUpClassName = 'fa fa-caret-up';
-var caretDownClassName = 'fa fa-caret-down';
-var tableData = [];
 var elTable;
+var tableData = [];
+
+const nbMaxLignesTable = 5;
+const caretUpClassName = 'fa fa-caret-up';
+const caretDownClassName = 'fa fa-caret-down';
+
+const elCartes = document.querySelectorAll('.card');
+
+const elTablesVino = document.querySelector('.carte-vino');
+const elBouteilles = document.querySelector('.carte-bouteille');
+const elCelliers = document.querySelector('.carte-cellier');
+const elUsagers = document.querySelector('.carte-usager');
+
+const elVinoWrapper = document.querySelector('.vino-wrapper');
+const elTableWrapper = document.querySelector('.table-wrapper');
+const elDetailWrapper = document.querySelector('.detail-wrapper');
+
+const elNbBouteilles = document.querySelector('.nb-bouteilles');
+const elNbCelliers = document.querySelector('.nb-celliers');
+const elNbUsagers = document.querySelector('.nb-usagers');
+
+const elNomTableVino = document.querySelector('[data-js-selection-nom-table]');
+const elSelectionVino = document.querySelector('#selection-table-vino');
+const elbtnAfficherVino = document.querySelector('.btn-afficher-vino');
 
 const trier_par = (champ, inverse, primer) => {
     const key = primer ?
@@ -24,16 +43,6 @@ const trier_par = (champ, inverse, primer) => {
     };
 };
 
-const elCartes = document.querySelectorAll('.card');
-const elTablesVino = document.querySelector('.carte-vino');
-const elBouteilles = document.querySelector('.carte-bouteille');
-const elCelliers = document.querySelector('.carte-cellier');
-const elUsagers = document.querySelector('.carte-usager');
-
-elTablesVino.addEventListener('click', () => {
-    construireListeVino();
-    selectionnerCarte(elTablesVino);
-});
 
 elBouteilles.addEventListener('click', () => {
     construireListeBouteilles();
@@ -48,6 +57,18 @@ elCelliers.addEventListener('click', () => {
 elUsagers.addEventListener('click', () => {
     construireListeUsagers();
     selectionnerCarte(elUsagers);
+});
+
+elTablesVino.addEventListener('click', () => {
+    afficherListeVino();
+    selectionnerCarte(elTablesVino);
+});
+
+elbtnAfficherVino.addEventListener('click', () => {
+    const nomTable = elSelectionVino.value;
+    elNomTableVino.innerHTML = "Table: " + nomTable;
+    elNomTableVino.dataset.jsSelectionNomTable = nomTable;
+    construireListeVino(nomTable);
 });
 
 
@@ -80,36 +101,35 @@ function basculerFleche(event) {
 function construireListeBouteilles() {
     let html = `
                 <div>
-                    <div class="filtre-wrapper">
+                    <div class="filtre-wrapper filtre-bouteille">
                         <label for="filtre-table">Commencez à taper pour filtrer la table</label>
                         <input type="text" id="filtre-table" class="filtre-table" placeholder="Rechercher..." title="Commencez à taper">
                     </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><span id="id_bouteille" class="w3-button table-column">Id bouteille <i class="caret"></span></th>
-                                <th><span id="id_cellier" class="w3-button table-column">Id Cellier <i class="caret"></span></th>
-                                <th><span id="nom_bouteille" class="w3-button table-column">Nom de la bouteille <i class="caret"></span></th>
-                                <th><span id="url_saq" class="w3-button table-column">Lien vers la SAQ <i class="caret"></span></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="table-bouteille">
+                            <thead>
+                                <tr id="table-entete">
+                                    <th><span id="id_bouteille" class="w3-button table-colonne">Id bouteille <i class="caret"></span></th>
+                                    <th><span id="id_cellier" class="w3-button table-colonne">Id Cellier <i class="caret"></span></th>
+                                    <th><span id="nom_bouteille" class="w3-button table-colonne">Nom de la bouteille <i class="caret"></span></th>
+                                    <th><span id="url_saq" class="w3-button table-colonne">Lien vers la SAQ <i class="caret"></span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                    </div>
                 </div>`;
 
     lireDonnees('lireAdminBouteilles')
-        .then(listeBouteilles => {
-            let elNbTrouve = document.querySelector('.nb-bouteilles'),
-                nbTrouve = listeBouteilles.length;
-
+        .then(donnees => {
             reinitialiserListes();
 
             // Création de la nouvelle table, si il y a des données
-            let tableWrapper = document.querySelector('.table-wrapper');
+            let nbTrouve = donnees.length;
 
-            elNbTrouve.innerHTML = nbTrouve;
-            elNbTrouve.classList.remove('inconnu');
+            elNbBouteilles.innerHTML = nbTrouve;
+            elNbBouteilles.classList.remove('inconnu');
 
             if (nbTrouve == 0) {
                 let tableVide = `
@@ -119,12 +139,12 @@ function construireListeBouteilles() {
                     </div>
                 </div>`;
 
-                tableWrapper.insertAdjacentHTML('beforeend', tableVide);
+                elTableWrapper.insertAdjacentHTML('beforeend', tableVide);
             } else {
-                tableWrapper.insertAdjacentHTML('beforeend', html);
+                elTableWrapper.insertAdjacentHTML('beforeend', html);
 
                 // On ajoute des événements à certains éléments nouvellement créés
-                let tableColumns = document.getElementsByClassName('table-column');
+                let tableColumns = document.getElementsByClassName('table-colonne');
 
                 for (let column of tableColumns) {
                     column.addEventListener('click', function (event) {
@@ -138,10 +158,18 @@ function construireListeBouteilles() {
                     filtrerDonnees();
                 });
 
-                elTable = document.getElementById('table-body');
+                // On ajuste l'entête de la liste pour tenir compte de la barre de défilement
+                let elTableEntete = document.getElementById('table-entete');
+
+                if (donnees.length > nbMaxLignesTable) {
+                    let scrollbarWidth = getScrollbarWidth();
+                    elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
+                }
 
                 // Injection des données
-                tableData = [...listeBouteilles];
+                elTable = document.getElementById('table-body');
+
+                tableData = [...donnees];
                 injecterDonnees();
 
                 let rows = elTable.getElementsByTagName("tr");
@@ -193,7 +221,6 @@ function afficherDonnees(donnees) {
                     </table>
                 </div>`;
 
-    let elDetailWrapper = document.querySelector('.detail-wrapper');
     elDetailWrapper.innerHTML = "";
     elDetailWrapper.insertAdjacentHTML('beforeend', html);
 
@@ -237,36 +264,35 @@ function afficherDonnees(donnees) {
 function construireListeCelliers() {
     let html = `
                 <div>
-                    <div class="filtre-wrapper">
+                    <div class="filtre-wrapper filtre-cellier">
                         <label for="filtre-table">Commencez à taper pour filtrer la table</label>
                         <input type="text" id="filtre-table" class="filtre-table" placeholder="Rechercher..." title="Commencez à taper">
                     </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><span id="id_cellier" class="w3-button table-column">Id cellier <i class="caret"></span></th>
-                                <th><span id="id_usager" class="w3-button table-column">Id usager <i class="caret"></span></th>
-                                <th><span id="nom_cellier" class="w3-button table-column">Nom du cellier <i class="caret"></span></th>
-                                <th><span id="type_cellier" class="w3-button table-column">type de cellier <i class="caret"></span></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="table-cellier">
+                            <thead>
+                                <tr id="table-entete">
+                                    <th><span id="id_cellier" class="w3-button table-colonne">Id cellier <i class="caret"></span></th>
+                                    <th><span id="id_usager" class="w3-button table-colonne">Id usager <i class="caret"></span></th>
+                                    <th><span id="nom_cellier" class="w3-button table-colonne">Nom du cellier <i class="caret"></span></th>
+                                    <th><span id="type_cellier" class="w3-button table-colonne">type de cellier <i class="caret"></span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                    </div>
                 </div>`;
 
     lireDonnees('lireAdminCelliers')
-        .then(listeCelliers => {
-            let elNbTrouve = document.querySelector('.nb-celliers'),
-                nbTrouve = listeCelliers.length;
-
+        .then(donnees => {
             reinitialiserListes();
 
             // Création de la nouvelle table, si il y a des données
-            let tableWrapper = document.querySelector('.table-wrapper');
+            let nbTrouve = donnees.length;
 
-            elNbTrouve.innerHTML = nbTrouve;
-            elNbTrouve.classList.remove('inconnu');
+            elNbCelliers.innerHTML = nbTrouve;
+            elNbCelliers.classList.remove('inconnu');
 
             if (nbTrouve == 0) {
                 let tableVide = `
@@ -276,12 +302,12 @@ function construireListeCelliers() {
                     </div>
                 </div>`;
 
-                tableWrapper.insertAdjacentHTML('beforeend', tableVide);
+                elTableWrapper.insertAdjacentHTML('beforeend', tableVide);
             } else {
-                tableWrapper.insertAdjacentHTML('beforeend', html);
+                elTableWrapper.insertAdjacentHTML('beforeend', html);
 
                 // On ajoute des événements à certains éléments nouvellement créés
-                let tableColumns = document.getElementsByClassName('table-column');
+                let tableColumns = document.getElementsByClassName('table-colonne');
 
                 for (let column of tableColumns) {
                     column.addEventListener('click', function (event) {
@@ -295,10 +321,18 @@ function construireListeCelliers() {
                     filtrerDonnees();
                 });
 
-                elTable = document.getElementById('table-body');
+                // On ajuste l'entête de la liste pour tenir compte de la barre de défilement
+                let elTableEntete = document.getElementById('table-entete');
+
+                if (donnees.length > nbMaxLignesTable) {
+                    let scrollbarWidth = getScrollbarWidth();
+                    elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
+                }
 
                 // Injection des données
-                tableData = [...listeCelliers];
+                elTable = document.getElementById('table-body');
+
+                tableData = [...donnees];
                 injecterDonnees();
 
                 let rows = elTable.getElementsByTagName("tr");
@@ -324,37 +358,36 @@ function construireListeCelliers() {
 function construireListeUsagers() {
     let html = `
                 <div>
-                    <div class="filtre-wrapper">
+                    <div class="filtre-wrapper filtre-usager">
                         <label for="filtre-table">Commencez à taper pour filtrer la table</label>
                         <input type="text" id="filtre-table" class="filtre-table" placeholder="Rechercher..." title="Commencez à taper">
                     </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><span id="id_usager" class="w3-button table-column">Id de l'usager <i class="caret"></span></th>
-                                <th><span id="nom_usager" class="w3-button table-column">Nom de l'usager <i class="caret"></span></th>
-                                <th><span id="courriel_usager" class="w3-button table-column">Courriel <i class="caret"></span></th>
-                                <th><span id="nom_utilisateur" class="w3-button table-column">Nom d'utilisateur <i class="caret"></span></th>
-                                <th><span id="type_usager" class="w3-button table-column">Type d'usager <i class="caret"></span></th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="table-usager">
+                            <thead>
+                                <tr id="table-entete">
+                                    <th><span id="id_usager" class="w3-button table-colonne">Id de l'usager <i class="caret"></span></th>
+                                    <th><span id="nom_usager" class="w3-button table-colonne">Nom de l'usager <i class="caret"></span></th>
+                                    <th><span id="courriel_usager" class="w3-button table-colonne">Courriel <i class="caret"></span></th>
+                                    <th><span id="nom_utilisateur" class="w3-button table-colonne">Nom d'utilisateur <i class="caret"></span></th>
+                                    <th><span id="type_usager" class="w3-button table-colonne">Type d'usager <i class="caret"></span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                    </div>
                 </div>`;
 
     lireDonnees('lireAdminUsagers')
-        .then(listeUsagers => {
-            let elNbTrouve = document.querySelector('.nb-usagers'),
-                nbTrouve = listeUsagers.length;
-
+        .then(donnees => {
             reinitialiserListes();
 
             // Création de la nouvelle table, si il y a des données
-            let tableWrapper = document.querySelector('.table-wrapper');
+            let nbTrouve = donnees.length;
 
-            elNbTrouve.innerHTML = nbTrouve;
-            elNbTrouve.classList.remove('inconnu');
+            elNbUsagers.innerHTML = nbTrouve;
+            elNbUsagers.classList.remove('inconnu');
 
             if (nbTrouve == 0) {
                 let tableVide = `
@@ -364,12 +397,12 @@ function construireListeUsagers() {
                     </div>
                 </div>`;
 
-                tableWrapper.insertAdjacentHTML('beforeend', tableVide);
+                elTableWrapper.insertAdjacentHTML('beforeend', tableVide);
             } else {
-                tableWrapper.insertAdjacentHTML('beforeend', html);
+                elTableWrapper.insertAdjacentHTML('beforeend', html);
 
                 // On ajoute des événements à certains éléments nouvellement créés
-                let tableColumns = document.getElementsByClassName('table-column');
+                let tableColumns = document.getElementsByClassName('table-colonne');
 
                 for (let column of tableColumns) {
                     column.addEventListener('click', function (event) {
@@ -383,10 +416,18 @@ function construireListeUsagers() {
                     filtrerDonnees();
                 });
 
-                elTable = document.getElementById('table-body');
+                // On ajuste l'entête de la liste pour tenir compte de la barre de défilement
+                let elTableEntete = document.getElementById('table-entete');
+
+                if (donnees.length > nbMaxLignesTable) {
+                    let scrollbarWidth = getScrollbarWidth();
+                    elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
+                }
 
                 // Injection des données
-                tableData = [...listeUsagers];
+                elTable = document.getElementById('table-body');
+
+                tableData = [...donnees];
                 injecterDonnees();
 
                 let rows = elTable.getElementsByTagName("tr");
@@ -409,14 +450,106 @@ function construireListeUsagers() {
 }
 
 
-function construireListeVino() {
-    let elNbTrouve = document.querySelector('.nb-tables-vino'),
-        nbTrouve = 13;
-
+function afficherListeVino() {
     reinitialiserListes();
+    elVinoWrapper.classList.remove("hide");
+}
 
-    elNbTrouve.innerHTML = nbTrouve;
-    elNbTrouve.classList.remove('inconnu');
+function construireListeVino(nomTable) {
+    let html = `
+                <div>
+                    <div class="filtre-wrapper filtre-vino">
+                        <label for="filtre-table">Commencez à taper pour filtrer la table</label>
+                        <input type="text" id="filtre-table" class="filtre-table" placeholder="Rechercher..." title="Commencez à taper">
+                    </div>
+
+                    <div class="table-container">
+                        <table class="table-vino entete-fixe">
+                            <thead>
+                                <tr id="table-entete">
+                                </tr>
+                            </thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                    </div>
+                </div>`;
+
+    const body = { 'nomTable': nomTable };
+
+    lireDonnees('lireTableVino', body)
+        .then(donnees => {
+            reinitialiserListes();
+
+            // Création de la nouvelle table, si il y a des données
+            elTableWrapper.insertAdjacentHTML('beforeend', html);
+
+            // Création de l'entête de la table
+            let elTableEntete = document.getElementById('table-entete');
+            elTableEntete.innerHTML = "";
+
+            for (let i = 0, l = Object.keys(donnees[0]).length; i < l; i++) {
+                const colonne = Object.keys(donnees[0])[i];
+                const lesMots = colonne.split("_");
+
+                lesMots[0] = lesMots[0].charAt(0).toUpperCase() + lesMots[0].slice(1);
+
+                const colDesc = lesMots.join(" ");
+                const th = `<th><span id="${colonne}" class="w3-button table-colonne">${colDesc} <i class="caret"></span></th>`;
+
+                elTableEntete.insertAdjacentHTML('beforeend', th);
+            }
+
+            // On ajoute des événements à certains éléments nouvellement créés
+            let tableColumns = document.getElementsByClassName('table-colonne');
+
+            for (let column of tableColumns) {
+                column.addEventListener('click', function (event) {
+                    basculerFleche(event);
+                });
+            }
+
+            let input = document.getElementById('filtre-table');
+
+            input.addEventListener('keyup', function (event) {
+                filtrerDonnees();
+            });
+
+            // On ajuste l'entête de la liste pour tenir compte de la barre de défilement
+            if (donnees.length > nbMaxLignesTable) {
+                let scrollbarWidth = getScrollbarWidth();
+                elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
+            }
+
+            // Injection des données
+            elTable = document.getElementById('table-body');
+
+            if (donnees.length > nbMaxLignesTable) {
+                let scrollbarWidth = getScrollbarWidth();
+                elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
+            }
+
+            tableData = [...donnees];
+            injecterDonnees();
+
+            let rows = elTable.getElementsByTagName("tr");
+            nomTable = elNomTableVino.dataset.jsSelectionNomTable;
+
+            for (let row of rows) {
+                row.addEventListener("click", () => {
+                    const id = row.firstElementChild.innerHTML;
+
+                    const body = {
+                        'nomTable': nomTable,
+                        'id': id
+                    };
+
+                    lireDonnees('lireTableVino', body)
+                        .then(donnees => {
+                            afficherDonnees(donnees[0]);
+                        });
+                });
+            }
+        });
 }
 
 
@@ -529,10 +662,32 @@ function selectionnerCarte(el) {
 
 
 function reinitialiserListes() {
-    const tableWrapper = document.querySelector('.table-wrapper');
-    const elDetailWrapper = document.querySelector('.detail-wrapper');
+    if (!elTablesVino.classList.contains("selected") && !elVinoWrapper.classList.contains("hide")) {
+        elVinoWrapper.classList.add("hide");
+    }
 
-    tableWrapper.innerHTML = "";
+    elTableWrapper.innerHTML = "";
     elDetailWrapper.innerHTML = "";
 
+}
+
+function getScrollbarWidth() {
+    // Creating invisible container
+    const outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+    outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+    document.body.appendChild(outer);
+
+    // Creating inner element and placing it in the container
+    const inner = document.createElement('div');
+    outer.appendChild(inner);
+
+    // Calculating difference between container's full width and the child width
+    const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+
+    // Removing temporary elements from the DOM
+    outer.parentNode.removeChild(outer);
+
+    return scrollbarWidth;
 }

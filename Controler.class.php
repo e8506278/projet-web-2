@@ -118,6 +118,9 @@ class Controler
             case 'lireAdminUsagers':
                 $this->lireAdminUsagers();
                 break;
+            case 'lireTableVino':
+                $this->lireTableVino();
+                break;
             case 'accueil':
                 $this->accueil();
                 break;
@@ -509,6 +512,25 @@ class Controler
             $usagers = new Usager();
             $listeUsagers = $usagers->getAdminUsagers();
             echo json_encode($listeUsagers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireTableVino()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $vino = new Vino();
+
+            $nomTable = $body->nomTable;
+            $id = isset($body->id) ? $body->id : null;
+
+            $liste = $vino->lireTable($nomTable, $id);
+            echo json_encode($liste);
         } else {
             include("vues/entete.php");
             include("vues/connexion.php");

@@ -5,7 +5,7 @@ $aAppellations = $oVino->lireAppellations();
 $aBouteilles = $oVino->lireBouteilles();
 $aCepages = $oVino->lireCepages();
 $aClassifications = $oVino->lireClassifications();
-$aDegresAlcool = $oVino->lireDegreAlcool();
+$aDegresAlcool = $oVino->lireDegresAlcool();
 $aDesignations = $oVino->lireDesignations();
 $aFormats = $oVino->lireFormats();
 $aPays = $oVino->lirePays();
@@ -25,7 +25,6 @@ $nbCelliers = $oCellier->getAdminNbCelliers();
 
 $oBouteille = new Bouteille();
 $nbBouteilles = $oBouteille->getAdminNbBouteilles();
-
 ?>
 
 <!DOCTYPE html>
@@ -81,25 +80,31 @@ $nbBouteilles = $oBouteille->getAdminNbBouteilles();
                 </div>
             </div>
         </div>
-        <div class="vino-wrapper">
-            <label for="selection-table-vino">Sélectionner la table à visualiser</label>
-            <select id="selection-table-vino">
-                <option>Appellation (<?= count($aAppellations) ?> lignes)</option>
-                <option>Bouteille (<?= count($aBouteilles) ?> lignes)</option>
-                <option>Cepage (<?= count($aCepages) ?> lignes)</option>
-                <option>Classification (<?= count($aClassifications) ?> lignes)</option>
-                <option>Degré d'alcool (<?= count($aDegresAlcool) ?> lignes)</option>
-                <option>Désignation (<?= count($aDesignations) ?> lignes)</option>
-                <option>Format (<?= count($aFormats) ?> lignes)</option>
-                <option>Pay (<?= count($aPays) ?> lignes)</option>
-                <option>Produit du Québec (<?= count($aProduitsQc) ?> lignes)</option>
-                <option>Région (<?= count($aRegions) ?> lignes)</option>
-                <option>Taux de sucre (<?= count($aTauxDeSucre) ?> lignes)</option>
-                <option>Type de cellier (<?= count($aTypesCellier) ?> lignes)</option>
-                <option>Type de vin (<?= count($aTypesVin) ?> lignes)</option>
-            </select>
-        </div>
         <div class="row liste-wrapper">
+            <div class="vino-wrapper hide">
+                <div>
+                    <span class="selection-nom-table" data-js-selection-nom-table></span>
+                </div>
+                <div>
+                    <label for="selection-table-vino">Sélectionner la table à visualiser</label>
+                    <select id="selection-table-vino">
+                        <option value="vino__appellation">Appellation (<?= count($aAppellations) ?> lignes)</option>
+                        <option value="vino__bouteille">Bouteille (<?= count($aBouteilles) ?> lignes)</option>
+                        <option value="vino__cepage">Cepage (<?= count($aCepages) ?> lignes)</option>
+                        <option value="vino__classification">Classification (<?= count($aClassifications) ?> lignes)</option>
+                        <option value="vino__degre_alcool">Degré d'alcool (<?= count($aDegresAlcool) ?> lignes)</option>
+                        <option value="vino__designation">Désignation (<?= count($aDesignations) ?> lignes)</option>
+                        <option value="vino__format">Format (<?= count($aFormats) ?> lignes)</option>
+                        <option value="generique__pays">Pays (<?= count($aPays) ?> lignes)</option>
+                        <option value="vino__produit_du_quebec">Produit du Québec (<?= count($aProduitsQc) ?> lignes)</option>
+                        <option value="vino__region">Région (<?= count($aRegions) ?> lignes)</option>
+                        <option value="vino__taux_de_sucre">Taux de sucre (<?= count($aTauxDeSucre) ?> lignes)</option>
+                        <option value="vino__type_cellier">Type de cellier (<?= count($aTypesCellier) ?> lignes)</option>
+                        <option value="vino__type">Type de vin (<?= count($aTypesVin) ?> lignes)</option>
+                    </select>
+                    <button class="bouton-primaire btn-afficher-vino">Afficher la table</button>
+                </div>
+            </div>
             <div class="col-md-12 table-wrapper">
             </div>
             <div class="col-md-12 detail-wrapper">

@@ -13,6 +13,30 @@
  */
 class Usager extends Modele
 {
+    public function ajouterUsager($donnees)
+    {
+        echo ('ajouterUsager');
+
+        $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, nom_utilisateur, mot_de_passe, type_utilisateur, jeton, date_creation, date_modification, dernier_access) 
+                        VALUES (" .
+            "'{$donnees->nom}'," .
+            "'{$donnees->adresse}'," .
+            "'{$donnees->telephone}'," .
+            "'{$donnees->courriel}'," .
+            "'{$donnees->date_naissance}'," .
+            "'{$donnees->ville}'," .
+            "'{$donnees->nom_utilisateur}'," .
+            "'{$donnees->mot_de_passe}'," .
+            "'{$donnees->type_utilisateur}'," .
+            "'{$donnees->jeton}'," .
+            "'{$donnees->date_creation}'," .
+            "'{$donnees->date_modification}')";
+
+        $res = $this->_db->query($requete);
+        return $res;
+    }
+
+
     public function getAdminNbUsagers()
     {
         $nbTrouve = 0;
@@ -35,7 +59,7 @@ class Usager extends Modele
     {
         $requete = "SELECT id, nom, adresse, telephone, courriel, date_naissance, ville, nom_utilisateur, type_utilisateur, date_creation, date_modification, dernier_access
                     FROM usager__detail
-                    WHERE id = " . $id_usager;
+                    WHERE id = {$id_usager}";
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
@@ -72,5 +96,39 @@ class Usager extends Modele
         }
 
         return $rows;
+    }
+
+
+    public function verifierCourriel($courriel)
+    {
+        $trouve = false;
+        $requete = "SELECT * FROM usager__detail WHERE courriel = '{$courriel}'";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                $trouve = true;
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $trouve;
+    }
+
+
+    public function verifierNom($utilisateur)
+    {
+        $trouve = false;
+        $requete = "SELECT * FROM usager__detail WHERE nom_utilisateur = '{$utilisateur}'";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                $trouve = true;
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $trouve;
     }
 }
