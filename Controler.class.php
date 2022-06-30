@@ -118,6 +118,9 @@ class Controler
             case 'lireAdminUsagers':
                 $this->lireAdminUsagers();
                 break;
+            case 'lireFormulaireBouteille':
+                $this->lireFormulaireBouteille();
+                break;
             case 'lireTableVino':
                 $this->lireTableVino();
                 break;
@@ -512,6 +515,20 @@ class Controler
             $usagers = new Usager();
             $listeUsagers = $usagers->getAdminUsagers();
             echo json_encode($listeUsagers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireFormulaireBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $formulaire = require 'vues/Admin/fBouteille.php';
+            echo $formulaire;
         } else {
             include("vues/entete.php");
             include("vues/connexion.php");

@@ -538,9 +538,12 @@ h1 {
 }
 
 .groupe-ajouter>*:hover svg,
-.groupe-modifier>*:hover svg,
-.groupe-action>*:hover svg {
+.groupe-modifier>*:hover svg {
     fill: #44413B;
+}
+
+.groupe-action>*:hover svg {
+    fill: #f3f4f6;
 }
 
 .vino-wrapper {

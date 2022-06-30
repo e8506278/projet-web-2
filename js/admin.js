@@ -5,8 +5,9 @@ var elTableBody;
 var tableData = [];
 
 var tableSelectionnee = {
+    id: "",
     table: "",
-    id: ""
+    donnees: []
 };
 
 const nbMaxLignesTable = 5;
@@ -113,7 +114,7 @@ function afficherDonnees(donnees) {
                 </div>
 
                 <div class="col-md-12 groupe-modifier">
-                    <div class="btn-ajouter" title="Modifier" data-js-btn-modifier>
+                    <div class="btn-modifier" title="Modifier" data-js-btn-modifier>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                             <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                             <path d="M362.7 19.32C387.7-5.678 428.3-5.678 453.3 19.32L492.7 58.75C517.7 83.74 517.7 124.3 492.7 149.3L444.3 197.7L314.3 67.72L362.7 19.32zM421.7 220.3L188.5 453.4C178.1 463.8 165.2 471.5 151.1 475.6L30.77 511C22.35 513.5 13.24 511.2 7.03 504.1C.8198 498.8-1.502 489.7 .976 481.2L36.37 360.9C40.53 346.8 48.16 333.9 58.57 323.5L291.7 90.34L421.7 220.3z" />
@@ -220,22 +221,72 @@ function afficherDonnees(donnees) {
     });
 
 
+    function afficherFormulaire(nomTable, body = null) {
+        const elDetail = document.getElementById('detail-body');
+
+        switch (nomTable) {
+            case "bouteille":
+                lireHtml('lireFormulaireBouteille', body)
+                    .then(formulaire => {
+                        elDetail.innerHTML = "";
+                        elDetail.insertAdjacentHTML("beforeend", formulaire);
+                    });
+                break;
+
+            case "cellier":
+                break;
+
+            case "usager":
+                break;
+
+            case "vino__appellation":
+                break;
+
+            case "vino__bouteille":
+                break;
+
+            case "vino__cepage":
+                break;
+
+            case "vino__classification":
+                break;
+
+            case "vino__degre_alcool":
+                break;
+
+            case "vino__designation":
+                break;
+
+            case "vino__format":
+                break;
+
+            case "generique__pays":
+                break;
+
+            case "vino__produit_du_quebec":
+                break;
+
+            case "vino__region":
+                break;
+
+            case "vino__taux_de_sucre":
+                break;
+
+            case "vino__type_cellier":
+                break;
+
+            case "vino__type":
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
     // Quand on clique sur le bouton pour ajouter un nouvel enregistrement.
     elBtnAjouter.addEventListener("click", () => {
-        const elDetail = document.getElementById('detail-body');
-        const elTRs = elDetail.getElementsByTagName("tr");
-
-        for (let i = 0, l = elTRs.length; i < l; i++) {
-            const cells = elTRs[i].getElementsByTagName('td');
-
-            if (i == 0) {
-                cells[1].innerHTML = "** valeur auto-générée **";
-            } else {
-                cells[1].innerHTML = "";
-                cells[1].setAttribute("contenteditable", true);
-            }
-        }
-
+        afficherFormulaire(tableSelectionnee['nomTable']);
         elGroupeAction.classList.remove("hide");
 
         if (!elGroupeAjouter.classList.contains("hide")) {
@@ -250,14 +301,7 @@ function afficherDonnees(donnees) {
 
     // Quand on clique sur le bouton pour modifier un enregistrement existant.
     elBtnModifier.addEventListener("click", () => {
-        const elDetail = document.getElementById('detail-body');
-        const elTRs = elDetail.getElementsByTagName("tr");
-
-        for (let i = 0, l = elTRs.length; i < l; i++) {
-            const cells = elTRs[i].getElementsByTagName('td');
-            cells[1].setAttribute("contenteditable", true);
-        }
-
+        afficherFormulaire(tableSelectionnee['nomTable'], tableSelectionnee["donnees"]);
         elGroupeAction.classList.remove("hide");
 
         if (!elGroupeAjouter.classList.contains("hide")) {
@@ -309,6 +353,7 @@ function basculerFleche(event) {
     injecterDonnees();
 }
 
+
 /**
  * Fonction qui construit la liste qui contient toutes les bouteilles
  */
@@ -344,7 +389,7 @@ function construireListeBouteilles() {
                     </div>
                 </div>`;
 
-    lireDonnees('lireAdminBouteilles')
+    lireJson('lireAdminBouteilles')
         .then(donnees => {
             reinitialiserListes();
 
@@ -412,8 +457,9 @@ function construireListeBouteilles() {
                         const body = { 'id_bouteille': idBouteille };
                         const requete = "lireAdminUneBouteille";
 
-                        lireDonnees(requete, body)
+                        lireJson(requete, body)
                             .then(donnees => {
+                                tableSelectionnee["donnees"] = donnees[0];
                                 afficherDonnees(donnees[0]);
                             });
                     });
@@ -426,7 +472,6 @@ function construireListeBouteilles() {
 /**
  * Fonction qui construit la liste qui contient tous les celliers
  */
-
 function construireListeCelliers() {
     let html = `
                 <div>
@@ -459,7 +504,7 @@ function construireListeCelliers() {
                     </div>
                 </div>`;
 
-    lireDonnees('lireAdminCelliers')
+    lireJson('lireAdminCelliers')
         .then(donnees => {
             reinitialiserListes();
 
@@ -527,8 +572,9 @@ function construireListeCelliers() {
                         const body = { 'id_cellier': idCellier };
                         const requete = "lireAdminUnCellier";
 
-                        lireDonnees(requete, body)
+                        lireJson(requete, body)
                             .then(donnees => {
+                                tableSelectionnee["donnees"] = donnees[0];
                                 afficherDonnees(donnees[0]);
                             });
 
@@ -542,7 +588,6 @@ function construireListeCelliers() {
 /**
  * Fonction qui construit la liste qui contient tous les usagers
  */
-
 function construireListeUsagers() {
     let html = `
                 <div>
@@ -576,7 +621,7 @@ function construireListeUsagers() {
                     </div>
                 </div>`;
 
-    lireDonnees('lireAdminUsagers')
+    lireJson('lireAdminUsagers')
         .then(donnees => {
             reinitialiserListes();
 
@@ -644,9 +689,11 @@ function construireListeUsagers() {
                         const body = { 'id_usager': idUsager };
                         const requete = "lireAdminUnUsager";
 
-                        lireDonnees(requete, body)
+                        lireJson(requete, body)
                             .then(donnees => {
+                                tableSelectionnee["donnees"] = donnees[0];
                                 afficherDonnees(donnees[0]);
+
                             });
 
                     });
@@ -689,7 +736,7 @@ function construireListeVino() {
 
     const body = { 'nomTable': tableSelectionnee['nomTable'] };
 
-    lireDonnees('lireTableVino', body)
+    lireJson('lireTableVino', body)
         .then(donnees => {
             reinitialiserListes();
 
@@ -764,8 +811,9 @@ function construireListeVino() {
                         'id': id
                     };
 
-                    lireDonnees('lireTableVino', body)
+                    lireJson('lireTableVino', body)
                         .then(donnees => {
+                            tableSelectionnee["donnees"] = donnees[0];
                             afficherDonnees(donnees[0]);
                         });
                 });
@@ -882,13 +930,45 @@ function injecterDonnees() {
     filtrerDonnees();
 }
 
+
 /**
  * Fonction qui lit les données de la BD
  * @param reqNom    Le nom de la requête à appeller
  * @param reqBody   L'information à passer avec la requçete
- * @returns 
+ * @returns         Le contenu html généré
  */
-async function lireDonnees(reqNom, reqBody = null) {
+async function lireHtml(reqNom, reqBody = null) {
+    const entete = new Headers();
+    entete.append("Content-Type", "text/html");
+
+    const reqOptions = {
+        method: "POST",
+        headers: entete
+    };
+
+    if (reqBody) {
+        reqOptions["body"] = JSON.stringify(reqBody);
+    }
+
+    const requete = new Request($baseUrl_without_parameters + "?requete=" + reqNom, reqOptions);
+    const reponse = await fetch(requete);
+
+    if (!reponse.ok) {
+        throw new Error(`Erreur HTTP : statut = ${reponse.status}`);
+    }
+
+    const data = await reponse.text();
+    return data;
+}
+
+
+/**
+ * Fonction qui lit les données de la BD
+ * @param reqNom    Le nom de la requête à appeller
+ * @param reqBody   L'information à passer avec la requçete
+ * @returns         Le contenu json généré
+ */
+async function lireJson(reqNom, reqBody = null) {
     const entete = new Headers();
     entete.append("Content-Type", "application/json");
     entete.append("Accept", "application/json");
