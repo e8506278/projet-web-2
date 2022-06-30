@@ -199,6 +199,8 @@ function afficherDonnees(donnees) {
         if (!elGroupeAction.classList.contains("hide")) {
             elGroupeAction.classList.add("hide");
         }
+
+        basculerEdition(elTableWrapper);
     });
 
 
@@ -218,64 +220,67 @@ function afficherDonnees(donnees) {
         if (!elGroupeAction.classList.contains("hide")) {
             elGroupeAction.classList.add("hide");
         }
+
+        basculerEdition(elTableWrapper);
     });
 
 
     function afficherFormulaire(nomTable, body = null) {
-        const elDetail = document.getElementById('detail-body');
-
         switch (nomTable) {
             case "bouteille":
                 lireHtml('lireFormulaireBouteille', body)
                     .then(formulaire => {
+                        const elDetail = document.getElementById('detail-body');
                         elDetail.innerHTML = "";
                         elDetail.insertAdjacentHTML("beforeend", formulaire);
                     });
                 break;
 
             case "cellier":
+                lireHtml('lireFormulaireCellier', body)
+                    .then(formulaire => {
+                        const elDetail = document.getElementById('detail-body');
+                        elDetail.innerHTML = "";
+                        elDetail.insertAdjacentHTML("beforeend", formulaire);
+                    });
                 break;
 
             case "usager":
+                lireHtml('lireFormulaireUsager', body)
+                    .then(formulaire => {
+                        const elDetail = document.getElementById('detail-body');
+                        elDetail.innerHTML = "";
+                        elDetail.insertAdjacentHTML("beforeend", formulaire);
+                    });
                 break;
 
             case "vino__appellation":
+            case "vino__cepage":
+            case "vino__classification":
+            case "vino__degre_alcool":
+            case "vino__designation":
+            case "vino__format":
+            case "generique__pays":
+            case "vino__produit_du_quebec":
+            case "vino__region":
+            case "vino__taux_de_sucre":
+            case "vino__type_cellier":
+            case "vino__type":
+                const elDetail = document.getElementById('detail-body');
+                const elTRs = elDetail.getElementsByTagName("tr");
+
+                for (let i = 0, l = elTRs.length; i < l; i++) {
+                    const cells = elTRs[i].getElementsByTagName('td');
+                    cells[1].setAttribute("contenteditable", true);
+
+                    if (!body) {
+                        cells[1].innerHTML = "";
+                    }
+                }
+
                 break;
 
             case "vino__bouteille":
-                break;
-
-            case "vino__cepage":
-                break;
-
-            case "vino__classification":
-                break;
-
-            case "vino__degre_alcool":
-                break;
-
-            case "vino__designation":
-                break;
-
-            case "vino__format":
-                break;
-
-            case "generique__pays":
-                break;
-
-            case "vino__produit_du_quebec":
-                break;
-
-            case "vino__region":
-                break;
-
-            case "vino__taux_de_sucre":
-                break;
-
-            case "vino__type_cellier":
-                break;
-
-            case "vino__type":
                 break;
 
             default:
@@ -296,6 +301,8 @@ function afficherDonnees(donnees) {
         if (!elGroupeModifier.classList.contains("hide")) {
             elGroupeModifier.classList.add("hide");
         }
+
+        basculerEdition(elTableWrapper);
     });
 
 
@@ -311,6 +318,8 @@ function afficherDonnees(donnees) {
         if (!elGroupeModifier.classList.contains("hide")) {
             elGroupeModifier.classList.add("hide");
         }
+
+        basculerEdition(elTableWrapper);
     });
 }
 
@@ -321,6 +330,19 @@ function afficherDonnees(donnees) {
 function afficherListeVino() {
     reinitialiserListes();
     elVinoWrapper.classList.remove("hide");
+}
+
+
+/**
+ * Active ou désactive une section à l'écran quand on entre/sort d'un mode d'édition du formulaire.
+ * @param el Le parent qui contient les éléments à activer/désactiver
+ */
+function basculerEdition(el) {
+    if (el.classList.contains("edition")) {
+        el.classList.remove("edition");
+    } else {
+        el.classList.add("edition");
+    }
 }
 
 
@@ -842,6 +864,7 @@ function filtrerDonnees() {
     let filter = input.value.toUpperCase();
     let rows = elTableBody.getElementsByTagName("tr");
     let flag = false;
+    let compteur = 0;
 
     for (let row of rows) {
         let cells = row.getElementsByTagName("td");
@@ -862,11 +885,21 @@ function filtrerDonnees() {
 
         if (flag) {
             row.style.display = "";
+            compteur++;
         } else {
             row.style.display = "none";
         }
 
         flag = false;
+    }
+
+    let elTableEntete = document.getElementById('table-entete');
+
+    if (compteur > nbMaxLignesTable) {
+        let scrollbarWidth = getScrollbarWidth();
+        elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
+    } else {
+        elTableEntete.style = `width: 100%)`;
     }
 }
 
@@ -938,6 +971,8 @@ function injecterDonnees() {
  * @returns         Le contenu html généré
  */
 async function lireHtml(reqNom, reqBody = null) {
+    document.body.className = 'waiting';
+
     const entete = new Headers();
     entete.append("Content-Type", "text/html");
 
@@ -958,6 +993,8 @@ async function lireHtml(reqNom, reqBody = null) {
     }
 
     const data = await reponse.text();
+    document.body.className = '';
+
     return data;
 }
 
@@ -969,6 +1006,8 @@ async function lireHtml(reqNom, reqBody = null) {
  * @returns         Le contenu json généré
  */
 async function lireJson(reqNom, reqBody = null) {
+    document.body.className = 'waiting';
+
     const entete = new Headers();
     entete.append("Content-Type", "application/json");
     entete.append("Accept", "application/json");
@@ -990,6 +1029,8 @@ async function lireJson(reqNom, reqBody = null) {
     }
 
     const data = await reponse.json();
+    document.body.className = '';
+
     return data;
 }
 

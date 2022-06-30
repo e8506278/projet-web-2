@@ -49,7 +49,7 @@ $aTypesVin = $oVino->lireTypesVin();
 </tr>
 <tr>
     <td>id_bouteille</td>
-    <td><?php echo (isset($body) && isset($body->id_bouteille)) ? $body->id_bouteille . " ** non modifiable **" : "** valeur auto-générée **"; ?></td>
+    <td class="non-modifiable"><?php echo (isset($body) && isset($body->id_bouteille)) ? $body->id_bouteille : "** valeur auto-générée **"; ?></td>
 </tr>
 <tr>
     <td>id_cellier</td>

@@ -121,6 +121,12 @@ class Controler
             case 'lireFormulaireBouteille':
                 $this->lireFormulaireBouteille();
                 break;
+            case 'lireFormulaireCellier':
+                $this->lireFormulaireCellier();
+                break;
+            case 'lireFormulaireUsager':
+                $this->lireFormulaireUsager();
+                break;
             case 'lireTableVino':
                 $this->lireTableVino();
                 break;
@@ -528,6 +534,34 @@ class Controler
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $body = json_decode(file_get_contents('php://input'));
             $formulaire = require 'vues/Admin/fBouteille.php';
+            echo $formulaire;
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireFormulaireCellier()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $formulaire = require 'vues/Admin/fCellier.php';
+            echo $formulaire;
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireFormulaireUsager()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            $formulaire = require 'vues/Admin/fUsager.php';
             echo $formulaire;
         } else {
             include("vues/entete.php");

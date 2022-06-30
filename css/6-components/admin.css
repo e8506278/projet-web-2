@@ -16,6 +16,14 @@
 
 }
 
+.non-modifiable {
+    color: mediumblue;
+}
+
+body.waiting * {
+    cursor: wait;
+}
+
 .section-wrapper {
     padding: var(--espace-p) var(--espace-p);
 }
@@ -322,6 +330,10 @@ h1 {
     display: flex;
 }
 
+.table-wrapper.edition {
+    pointer-events: none;
+}
+
 .table-wrapper>div {
     width: 100%;
 }
@@ -471,7 +483,6 @@ h1 {
 .detail-wrapper table th {
     background-color: #04AA6D;
     color: white;
-    cursor: pointer;
     padding: 0;
     text-align: left;
 }

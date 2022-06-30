@@ -99,6 +99,24 @@ class Usager extends Modele
     }
 
 
+    public function lireTypesUsager()
+    {
+        $requete = "SELECT id, nom FROM usager__type ORDER BY id";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
     public function verifierCourriel($courriel)
     {
         $trouve = false;
