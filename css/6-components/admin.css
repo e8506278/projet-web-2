@@ -52,18 +52,6 @@
     padding: var(--espace-p) 0;
 }
 
-@media only screen and (min-width: 760px) {
-    .liste-wrapper {
-        padding: var(--espace-m) 0;
-    }
-}
-
-@media only screen and (min-width: 1024px) {
-    .liste-wrapper {
-        padding: var(--espace-l) 0;
-    }
-}
-
 /****************************************************************/
 
 * {
@@ -397,12 +385,17 @@ h1 {
     background-color: #ffffff;
 }
 
+.table-wrapper table tr.selected td {
+    background-color: #44413B;
+    color: #fff;
+}
+
 .table-wrapper table tr:nth-child(even) {
     background-color: #cfcfcf;
 }
 
 .table-wrapper table tr:hover {
-    background-color: #019879;
+    background-color: #333;
     color: #ffffff;
 }
 
@@ -490,33 +483,63 @@ h1 {
     text-align: center;
 }
 
-.detail-boutons {
+.groupe-ajouter,
+.groupe-modifier,
+.groupe-action {
     display: flex;
+    margin: var(--espace-p) 0 var(--espace-xp) 0;
     justify-content: flex-end;
-    margin: var(--espace-l) 0 var(--espace-xp) 0;
 }
 
-.detail-boutons>* {
+.groupe-ajouter.hide {
+    opacity: 0;
+}
+
+.groupe-modifier.hide,
+.groupe-action.hide {
+    display: none;
+}
+
+.groupe-ajouter>*,
+.groupe-modifier>*,
+.groupe-action>* {
     border: 1px solid #f3f4f6;
     cursor: pointer;
     padding: var(--espace-xp);
 }
 
-.detail-boutons>*:hover {
+.groupe-ajouter>*:hover,
+.groupe-modifier>*:hover,
+.groupe-action>*:hover {
     background-color: #f3f4f6;
     border: 1px solid transparent;
 }
 
-.detail-boutons>*+* {
+.groupe-action>*+* {
     margin-left: var(--espace-p);
 }
 
-.detail-boutons svg {
+.btn-confirmer:hover {
+    background-color: green;
+    border: 1px solid transparent;
+}
+
+.btn-annuler:hover {
+    background-color: red;
+    border: 1px solid transparent;
+}
+
+.groupe-ajouter svg,
+.groupe-modifier svg,
+.groupe-action svg {
     fill: #f3f4f6;
+    height: 20px;
     width: 20px;
 }
 
-.detail-boutons>*:hover svg {
+.groupe-ajouter>*:hover svg,
+.groupe-modifier>*:hover svg,
+.groupe-action>*:hover svg {
     fill: #44413B;
 }
 
@@ -534,11 +557,7 @@ h1 {
     display: none;
 }
 
-.vino-wrapper>*:first-child {
-    margin: 0 var(--espace-p);
-}
-
-.vino-wrapper>*+* {
+.vino-selection>*+* {
     margin-left: var(--espace-p);
 }
 

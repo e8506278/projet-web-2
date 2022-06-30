@@ -85,7 +85,7 @@ $nbBouteilles = $oBouteille->getAdminNbBouteilles();
                 <div>
                     <span class="selection-nom-table" data-js-selection-nom-table></span>
                 </div>
-                <div>
+                <div class="vino-selection">
                     <label for="selection-table-vino">Sélectionner la table à visualiser</label>
                     <select id="selection-table-vino">
                         <option value="vino__appellation">Appellation (<?= count($aAppellations) ?> lignes)</option>
