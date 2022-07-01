@@ -117,6 +117,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
         $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
             $cellier_dans_le_compte['quantite'] = $bouteille ? $ub['quantite_bouteille']: 0;
+            $cellier_dans_le_compte['id_bouteille'] = $bouteille ? $ub['id_bouteille']: 0;
         }
     }
 }
@@ -125,7 +126,7 @@ foreach ($celliers as & $cellier_dans_le_compte){
 
 //echo $_SESSION['utilisateur']['id'];
 //print_r($celliers);
-
+//
 ?>
 
 <script src="./js/bouteille.js"  type="text/javascript"></script>
@@ -169,6 +170,16 @@ foreach ($celliers as & $cellier_dans_le_compte){
                     />
                     <div class="form-block">
                         <h6>Informations sur la bouteille</h6>
+                        <?php if($form_values['id_cellier']) { ?>
+                        <div class="row">
+                            <div class="col-6 info-unit">
+                                <div class="label">Cellier</div>
+                                <div class="value">
+                                    <?php echo $form_values['nom_cellier']  ?: 'Non défini'?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
                         <div class="row">
                             <div class="col info-unit">
                                 <input type="hidden" value="<?php echo $form_values['id_bouteille']?>" name="id_bouteille"/>
@@ -676,33 +687,36 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                            id="millesime" />
                                 </div>
                             </div>
-                            <?php if(isset($id_cellier) && $id_cellier!=null) {?>
-                                <div class="col-6 info-unit">
-                                <div class="label">Quantité(*)</div>
-                                <div class="value label-state">
-                                    <?php echo $form_values['quantite']  ?: 'Non défini'?>
-                                </div>
-                                <div class="value input-state">
-                                    <input type="hidden" name="celliers[0][id_cellier]"
-                                           value="<?php echo $id_cellier?>"
-                                    />
-                                    <input type="number"
-                                           required
-                                           min="0"
-                                           value="<?php echo $form_values['quantite']?>"
-                                           placeholder="Sélectionner ici"
-                                           class="input formulaire__champs boite-double__champs"
-                                           name="celliers[0][quantite]"
-                                           id="quantite" />
-                                </div>
-                            </div>
-                            <?php } ?>
+<!--                            --><?php //if(isset($id_cellier) && $id_cellier!=null) {?>
+<!--                                <div class="col-6 info-unit">-->
+<!--                                <div class="label">Quantité(*)</div>-->
+<!--                                <div class="value label-state">-->
+<!--                                    --><?php //echo $form_values['quantite']  ?: 'Non défini'?>
+<!--                                </div>-->
+<!--                                <div class="value input-state">-->
+<!--                                    <input type="hidden" name="celliers[0][id_cellier]"-->
+<!--                                           value="--><?php //echo $id_cellier?><!--"-->
+<!--                                    />-->
+<!--                                    <input type="number"-->
+<!--                                           required-->
+<!--                                           min="0"-->
+<!--                                           value="--><?php //echo $form_values['quantite']?><!--"-->
+<!--                                           placeholder="Sélectionner ici"-->
+<!--                                           class="input formulaire__champs boite-double__champs"-->
+<!--                                           name="celliers[0][quantite]"-->
+<!--                                           id="quantite" />-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            --><?php //} ?>
+                        </div>
+                        <div class="row">
+
                         </div>
                     </div>
                     <!--            Information liées au cellier-->
-                    <?php if(!isset($id_cellier) || !$id_cellier) {?>
+<!--                    --><?php //if(!isset($id_cellier) || !$id_cellier) {?>
                         <div class="form-block" id="cellier-block">
-                        <h6>Mes celliers</h6>
+                        <h6>Gérer les quantité de la bouteille dans mes celliers</h6>
 
                                 <?php $key = 0; foreach ($celliers as $cellier) {?>
                                     <div class="row">
@@ -711,9 +725,10 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                             <div class="value">
                                                 <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                        name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
-                                                <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
-                                                       name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
+                                                <input type="hidden" value="<?php echo $cellier['id_bouteille'] ?>"
+                                                       name="celliers<?php echo "[".$key."]"?>[id_bouteille]"/>
                                                 <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
+                                                <?php echo  $cellier['nom_cellier'] && $cellier['id_cellier'] === $id_cellier ? '(Cellier actuel)': ''; ?>
                                             </div>
                                         </div>
                                         <div class="col-6 info-unit">
@@ -782,20 +797,23 @@ foreach ($celliers as & $cellier_dans_le_compte){
 <!--                            </div>-->
 <!--                        </div>-->
                     </div>
-                    <?php } ?>
+<!--                    --><?php //} ?>
                     <!--        fin    Information liées au cellier-->
                     <div class="row submit-bloc">
-                        <div class="col-6 info-unit">
-                                <button class="bouton-danger" type="button" id="askDeleteBtn"
+                        <div class="col-12 info-unit">
+                            <?php if(isset($id_bouteille) && $id_bouteille != null) { ?>
+                            <div id="submit_btns" class="submit_btns">
+                                <button class="bouton-secondaire bouton-danger" type="button" id="askDeleteBtn"
                                     <?php if(!$form_values['id_cellier'] || !$form_values['id_bouteille']) {echo "disabled";}?>
                                 >Détruire</button>
-                            <?php //if(isset($id_bouteille) && $id_bouteille != null) {echo "disabled";}?>
-                            <button class="bouton-secondaire" type="button" id="ouvrirFormulaire"
-                            >Modifier</button>
+                                <button class="bouton-secondaire" type="button" id="ouvrirFormulaire"
+                                >Modifier</button>
+                            </div>
+                            <?php } ?>
                         </div>
-                        <div class="col-6 info-unit" >
+                        <div class="col-12 info-unit" >
 
-                            <div id="submit_btns">
+                            <div  class="submit_btns">
                                 <button class="bouton-primaire" type="button" id="fermerFormulaire"
                                 >Annuler</button>
                                     <button class="bouton-secondaire" id="enregistrerFormulaire">Enregistrer</button>
@@ -808,7 +826,6 @@ foreach ($celliers as & $cellier_dans_le_compte){
     <?php }else{ ?>
 <!--            Le cas d'ajout d'une nouvelle bouteille-->
         <div class="boite-double">
-            <!--LOGIN-->
             <div class="boite-double__contenant-form">
                 <div class="product-photo">
                     <img src="<?php echo $form_values['image_bouteille']?>"
@@ -1265,9 +1282,8 @@ foreach ($celliers as & $cellier_dans_le_compte){
                                             <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                    name="celliers<?php echo "[".$key."]"?>[id_cellier]"
                                             />
-                                            <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
-                                                   name="celliers<?php echo "[".$key."]"?>[id_cellier]"
-                                            />
+                                            <input type="hidden" value="<?php echo $cellier['id_bouteille'] ?>"
+                                                   name="celliers<?php echo "[".$key."]"?>[id_bouteille]"/>
                                             <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
                                         </div>
                                     </div>

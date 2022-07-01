@@ -313,3 +313,14 @@ select{
     margin-top: 40px;
     line-height: 23px;
 }
+
+.submit_btns{
+    display: flex;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.bouton-danger{
+    background: #bd1717;
+    border-color: #bd1717;
+}
