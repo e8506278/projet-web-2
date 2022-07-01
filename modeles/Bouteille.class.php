@@ -68,6 +68,9 @@ class Bouteille extends Modele
         $res = $this->_db->query('Select * from ' . self::TABLE);
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
+                foreach($row as $cle =>$valeur){
+                    $row[$cle] = trim(utf8_encode($row[$cle]));
+                }
                 $rows[] = $row;
             }
         }
@@ -97,6 +100,9 @@ class Bouteille extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
+                    foreach($row as $cle =>$valeur){
+                        $row[$cle] = trim(utf8_encode($row[$cle]));
+                    }
                     $rows[] = $row;
                 }
             }
@@ -110,6 +116,7 @@ class Bouteille extends Modele
     public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();
+        
         $requete = "SELECT 
 					    uc.nom_cellier as nom_cellier,
 					    ub.id_cellier, 
@@ -184,11 +191,14 @@ class Bouteille extends Modele
         if ($id_cellier) {
             $requete = $requete . " AND ub.id_cellier = '" . $id_cellier . "'";
         }
+        $this->_db->set_charset('utf8');
+      
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
+                    
                     $rows[] = $row;
                 }
             }
@@ -300,12 +310,13 @@ class Bouteille extends Modele
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
 
                        WHERE b.nom_bouteille = '" . $nom . "'";
-
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
+                    
                     $rows[] = $row;
                 }
             }
@@ -380,28 +391,32 @@ class Bouteille extends Modele
         return $res;
     }
 
+    
 
     /**
      * Cette méthode change la quantité d'une bouteille en particulier dans le cellier
      *
+     * @param int $id_usager , id de session de l'usager
      * @param int $id id de la bouteille
+     * 
      * @param int $nombre Nombre de bouteille a ajouter ou retirer
      * 
      * @return String Si les id et nombre ne sont pas des caractères numériques
      *
      */
-    public function modifierQuantiteBouteilleCellier($id, $nombre)
+    public function modifierQuantiteBouteilleCellier($id_usager,$id, $nombre, $action)
     {
-        $erreur = "";
-        if (is_numeric($id) && is_numeric($nombre)) {
-            $requete = "UPDATE usager__bouteille SET quantite_bouteille = GREATEST(quantite_bouteille + " . $nombre . ", 0) WHERE id_bouteille = " . $id;
-            $res = $this->_db->query($requete);
-        } else {
-            $erreur = "$id et $nombre doivent être numériques.";
-            return $erreur;
-        }
-
-        return $res;
+            if (is_numeric($id_usager) && is_numeric($id) && is_numeric($nombre)) {
+                $requete = $this->_db->query("INSERT INTO bouteille_action SET id_usager = '$id_usager', id_bouteille = '$id', quantite_bouteille =  '$nombre', action = '$action'");
+                if($action == "a"){
+                    $nombre = 1;
+                }else{
+                    $nombre = -1;
+                }
+               
+                $modele = new Modele();
+                $res = $modele->ajusterQuantiteBouteille($id);
+            }   
     }
 
 
@@ -446,6 +461,27 @@ class Bouteille extends Modele
             throw new Exception("Erreur de requête sur la base de donnée", 1);
         }
 
+        return $rows;
+    }
+
+    public function getBouteilleCUP($cup){
+        $rows = array();
+        $requete = "SELECT id_bouteille
+                    FROM vino__bouteille 
+                    WHERE code_cup = '$cup'";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                  
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+      
         return $rows;
     }
 }
