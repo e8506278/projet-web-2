@@ -96,6 +96,20 @@ class Controler
                 break;
             case 'scan':
                 $this->scan();
+            case 'admin':
+                $this->afficherPageAdmin();
+                break;
+            case 'lireAdminBouteilles':
+                $this->lireAdminBouteilles();
+                break;
+            case 'lireAdminCelliers':
+                $this->lireAdminCelliers();
+                break;
+            case 'lireAdminRevisions':
+                $this->lireAdminRevisions();
+                break;
+            case 'lireAdminUsagers':
+                $this->lireAdminUsagers();
                 break;
             case 'accueil':
                 $this->accueil();
@@ -108,7 +122,6 @@ class Controler
                 break;
         }
     }
-
 
     /**
      * Cette méthode renvoi selon si l'utilisateur est connecté ou non
@@ -141,6 +154,15 @@ class Controler
         include("vues/pied.php");
     }
 
+
+    /**
+     * Cette méthode affiche les statistiques d'un usager
+     *  
+     */
+    private function afficherPageAdmin()
+    {
+        include("vues/admin.php");
+    }
 
     private function ajouterBouteilleCellier()
     {
@@ -396,6 +418,62 @@ class Controler
     }
 
 
+    private function lireAdminBouteilles()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $bte = new Bouteille();
+            $listeBouteilles = $bte->getAdminBouteilles();
+            echo json_encode($listeBouteilles);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminCelliers()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $celliers = new Cellier();
+            $listeCelliers = $celliers->getAdminCelliers();
+            echo json_encode($listeCelliers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminRevisions()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $bte = new Bouteille();
+            $listeRevisions = $bte->getAdminRevisions();
+            echo json_encode($listeRevisions);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireAdminUsagers()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $usagers = new Usager();
+            $listeUsagers = $usagers->getAdminUsagers();
+            echo json_encode($listeUsagers);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
     /**
      * Cette méthode appelle la fonction pour récupérer la liste des bouteilles dans un cellier
      *  selon l'id_cellier envoyé dans l'url, ou la quantité_bouteille est plus grande que 0, trié DESC selon l'id_bouteille 
@@ -447,7 +525,7 @@ class Controler
         include("vues/pied.php");
     }
 
-     /**
+    /**
      * Cette méthode récupère la liste des celliers selon l'id de l'utilisateur
      *  
      */
@@ -486,7 +564,8 @@ class Controler
      * Cette méthode affiche la page du profil de l'utilisateur
      *  
      */
-    private function profilUtilisateur(){
+    private function profilUtilisateur()
+    {
 
         include("vues/entete.php");
         include("vues/profil.php");

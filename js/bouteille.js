@@ -94,13 +94,17 @@ window.addEventListener('load', function () {
     const annulerDetruirebtn2 = document.getElementById("annulerDetruirebtn2");
     const fermerModalAnnulation = document.getElementById("fermerModalAnnulation");
 
-    // if(fermerFormulaire){
-    //     fermerFormulaire.disabled = true;
-    // }
+    if(fermerFormulaire){
+        // fermerFormulaire.disabled = true;
+        fermerFormulaire.style.display = 'none';
+    }
 
     if(enregistrerFormulaire){
-        enregistrerFormulaire.disabled = true;
+        // enregistrerFormulaire.disabled = true;
+        enregistrerFormulaire.style.display = 'none';
     }
+
+
 
     if(modifier_bouton){
         modifier_bouton.addEventListener('click', function (e){
@@ -113,18 +117,21 @@ window.addEventListener('load', function () {
             });
 
             if(modifier_bouton){
-                modifier_bouton.disabled = true;
+                // modifier_bouton.disabled = true;
+                modifier_bouton.style.display = "none";
             }
-            // if(fermerFormulaire){
-            //     fermerFormulaire.disabled = false;
-            // }
+            if(fermerFormulaire){
+                // fermerFormulaire.disabled = false;
+                fermerFormulaire.style.display = 'block';
+            }
 
             if(askDeleteBtn){
-                askDeleteBtn.disabled = true;
+                // askDeleteBtn.disabled = true;
+                askDeleteBtn.style.display = "none";
             }
 
             if(enregistrerFormulaire){
-                enregistrerFormulaire.disabled = false;
+                enregistrerFormulaire.style.display = "block";
             }
         });
     }
@@ -142,19 +149,23 @@ window.addEventListener('load', function () {
             });
 
             if(modifier_bouton){
-                modifier_bouton.disabled = false;
+                // modifier_bouton.disabled = false;
+                modifier_bouton.style.display = 'block';
             }
 
-            // if(fermerFormulaire){
-            //     fermerFormulaire.disabled = true;
-            // }
+            if(fermerFormulaire){
+                // fermerFormulaire.disabled = true;
+                fermerFormulaire.style.display = 'none';
+            }
 
             if(askDeleteBtn){
-                askDeleteBtn.disabled = false;
+                askDeleteBtn.style.display = 'block';
+                // askDeleteBtn.disabled = false;
             }
 
             if(enregistrerFormulaire){
-                enregistrerFormulaire.disabled = true;
+                // enregistrerFormulaire.disabled = true;
+                enregistrerFormulaire.style.display = 'none';
             }
 
         });

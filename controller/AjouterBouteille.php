@@ -2,10 +2,11 @@
 
 <?php
 ob_start();
+if(session_id() == ''){ session_start();}
 if (!class_exists('Lists')) {
     require_once ('../modeles/Lists.class.php');
 }
-$debug = true;
+$debug = false;
 $message = null;
 
 $returnpage = home_base_url()."?requete=bouteille";
@@ -88,198 +89,242 @@ if(isset($_POST['estCommentaire'])){
 
 
     $message = "Opération réussie";
-   
-//    echo $bouteille_id;; die();
+
+
+
     foreach ( $_POST['celliers'] as  $key => $cellier){
         $ub = null;
-        if($bouteille_id)
-            $ub = $list->getUsagerBouteille( $bouteille_id, $cellier['id_cellier']);
+//        if($bouteille_id){
+            $ub = $list->getUsagerBouteille( $cellier['id_bouteille'], $cellier['id_cellier']);
+//        }
+        echo "<br>";
+        echo "bouteille ".$cellier['id_bouteille']."<br>";
+
+        echo "<br>";
+        echo  "cellier ".$cellier['id_cellier'];
+        echo "<br> usager bouteille ";
+        print_r($ub);
+        echo "<br>";
 
         if($debug){
              echo "<br><br>";
             print_r($ub);
             echo "<br><br>";
         }
-            if(!$ub){
-                if(!isset($cellier['quantite']) || !$cellier['quantite']){
-                    continue;
-                }
-                if($cellier['quantite'] < 0){
-                    $cellier['quantite'] = 0;
-                }
-                $query_string = "INSERT INTO usager__bouteille(
-                            id_cellier ,
-                            nom_bouteille,
-                            image_bouteille ,
-                            description_bouteille ,
-                            code_saq ,
-                            code_cup ,
-                            prix_bouteille ,
-                            url_saq,
-                            producteur ,
-                            biodynamique,
-                            casher,
-                            desalcoolise,
-                            equitable,
-                            faible_taux_alcool,
-                            produit_bio,
-                            vin_nature,
-                            vin_orange,
-                            pays_revision,
-                            pays_nom,
-                            region_revision,
-                            region_nom,
-                            type_de_vin_revision,
-                            type_de_vin_nom,
-                            format_revision,
-                            format_nom,
-                            appellation_revision,
-                            appellation_nom,
-                            designation_revision,
-                            designation_nom,
-                            cepage_revision,
-                            cepage_nom,
-                            taux_de_sucre_revision,
-                            taux_de_sucre_nom,
-                            degre_alcool_revision,
-                            degre_alcool_nom,
-                            produit_du_quebec_revision,
-                            produit_du_quebec_nom,
-                            classification_revision, 
-                            classification_nom, 
-                            quantite_bouteille ,
-                            date_achat ,
-                            garde_jusqua ,
-                            millesime
-                              
-                    ) VALUES (
-                          ".$cellier['id_cellier'].",
-                           '".$_POST['nom_bouteille']."', 
-                          '".$_POST['image_bouteille']."',
-                          '".$_POST['description_bouteille']."',
-                          ".($_POST['code_saq'] ?: 'NULL').",
-                          ".($_POST['code_cup'] ?: 'NULL').",
-                          '".$_POST['prix_bouteille']."',
-                          '".$_POST['url_saq']."',
-                          '".$_POST['producteur']."',
-                          ".(isset($_POST['biodynamique'])? 1: 0).",
-                          ".(isset($_POST['casher'])? 1: 0).",
-                          ".(isset($_POST['desalcoolise'])? 1: 0).",
-                          ".(isset($_POST['equitable'])? 1: 0).",
-                          ".(isset($_POST['faible_taux_alcool'])? 1: 0).",
-                          ".(isset($_POST['produit_bio'])? 1: 0).",
-                          ".(isset($_POST['vin_nature'])? 1: 0).",
-                          ".(isset($_POST['vin_orange'])? 1: 0).",
-                          ".($pays_id ? 'NULL': 1).",
-                          '".$_POST['pays_nom']."',
-                          
-                          ".($region_id? 'NULL': 1).",
-                          '".$_POST['region_nom']."',
-                          
-                          ".($type_id ? 'NULL': 1).",
-                           '".$_POST['type_de_vin_nom']."',
-                         
-                          ".($format_id ? 'NULL': 1).",
-                           '".$_POST['format_nom']."',
-                           
-                          ".($appellation_id ? 'NULL': 1).",
-                            '".$_POST['appellation_nom']."',
-                            
-                          ".($designation_id ? 'NULL': 1).",
-                           '".$_POST['designation_nom']."',
-                          
-                          ".($cepages_id ? 'NULL': 1).",
-                          '".$_POST['cepage_nom']."',
-                          
-                          ".($taux_de_sucre_id ? 'NULL': 1).",
-                           '".$_POST['taux_de_sucre_nom']."',
-                          
-                          ".($degre_alcool_id ? 'NULL': 1).",
-                           '".$_POST['degre_alcool_nom']."',
-                           
-                          ".($produit_du_quebec_id ? 'NULL': 1).",
-                          '".$_POST['produit_du_quebec_nom']."',
-                          
-                          ".($classification_id ? 'NULL': 1).",
-                          '".$_POST['classification_nom']."',
-                          
-                          '".($cellier['quantite'] ?: 0)."',
-                          ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
-                          ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
-                         '".($_POST['millesime'])."'
-                    )";
-            }else{
-                if($cellier['quantite'] < 0){
-                    $cellier['quantite'] = 0;
-                }
-                $query_string = "UPDATE  usager__bouteille SET 
-                            nom_bouteille =  '".$_POST['nom_bouteille']."',
-                            image_bouteille =  '".$_POST['image_bouteille']."',
-                            description_bouteille  = '".$_POST['description_bouteille']."',
-                            code_saq  =  ".($_POST['code_saq'] ?: 'NULL').",
-                            code_cup =  ".($_POST['code_cup']?: 'NULL').",
-                            prix_bouteille =  '".$_POST['prix_bouteille']."',
-                            url_saq =  '".$_POST['url_saq']."',
-                            producteur =  '".$_POST['producteur']."',
-                            biodynamique  =  ".(isset($_POST['biodynamique']) ? 1: 0).",
-                            casher  =  ".(isset($_POST['casher']) ? 1: 0).",
-                            desalcoolise =  ".(isset($_POST['desalcoolise']) ? 1: 0).",
-                            equitable =  ".(isset($_POST['equitable']) ? 1: 0).",
-                            faible_taux_alcool=  ".(isset($_POST['faible_taux_alcool']) ? 1: 0).",
-                            produit_bio=  ".(isset($_POST['produit_bio']) ? 1: 0).",
-                            vin_nature=  ".(isset($_POST['vin_nature']) ? 1: 0).",
-                            vin_orange=  ".(isset($_POST['vin_orange']) ? 1: 0).",
-                          
-                            pays_revision=  ".($pays_id ? 'NULL': 1).",
-                            pays_nom=  '".$_POST['pays_nom']."',
-                            region_revision=  ".($region_id ? 'NULL': 1).",
-                            region_nom=  '".$_POST['region_nom']."',
-                            type_de_vin_revision=  ".($type_id ? 'NULL': 1).",
-                            type_de_vin_nom= '".$_POST['type_de_vin_nom']."',
-                            format_revision=  ".($format_id ? 'NULL': 1).",
-                            format_nom= '".$_POST['format_nom']."',
-                            appellation_revision=  ".($appellation_id ? 'NULL': 1).",
-                            appellation_nom= '".$_POST['appellation_nom']."',
-                            designation_revision=  ".($designation_id ? 'NULL': 1).",
-                            designation_nom=  '".$_POST['designation_nom']."',
-                            cepage_revision=  ".($cepages_id ? 'NULL': 1).",
-                            cepage_nom= '".$_POST['cepage_nom']."',
-                            taux_de_sucre_revision=  ".($taux_de_sucre_id ? 'NULL': 1).",
-                            taux_de_sucre_nom= '".$_POST['taux_de_sucre_nom']."',
-                            degre_alcool_revision=  ".($degre_alcool_id ? 'NULL': 1).",
-                            degre_alcool_nom= '".$_POST['degre_alcool_nom']."',
-                            produit_du_quebec_revision=  ".($produit_du_quebec_id ?  'NULL': 1).",
-                            produit_du_quebec_nom=  '".$_POST['produit_du_quebec_nom']."',
-                            classification_revision  =  ".($classification_id ? 'NULL': 1).",
-                            classification_nom  =  '".$_POST['classification_nom']."',
-                           
-                            quantite_bouteille = '".($cellier['quantite'] ?: 0)."',
-                            date_achat = ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
-                            garde_jusqua = ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
-                            millesime = '".($_POST['millesime'])."'
-                            WHERE id_cellier=".$cellier['id_cellier']." AND id_bouteille=".$bouteille_id;
+        if(!$ub){
+            if(!isset($cellier['quantite']) || !$cellier['quantite']){
+                continue;
             }
+            if($cellier['quantite'] <= 0){
+                $cellier['quantite'] = 0;
+            }
+            //Si la quantite est egale à zero on insere sans id_cellier
+            $query_string = "INSERT INTO usager__bouteille(
+                        id_cellier ,
+                        nom_bouteille,
+                        image_bouteille ,
+                        description_bouteille ,
+                        code_saq ,
+                        code_cup ,
+                        prix_bouteille ,
+                        url_saq,
+                        producteur ,
+                        biodynamique,
+                        casher,
+                        desalcoolise,
+                        equitable,
+                        faible_taux_alcool,
+                        produit_bio,
+                        vin_nature,
+                        vin_orange,
+                        pays_revision,
+                        pays_nom,
+                        region_revision,
+                        region_nom,
+                        type_de_vin_revision,
+                        type_de_vin_nom,
+                        format_revision,
+                        format_nom,
+                        appellation_revision,
+                        appellation_nom,
+                        designation_revision,
+                        designation_nom,
+                        cepage_revision,
+                        cepage_nom,
+                        taux_de_sucre_revision,
+                        taux_de_sucre_nom,
+                        degre_alcool_revision,
+                        degre_alcool_nom,
+                        produit_du_quebec_revision,
+                        produit_du_quebec_nom,
+                        classification_revision, 
+                        classification_nom, 
+                        quantite_bouteille ,
+                        date_achat ,
+                        garde_jusqua ,
+                        millesime
+                          
+                ) VALUES (
+                      ".  ($cellier['quantite'] == 0 ? 'NULL': $cellier['id_cellier']) .",
+                       '".$_POST['nom_bouteille']."', 
+                      '".$_POST['image_bouteille']."',
+                      '".$_POST['description_bouteille']."',
+                      ".($_POST['code_saq'] ?: 'NULL').",
+                      ".($_POST['code_cup'] ?: 'NULL').",
+                      '".$_POST['prix_bouteille']."',
+                      '".$_POST['url_saq']."',
+                      '".$_POST['producteur']."',
+                      ".(isset($_POST['biodynamique'])? 1: 0).",
+                      ".(isset($_POST['casher'])? 1: 0).",
+                      ".(isset($_POST['desalcoolise'])? 1: 0).",
+                      ".(isset($_POST['equitable'])? 1: 0).",
+                      ".(isset($_POST['faible_taux_alcool'])? 1: 0).",
+                      ".(isset($_POST['produit_bio'])? 1: 0).",
+                      ".(isset($_POST['vin_nature'])? 1: 0).",
+                      ".(isset($_POST['vin_orange'])? 1: 0).",
+                      ".($pays_id ? 'NULL': 1).",
+                      '".$_POST['pays_nom']."',
+                      
+                      ".($region_id? 'NULL': 1).",
+                      '".$_POST['region_nom']."',
+                      
+                      ".($type_id ? 'NULL': 1).",
+                       '".$_POST['type_de_vin_nom']."',
+                     
+                      ".($format_id ? 'NULL': 1).",
+                       '".$_POST['format_nom']."',
+                       
+                      ".($appellation_id ? 'NULL': 1).",
+                        '".$_POST['appellation_nom']."',
+                        
+                      ".($designation_id ? 'NULL': 1).",
+                       '".$_POST['designation_nom']."',
+                      
+                      ".($cepages_id ? 'NULL': 1).",
+                      '".$_POST['cepage_nom']."',
+                      
+                      ".($taux_de_sucre_id ? 'NULL': 1).",
+                       '".$_POST['taux_de_sucre_nom']."',
+                      
+                      ".($degre_alcool_id ? 'NULL': 1).",
+                       '".$_POST['degre_alcool_nom']."',
+                       
+                      ".($produit_du_quebec_id ? 'NULL': 1).",
+                      '".$_POST['produit_du_quebec_nom']."',
+                      
+                      ".($classification_id ? 'NULL': 1).",
+                      '".$_POST['classification_nom']."',
+                      
+                      '".($cellier['quantite'] ?: 0)."',
+                      ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
+                      ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
+                     '".($_POST['millesime'])."'
+                )";
 
-            if(isset($cellier['id_cellier']) && $cellier['id_cellier'] != null){
+            $action ="a";
 
-                if($debug){
-                  echo "<br>";
-                  echo $query_string;
-                 echo "<br>";
-                }
-                $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+        }else{
+            $query_string = "UPDATE  usager__bouteille SET ";
+            if($cellier['quantite'] <= 0){
+                $cellier['quantite'] = 0;
+                $query_string = $query_string ." id_cellier=null,";
+            }
+            //Si la quantite est egale à zero on rend l'id_cellier null
+            $query_string = $query_string ."nom_bouteille =  '".$_POST['nom_bouteille']."',
+                        image_bouteille =  '".$_POST['image_bouteille']."',
+                        description_bouteille  = '".$_POST['description_bouteille']."',
+                        code_saq  =  ".($_POST['code_saq'] ?: 'NULL').",
+                        code_cup =  ".($_POST['code_cup']?: 'NULL').",
+                        prix_bouteille =  '".$_POST['prix_bouteille']."',
+                        url_saq =  '".$_POST['url_saq']."',
+                        producteur =  '".$_POST['producteur']."',
+                        biodynamique  =  ".(isset($_POST['biodynamique']) ? 1: 0).",
+                        casher  =  ".(isset($_POST['casher']) ? 1: 0).",
+                        desalcoolise =  ".(isset($_POST['desalcoolise']) ? 1: 0).",
+                        equitable =  ".(isset($_POST['equitable']) ? 1: 0).",
+                        faible_taux_alcool=  ".(isset($_POST['faible_taux_alcool']) ? 1: 0).",
+                        produit_bio=  ".(isset($_POST['produit_bio']) ? 1: 0).",
+                        vin_nature=  ".(isset($_POST['vin_nature']) ? 1: 0).",
+                        vin_orange=  ".(isset($_POST['vin_orange']) ? 1: 0).",
+                      
+                        pays_revision=  ".($pays_id ? 'NULL': 1).",
+                        pays_nom=  '".$_POST['pays_nom']."',
+                        region_revision=  ".($region_id ? 'NULL': 1).",
+                        region_nom=  '".$_POST['region_nom']."',
+                        type_de_vin_revision=  ".($type_id ? 'NULL': 1).",
+                        type_de_vin_nom= '".$_POST['type_de_vin_nom']."',
+                        format_revision=  ".($format_id ? 'NULL': 1).",
+                        format_nom= '".$_POST['format_nom']."',
+                        appellation_revision=  ".($appellation_id ? 'NULL': 1).",
+                        appellation_nom= '".$_POST['appellation_nom']."',
+                        designation_revision=  ".($designation_id ? 'NULL': 1).",
+                        designation_nom=  '".$_POST['designation_nom']."',
+                        cepage_revision=  ".($cepages_id ? 'NULL': 1).",
+                        cepage_nom= '".$_POST['cepage_nom']."',
+                        taux_de_sucre_revision=  ".($taux_de_sucre_id ? 'NULL': 1).",
+                        taux_de_sucre_nom= '".$_POST['taux_de_sucre_nom']."',
+                        degre_alcool_revision=  ".($degre_alcool_id ? 'NULL': 1).",
+                        degre_alcool_nom= '".$_POST['degre_alcool_nom']."',
+                        produit_du_quebec_revision=  ".($produit_du_quebec_id ?  'NULL': 1).",
+                        produit_du_quebec_nom=  '".$_POST['produit_du_quebec_nom']."',
+                        classification_revision  =  ".($classification_id ? 'NULL': 1).",
+                        classification_nom  =  '".$_POST['classification_nom']."',
+                       
+                        quantite_bouteille = '".($cellier['quantite'] ?: 0)."',
+                        date_achat = ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
+                        garde_jusqua = ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
+                        millesime = '".($_POST['millesime'])."'
+                        WHERE id_cellier=".$cellier['id_cellier']." AND id_bouteille=".$cellier['id_bouteille'];
 
+            echo "<br>".intval($ub[0]['quantite_bouteille'])." -- ".intval($cellier['quantite']). "<br>";
+            if(intval($ub[0]['quantite_bouteille']) && intval($cellier['quantite'])){
+                $action = intval($ub[0]['quantite_bouteille']) < intval($cellier['quantite']) ? 'a': 'd';
+            }else{
+                $action = null;
             }
         }
 
+        if(isset($cellier['id_cellier']) && $cellier['id_cellier'] != null){
+            if($debug){
+              echo "<br>";
+              echo $query_string;
+             echo "<br>";
+            }
+            $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+            if(!$ub){ // Le cas d'ajout d'une nouvelle ligne onn prend la derniere
+                $usager_bouteille_id = MonSQL::getInstance()->insert_id;
+            }else{// Le cas de la modification d'usager bouteille
+                $usager_bouteille_id = $ub[0]['id_bouteille'];
+            }
 
+            echo "ACTION: ".$action." user ".$_SESSION['utilisateur']['id']. " ub= ".$usager_bouteille_id;
 
+            // lors de l'ajout ou la modification dans l'usager_bouteille on ajoute une ligne dans bouteille_action
+            if($action && $_SESSION['utilisateur']['id'] && $usager_bouteille_id ){
+                $query_string_action = "INSERT INTO bouteille_action(
+                                    id_usager,
+                                    id_bouteille,
+                                    date_creation,
+                                    action,
+                                    quantite_bouteille
+                                    ) VALUES (
+                                         '".$_SESSION['utilisateur']['id']."',
+                                         ".$usager_bouteille_id.",
+                                         '".date('Y-m-d h:m:s', time())."',
+                                         '".$action."',
+                                        '".($cellier['quantite'] ?: 0)."'
+                                    )";
+                $res = MonSQL::getInstance()->query($query_string_action) or die(mysqli_error(MonSQL::getInstance()));
+            }
+        }
+
+        //On ajoute l'action ici
+    }
 }
 
 
 echo "Traitement terminé avec succès !<br><br>";
 ECHO "Redirection ...";
-
 
 
 if(isset($message) && $message != null){
