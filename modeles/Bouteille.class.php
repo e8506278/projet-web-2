@@ -153,6 +153,124 @@ class Bouteille extends Modele
         return $rows;
     }
 
+
+    public function getOneBouteilleFromVino($vino_bouteille_id)
+    {
+        $rows = array();
+        $requete = "SELECT 
+						ub.id_cellier, 
+						ub.date_achat, 
+						ub.garde_jusqua, 
+						ub.note, 
+						ub.quantite_bouteille as quantite,
+						ub.quantite_bouteille,
+						ub.millesime, 
+						ub.commentaires, 
+						ub.note, 
+       
+                        ub.pays_revision,
+                        ub.region_revision,
+                        ub.type_de_vin_revision,
+                        ub.format_revision,
+                        ub.appellation_revision,
+                        ub.designation_revision,
+                        ub.classification_revision,
+                        ub.cepage_revision,
+                        ub.taux_de_sucre_revision,
+                        ub.degre_alcool_revision,
+                        ub.produit_du_quebec_revision,
+       
+       
+                         pays.nom AS pays_nom,
+                         region.nom as region_nom,
+                         typ.nom as type_de_vin_nom,
+                         format.nom as format_nom,
+                         appel.nom as appellation_nom,
+                         designation.nom as designation_nom,
+                         cepages.nom as cepage_nom,
+                         ts.nom as taux_de_sucre_nom,
+                         da.nom as degre_alcool_nom,
+                         pc.nom as produit_du_quebec_nom,
+                         classif.nom as classification_nom,
+                        
+                        
+                         uc.nom_cellier as nom_cellier,
+					
+                          b.id_bouteille,
+                          b.nom_bouteille,
+                          b.image_bouteille,
+                          b.code_saq,
+                          b.code_cup,
+                          b.pays_id,
+                          b.region_id,
+                          b.type_id,
+                          b.description_bouteille,
+                          b.producteur,
+                          b.prix_bouteille,
+                          b.url_saq,
+                          b.url_img,
+                          b.format_id,
+                          b.appellation_id,
+                          b.designation_id,
+                          b.classification_id,
+                          b.cepages_id,
+                          b.taux_de_sucre_id,
+                          b.degre_alcool_id,
+                          b.produit_du_quebec_id,
+                          b.biodynamique,
+                          b.casher,
+                          b.desalcoolise,
+                          b.equitable,
+                          b.faible_taux_alcool,
+                          b.produit_bio,
+                          b.vin_nature,
+                          b.vin_orange,
+              
+                         pays.nom AS nom_pays,
+                         region.nom as nom_region,
+                         typ.nom as nom_type,
+                         format.nom as nom_format,
+                         appel.nom as nom_appellation,
+                         designation.nom as nom_designation,
+                         cepages.nom as nom_cepages,
+                         ts.nom as nom_taux_de_sucre,
+                         da.nom as nom_degre_alcool,
+                         pc.nom as nom_produit_du_quebec,
+                        classif.nom as nom_classification
+
+                        from vino__bouteille b
+                        LEFT JOIN usager__bouteille ub ON ub.id_bouteille = b.id_bouteille
+                    
+						LEFT JOIN usager__cellier uc ON uc.id_cellier = ub.id_cellier
+						LEFT JOIN vino__format format ON format.id = b.format_id
+                        LEFT JOIN generique__pays pays ON pays.id = b.pays_id
+                        LEFT JOIN vino__region region ON region.id = b.region_id
+                        LEFT JOIN vino__type typ ON typ.id = b.type_id
+                        LEFT JOIN vino__cepage cepages ON cepages.id = b.cepages_id
+                        LEFT JOIN vino__appellation appel ON appel.id = b.appellation_id
+                        LEFT JOIN vino__designation designation ON designation.id = b.designation_id
+                        LEFT JOIN vino__taux_de_sucre ts ON ts.id = b.taux_de_sucre_id
+                        LEFT JOIN vino__degre_alcool da ON da.id = b.degre_alcool_id  
+                        LEFT JOIN vino__produit_du_quebec pc ON pc.id = b.produit_du_quebec_id
+                        LEFT JOIN vino__classification classif ON classif.id = b.classification_id
+
+                       WHERE b.id_bouteille = '" . $vino_bouteille_id . "'";
+
+        $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
+        if ($res) {
+
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+            //$this->_db->error;
+        }
+        return $rows;
+    }
+
     public function getOneBouteilleByName($nom)
     {
         $rows = array();
