@@ -6,9 +6,13 @@
     font-weight: var(--police-gras);
 }
 .graphique{
-    
+    width: 60%;
 }
-
+@media only screen and (min-width: 1024px) {
+    .graphique{
+        width: 100%;
+    }
+}
 .graphique li { 
     position: relative;
     display: block; 

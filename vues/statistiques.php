@@ -9,7 +9,7 @@
             
     
     
-            <div class="grille grille--2">
+            <div class="grille grille--2l">
         <!--1-TYPE-->
         <div>
             <h4 class="graphique__titre">Type de bouteille</h4><div data-js-btnsformat>
@@ -46,11 +46,10 @@
             <ul class="graphique" data-js-graphique>
                 <?php foreach($data as $cellier){  ?>
                 <li>
-                    <div><?php echo $cellier['nom_cellier'] ;?>  </div>
-                    <span class="graphique__qte"></span>
-                    <div class="index" style="width:<?php echo (($cellier['prix_total']*$cellier['bouteille_total'])/$total)*100?>%; background-color: #b30000; opacity: 0.8;">("<?php echo round(($cellier['prix_total']/$prix_total)*100,2)?>%")</div>
+                    <div><?php echo $cellier['nom_cellier'] ;?></div>
+                    <span class="graphique__qte" ></span>
+                    <span class="index" style="width:<?php echo (($cellier['prix_total']*$cellier['bouteille_total'])/$total)*100?>%; background-color: #b11226; ">("<?php echo round(($cellier['prix_total']/$prix_total)*100,2)?>%")</span>
                     <span class="graphique--police"><?php echo $cellier['prix_total']*$cellier['bouteille_total'] ?>$</span>
-                </li>
                 </li>
                 <?php }?>
                 </ul> 

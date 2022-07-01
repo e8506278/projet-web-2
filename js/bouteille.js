@@ -29,7 +29,7 @@ window.addEventListener('load', function () {
         selectBouteilleInput.addEventListener('input', (e) => {
             console.log('selectBouteilleInput', e.target.value);
 
-            const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom:  e.target.value}) });
+            const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom: e.target.value}) });
             fetch(requete)
                 .then(response => {
                     // if (response.status === 200) {

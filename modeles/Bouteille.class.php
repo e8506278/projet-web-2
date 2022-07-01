@@ -22,6 +22,9 @@ class Bouteille extends Modele
         $res = $this->_db->query('Select * from ' . self::TABLE);
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
+                foreach($row as $cle =>$valeur){
+                    $row[$cle] = trim(utf8_encode($row[$cle]));
+                }
                 $rows[] = $row;
             }
         }
@@ -51,6 +54,9 @@ class Bouteille extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
+                    foreach($row as $cle =>$valeur){
+                        $row[$cle] = trim(utf8_encode($row[$cle]));
+                    }
                     $rows[] = $row;
                 }
             }
@@ -64,6 +70,7 @@ class Bouteille extends Modele
     public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();
+        
         $requete = "SELECT 
 					    uc.nom_cellier as nom_cellier,
 					    ub.id_cellier, 
@@ -138,11 +145,14 @@ class Bouteille extends Modele
         if ($id_cellier) {
             $requete = $requete . " AND ub.id_cellier = '" . $id_cellier . "'";
         }
+        $this->_db->set_charset('utf8');
+      
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
+                    
                     $rows[] = $row;
                 }
             }
@@ -254,12 +264,13 @@ class Bouteille extends Modele
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
 
                        WHERE b.nom_bouteille = '" . $nom . "'";
-
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
+                    
                     $rows[] = $row;
                 }
             }
@@ -404,6 +415,27 @@ class Bouteille extends Modele
             throw new Exception("Erreur de requête sur la base de donnée", 1);
         }
 
+        return $rows;
+    }
+
+    public function getBouteilleCUP($cup){
+        $rows = array();
+        $requete = "SELECT id_bouteille
+                    FROM vino__bouteille 
+                    WHERE code_cup = '$cup'";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                  
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+      
         return $rows;
     }
 }

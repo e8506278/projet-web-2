@@ -94,6 +94,9 @@ class Controler
             case 'statistiques':
                 $this->statistiquesUtilisateur();
                 break;
+            case 'scan':
+                $this->scan();
+                break;
             case 'accueil':
                 $this->accueil();
                 break;
@@ -377,15 +380,18 @@ class Controler
     public function getBouteille()
     {
         $body = json_decode(file_get_contents('php://input'));
-
+       
         if (!empty($body)) {
             $bouteille = new Bouteille();
 
             $resultat = $bouteille->getOneBouteilleByName($body->nom);
+           
+            
             if (count($resultat) > 0) {
                 return $this->returnJsonHttpResponse(true, $resultat[0]);
             }
         }
+       
         return $this->returnJsonHttpResponse(false, null);
     }
 
@@ -579,6 +585,17 @@ class Controler
 
         // making sure nothing is added
         exit();
+    }
+
+    private function scan(){
+        $body = json_decode(file_get_contents('php://input'));
+        if (!empty($body)) {
+            $id_bouteille = new Bouteille;
+            $id = $id_bouteille ->getBouteilleCUP($body->scan_resultat);
+          
+            echo json_encode($id);
+        } 
+       
     }
 
     /**
