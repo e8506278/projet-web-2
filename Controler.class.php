@@ -118,6 +118,15 @@ class Controler
             case 'lireAdminUsagers':
                 $this->lireAdminUsagers();
                 break;
+            case 'lireDetailBouteille':
+                $this->lireDetailBouteille();
+                break;
+            case 'lireDetailCellier':
+                $this->lireDetailCellier();
+                break;
+            case 'lireDetailUsager':
+                $this->lireDetailUsager();
+                break;
             case 'lireFormulaireBouteille':
                 $this->lireFormulaireBouteille();
                 break;
@@ -529,12 +538,49 @@ class Controler
     }
 
 
-    private function lireFormulaireBouteille()
+    private function lireDetailBouteille()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $body = json_decode(file_get_contents('php://input'));
-            $formulaire = require 'vues/Admin/fBouteille.php';
-            echo $formulaire;
+            include("vues/Admin/detailBouteille.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireDetailCellier()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            include("vues/Admin/detailCellier.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireDetailUsager()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'));
+            include("vues/Admin/detailUsager.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
+
+    private function lireFormulaireBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            include('vues/Admin/formulaireBouteille.php');
         } else {
             include("vues/entete.php");
             include("vues/connexion.php");
@@ -546,9 +592,7 @@ class Controler
     private function lireFormulaireCellier()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-            $body = json_decode(file_get_contents('php://input'));
-            $formulaire = require 'vues/Admin/fCellier.php';
-            echo $formulaire;
+            include('vues/Admin/formulaireCellier.php');
         } else {
             include("vues/entete.php");
             include("vues/connexion.php");
@@ -560,9 +604,7 @@ class Controler
     private function lireFormulaireUsager()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-            $body = json_decode(file_get_contents('php://input'));
-            $formulaire = require 'vues/Admin/fUsager.php';
-            echo $formulaire;
+            include('vues/Admin/formulaireUsager.php');
         } else {
             include("vues/entete.php");
             include("vues/connexion.php");

@@ -79,11 +79,9 @@ class Usager extends Modele
     {
         $rows = array();
 
-        $requete = "SELECT T1.id as id_usager, T1.nom as nom_usager, T1.courriel as courriel_usager, T1.nom_utilisateur, T2.nom AS type_usager
-                    FROM usager__detail AS T1 
-                    LEFT JOIN usager__type AS T2 
-                    ON T1.type_utilisateur = T2.id
-                    ORDER BY T1.id;";
+        $requete = "SELECT id, nom, courriel, nom_utilisateur, type_utilisateur
+                    FROM usager__detail
+                    ORDER BY id;";
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {

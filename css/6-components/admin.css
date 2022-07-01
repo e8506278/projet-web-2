@@ -17,7 +17,9 @@
 }
 
 .non-modifiable {
-    color: mediumblue;
+    background-color: #996633;
+    color: #f3f4f6;
+
 }
 
 body.waiting * {
@@ -58,6 +60,19 @@ body.waiting * {
 
 .liste-wrapper {
     padding: var(--espace-p) 0;
+}
+
+.liste-wrapper select {
+    padding: var(--espace-xp);
+}
+
+.liste-wrapper select[readonly] {
+    pointer-events: none;
+}
+
+input.plus-gros {
+    transform: scale(2);
+    margin: var(--espace-xp);
 }
 
 /****************************************************************/
@@ -107,7 +122,7 @@ svg {
 }
 
 .card .box h1 {
-    font-size: var(--espace-l);
+    font-size: var(--espace-m);
 }
 
 .card .box h3 {
@@ -194,7 +209,7 @@ svg {
 
 .carte-usager.selected,
 .err-usager {
-    background-color: #572780;
+    background-color: #6A3E4F;
     color: #f3f4f6;
 }
 
@@ -298,6 +313,7 @@ h1 {
 .filtre-wrapper.filtre-bouteille {
     background-color: #04AA6D;
     color: #f3f4f6;
+    margin: var(--espace-xp) 0;
 }
 
 .filtre-wrapper.filtre-cellier {
@@ -306,7 +322,7 @@ h1 {
 }
 
 .filtre-wrapper.filtre-usager {
-    background-color: #572780;
+    background-color: #6A3E4F;
     color: #f3f4f6;
 }
 
@@ -326,19 +342,19 @@ h1 {
     padding: var(--espace-xp);
 }
 
-.table-wrapper {
+.section2 {
     display: flex;
 }
 
-.table-wrapper.edition {
+.section2.edition {
     pointer-events: none;
 }
 
-.table-wrapper>div {
+.section2>div {
     width: 100%;
 }
 
-.table-wrapper table {
+.section2 table {
     border-collapse: collapse;
     width: 100%;
 }
@@ -383,35 +399,44 @@ h1 {
     width: 20px;
 }
 
-.table-wrapper table tr:hover .lien-externe svg {
+.section2 table tr:hover .lien-externe svg {
     fill: #ffffff;
 }
 
-.table-wrapper table td,
-.table-wrapper table th {
+.section2 table td,
+.section2 table th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-.table-wrapper table tr {
+.section2 table tr {
     background-color: #ffffff;
 }
 
-.table-wrapper table tr.selected td {
+.section2 table tr.selected td {
     background-color: #44413B;
     color: #fff;
 }
 
-.table-wrapper table tr:nth-child(even) {
+.section2 table tr.selected .lien-externe svg {
+    fill: #ffffff;
+}
+
+.section2 table tr:nth-child(even) {
     background-color: #cfcfcf;
 }
 
-.table-wrapper table tr:hover {
+.section2 table td.couleur-filtre {
+    background-color: #ffab40;
+}
+
+.section2 table tr:hover,
+.section2 table tr:hover td.couleur-filtre {
     background-color: #333;
     color: #ffffff;
 }
 
-.table-wrapper table th {
+.section2 table th {
     background-color: #04AA6D;
     color: white;
     cursor: pointer;
@@ -419,75 +444,75 @@ h1 {
     text-align: left;
 }
 
-.table-wrapper table.table-bouteille th {
+.section2 table.table-bouteille th {
     background-color: #04AA6D;
     color: #f3f4f6;
 }
 
-.table-wrapper table.table-cellier th {
+.section2 table.table-cellier th {
     background-color: #276880;
     color: #f3f4f6;
 }
 
-.table-wrapper table.table-usager th {
-    background-color: #572780;
+.section2 table.table-usager th {
+    background-color: #6A3E4F;
     color: #f3f4f6;
 }
 
-.table-wrapper table.table-vino th {
+.section2 table.table-vino th {
     background-color: rgb(126, 0, 63);
     ;
     color: #f3f4f6;
 }
 
-.table-wrapper table th span {
+.section2 table th span {
     display: block;
     height: 40px;
     line-height: 40px;
     text-align: center;
 }
 
-.detail-wrapper {
+.section3 {
     display: flex;
     flex-direction: column;
 }
 
-.detail-wrapper>div {
+.section3>div {
     width: 100%;
 }
 
-.detail-wrapper table {
+.section3 table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.detail-wrapper table td,
-.detail-wrapper table th {
+.section3 table td,
+.section3 table th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-.detail-wrapper table tr {
+.section3 table tr {
     background-color: #ffffff;
 }
 
-.detail-wrapper table tr:nth-child(even) {
+.section3 table tr:nth-child(even) {
     background-color: #cfcfcf;
 }
 
-.detail-wrapper table tr:hover {
+.section3 table tr:hover {
     background-color: #019879;
     color: #ffffff;
 }
 
-.detail-wrapper table th {
+.section3 table th {
     background-color: #04AA6D;
     color: white;
     padding: 0;
     text-align: left;
 }
 
-.detail-wrapper table th span {
+.section3 table th span {
     display: block;
     height: 40px;
     line-height: 40px;
@@ -557,7 +582,7 @@ h1 {
     fill: #f3f4f6;
 }
 
-.vino-wrapper {
+.section1 {
     align-items: center;
     background-color: rgb(126, 0, 63);
     color: white;
@@ -567,7 +592,7 @@ h1 {
     padding: var(--espace-p);
 }
 
-.vino-wrapper.hide {
+.section1.hide {
     display: none;
 }
 
