@@ -15,8 +15,8 @@ const urlParams = new URLSearchParams(queryString);
 const nomCellier = urlParams.get('nom_cellier');
 
 
-var $baseUrl_without_parameters =  window.location.href.split('?');//[0];
-$baseUrl_without_parameters = $baseUrl_without_parameters.length>0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
+var $baseUrl_without_parameters = window.location.href.split('?');//[0];
+$baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
 
 let etatModification = true;
 console.log('hello bouteille', etatModification);
@@ -25,57 +25,78 @@ window.addEventListener('load', function () {
 
     /*AJOUT D'UNE BOUTEILLE*/
     const selectBouteilleInput = document.querySelector('[data-js-bouteille-select]');
-    if(selectBouteilleInput){
+
+    /**
+     * CR - Début des modifs
+     */
+    const vino_id = urlParams.get('vino_id');
+
+    if (selectBouteilleInput) {
+        if (vino_id) {
+            id_bouteille = vino_id;
+            elOptBouteille = document.querySelector(`[data-js-id-bouteille="${id_bouteille}"]`);
+            selectBouteilleInput.value = elOptBouteille.value;
+            afficheBouteille(selectBouteilleInput.value);
+        }
+
         selectBouteilleInput.addEventListener('input', (e) => {
             console.log('selectBouteilleInput', e.target.value);
+            afficheBouteille(e.target.value);
 
-            const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom:  e.target.value}) });
-            fetch(requete)
-                .then(response => {
-                    // if (response.status === 200) {
-                    //     console.log('got result', response.json());
-                    // }
-                    return response.json();
-                }).then(function (data) {
+        })
+    }
+
+    function afficheBouteille(nomBouteille) {
+        const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({ nom: nomBouteille }) });
+        fetch(requete)
+            .then(response => {
+                // if (response.status === 200) {
+                //     console.log('got result', response.json());
+                // }
+                return response.json();
+            }).then(function (data) {
                 console.log('data', data);
                 Object.keys(data).forEach(key => {
 
-                    if(key === 'image_bouteille'){
+                    if (key === 'image_bouteille') {
                         const image_bouteille = document.getElementById(key);
-                        if(data['image_bouteille']){
+                        if (data['image_bouteille']) {
                             image_bouteille.src = data['image_bouteille'];
-                        }else if( data['image_url'] ){
+                        } else if (data['image_url']) {
                             image_bouteille.src = data['image_url'];
-                        }else {
-                            image_bouteille.src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png';
+                        } else {
+                            image_bouteille.src = $baseUrl_without_parameters + '/assets/img/default_bouteille.png';
                         }
                     }
                     const elements = document.getElementsByName(key);
-                    if( elements && elements.length>0){
+                    if (elements && elements.length > 0) {
                         elements[0].value = data[key];
-                    }else{
+                    } else {
                         console.log('not found in form', key);
                     }
                 });
             });
-        })
+
     }
+    /**
+     * CR - Fin des modifs
+     */
 
     const image_inputs = document.getElementsByName('image_bouteille');
-    if( image_inputs && image_inputs.length>0){
+    if (image_inputs && image_inputs.length > 0) {
         image_inputs.forEach(el => {
             el.addEventListener('input', (e) => {
                 console.log('input changed', e.target.value);
-                const newlien =  e.target.value;
+                const newlien = e.target.value;
                 const image_bouteille = document.getElementById('image_bouteille');
-                if(image_bouteille){
+                if (image_bouteille) {
                     image_bouteille.src = newlien;
-                }else {
-                    image_bouteille.src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png';
+                } else {
+                    image_bouteille.src = $baseUrl_without_parameters + '/assets/img/default_bouteille.png';
                 }
             })
         })
-    }else{
+    } else {
         console.log('not found in form', key);
     }
     /*AJOUT D'UN CELLIER*/
@@ -98,13 +119,13 @@ window.addEventListener('load', function () {
     //     fermerFormulaire.disabled = true;
     // }
 
-    if(enregistrerFormulaire){
+    if (enregistrerFormulaire) {
         enregistrerFormulaire.disabled = true;
     }
 
-    if(modifier_bouton){
-        modifier_bouton.addEventListener('click', function (e){
-            etatModification  = true;
+    if (modifier_bouton) {
+        modifier_bouton.addEventListener('click', function (e) {
+            etatModification = true;
             document.querySelectorAll(".input-state").forEach(element => {
                 element.style.display = "block";
             });
@@ -112,26 +133,26 @@ window.addEventListener('load', function () {
                 element.style.display = "none";
             });
 
-            if(modifier_bouton){
+            if (modifier_bouton) {
                 modifier_bouton.disabled = true;
             }
             // if(fermerFormulaire){
             //     fermerFormulaire.disabled = false;
             // }
 
-            if(askDeleteBtn){
+            if (askDeleteBtn) {
                 askDeleteBtn.disabled = true;
             }
 
-            if(enregistrerFormulaire){
+            if (enregistrerFormulaire) {
                 enregistrerFormulaire.disabled = false;
             }
         });
     }
 
-    if(fermerFormulaire){
+    if (fermerFormulaire) {
 
-        fermerFormulaire.addEventListener('click', function (e){
+        fermerFormulaire.addEventListener('click', function (e) {
             etatModification = false;
             openModal(modalAnnulation);
             document.querySelectorAll(".input-state").forEach(element => {
@@ -141,7 +162,7 @@ window.addEventListener('load', function () {
                 element.style.display = "block";
             });
 
-            if(modifier_bouton){
+            if (modifier_bouton) {
                 modifier_bouton.disabled = false;
             }
 
@@ -149,11 +170,11 @@ window.addEventListener('load', function () {
             //     fermerFormulaire.disabled = true;
             // }
 
-            if(askDeleteBtn){
+            if (askDeleteBtn) {
                 askDeleteBtn.disabled = false;
             }
 
-            if(enregistrerFormulaire){
+            if (enregistrerFormulaire) {
                 enregistrerFormulaire.disabled = true;
             }
 
@@ -161,27 +182,27 @@ window.addEventListener('load', function () {
 
     }
 
-    if(detruireButton){
-        detruireButton.addEventListener('click', function (e){
+    if (detruireButton) {
+        detruireButton.addEventListener('click', function (e) {
             const id_bouteille_input = document.getElementById('id_bouteille_input');
             const id_cellier_input = document.getElementById('id_cellier_input');
-            if(id_bouteille_input && id_cellier_input){
+            if (id_bouteille_input && id_cellier_input) {
                 console.log('id_bouteille_input', id_bouteille_input.value);
                 const id_bouteille = id_bouteille_input.value;
                 const id_cellier = id_cellier_input.value;
                 console.log('id_bouteille', id_bouteille);
                 const requete = new Request($baseUrl_without_parameters + "?requete=detruireBouteille",
-                    { method: 'POST', body: JSON.stringify({id_bouteille, id_cellier}) });
+                    { method: 'POST', body: JSON.stringify({ id_bouteille, id_cellier }) });
                 fetch(requete)
                     .then(response => {
                         if (response.status === 200) {
                             console.log('got result', response.json());
-                            window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier="+e.target.value+"&nom_cellier="+nomCellier);
+                            window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier=" + e.target.value + "&nom_cellier=" + nomCellier);
                         }
                         return response.json();
                     }).then(function (data) {
-                    console.log('data', data);
-                });
+                        console.log('data', data);
+                    });
             }
         })
     }
@@ -190,31 +211,31 @@ window.addEventListener('load', function () {
     const modalModificationStatut = '[modal-modification-statut]';
     const modalAnnulation = '[modal-annulation]';
 
-    if(askDeleteBtn){
-        askDeleteBtn.addEventListener('click', ()=>{
-           openModal(modalAskDelete);
+    if (askDeleteBtn) {
+        askDeleteBtn.addEventListener('click', () => {
+            openModal(modalAskDelete);
         });
     }
 
-    if(annulerDetruirebtn){
+    if (annulerDetruirebtn) {
         annulerDetruirebtn.addEventListener('click', () => {
             closeModal(modalAskDelete);
         })
     }
 
-    if(annulerDetruirebtn2){
+    if (annulerDetruirebtn2) {
         annulerDetruirebtn2.addEventListener('click', () => {
             closeModal(modalModificationStatut);
         })
     }
 
-    if(fermerModalAnnulation){
+    if (fermerModalAnnulation) {
         fermerModalAnnulation.addEventListener('click', () => {
             closeModal(modalAnnulation);
         })
     }
 
-    function openModal(modalSelector){
+    function openModal(modalSelector) {
         const elModal = document.querySelector(modalSelector);
         if (elModal.classList.contains('modal--ferme')) {
             elModal.classList.replace('modal--ferme', 'modal--ouvre');
@@ -226,7 +247,7 @@ window.addEventListener('load', function () {
 
     }
 
-    function closeModal(modalSelector){
+    function closeModal(modalSelector) {
         const elModal = document.querySelector(modalSelector);
         if (elModal.classList.contains('modal--ouvre')) {
             elModal.classList.replace('modal--ouvre', 'modal--ferme');
@@ -238,37 +259,37 @@ window.addEventListener('load', function () {
     }
 
     const modifStatus = document.getElementById('modifStatus');
-    if(modifStatus){
-        if(modifStatus.value){
+    if (modifStatus) {
+        if (modifStatus.value) {
             openModal(modalModificationStatut);
         }
     }
 
     const gobackbtn = document.getElementById('gobackbtn');
-    if(gobackbtn){
+    if (gobackbtn) {
         gobackbtn.addEventListener('click', (e) => {
             console.log('gobackbtn', e.target.value);
 
-            if(e.target.value){
+            if (e.target.value) {
                 console.log("e.target.value", e.target.value);
-                if( e.target.value  === -1){
+                if (e.target.value === -1) {
                     window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier");
-                }else {
-                    window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier="+e.target.value+"&nom_cellier="+nomCellier);
+                } else {
+                    window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier=" + e.target.value + "&nom_cellier=" + nomCellier);
                 }
             }
         });
     }
 
     const gobackbtn2 = document.getElementById('gobackbtn2');
-    if(gobackbtn2){
+    if (gobackbtn2) {
         gobackbtn2.addEventListener('click', (e) => {
-            if(e.target.value){
+            if (e.target.value) {
                 console.log("e.target.value", e.target.value);
-                if( e.target.value  === -1){
+                if (e.target.value === -1) {
                     window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier");
-                }else {
-                    window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier="+e.target.value+"&nom_cellier="+nomCellier);
+                } else {
+                    window.location.replace($baseUrl_without_parameters + "?requete=listeBouteilleCellier&id_cellier=" + e.target.value + "&nom_cellier=" + nomCellier);
                 }
             }
         });
