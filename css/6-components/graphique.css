@@ -1,7 +1,18 @@
-.graphique{
-    width: 50%;
+.graphique__titre{
+    padding-bottom: var(--espace-p);
 }
-
+.graphique--police{
+    font-size: var(--police-xp);
+    font-weight: var(--police-gras);
+}
+.graphique{
+    width: 60%;
+}
+@media only screen and (min-width: 1024px) {
+    .graphique{
+        width: 100%;
+    }
+}
 .graphique li { 
     position: relative;
     display: block; 
@@ -11,18 +22,18 @@ display: block;
 position: absolute; 
 top: 0; 
 right: 0; 
-margin: 0 0.3em; 
 text-align: right; 
 font-weight: bold; 
+padding-right: 5px;
 }
 .graphique li{ 
 display: flex; 
 position: relative; 
 z-index: 2; 
-margin: var(--espace-xp);
+margin: var(--espace-xp) 0;
 }
 .graphique div{
-    width: 70px;
+    min-width: 70px;
 }
 .graphique .index { 
 display: block;  
@@ -32,11 +43,13 @@ height: 100%;
 background-color: var(--couleur-accent);
 text-indent: -9999px; 
 overflow: hidden; 
+
 }
 
 .graphique-vertical{
 display:table;
 table-layout: fixed;   
+margin-top: 50px;
 
 }   
 .graphique-vertical li{
@@ -48,8 +61,16 @@ table-layout: fixed;
 .graphique-vertical span{
     margin: 0 var(--espace-xp);
     display: block;
+    text-align: center;
 }
-.graphique--vertical--couleur{
-    background-color: var(--couleur-accent);
+.graphique-vertical--couleur{
+    background-color: #006A4E ;
+    opacity: 0.7;
 }
    
+.graphique--police{
+    font-size: var(--police-xp);
+    padding-left: var(--espace-xp);
+}
+
+
