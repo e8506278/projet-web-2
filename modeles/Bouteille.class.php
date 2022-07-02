@@ -424,7 +424,7 @@ class Bouteille extends Modele
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
 
                        WHERE b.nom_bouteille = '" . $nom . "'";
-        $this->_db->set_charset('utf8');
+       // $this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
