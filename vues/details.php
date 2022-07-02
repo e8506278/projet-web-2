@@ -115,7 +115,8 @@ foreach ($celliers as &$cellier_dans_le_compte) {
 
 ?>
 
-<script src="./js/bouteille.js" type="text/javascript"></script>
+<script src="./js/bouteille.js"  type="text/javascript"></script>
+<script src="./js/autocomplete.js"  type="text/javascript"></script>
 <section class="section-wrapper">
     <h2>Informations</h2>
 
