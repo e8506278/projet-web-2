@@ -261,7 +261,7 @@ class Cellier extends Modele
      */
     public function deplacerBouteillesCellier($id, $bouteilles)
     {
-       
+      
             foreach ($bouteilles as $bouteille) {
                 if($id === "null"){
                     

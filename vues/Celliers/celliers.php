@@ -100,6 +100,7 @@
             <?php };?>
         </div>
     </div>
+   
 </section>
 <div class="carte__remp carte--bg-couleur "></div>
 

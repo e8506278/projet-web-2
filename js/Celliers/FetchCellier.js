@@ -50,6 +50,12 @@ class FetchCellier{
                              bouton.classList.add("carte--inactif")
                              action.classList.add("carte--inactif")
                           }
+                          else if(nbreCellier<=1){
+                            
+                            action.innerHTML = `<option value="null">Aucun cellier</option>`
+                            bouton.classList.add("carte--inactif")
+                             action.classList.add("carte--inactif")
+                          }
                        
                        }    
                    

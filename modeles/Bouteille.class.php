@@ -578,6 +578,15 @@ class Bouteille extends Modele
         return $rows;
     }
 
+
+    /**
+     * Cette méthode récupère l'id d'une bouteille selon le code cup envoyé en paramètre
+     *
+     * @param int $cup, le code cup
+     * 
+     * @return Array id_bouteille, le id de la bouteille
+     *
+     */
     public function getBouteilleCUP($cup){
         $rows = array();
         $requete = "SELECT id_bouteille

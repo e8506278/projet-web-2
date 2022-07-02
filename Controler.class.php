@@ -157,7 +157,7 @@ class Controler
                 
             }
             $bouteillesAchetees = 0;
-            $actionsAjouts = $stats->getBouteilleAjouts($id_usager);
+            $actionsAjouts = $stats->getBouteilleAjouts($id);
             foreach($actionsAjouts as $achetees){
                  $bouteillesAchetees += $achetees['quantite_bouteille'];
            
@@ -808,21 +808,23 @@ class Controler
      */
     private function supprimerCellier()
     {
+        $id_usager = $_SESSION['utilisateur']['id'];
         $body = json_decode(file_get_contents('php://input'));
         $id = $body->id_cellierSupprime;
         $bte = new Bouteille();
-        $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
-        if(count($bouteilles) > 0){
-            $cellier = new Cellier();
-            $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
-          
-            $cellier->supprimerCellier($id);
-        }
-        else{
-            $cellier = new Cellier();
-            $cellier->supprimerCellier($id);
-        }
-       
         
+        $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
+        foreach($bouteilles as $bouteille){
+                
+            $bte->modifierQuantiteBouteilleCellier($id_usager,$bouteille['id_bouteille'], $bouteille['quantite_bouteille'], "d");
+            
+        }
+      
+           $cellier = new Cellier();
+            $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
+            $cellier->supprimerCellier($id);
+        
+       
+    
     }
 }
