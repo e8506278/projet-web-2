@@ -23,8 +23,8 @@ class Modele
     function __construct()
     {
 
-        $this->_db = MonSQL::getInstance();
-        
+      $this->_db = MonSQL::getInstance();
+      
     }
 
     public function ajusterQuantiteBouteille($id_bouteille)

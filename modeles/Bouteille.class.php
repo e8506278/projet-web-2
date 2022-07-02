@@ -68,9 +68,7 @@ class Bouteille extends Modele
         $res = $this->_db->query('Select * from ' . self::TABLE);
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
-                foreach($row as $cle =>$valeur){
-                    $row[$cle] = trim(utf8_encode($row[$cle]));
-                }
+                
                 $rows[] = $row;
             }
         }
@@ -100,9 +98,7 @@ class Bouteille extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    foreach($row as $cle =>$valeur){
-                        $row[$cle] = trim(utf8_encode($row[$cle]));
-                    }
+               
                     $rows[] = $row;
                 }
             }
@@ -191,7 +187,7 @@ class Bouteille extends Modele
         if ($id_cellier) {
             $requete = $requete . " AND ub.id_cellier = '" . $id_cellier . "'";
         }
-        $this->_db->set_charset('utf8');
+       
       
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
@@ -351,7 +347,7 @@ class Bouteille extends Modele
         if (($res = $this->_db->query($requete)) ==     true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    $row['nom'] = trim(utf8_encode($row['nom']));
+                    //$row['nom'] = trim(utf8_encode($row['nom']));
                     $rows[] = $row;
                 }
             }
@@ -360,7 +356,7 @@ class Bouteille extends Modele
         }
 
 
-        //var_dump($rows);
+        var_dump($rows);
         return $rows;
     }
 

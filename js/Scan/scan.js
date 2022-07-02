@@ -26,30 +26,7 @@ elBtnScan.addEventListener('click', (e)=>{
                 // Stop failed, handle it.
               });
              
-              location.href = BaseURL+"?requete=bouteille&id_bouteille="+vino_bouteille;
-        
-            if(response !== ""){
-                
-                fetch(requete)
-                    .then(response => {
-                        if (response.status === 200) {
-                    
-                            return response
-                        } else {
-                            throw new Error('Erreur');
-                        }
-                    })
-                    .then(response => {
-                    
-                        
-        
-                       
-        
-                    }).catch(error => {
-                        console.error(error);
-                    });
-            
-            }
+              location.href = BaseURL+"?requete=bouteille&vino_id="+vino_bouteille;
          
             
             
