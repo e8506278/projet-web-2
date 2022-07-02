@@ -140,12 +140,28 @@ class Controler
             $nombre_cellier = $celliers->nombreCellierUsager($id);
             $bouteille_total = 0;
             $prix_total = 0;
-            foreach($data as $cellier){        
+            foreach($data as $cellier){     
+               
                 $bouteille_total += $cellier['bouteille_total'];
                 $prix_total += $cellier['prix_total'];
             }
             $total = $prix_total*$bouteille_total;
 
+
+            $stats = new Statistique();
+            $bouteillesBues = 0;
+            $actionsBues = $stats->getBouteilleBues($id);
+
+            foreach($actionsBues as $bues){
+                $bouteillesBues += $bues['quantite_bouteille'];
+                
+            }
+            $bouteillesAchetees = 0;
+            $actionsAjouts = $stats->getBouteilleAjouts($id_usager);
+            foreach($actionsAjouts as $achetees){
+                 $bouteillesAchetees += $achetees['quantite_bouteille'];
+           
+            }
             include("vues/index.php");
         } else {
             include("vues/connexion.php");
