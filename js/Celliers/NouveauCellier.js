@@ -10,6 +10,7 @@ export default class NouveauCellier extends ModalCellier{
         this._elContenu = document.querySelector('[data-js-modalcontenu]')
         this._elBtnAjouterCellier =  document.querySelector('[data-js-boutonAjouterCellier]')
         this._elUsager =  document.querySelector("[data-js-usager]")
+        console.log(this._elUsager )
         this._elNom_cellier = document.querySelector("[name='nom_cellier']")
         this._elType_cellier_id = document.querySelectorAll("[name='type_cellier_id']")
         this._elDescription_cellier =document.querySelector("[name='description_cellier']")

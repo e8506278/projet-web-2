@@ -5,17 +5,17 @@ class FetchCellier{
                .then(response => {
                    if (response.status === 200) {
                  
-                       return response
+                       return response.text()
                    } else {
                        throw new Error('Erreur');
                    }
                })
                .then(response => {
-                  
-                   //action
+                  console.log(response)
+                   action
     
                     //Rafraîchir la page
-                   //location.reload();
+                   location.reload();
       
                }).catch(error => {
                    console.error(error);

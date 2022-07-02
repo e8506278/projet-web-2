@@ -287,6 +287,7 @@ class Controler
 
         $body = json_decode(file_get_contents('php://input'));
         $id = $body->id_cellierSupprime;
+
         if (!empty($body)) {
 
             $bte = new Bouteille();
@@ -295,8 +296,9 @@ class Controler
 
                 $cellier = new Cellier();
                 $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
+                
                 if ($resultat) {
-                    $resultat =   $cellier->supprimerCellier($id);
+                    $resultat = $cellier->supprimerCellier($id);
                 }
             }
         }
@@ -792,22 +794,19 @@ class Controler
     {
         $body = json_decode(file_get_contents('php://input'));
         $id = $body->id_cellierSupprime;
- 
-        if (!empty($body)) {
-
-            $bte = new Bouteille();
-            $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
-            if ($bouteilles) {
-                var_dump($body->id_cellierChoisi);
-                if($body->id_cellierChoisi === "0"){
-                    $id_cellierChoisi = null;
-                }
-                $cellier = new Cellier();
-                $resultat = $cellier->deplacerBouteillesCellier($id_cellierChoisi, $bouteilles);
-              
-                 $cellier->supprimerCellier($id);
-              
-            }
+        $bte = new Bouteille();
+        $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
+        if(count($bouteilles) > 0){
+            $cellier = new Cellier();
+            $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
+          
+            $cellier->supprimerCellier($id);
         }
+        else{
+            $cellier = new Cellier();
+            $cellier->supprimerCellier($id);
+        }
+       
+        
     }
 }

@@ -261,15 +261,30 @@ class Cellier extends Modele
      */
     public function deplacerBouteillesCellier($id, $bouteilles)
     {
-        foreach ($bouteilles as $bouteille) {
-            $id_bouteille = $bouteille['id_bouteille'];
-
-            $requete = "UPDATE usager__bouteille SET id_cellier = '$id'
-                WHERE id_bouteille = '$id_bouteille'";
-
-            $res = $this->_db->query($requete);
-        }
-
+       
+            foreach ($bouteilles as $bouteille) {
+                if($id === "null"){
+                    
+                    $id_bouteille = $bouteille['id_bouteille'];
+    
+                    $requete = "UPDATE usager__bouteille SET id_cellier = null
+                        WHERE id_bouteille = '$id_bouteille'";
+        
+                    $res = $this->_db->query($requete);
+                }else{
+                    $id_bouteille = $bouteille['id_bouteille'];
+    
+                    $requete = "UPDATE usager__bouteille SET id_cellier = '$id'
+                        WHERE id_bouteille = '$id_bouteille'";
+        
+                    $res = $this->_db->query($requete);
+                }
+                
+            }
+            
+        
+        
+       
         return $res;
     }
     /**
@@ -283,7 +298,7 @@ class Cellier extends Modele
      */
     public function supprimerCellier($id)
     {
-        var_dump($id);exit;
+       
         $requete = "DELETE FROM usager__cellier WHERE id_cellier = '$id'";
 
         $res = $this->_db->query($requete);
