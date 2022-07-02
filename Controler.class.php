@@ -347,17 +347,28 @@ class Controler
 
         $id_cellier = isset($_GET['id_cellier']) ? $_GET['id_cellier'] : null;
         $id_bouteille = isset($_GET['id_bouteille']) ? $_GET['id_bouteille'] : null;
+        $vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
         $message = isset($_GET['message']) ? $_GET['message'] : null;
 
 
-        if ($id_bouteille) {
-            $bouteille = (new Bouteille());
-            $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
-            if (is_array($bouteille) && count($bouteille) > 0) {
-                $bouteille = $bouteille[0];
+            if ($id_bouteille) {
+                $bouteille = (new Bouteille());
+                $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
+                if (is_array($bouteille) && count($bouteille) > 0) {
+                    $bouteille = $bouteille[0];
+                }
+            } else{
+                if(isset($vino_id) && $vino_id != null){
+                    $bouteille = (new Bouteille());
+                    $bouteille = $bouteille->getOneBouteilleFromVino($vino_id);
+                    if (is_array($bouteille) && count($bouteille) > 0) {
+                        $bouteille = $bouteille[0];
+                        $id_bouteille = $bouteille['id_bouteille'];
+                    }
+                }
             }
-        }
 
+//            print_r($bouteille); die();
 
         $body = json_decode(file_get_contents('php://input'));
 

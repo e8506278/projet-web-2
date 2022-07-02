@@ -38,25 +38,27 @@ window.addEventListener('load', function () {
                     return response.json();
                 }).then(function (data) {
                 console.log('data', data);
-                Object.keys(data).forEach(key => {
+                if(data){
+                    Object.keys(data).forEach(key => {
 
-                    if(key === 'image_bouteille'){
-                        const image_bouteille = document.getElementById(key);
-                        if(data['image_bouteille']){
-                            image_bouteille.src = data['image_bouteille'];
-                        }else if( data['image_url'] ){
-                            image_bouteille.src = data['image_url'];
-                        }else {
-                            image_bouteille.src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png';
+                        if(key === 'image_bouteille'){
+                            const image_bouteille = document.getElementById(key);
+                            if(data['image_bouteille']){
+                                image_bouteille.src = data['image_bouteille'];
+                            }else if( data['image_url'] ){
+                                image_bouteille.src = data['image_url'];
+                            }else {
+                                image_bouteille.src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png';
+                            }
                         }
-                    }
-                    const elements = document.getElementsByName(key);
-                    if( elements && elements.length>0){
-                        elements[0].value = data[key];
-                    }else{
-                        console.log('not found in form', key);
-                    }
-                });
+                        const elements = document.getElementsByName(key);
+                        if( elements && elements.length>0){
+                            elements[0].value = data[key];
+                        }else{
+                            console.log('not found in form', key);
+                        }
+                    });
+                }
             });
         })
     }
