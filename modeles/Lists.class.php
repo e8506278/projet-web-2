@@ -100,7 +100,7 @@ class Lists
         if($condition){
             $query_string = $query_string.' '. $condition;
         }
-        
+
         $res = MonSQL::getInstance()->query($query_string);
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
