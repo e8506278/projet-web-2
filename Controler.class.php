@@ -277,6 +277,11 @@ class Controler
      * et supprime le cellier selon l'id_cellier envoyé dans l'url 
      *  
      */
+    /**
+     * Cette méthode déplace toutes les bouteilles d'un cellier à l'autre selon l'id_cellier choisi
+     * et supprime le cellier selon l'id_cellier envoyé dans l'url 
+     *  
+     */
     private function deplacerSupprimer()
     {
 
@@ -516,7 +521,7 @@ class Controler
     {
 
         $id = $_SESSION['utilisateur']['id'];
-
+;
         $celliers = new Cellier();
 
         $data = $celliers->getListeCellier($id);
@@ -548,8 +553,7 @@ class Controler
 
         $data = $celliers->getListeCellier($id);
 
-
-        echo json_encode($data);
+        echo json_encode($data, \JSON_UNESCAPED_UNICODE);
     }
 
 
@@ -786,20 +790,23 @@ class Controler
      */
     private function supprimerCellier()
     {
-
         $body = json_decode(file_get_contents('php://input'));
         $id = $body->id_cellierSupprime;
+ 
         if (!empty($body)) {
 
             $bte = new Bouteille();
             $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
             if ($bouteilles) {
-
-                $cellier = new Cellier();
-                $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
-                if ($resultat) {
-                    $resultat =   $cellier->supprimerCellier($id);
+                var_dump($body->id_cellierChoisi);
+                if($body->id_cellierChoisi === "0"){
+                    $id_cellierChoisi = null;
                 }
+                $cellier = new Cellier();
+                $resultat = $cellier->deplacerBouteillesCellier($id_cellierChoisi, $bouteilles);
+              
+                 $cellier->supprimerCellier($id);
+              
             }
         }
     }
