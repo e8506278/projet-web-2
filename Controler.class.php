@@ -97,6 +97,9 @@ class Controler
             case 'admin':
                 $this->afficherPageAdmin();
                 break;
+            case 'ajouterAdminBouteille':
+                $this->ajouterAdminBouteille();
+                break;
             case 'lireAdminBouteilles':
                 $this->lireAdminBouteilles();
                 break;
@@ -117,6 +120,9 @@ class Controler
                 break;
             case 'lireAdminUsagers':
                 $this->lireAdminUsagers();
+                break;
+            case 'modifierAdminBouteille':
+                $this->modifierAdminBouteille();
                 break;
             case 'lireDetailBouteille':
                 $this->lireDetailBouteille();
@@ -183,6 +189,23 @@ class Controler
     {
         include("vues/admin.php");
     }
+
+
+    private function ajouterAdminBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $donnees = json_decode(file_get_contents('php://input'));
+
+            $bte = new Bouteille();
+            $res = $bte->ajouterAdminBouteille($donnees);
+            echo json_encode($res);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
+    }
+
 
     private function ajouterBouteilleCellier()
     {
@@ -433,7 +456,6 @@ class Controler
         return $this->returnJsonHttpResponse(false, null);
     }
 
-
     private function lireAdminBouteilles()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
@@ -542,6 +564,9 @@ class Controler
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $body = json_decode(file_get_contents('php://input'));
+            $mode = isset($body->mode) ? $body->mode : "lire";
+            $id = isset($body->id) ? $body->id : null;
+
             include("vues/Admin/detailBouteille.php");
         } else {
             include("vues/entete.php");
@@ -555,6 +580,9 @@ class Controler
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $body = json_decode(file_get_contents('php://input'));
+            $mode = isset($body->mode) ? $body->mode : "lire";
+            $id = isset($body->id) ? $body->id : null;
+
             include("vues/Admin/detailCellier.php");
         } else {
             include("vues/entete.php");
@@ -568,6 +596,9 @@ class Controler
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $body = json_decode(file_get_contents('php://input'));
+            $mode = isset($body->mode) ? $body->mode : "lire";
+            $id = isset($body->id) ? $body->id : null;
+
             include("vues/Admin/detailUsager.php");
         } else {
             include("vues/entete.php");
@@ -696,6 +727,22 @@ class Controler
 
 
         echo json_encode($data);
+    }
+
+
+    private function modifierAdminBouteille()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $donnees = json_decode(file_get_contents('php://input'));
+
+            $bte = new Bouteille();
+            $res = $bte->modifierAdminBouteille($donnees);
+            echo json_encode($res);
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
+        }
     }
 
 

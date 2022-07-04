@@ -4,16 +4,20 @@ $baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_
 let tableData = [];
 
 let tableSelectionnee = {
+    id: -1,
     nomTable: "",
     ligneActive: -1,
-    actionCourante: "",
-    donnees: []
+    actionCourante: ""
 };
 
 let rows;
 let input;
 let elTableBody;
 let elBtnAjouter;
+let elBtnAnnuler;
+let elActionTexte;
+let elBtnConfirmer;
+let elBtnModifier;
 let elTableEntete;
 let elTableColonnes;
 
@@ -23,16 +27,17 @@ const nbMaxLignesTable = 5;
 const caretUpClassName = "fa fa-caret-up";
 const caretDownClassName = "fa fa-caret-down";
 
-const elCartes = document.querySelectorAll(".card");
+const elCartes = document.querySelectorAll(".carte-admin");
 
 const elTablesVino = document.querySelector(".carte-vino");
 const elBouteilles = document.querySelector(".carte-bouteille");
 const elCelliers = document.querySelector(".carte-cellier");
 const elUsagers = document.querySelector(".carte-usager");
 
-const elVinoWrapper = document.querySelector(".section1");
+const elSection1 = document.querySelector(".section1");
 const elSection2 = document.querySelector(".section2");
 const elSection3 = document.querySelector(".section3");
+const elSection4 = document.querySelector(".section4");
 
 const elNbBouteilles = document.querySelector(".nb-bouteilles");
 const elNbCelliers = document.querySelector(".nb-celliers");
@@ -338,75 +343,62 @@ function selectionnerCarte(el) {
 function traiterProchaineAction(prochaineAction) {
 
     if (prochaineAction.hasOwnProperty("nomTable")) {
-        reinitialiserSection(elSection2);
-        reinitialiserSection(elSection3);
-
-        switch (prochaineAction["nomTable"]) {
-            case "bouteille":
-                afficherFormulaire("lireFormulaireBouteille");
-                selectionnerCarte(elBouteilles);
-                break;
-
-            case "cellier":
-                afficherFormulaire("lireFormulaireCellier");
-                selectionnerCarte(elCelliers);
-                break;
-
-            case "usager":
-                afficherFormulaire("lireFormulaireUsager");
-                selectionnerCarte(elUsagers);
-                break;
-
-            case "vino__appellation":
-            case "vino__cepage":
-            case "vino__classification":
-            case "vino__degre_alcool":
-            case "vino__designation":
-            case "vino__format":
-            case "generique__pays":
-            case "vino__produit_du_quebec":
-            case "vino__region":
-            case "vino__taux_de_sucre":
-            case "vino__type_cellier":
-            case "vino__type":
-                break;
-        }
-
+        tableSelectionnee["id"] = -1;
         tableSelectionnee["nomTable"] = prochaineAction["nomTable"];
+        tableSelectionnee["ligneActive"] = -1;
+        tableSelectionnee["actionCourante"] = "";
+
+        reinitialiserSection4();
+        afficherFormulaire();
 
     } else if (prochaineAction.hasOwnProperty("ligneActive")) {
-        selectionnerLigne(prochaineAction["ligneActive"]);
-        afficherDetail({ "mode": "lecture" });
-        tableSelectionnee["ligneActive"] = prochaineAction["ligneActive"];
+        const ligneActive = prochaineAction["ligneActive"];
+
+        tableSelectionnee["id"] = elTableBody.rows[ligneActive].cells[0].innerHTML;
+        tableSelectionnee["ligneActive"] = ligneActive;
+        tableSelectionnee["actionCourante"] = "";
+
+        selectionnerLigne(ligneActive);
+        afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
 
     } else if (prochaineAction.hasOwnProperty("actionCourante")) {
         switch (prochaineAction["actionCourante"]) {
             case "ajouter":
-                afficherDetail({ "mode": "ajout" });
+                tableSelectionnee["actionCourante"] = "ajouter";
+                afficherDetail({ "mode": "ajouter" });
                 break;
             case "annuler":
-                finirEdition();
+                gererAnnulation();
+
+                // gererEdition("fin");
+                // reinitialiserSection4();
+
                 break;
             case "confirmer":
-                finirEdition();
+                // Sauvegarde des données
+                ajouterBouteille();
+
+                // Gérer la fin de l'édition de l'enregistrement
+                gererEdition("fin");
+                reinitialiserSection4();
+
                 break;
             case "lire":
-                afficherDetail({ "mode": "lecture" });
+                afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
                 break;
             case "modifier":
-                afficherDetail({ "mode": "modification" });
+                tableSelectionnee["actionCourante"] = "modifier";
+                afficherDetail({ "mode": "modifier", "id": tableSelectionnee["id"] });
                 break;
 
             default:
                 break;
         }
-
-        tableSelectionnee["actionCourante"] = prochaineAction["actionCourante"];
     }
 }
 
 
-function afficherDetail(mode) {
+function afficherDetail(body) {
     let requete = "";
 
     if (tableSelectionnee.hasOwnProperty("nomTable")) {
@@ -440,40 +432,37 @@ function afficherDetail(mode) {
     }
 
     if (requete) {
-        lireHtml(requete, mode)
+        lireHtml(requete, body)
             .then(formulaire => {
-                elSection3.innerHTML = "";
-                elSection3.insertAdjacentHTML("beforeend", formulaire);
+                elSection4.innerHTML = "";
+                elSection4.insertAdjacentHTML("beforeend", formulaire);
 
-                const elBtnModifier = document.querySelector("[data-js-btn-modifier]");
-                const elBtnConfirmer = document.querySelector("[data-js-btn-confirmer]");
-                const elBtnAnnuler = document.querySelector("[data-js-btn-annuler]");
+                elBtnModifier = document.querySelector("[data-js-btn-modifier]");
+                elBtnConfirmer = document.querySelector("[data-js-btn-confirmer]");
+                elBtnAnnuler = document.querySelector("[data-js-btn-annuler]");
+                elActionTexte = document.querySelector(".action-texte");
 
-                elBtnModifier.addEventListener("click", () => {
-                    traiterProchaineAction({ "actionCourante": "modifier" });
-                });
+                if (elBtnModifier) {
+                    elBtnModifier.addEventListener("click", () => {
+                        traiterProchaineAction({ "actionCourante": "modifier" });
+                    });
 
-                elBtnConfirmer.addEventListener("click", () => {
-                    traiterProchaineAction({ "actionCourante": "confirmer" });
-                });
-
-                elBtnAnnuler.addEventListener("click", () => {
-                    traiterProchaineAction({ "actionCourante": "annuler" });
-                });
-
-                if (mode.hasOwnProperty("ajouter") || mode.hasOwnProperty("modifier")) {
-                    // On rend la section 2 non-utilisable le temps que dure l'édition
-                    if (!elSection2.classList.contains("edition")) {
-                        elSection2.classList.add("edition");
-                    }
-
-                    // On rend utilisable les boutons Confirmer et Annuler et le bouton Modifier non-utilisable
-                    const elGroupeAction = document.querySelector(".groupe-action");
-                    const elGroupeModifier = document.querySelector(".groupe-modifier");
-
-                    elGroupeAction.classList.remove("hide");
-                    elGroupeModifier.classList.add("hide");
                 }
+
+                if (elBtnConfirmer) {
+                    elBtnConfirmer.addEventListener("click", () => {
+                        traiterProchaineAction({ "actionCourante": "confirmer" });
+                    });
+                }
+
+                if (elBtnAnnuler) {
+                    elBtnAnnuler.addEventListener("click", () => {
+                        traiterProchaineAction({ "actionCourante": "annuler" });
+                    });
+                }
+
+                if (body.mode == "ajouter" || body.mode == "modifier")
+                    gererEdition("debut");
             });
     }
 }
@@ -482,60 +471,311 @@ function afficherDetail(mode) {
 /**
  * Fonction qui construit la liste qui contient toutes les bouteilles
  */
-function afficherFormulaire(requete) {
-    lireHtml(requete)
-        .then(formulaire => {
-            elSection2.insertAdjacentHTML("beforeend", formulaire);
+function afficherFormulaire() {
+    let requete = "";
 
-            // On ajuste l'entête de la liste pour tenir compte de la barre de défilement
-            elTableEntete = document.getElementById("table-entete");
-            elTableBody = document.getElementById("table-body");
-            const elTr = elTableBody.querySelectorAll("tr");
+    switch (tableSelectionnee["nomTable"]) {
+        case "bouteille":
+            requete = "lireFormulaireBouteille";
+            selectionnerCarte(elBouteilles);
+            break;
 
-            if (elTr.length > nbMaxLignesTable) {
-                elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
-            }
+        case "cellier":
+            requete = "lireFormulaireCellier";
+            selectionnerCarte(elCelliers);
+            break;
 
-            // On ajoute des événements à certains éléments nouvellement créés
-            elTableColonnes = document.getElementsByClassName("table-colonne");
+        case "usager":
+            requete = "lireFormulaireUsager";
+            selectionnerCarte(elUsagers);
+            break;
 
-            for (let column of elTableColonnes) {
-                column.addEventListener("click", function (event) {
-                    basculerFleche(event);
+        case "vino__appellation":
+        case "vino__cepage":
+        case "vino__classification":
+        case "vino__degre_alcool":
+        case "vino__designation":
+        case "vino__format":
+        case "generique__pays":
+        case "vino__produit_du_quebec":
+        case "vino__region":
+        case "vino__taux_de_sucre":
+        case "vino__type_cellier":
+        case "vino__type":
+            break;
+    }
+
+    if (requete) {
+        lireHtml(requete)
+            .then(formulaire => {
+                elSection3.innerHTML = "";
+                elSection3.insertAdjacentHTML("beforeend", formulaire);
+
+                // On ajuste l'entête de la liste pour tenir compte de la barre de défilement
+                elTableEntete = document.getElementById("table-entete");
+                elTableBody = document.getElementById("table-body");
+                const elTr = elTableBody.querySelectorAll("tr");
+
+                if (elTr.length > nbMaxLignesTable) {
+                    elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
+                }
+
+                // On ajoute des événements à certains éléments nouvellement créés
+                elTableColonnes = document.getElementsByClassName("table-colonne");
+
+                for (let column of elTableColonnes) {
+                    column.addEventListener("click", function (event) {
+                        basculerFleche(event);
+                    });
+                }
+
+                input = document.getElementById("filtre-table");
+
+                input.addEventListener("keyup", function (event) {
+                    filtrerDonnees();
                 });
-            }
 
-            input = document.getElementById("filtre-table");
+                rows = elTableBody.getElementsByTagName("tr");
 
-            input.addEventListener("keyup", function (event) {
-                filtrerDonnees();
-            });
+                for (let i = 0, l = rows.length; i < l; i++) {
+                    rows[i].addEventListener("click", () => {
+                        traiterProchaineAction({ "ligneActive": i });
+                    });
+                }
 
-            rows = elTableBody.getElementsByTagName("tr");
+                elBtnAjouter = document.querySelector("[data-js-btn-ajouter]");
+                elActionTexte = document.querySelector(".action-texte");
 
-            for (let i = 0, l = rows.length; i < l; i++) {
-                rows[i].addEventListener("click", () => {
-                    traiterProchaineAction({ "ligneActive": i });
+                // Quand on clique sur le bouton pour ajouter un nouvel enregistrement.
+                elBtnAjouter.addEventListener("click", () => {
+                    traiterProchaineAction({ "actionCourante": "ajouter" });
                 });
-            }
-
-            const elBtnAjouter = document.querySelector("[data-js-btn-ajouter]");
-
-            // Quand on clique sur le bouton pour ajouter un nouvel enregistrement.
-            elBtnAjouter.addEventListener("click", () => {
-                traiterProchaineAction({ "actionCourante": "ajouter" });
             });
-        });
+    }
 }
 
 
-function reinitialiserSection(section) {
-    section.innerHTML = "";
-    section.classList.remove("edition");
+async function ajouterBouteille() {
+
+    const lesInputs = document.querySelectorAll("select,input");
+    const donnees = {};
+
+    for (let i = 0, l = lesInputs.length; i < l; i++) {
+        const element = lesInputs[i];
+        donnees[element.name] = element.value;
+    }
+
+    donnees["id_bouteille"] = tableSelectionnee["id"];
+
+    document.body.className = "waiting";
+
+    const entete = new Headers();
+    entete.append("Content-Type", "application/json");
+    entete.append("Accept", "application/json");
+
+    const reqOptions = {
+        method: "POST",
+        headers: entete,
+        body: JSON.stringify(donnees)
+    };
+
+    const requete = new Request($baseUrl_without_parameters + "?requete=modifierAdminBouteille", reqOptions);
+    const reponse = await fetch(requete);
+
+    if (!reponse.ok) {
+        throw new Error(`Erreur HTTP : statut = ${reponse.status}`);
+    }
+
+    const data = await reponse.text();
+    document.body.className = "";
+    console.log(data);
+}
+
+function reinitialiserSection4() {
+    if (tableSelectionnee["id"] > 0) {
+        afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
+        tableSelectionnee["actionCourante"] = "";
+    }
+
+    else {
+        elSection4.innerHTML = "";
+    }
+
 
 }
 
-function finirEdition() {
-    elSection2.classList.remove("edition");
-    traiterProchaineAction({ "actionCourante": "lire" });
+
+function gererEdition(pos) {
+    if (pos === "debut") {
+        // On rend la section 1 inutilisable le temps que dure l'édition
+        if (elSection1 && !elSection1.classList.contains("edition")) {
+            elSection1.classList.add("edition");
+        }
+
+        // On rend la section 2 inutilisable le temps que dure l'édition
+        if (elSection2 && !elSection2.classList.contains("edition")) {
+            elSection2.classList.add("edition");
+        }
+
+        // On rend la section 3 inutilisable le temps que dure l'édition
+        if (elSection3 && !elSection3.classList.contains("edition")) {
+            elSection3.classList.add("edition");
+        }
+
+        // On rend inutilisable les boutons Ajouter et Modifier
+        let action = tableSelectionnee["actionCourante"];
+        action = action.charAt(0).toUpperCase() + action.slice(1);
+
+        switch (tableSelectionnee["nomTable"]) {
+            case "bouteille":
+                action += " une bouteille";
+                break;
+
+            case "cellier":
+                action += " un cellier";
+                break;
+
+            case "usager":
+                action += " un usager";
+                break;
+        }
+
+        elActionTexte.innerHTML = action;
+
+        if (elBtnAjouter && !elBtnAjouter.classList.contains("hide")) {
+            elBtnAjouter.classList.add("hide");
+        }
+
+        if (elBtnModifier && !elBtnModifier.classList.contains("hide")) {
+            elBtnModifier.classList.add("hide");
+        }
+
+        // On rend utilisable les boutons Confirmer et Annuler
+        if (elBtnConfirmer) {
+            elBtnConfirmer.classList.remove("hide");
+        }
+
+        if (elBtnAnnuler) {
+            elBtnAnnuler.classList.remove("hide");
+        }
+
+    } else {
+        // On rend la section 1 utilisable
+        if (elSection1) {
+            elSection1.classList.remove("edition");
+        }
+
+        // On rend la section 2 utilisable
+        if (elSection2) {
+            elSection2.classList.remove("edition");
+        }
+
+        // On rend la section 3 utilisable
+        if (elSection3) {
+            elSection3.classList.remove("edition");
+        }
+
+        // On rend utilisable les boutons Ajouter et Modifier
+        elActionTexte.innerHTML = "";
+
+        if (elBtnAjouter) {
+            elBtnAjouter.classList.remove("hide");
+        }
+
+        if (elBtnModifier) {
+            elBtnModifier.classList.remove("hide");
+        }
+
+        // On rend inutilisable les boutons Confirmer et Annuler
+        if (elBtnConfirmer && !elBtnConfirmer.classList.contains("hide")) {
+            elBtnConfirmer.classList.add("hide");
+        }
+
+        if (elBtnAnnuler && !elBtnAnnuler.classList.contains("hide")) {
+            elBtnAnnuler.classList.add("hide");
+        }
+
+    }
+}
+
+function gererAnnulation() {
+    const elModalMessage = document.querySelector("[data-js-modal-message]");
+    const elBtnDanger = document.querySelector("[data-js-bouton-danger]");
+    const elBtnSecondaire = document.querySelector("[data-js-bouton-secondaire]");
+    let message = "";
+
+    switch (tableSelectionnee["actionCourante"]) {
+        case "ajouter":
+            message = "Voulez-vous vraiment annuler l'ajout";
+            break;
+
+        case "modifier":
+            message = "Voulez-vous vraiment annuler la modification";
+            break;
+    }
+
+    if (message) {
+        switch (tableSelectionnee["nomTable"]) {
+            case "bouteille":
+                message += " de la bouteille?";
+                break;
+
+            case "cellier":
+                message += " du cellier?";
+                break;
+
+            case "usager":
+                message += " de l'usager?";
+                break;
+        }
+
+    }
+
+    if (!message) {
+        message = "Êtes-vous certain?"
+    }
+
+    elModalMessage.innerHTML = message;
+    elBtnDanger.innerHTML = "Oui";
+    elBtnSecondaire.innerHTML = "Non";
+
+    elBtnDanger.addEventListener("click", () => {
+        confirmerAnnulation();
+    });
+
+    elBtnSecondaire.addEventListener("click", () => {
+        fermerModal();
+    });
+
+    ouvrirModal();
+}
+
+function confirmerAnnulation() {
+    gererEdition("fin");
+    reinitialiserSection4();
+}
+
+function ouvrirModal() {
+    const elModal = document.querySelector(".modal");
+
+    if (elModal.classList.contains('modal--ferme')) {
+        elModal.classList.replace('modal--ferme', 'modal--ouvre');
+
+        // Ajoute la propriété overflow-y: hidden; sur les éléments html et body afin d'enlever le scroll en Y lorsque le modal est ouvert
+        document.documentElement.classList.add('overflow-y--hidden');
+        document.body.classList.add('overflow-y--hidden');
+    }
+
+}
+
+function fermerModal() {
+    const elModal = document.querySelector(".modal");
+
+    if (elModal.classList.contains('modal--ouvre')) {
+        elModal.classList.replace('modal--ouvre', 'modal--ferme');
+
+        document.documentElement.classList.remove('overflow-y--hidden');
+        document.body.classList.remove('overflow-y--hidden');
+    }
+
 }

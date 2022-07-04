@@ -22,6 +22,10 @@
 
 }
 
+.pa-8 {
+    padding: 8px !important;
+}
+
 body.waiting * {
     cursor: wait;
 }
@@ -66,12 +70,13 @@ body.waiting * {
     padding: var(--espace-xp);
 }
 
-.liste-wrapper select[readonly] {
+.liste-wrapper select[readonly],
+.liste-wrapper input[type='checkbox'][readonly] {
     pointer-events: none;
 }
 
 input.plus-gros {
-    transform: scale(2);
+    transform: scale(1.5);
     margin: var(--espace-xp);
 }
 
@@ -93,16 +98,16 @@ svg {
     width: 75px;
 }
 
-.card {
+.carte-admin {
     display: flex;
     padding: var(--espace-p);
 }
 
-.card>*+* {
+.carte-admin>*+* {
     margin-left: var(--espace-p);
 }
 
-.card .box {
+.carte-admin .box {
     align-items: center;
     border-radius: 3px;
     display: flex;
@@ -113,25 +118,32 @@ svg {
     position: relative;
 }
 
-.card .box h1,
-.card .box h3 {
+.carte-admin .box h1,
+.carte-admin .box h3 {
     display: flex;
     justify-content: center;
     margin: 0;
     padding: 0;
 }
 
-.card .box h1 {
+.carte-admin .box h1 {
     font-size: var(--espace-m);
 }
 
-.card .box h3 {
+.carte-admin .box h3 {
     font-size: var(--espace-p);
 }
 
-.card .box p {
+.carte-admin .box p {
     margin: 0 0 1rem;
     padding: 0;
+}
+
+.carte-admin img {
+    box-sizing: border-box;
+    margin: 0;
+    object-fit: cover;
+    width: auto;
 }
 
 .mt-4 {
@@ -182,7 +194,7 @@ svg {
     }
 }
 
-.card {
+.carte-admin {
     background-color: #44413B;
     color: #f3f4f6;
     cursor: pointer;
@@ -307,7 +319,7 @@ h1 {
     color: white;
     display: flex;
     align-items: center;
-    margin: var(--espace-p) 0;
+    margin: var(--espace-xp) 0;
 }
 
 .filtre-wrapper.filtre-bouteille {
@@ -342,19 +354,15 @@ h1 {
     padding: var(--espace-xp);
 }
 
-.section2 {
+.section3 {
     display: flex;
 }
 
-.section2.edition {
-    pointer-events: none;
-}
-
-.section2>div {
+.section3>div {
     width: 100%;
 }
 
-.section2 table {
+.section3 table {
     border-collapse: collapse;
     width: 100%;
 }
@@ -379,7 +387,25 @@ h1 {
     display: block;
     overflow: auto;
     table-layout: fixed;
-    max-height: 180px;
+    max-height: 195px;
+}
+
+.detail-container td label {
+    display: block;
+}
+
+.detail-container td input[type="text"] {
+    background-color: transparent;
+    border: 2px solid transparent;
+    font-size: 16px;
+    height: 35px;
+    margin: 0;
+    padding: 0 8px;
+    width: 100%;
+}
+
+.detail-container td input[type="text"]:focus {
+    border: 2px solid #000;
 }
 
 .lien-externe {
@@ -399,91 +425,8 @@ h1 {
     width: 20px;
 }
 
-.section2 table tr:hover .lien-externe svg {
+.section3 table tr:hover .lien-externe svg {
     fill: #ffffff;
-}
-
-.section2 table td,
-.section2 table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.section2 table tr {
-    background-color: #ffffff;
-}
-
-.section2 table tr.selected td {
-    background-color: #44413B;
-    color: #fff;
-}
-
-.section2 table tr.selected .lien-externe svg {
-    fill: #ffffff;
-}
-
-.section2 table tr:nth-child(even) {
-    background-color: #cfcfcf;
-}
-
-.section2 table td.couleur-filtre {
-    background-color: #ffab40;
-}
-
-.section2 table tr:hover,
-.section2 table tr:hover td.couleur-filtre {
-    background-color: #333;
-    color: #ffffff;
-}
-
-.section2 table th {
-    background-color: #04AA6D;
-    color: white;
-    cursor: pointer;
-    padding: 0;
-    text-align: left;
-}
-
-.section2 table.table-bouteille th {
-    background-color: #04AA6D;
-    color: #f3f4f6;
-}
-
-.section2 table.table-cellier th {
-    background-color: #276880;
-    color: #f3f4f6;
-}
-
-.section2 table.table-usager th {
-    background-color: #6A3E4F;
-    color: #f3f4f6;
-}
-
-.section2 table.table-vino th {
-    background-color: rgb(126, 0, 63);
-    ;
-    color: #f3f4f6;
-}
-
-.section2 table th span {
-    display: block;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-}
-
-.section3 {
-    display: flex;
-    flex-direction: column;
-}
-
-.section3>div {
-    width: 100%;
-}
-
-.section3 table {
-    border-collapse: collapse;
-    width: 100%;
 }
 
 .section3 table td,
@@ -496,20 +439,56 @@ h1 {
     background-color: #ffffff;
 }
 
+.section3 table tr.selected td {
+    background-color: #44413B;
+    color: #fff;
+}
+
+.section3 table tr.selected .lien-externe svg {
+    fill: #ffffff;
+}
+
 .section3 table tr:nth-child(even) {
     background-color: #cfcfcf;
 }
 
-.section3 table tr:hover {
-    background-color: #019879;
+.section3 table td.couleur-filtre {
+    background-color: #ffab40;
+}
+
+.section3 table tr:hover,
+.section3 table tr:hover td.couleur-filtre {
+    background-color: #333;
     color: #ffffff;
 }
 
 .section3 table th {
     background-color: #04AA6D;
     color: white;
+    cursor: pointer;
     padding: 0;
     text-align: left;
+}
+
+.section3 table.table-bouteille th {
+    background-color: #04AA6D;
+    color: #f3f4f6;
+}
+
+.section3 table.table-cellier th {
+    background-color: #276880;
+    color: #f3f4f6;
+}
+
+.section3 table.table-usager th {
+    background-color: #6A3E4F;
+    color: #f3f4f6;
+}
+
+.section3 table.table-vino th {
+    background-color: rgb(126, 0, 63);
+    ;
+    color: #f3f4f6;
 }
 
 .section3 table th span {
@@ -519,40 +498,121 @@ h1 {
     text-align: center;
 }
 
-.groupe-ajouter,
-.groupe-modifier,
-.groupe-action {
+.section4 {
+    display: flex;
+    flex-direction: column;
+}
+
+.section4>div {
+    width: 100%;
+}
+
+.section4 table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.section4 table td,
+.section4 table th {
+    border: 1px solid #ddd;
+    padding: 0;
+}
+
+.section4 table tr {
+    background-color: #ffffff;
+}
+
+.section4 table tr:nth-child(even) {
+    background-color: #cfcfcf;
+}
+
+.section4 table tr:hover {
+    background-color: #019879;
+    color: #ffffff;
+}
+
+.section4 table th {
+    background-color: #04AA6D;
+    color: white;
+    padding: 0;
+    text-align: left;
+}
+
+.section4 table th span {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.groupe-ajouter {
     display: flex;
     margin: var(--espace-p) 0 var(--espace-xp) 0;
     justify-content: flex-end;
 }
 
-.groupe-ajouter.hide {
+.groupe-action {
+    display: flex;
+    margin: var(--espace-p) 0 var(--espace-xp) 0;
+    justify-content: space-between;
+}
+
+.action-texte {
+    align-items: center;
+    color: #f3f4f6;
+    display: flex;
+    font-size: var(--espace-p);
+    font-weight: bold;
+}
+
+.action-boutons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-ajouter,
+.btn-annuler,
+.btn-confirmer,
+.btn-modifier {
+    border: 1px solid #f3f4f6;
+    cursor: pointer;
+    height: auto;
+    padding: var(--espace-xp);
+    width: auto;
+}
+
+.btn-annuler {
+    margin-left: var(--espace-p);
+}
+
+.btn-ajouter.hide {
     opacity: 0;
 }
 
-.groupe-modifier.hide,
-.groupe-action.hide {
+.btn-annuler.hide,
+.btn-confirmer.hide,
+.btn-modifier.hide {
     display: none;
 }
 
-.groupe-ajouter>*,
-.groupe-modifier>*,
-.groupe-action>* {
-    border: 1px solid #f3f4f6;
-    cursor: pointer;
-    padding: var(--espace-xp);
-}
-
-.groupe-ajouter>*:hover,
-.groupe-modifier>*:hover,
-.groupe-action>*:hover {
+.btn-ajouter:hover,
+.btn-modifier:hover {
     background-color: #f3f4f6;
     border: 1px solid transparent;
 }
 
-.groupe-action>*+* {
-    margin-left: var(--espace-p);
+.btn-ajouter svg,
+.btn-annuler svg,
+.btn-confirmer svg,
+.btn-modifier svg {
+    fill: #f3f4f6;
+    height: 20px;
+    width: 20px;
+}
+
+.btn-ajouter:hover svg,
+.btn-modifier:hover svg {
+    fill: #44413B;
 }
 
 .btn-confirmer:hover {
@@ -565,24 +625,12 @@ h1 {
     border: 1px solid transparent;
 }
 
-.groupe-ajouter svg,
-.groupe-modifier svg,
-.groupe-action svg {
-    fill: #f3f4f6;
-    height: 20px;
-    width: 20px;
-}
-
-.groupe-ajouter>*:hover svg,
-.groupe-modifier>*:hover svg {
-    fill: #44413B;
-}
-
-.groupe-action>*:hover svg {
+.btn-annuler:hover svg,
+.btn-confirmer:hover svg {
     fill: #f3f4f6;
 }
 
-.section1 {
+.section2 {
     align-items: center;
     background-color: rgb(126, 0, 63);
     color: white;
@@ -592,7 +640,10 @@ h1 {
     padding: var(--espace-p);
 }
 
-.section1.hide {
+.section1.hide,
+.section2.hide,
+.section3.hide,
+.section4.hide {
     display: none;
 }
 
@@ -659,4 +710,10 @@ h1 {
     border: 1px solid var(--couleur-rouge);
     background-color: var(--couleur-primaire);
     color: var(--couleur-rouge);
+}
+
+.section1.edition,
+.section2.edition,
+.section3.edition {
+    pointer-events: none;
 }
