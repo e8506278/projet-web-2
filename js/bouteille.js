@@ -15,8 +15,8 @@ const urlParams = new URLSearchParams(queryString);
 const nomCellier = urlParams.get('nom_cellier');
 
 
-var $baseUrl_without_parameters =  window.location.href.split('?');//[0];
-$baseUrl_without_parameters = $baseUrl_without_parameters.length>0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
+var $baseUrl_without_parameters = window.location.href.split('?');//[0];
+$baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_without_parameters[0] : $baseUrl_without_parameters;
 
 let etatModification = true;
 console.log('hello bouteille', etatModification);

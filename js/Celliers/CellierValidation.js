@@ -1,7 +1,6 @@
 export default class CellierValidation{
     constructor(el){
         this._el = el;
-
         this._elErreurnom =  this._el.querySelector("[data-js-erreurNom]")
         this._elErreurradio =  this._el.querySelector("[data-js-erreurRadio]")
         this._elNom_cellier = this._el.querySelector("[name='nom_cellier']")

@@ -10,7 +10,7 @@
 
 
 const BaseURL = document.baseURI;
-
+console.log(BaseURL)
 window.addEventListener('load', function () {
 
 
