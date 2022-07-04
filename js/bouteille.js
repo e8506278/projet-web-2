@@ -20,6 +20,86 @@ $baseUrl_without_parameters = $baseUrl_without_parameters.length>0 ? $baseUrl_wi
 
 let etatModification = true;
 console.log('hello bouteille', etatModification);
+
+function ratestar(note, id_bouteille, id_cellier) {
+    if(note && id_bouteille){
+        const requete = new Request($baseUrl_without_parameters + "?requete=noteBouteille", { method: 'POST', body: JSON.stringify({note: note, id_bouteille: id_bouteille, id_cellier: id_cellier }) });
+        fetch(requete).then(response => {
+            return response.json();
+        }).then(function (data) {
+            console.log('resultat', data);
+        }).finally(() => {
+            location.reload();
+        });
+    }
+}
+
+function modifierAAcheter(valeur, id_bouteille, id_cellier, vino_id){
+    // if( id_bouteille){
+        const requete = new Request($baseUrl_without_parameters + "?requete=modifierAAcheter",
+            { method: 'POST', body: JSON.stringify(
+                {valeur: valeur, id_bouteille: id_bouteille, id_cellier: id_cellier, vino_id: vino_id }) });
+        fetch(requete).then(response => {
+            return response.json();
+        }).then(function (data) {
+            console.log('resultat', data);
+            if(data && data.id_bouteille ){
+                if(vino_id){
+                    window.location.replace($baseUrl_without_parameters + "?requete=bouteille&id_bouteille="+data['id_bouteille']);
+                }else{
+                    location.reload();
+                }
+            }
+        }).finally(() => {
+
+        });
+    // }
+}
+
+function modifierAEssayer(valeur, id_bouteille, id_cellier, vino_id){
+    // if(id_bouteille){
+        const requete = new Request($baseUrl_without_parameters + "?requete=modifierAEssayer",
+            { method: 'POST', body: JSON.stringify(
+                {valeur: valeur, id_bouteille: id_bouteille, id_cellier: id_cellier, vino_id: vino_id }) });
+        fetch(requete).then(response => {
+            return response.json();
+        }).then(function (data) {
+            console.log('resultat', data);
+            if(data && data.id_bouteille ){
+                if(vino_id){
+                    window.location.replace($baseUrl_without_parameters + "?requete=bouteille&id_bouteille="+data['id_bouteille']);
+                }else{
+                    location.reload();
+                }
+            }
+        }).finally(() => {
+
+        });
+    // }
+}
+
+function modifierFavoris(valeur, id_bouteille, id_cellier, vino_id){
+    // if(id_bouteille){
+        const requete = new Request($baseUrl_without_parameters + "?requete=modifierFavoris",
+            { method: 'POST', body: JSON.stringify(
+                {valeur: valeur, id_bouteille: id_bouteille, id_cellier: id_cellier, vino_id: vino_id }) });
+        fetch(requete).then(response => {
+            return response.json();
+        }).then(function (data) {
+            console.log('resultat', data);
+            if(data && data.id_bouteille ){
+                if(vino_id){
+                    window.location.replace($baseUrl_without_parameters + "?requete=bouteille&id_bouteille="+data['id_bouteille']);
+                }else{
+                    location.reload();
+                }
+            }
+        }).finally(() => {
+
+        });
+    // }
+}
+
 window.addEventListener('load', function () {
     console.log("load bouteille.js");
 
@@ -95,6 +175,19 @@ window.addEventListener('load', function () {
     const annulerDetruirebtn = document.getElementById("annulerDetruirebtn");
     const annulerDetruirebtn2 = document.getElementById("annulerDetruirebtn2");
     const fermerModalAnnulation = document.getElementById("fermerModalAnnulation");
+    const shareFacebook = document.getElementById("shareFacebook");
+    const shareTwitter = document.getElementById("shareTwitter");
+    document.querySelectorAll(".cellier-block").forEach(element => {
+        element.style.display = "none";
+    });
+
+    if(shareFacebook){
+        // shareFacebook.setAttribute("href", "http://www.facebook.com/sharer.php?u="+encodeURIComponent($baseUrl_without_parameters));
+        shareFacebook.setAttribute("href", "http://www.facebook.com/sharer.php?u="+encodeURIComponent($baseUrl_without_parameters));
+    }
+    if(shareFacebook){
+        shareTwitter.setAttribute("href", "https://twitter.com/share?url="+ encodeURIComponent(window.location.href) );
+    }
 
     if(fermerFormulaire){
         // fermerFormulaire.disabled = true;
@@ -116,6 +209,9 @@ window.addEventListener('load', function () {
             });
             document.querySelectorAll(".label-state").forEach(element => {
                 element.style.display = "none";
+            });
+            document.querySelectorAll(".cellier-block").forEach(element => {
+                element.style.display = "block";
             });
 
             if(modifier_bouton){
@@ -148,6 +244,9 @@ window.addEventListener('load', function () {
             });
             document.querySelectorAll(".label-state").forEach(element => {
                 element.style.display = "block";
+            });
+            document.querySelectorAll(".cellier-block").forEach(element => {
+                element.style.display = "none";
             });
 
             if(modifier_bouton){
@@ -286,4 +385,7 @@ window.addEventListener('load', function () {
             }
         });
     }
+
+    // document.querySelector(".note-input").
+
 });

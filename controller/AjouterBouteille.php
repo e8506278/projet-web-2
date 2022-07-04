@@ -9,7 +9,7 @@ if (!class_exists('Lists')) {
 $debug = false;
 $message = null;
 
-$returnpage = home_base_url()."?requete=bouteille";
+$returnpage = home_base_url()."index.php?requete=bouteille";
 $id_cellier  = $_POST['id_cellier'];
 $nom_cellier = $_POST['nom_cellier'];
 $bouteille_id = isset($_POST['id_bouteille'])?$_POST['id_bouteille']: null;
@@ -23,8 +23,7 @@ if(isset($bouteille_id) && $bouteille_id != null){
 
 if(isset($_POST['estCommentaire'])){
     $query_string = "UPDATE  usager__bouteille SET
-                            commentaires = '".$_POST['commentaires']."',
-                            note = '".$_POST['note']."'
+                            commentaires = '".$_POST['commentaires']."'
                             WHERE id_bouteille=".$_POST['id_bouteille'];//
     $message = "Le commentaire a bien été ajouté";
     if($debug){
@@ -74,7 +73,37 @@ if(isset($_POST['estCommentaire'])){
 
 
 
+    /*
+     *
+     * Upload fichier
+     *
+     */
+    // repertoire d'upload de fichiers
+    $upload_url = null;
+    $source=$_FILES['photo']['tmp_name'];
+    $time = time();
+    $destination="../photos/".$time;
+    $extensions_auutorises =  array('jpg','png','jpeg','gif');
+    $fileinfo=pathinfo($_FILES['photo']['name']);
+    $file_extension = strtolower($fileinfo['extension']);
 
+    if(in_array($file_extension, $extensions_auutorises)){
+        if($_FILES['photo']['size'] <= 5000000){
+            $destination = __DIR__.'/'.$destination.'.'.$file_extension;
+            if( move_uploaded_file($source, $destination)){
+                $upload_url = 'photos/'.$time.'.'.$file_extension;
+            }
+        }else{
+            echo("la taille maximum est 500mo");
+        }
+    }else{
+        echo("la forme de l'image doit être jpg, png, jpeg ou gif");
+    }
+    /*
+     * Fin Upload fichier
+     * Si $upload_url est non null c'est à dire qu'on a uploader le fichier correctement
+     * Si $upload_url est null soit il y a echeck d'upload ou bien y a pas d'upload fichier dans le formulaire
+     */
 
     /*
      * Le code si dessous est testé et marche
@@ -87,10 +116,7 @@ if(isset($_POST['estCommentaire'])){
      * Ajouter une nouvelle bouteille
      * */
 
-
     $message = "Opération réussie";
-
-
 
     foreach ( $_POST['celliers'] as  $key => $cellier){
         $ub = null;
@@ -167,7 +193,7 @@ if(isset($_POST['estCommentaire'])){
                 ) VALUES (
                       ".  ($cellier['quantite'] == 0 ? 'NULL': $cellier['id_cellier']) .",
                        '".$_POST['nom_bouteille']."', 
-                      '".$_POST['image_bouteille']."',
+                      '".(isset($upload_url) && $upload_url!= null ? $upload_url: $_POST['image_bouteille'])."',
                       '".$_POST['description_bouteille']."',
                       ".($_POST['code_saq'] ?: 'NULL').",
                       ".($_POST['code_cup'] ?: 'NULL').",
@@ -222,7 +248,7 @@ if(isset($_POST['estCommentaire'])){
                 )";
 
             $action ="a";
-
+            $action_quatite = $cellier['quantite'];
         }else{
             $query_string = "UPDATE  usager__bouteille SET ";
             if($cellier['quantite'] <= 0){
@@ -231,7 +257,7 @@ if(isset($_POST['estCommentaire'])){
             }
             //Si la quantite est egale à zero on rend l'id_cellier null
             $query_string = $query_string ."nom_bouteille =  '".$_POST['nom_bouteille']."',
-                        image_bouteille =  '".$_POST['image_bouteille']."',
+                        image_bouteille =  '".(isset($upload_url) && $upload_url!= null ? $upload_url: $_POST['image_bouteille'])."',
                         description_bouteille  = '".$_POST['description_bouteille']."',
                         code_saq  =  ".($_POST['code_saq'] ?: 'NULL').",
                         code_cup =  ".($_POST['code_cup']?: 'NULL').",
@@ -279,8 +305,10 @@ if(isset($_POST['estCommentaire'])){
             echo "<br>".intval($ub[0]['quantite_bouteille'])." -- ".intval($cellier['quantite']). "<br>";
             if(intval($ub[0]['quantite_bouteille']) && intval($cellier['quantite'])){
                 $action = intval($ub[0]['quantite_bouteille']) < intval($cellier['quantite']) ? 'a': 'd';
+                $action_quatite = intval($cellier['quantite']) - intval($ub[0]['quantite_bouteille']);
             }else{
                 $action = null;
+                $action_quatite = 0;
             }
         }
 
@@ -300,7 +328,7 @@ if(isset($_POST['estCommentaire'])){
             echo "ACTION: ".$action." user ".$_SESSION['utilisateur']['id']. " ub= ".$usager_bouteille_id;
 
             // lors de l'ajout ou la modification dans l'usager_bouteille on ajoute une ligne dans bouteille_action
-            if($action && $_SESSION['utilisateur']['id'] && $usager_bouteille_id ){
+            if($action && $action_quatite && $_SESSION['utilisateur']['id'] && $usager_bouteille_id ){
                 $query_string_action = "INSERT INTO bouteille_action(
                                     id_usager,
                                     id_bouteille,
@@ -312,7 +340,7 @@ if(isset($_POST['estCommentaire'])){
                                          ".$usager_bouteille_id.",
                                          '".date('Y-m-d h:m:s', time())."',
                                          '".$action."',
-                                        '".($cellier['quantite'] ?: 0)."'
+                                        '".abs($action_quatite)."'
                                     )";
                 $res = MonSQL::getInstance()->query($query_string_action) or die(mysqli_error(MonSQL::getInstance()));
             }
@@ -336,7 +364,8 @@ if (headers_sent()) {
 }
 else{
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
-    exit(header("Location:../index.php?requete=mesCelliers"));
+//    exit(header("Location:../index.php?requete=mesCelliers"));
+    header("Location:".$returnpage);
 }
 /*
  *
@@ -361,7 +390,6 @@ function home_base_url(){
     else
      $base_url .= $tmpURL.'/';
     return $base_url;
-
 }
 ob_end_flush();
 ?>
