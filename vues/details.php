@@ -155,7 +155,7 @@ function home_base_url(){
 }
 
 
-echo ($form_values['essayer_bouteille']);
+
 ?>
 
 <script src="./js/bouteille.js"  type="text/javascript"></script>
@@ -796,7 +796,7 @@ echo ($form_values['essayer_bouteille']);
                             </div>
                         </div>
                         <!--            Information liées au cellier-->
-                        <div class="form-block input-state" >
+                        <div class="form-block" >
                             <h6>Gérer les quantité de la bouteille dans mes celliers</h6>
                             <?php if($celliers && is_array($celliers) && count($celliers)>0) {?>
                                 <?php $key = 0; foreach ($celliers as $cellier) {?>
