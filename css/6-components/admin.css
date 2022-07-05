@@ -1,19 +1,16 @@
-:root {
+.admin-body {
+    background-color: #524E47;
+    margin: 0;
+    padding: 0;
+}
 
-    --couleur-primaire: white;
-    --couleur-secondaire: black;
-    --couleur-accent: #9a8d66;
-    --couleur-intermediaire-foncee: #27241e;
-    --couleur-intermediaire-pale: whitesmoke;
-    --couleur-orange: #965e26;
-    --couleur-rouge: #bd1717;
+.admin-body.waiting * {
+    cursor: wait;
+}
 
-    --espace-xp: .5em;
-    --espace-p: 1.25em;
-    --espace-m: 2em;
-    --espace-l: 4em;
-    --espace-xl: 6em;
-
+.admin-body svg {
+    fill: #f3f4f6;
+    width: 75px;
 }
 
 .non-modifiable {
@@ -24,42 +21,6 @@
 
 .pa-8 {
     padding: 8px !important;
-}
-
-body.waiting * {
-    cursor: wait;
-}
-
-.section-wrapper {
-    padding: var(--espace-p) var(--espace-p);
-}
-
-@media only screen and (min-width: 760px) {
-    .section-wrapper {
-        padding: var(--espace-m) var(--espace-m);
-    }
-}
-
-@media only screen and (min-width: 1024px) {
-    .section-wrapper {
-        padding: var(--espace-l) var(--espace-l);
-    }
-}
-
-.nav-mobile-wrapper {
-    padding: var(--espace-p) var(--espace-p);
-}
-
-@media only screen and (min-width: 760px) {
-    .nav-mobile-wrapper {
-        padding: var(--espace-p) var(--espace-m);
-    }
-}
-
-@media only screen and (min-width: 1024px) {
-    .nav-mobile-wrapper {
-        padding: var(--espace-p) var(--espace-l);
-    }
 }
 
 .liste-wrapper {
@@ -81,22 +42,6 @@ input.plus-gros {
 }
 
 /****************************************************************/
-
-* {
-    box-sizing: border-box;
-    font-family: var(--police-texte);
-}
-
-body {
-    background-color: #524E47;
-    margin: 0;
-    padding: 0;
-}
-
-svg {
-    fill: #f3f4f6;
-    width: 75px;
-}
 
 .carte-admin {
     display: flex;
@@ -279,41 +224,6 @@ h1 {
     justify-content: center;
 }
 
-.dev-signature ul {
-    margin: 0;
-    font-size: 15px;
-}
-
-.dev-signature .item-linkedin a {
-    color: #2867b2;
-}
-
-.dev-signature .item-website a {
-    color: #212529;
-}
-
-/* Very basic media queries */
-@media (max-width: 1200px) {
-    table {
-        font-size: 12px;
-        overflow: hidden;
-    }
-
-    h1 {
-        font-size: 36px;
-    }
-}
-
-@media (max-width: 600px) {
-    table {
-        font-size: 8px;
-    }
-
-    .dev-signature {
-        justify-content: flex-start !important;
-    }
-}
-
 .filtre-wrapper {
     background-color: #04AA6D;
     color: white;
@@ -409,6 +319,7 @@ h1 {
 }
 
 .lien-externe {
+    align-items: center;
     display: flex;
     justify-content: space-between;
 }

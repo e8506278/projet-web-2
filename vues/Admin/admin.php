@@ -1,20 +1,4 @@
 <?php
-$oVino = new Vino();
-
-$aAppellations = $oVino->lireAppellations();
-$aBouteilles = $oVino->lireBouteilles();
-$aCepages = $oVino->lireCepages();
-$aClassifications = $oVino->lireClassifications();
-$aDegresAlcool = $oVino->lireDegresAlcool();
-$aDesignations = $oVino->lireDesignations();
-$aFormats = $oVino->lireFormats();
-$aPays = $oVino->lirePays();
-$aProduitsQc = $oVino->lireProduitsQc();
-$aRegions = $oVino->lireRegions();
-$aTauxDeSucre = $oVino->lireTauxDeSucre();
-$aTypesCellier = $oVino->lireTypesCellier();
-$aTypesVin = $oVino->lireTypesVin();
-
 $nbTablesVino = 13;
 
 $oUsager = new Usager();
@@ -39,7 +23,7 @@ $nbBouteilles = $oBouteille->getAdminNbBouteilles();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body>
+<body class="admin-body">
     <section class="section-wrapper">
         <div class="row section1">
             <div class="carte-admin col-md-6 col-lg-3 mb-4 mb-lg-0 carte-vino">
@@ -81,6 +65,7 @@ $nbBouteilles = $oBouteille->getAdminNbBouteilles();
             </div>
         </div>
         <div class="row liste-wrapper">
+            <div class="section1"></div>
             <div class="section2 hide"></div>
             <div class="section3"></div>
             <div class="section4"></div>

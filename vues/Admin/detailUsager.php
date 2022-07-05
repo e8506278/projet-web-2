@@ -1,5 +1,5 @@
 <?php
-$oVino = new Usager();
+$oUsager = new Usager();
 
 if (isset($id) && $id > 0) {
     $usager = new Usager();
@@ -10,7 +10,7 @@ if (isset($id) && $id > 0) {
     }
 }
 
-$vinoUsager = $oVino->lireTypesUsager();
+$vinoUsager = $oUsager->lireTypesUsager();
 
 if (!isset($mode)) {
     $mode = "lire";
@@ -105,7 +105,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
             <tr>
                 <td class="pa-8">Type d'utilisateur</td>
                 <td class="pa-8">
-                    <select name=" type_utilisateur" id="type_utilisateur" <?= $readonly ?>>
+                    <select name="type_utilisateur" id="type_utilisateur" <?= $readonly ?>>
                         <option value="-1">Aucun type d'utilisateur</option>
 
                         <?php
@@ -125,21 +125,15 @@ $disabled = ($mode == "lire") ? "disabled" : "";
             </tr>
             <tr>
                 <td class="pa-8 non-modifiable">Date de création</td>
-                <td>
-                    <input type="text" name="date_creation" <?= $disabled ?> value="<?php if (isset($usagerDetail) && isset($usagerDetail["date_creation"])) echo $usagerDetail["date_creation"]; ?>"></input>
-                </td>
+                <td class="pa-8"><?php if (isset($usagerDetail) && isset($usagerDetail["date_creation"])) echo $usagerDetail["date_creation"]; ?></td>
             </tr>
             <tr>
                 <td class="pa-8 non-modifiable">Date de modification</td>
-                <td>
-                    <input type="text" name="date_modification" <?= $disabled ?> value="<?php if (isset($usagerDetail) && isset($usagerDetail["date_modification"])) echo $usagerDetail["date_modification"]; ?>"></input>
-                </td>
+                <td class="pa-8"><?php if (isset($usagerDetail) && isset($usagerDetail["date_modification"])) echo $usagerDetail["date_modification"]; ?></td>
             </tr>
             <tr>
                 <td class="pa-8 non-modifiable">Dernier accès</td>
-                <td>
-                    <input type="text" name="dernier_access" <?= $disabled ?> value="<?php if (isset($usagerDetail) && isset($usagerDetail["dernier_access"])) echo $usagerDetail["dernier_access"]; ?>"></input>
-                </td>
+                <td class="pa-8"><?php if (isset($usagerDetail) && isset($usagerDetail["dernier_access"])) echo $usagerDetail["dernier_access"]; ?></td>
             </tr>
         </tbody>
     </table>

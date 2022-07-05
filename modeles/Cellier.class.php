@@ -15,6 +15,20 @@ class Cellier extends Modele
     const TABLE = 'usager__cellier';
 
 
+    public function ajouterAdminCellier($donnees)
+    {
+        $requete = "INSERT INTO usager__cellier (id_usager, nom_cellier, description_cellier, type_cellier_id)
+                    VALUES (" .
+            "'{$donnees->id_usager}'," .
+            "'{$donnees->nom_cellier}'," .
+            "'{$donnees->description_cellier}'," .
+            "'{$donnees->type_cellier_id}')";
+
+        $res = $this->_db->query($requete);
+        return $res;
+    }
+
+
     public function getAdminCelliers()
     {
         $rows = array();
@@ -74,6 +88,19 @@ class Cellier extends Modele
         }
 
         return $rows;
+    }
+
+
+    public function modifierAdminCellier($donnees)
+    {
+        $requete = "UPDATE usager__cellier SET 
+                            nom_cellier = '{$donnees->nom_cellier}',
+                            description_cellier = '{$donnees->description_cellier}',
+                            type_cellier_id = '{$donnees->type_cellier_id}'
+                    WHERE id_cellier = '{$donnees->id}'";
+
+        $res = $this->_db->query($requete);
+        return $res;
     }
 
 

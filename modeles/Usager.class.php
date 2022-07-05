@@ -13,6 +13,42 @@
  */
 class Usager extends Modele
 {
+    public function ajouterAdminUsager($donnees)
+    {
+        $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, nom_utilisateur, type_utilisateur) 
+                        VALUES (" .
+            "'{$donnees->nom}'," .
+            "'{$donnees->adresse}'," .
+            "'{$donnees->telephone}'," .
+            "'{$donnees->courriel}'," .
+            "'{$donnees->date_naissance}'," .
+            "'{$donnees->ville}'," .
+            "'{$donnees->nom_utilisateur}'," .
+            "'{$donnees->type_utilisateur}')";
+
+        $res = $this->_db->query($requete);
+        return $res;
+    }
+
+
+    public function modifierAdminUsager($donnees)
+    {
+        $requete = "UPDATE usager__detail SET 
+                            nom = '{$donnees->nom}',
+                            adresse = '{$donnees->adresse}',
+                            telephone = '{$donnees->telephone}',
+                            courriel = '{$donnees->courriel}',
+                            date_naissance = '{$donnees->date_naissance}',
+                            ville = '{$donnees->ville}',
+                            nom_utilisateur = '{$donnees->nom_utilisateur}',
+                            type_utilisateur = '{$donnees->type_utilisateur}'
+                    WHERE id = '{$donnees->id}'";
+
+        $res = $this->_db->query($requete);
+        return $res;
+    }
+
+
     public function ajouterUsager($donnees)
     {
         echo ('ajouterUsager');

@@ -2,15 +2,13 @@
 $oVino = new Vino();
 
 if (isset($id) && $id > 0) {
-    $cellier = new Cellier();
-    $aCelliers = $cellier->getAdminUnCellier($id);
+    $vino = new Vino();
+    $aVino = $vino->lireTable($nomTable, $id);
 
-    if (isset($aCelliers)) {
-        $usagerCellier = $aCelliers[0];
+    if (isset($aVino)) {
+        $vinoDetail = $aVino[0];
     }
 }
-
-$vinoCelliers = $oVino->lireTypesCellier();
 
 if (!isset($mode)) {
     $mode = "lire";
@@ -57,54 +55,19 @@ $disabled = ($mode == "lire") ? "disabled" : "";
         </thead>
         <tbody id="detail-body">
             <tr>
-                <td class="pa-8 non-modifiable">Id cellier</td>
-                <td class="pa-8"><?php echo (isset($usagerCellier) && isset($usagerCellier["id_cellier"])) ? $usagerCellier["id_cellier"] : "** valeur auto-générée **"; ?></td>
+                <td class="pa-8 non-modifiable">Id</td>
+                <td class="pa-8"><?php echo (isset($vinoDetail) && isset($vinoDetail["id"])) ? $vinoDetail["id"] : "** valeur auto-générée **"; ?></td>
             </tr>
             <tr>
-                <?php if (isset($usagerCellier) && isset($usagerCellier["id_usager"])) { ?>
-                    <td class="pa-8 non-modifiable">Id usager</td>
-                <?php } else { ?>
-                    <td class="pa-8">Id usager</td>
-                <?php } ?>
-                <?php if (isset($usagerCellier) && isset($usagerCellier["id_usager"])) { ?>
-                    <td class="pa-8" <?= $disabled ?>><?= $usagerCellier["id_usager"] ?></td>
-                <?php } else { ?>
-                    <td>
-                        <input type="text" name="id_usager" <?= $disabled ?> value="<?php if (isset($usagerCellier) && isset($usagerCellier['id_usager'])) echo $usagerCellier['id_usager']; ?>"></input>
-                    </td>
-                <?php } ?>
-            </tr>
-            <tr>
-                <td class="pa-8">Nom du cellier</td>
+                <td class="pa-8">Nom</td>
                 <td>
-                    <input type="text" name="nom_cellier" <?= $disabled ?> value="<?php if (isset($usagerCellier) && isset($usagerCellier['nom_cellier'])) echo $usagerCellier['nom_cellier']; ?>"></input>
+                    <input type="text" name="nom" <?= $disabled ?> value="<?php if (isset($vinoDetail) && isset($vinoDetail["nom"])) echo $vinoDetail["nom"]; ?>"></input>
                 </td>
             </tr>
             <tr>
-                <td class="pa-8">Description du cellier</td>
+                <td class="pa-8">Valeur</td>
                 <td>
-                    <input type="text" name="description_cellier" <?= $disabled ?> value="<?php if (isset($usagerCellier) && isset($usagerCellier['description_cellier'])) echo $usagerCellier['description_cellier']; ?>"></input>
-                </td>
-            </tr>
-            <tr>
-                <td class="pa-8">Type de cellier</td>
-                <td class="pa-8">
-                    <select name="type_cellier_id" id="type_cellier_id" <?= $readonly ?>>
-                        <option value="-1">Aucun type de cellier</option>
-
-                        <?php
-                        $type_cellier_id = (isset($usagerCellier) && isset($usagerCellier["type_cellier_id"])) ? $usagerCellier["type_cellier_id"] : "";
-
-                        foreach ($vinoCelliers as $unCellier) {
-                        ?>
-                            <option value="<?= $unCellier['id']; ?>" <?php if ($type_cellier_id == $unCellier['id']) {
-                                                                            echo ' selected="selected"';
-                                                                        } ?>>
-                                <?= $unCellier['nom'] ?> </option>
-                        <?php
-                        }
-                        ?>
-                    </select>
+                    <input type="text" name="valeur" <?= $disabled ?> value="<?php if (isset($vinoDetail) && isset($vinoDetail["valeur"])) echo $vinoDetail["valeur"]; ?>"></input>
                 </td>
             </tr>
         </tbody>

@@ -1,9 +1,27 @@
+<?php
+$oVino = new Vino();
+
+$aAppellations = $oVino->lireAppellations();
+$aBouteilles = $oVino->lireBouteilles();
+$aCepages = $oVino->lireCepages();
+$aClassifications = $oVino->lireClassifications();
+$aDegresAlcool = $oVino->lireDegresAlcool();
+$aDesignations = $oVino->lireDesignations();
+$aFormats = $oVino->lireFormats();
+$aPays = $oVino->lirePays();
+$aProduitsQc = $oVino->lireProduitsQc();
+$aRegions = $oVino->lireRegions();
+$aTauxDeSucre = $oVino->lireTauxDeSucre();
+$aTypesCellier = $oVino->lireTypesCellier();
+$aTypesVin = $oVino->lireTypesVin();
+?>
+
 <div>
     <span class="selection-nom-table" data-js-selection-nom-table></span>
 </div>
 <div class="vino-selection">
-    <label for="selection-table-vino">Sélectionner la table à visualiser</label>
     <select id="selection-table-vino">
+        <option value="">Sélectionner la table à visualiser </option>
         <option value="vino__appellation">Appellation (<?= count($aAppellations) ?> lignes)</option>
         <option value="vino__bouteille">Bouteille (<?= count($aBouteilles) ?> lignes)</option>
         <option value="vino__cepage">Cepage (<?= count($aCepages) ?> lignes)</option>
@@ -18,5 +36,5 @@
         <option value="vino__type_cellier">Type de cellier (<?= count($aTypesCellier) ?> lignes)</option>
         <option value="vino__type">Type de vin (<?= count($aTypesVin) ?> lignes)</option>
     </select>
-    <button class="bouton-primaire btn-afficher-vino">Afficher la table</button>
+    <button class="bouton-primaire btn-afficher-vino" data-js-btn-afficher-vino>Afficher la table</button>
 </div>
