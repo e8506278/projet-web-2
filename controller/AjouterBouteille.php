@@ -366,8 +366,7 @@ if (headers_sent()) {
 else{
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
 //    exit(header("Location:../index.php?requete=mesCelliers"));
-
-    header("Location:/".$returnpage);
+    header("Location:".$returnpage);
 }
 /*
  *

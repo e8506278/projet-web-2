@@ -108,7 +108,6 @@ class Bouteille extends Modele
         return $rows;
     }
 
-
     public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();
@@ -531,16 +530,43 @@ class Bouteille extends Modele
             }   
     }
 
-
     public function deleteUsageBouteille($id_bouteille, $id_cellier)
     {
-        $query_string = "DELETE from usager__bouteille WHERE id_bouteille = " . $id_bouteille . " AND id_cellier = " . $id_cellier;
+        $this->_db->set_charset('utf8');
 
-        $res = $this->_db->query($query_string);
+        // On récupere la ligne usager_bouteille pour avoir la quantite à mettre dans l'action
+        $query_string_select = "SELECT * FROM usager__bouteille WHERE id_bouteille = " . $id_bouteille . " AND id_cellier = " . $id_cellier;
+        $res = MonSQL::getInstance()->query($query_string_select);// or die(mysqli_error(MonSQL::getInstance()));
+        $row = [];
+        if($res){
+            $row = $res->fetch_assoc();
+        }
 
-        return $res;
+        if(isset($row['quantite_bouteille']) && $row['quantite_bouteille']){
+            // On ajoute l'action de suppression
+            $query_string_action = "INSERT INTO bouteille_action(
+                                    id_usager,
+                                    id_bouteille,
+                                    date_creation,
+                                    action,
+                                    quantite_bouteille
+                                    ) VALUES (
+                                         '".$_SESSION['utilisateur']['id']."',
+                                         ".$id_bouteille.",
+                                         '".date('Y-m-d h:m:s', time())."',
+                                         'd',
+                                        '".abs($row["quantite_bouteille"])."'
+                                    )";
+            $res = MonSQL::getInstance()->query($query_string_action) or die(mysqli_error(MonSQL::getInstance()));
+
+            // On supprime la ligne usager bouteille
+            $delete_quuery = "DELETE from usager__bouteille WHERE id_bouteille = " . $id_bouteille . " AND id_cellier = " . $id_cellier;
+            $res = $this->_db->query($delete_quuery);
+
+            return $res;
+        }
+       return false;
     }
-
 
     public function rechercherBouteillesCellier($id_cellier, $filtres)
     {
@@ -605,9 +631,6 @@ class Bouteille extends Modele
       
         return $rows;
     }
-
-
-
 
     public function getOneFromUsagerbouteille($id_bouteille){
         $rows = array();
