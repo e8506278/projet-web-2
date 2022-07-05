@@ -38,7 +38,7 @@ export default class NouveauCellier extends ModalCellier{
                         "description_cellier": this._elDescription_cellier.value
                     
                     };  
-                
+                    console.log(cellier)
                 // Requête fetch
                 let requete = new Request(BaseURL + "?requete=ajouterNouveauCellier", { method: 'POST', body: JSON.stringify(cellier) });
                 fetchCellier(requete, this.ferme())  

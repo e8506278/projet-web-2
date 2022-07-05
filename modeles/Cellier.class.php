@@ -121,7 +121,7 @@ class Cellier extends Modele
         $rows = array();
         $requete = "SELECT usager__cellier.id_cellier, id_usager, nom_cellier, description_cellier, type_cellier_id, 
                     SUM(quantite_bouteille)as bouteille_total, 
-                    SUM(prix_bouteille)as prix_total, vino__type_cellier.nom_type_cellier, vino__type_cellier.nom_commun_type_cellier, vino__type_cellier.id_type_cellier 
+                    SUM(prix_bouteille)as prix_total,  vino__type_cellier.nom_commun_type_cellier, vino__type_cellier.id_type_cellier 
                     FROM usager__cellier 
                     INNER JOIN vino__type_cellier on type_cellier_id = vino__type_cellier.id_type_cellier 
                     LEFT OUTER JOIN usager__bouteille on usager__cellier.id_cellier = usager__bouteille.id_cellier 
@@ -129,18 +129,17 @@ class Cellier extends Modele
                     Group by usager__cellier.id_cellier
                     ORDER BY usager__cellier.id_cellier DESC";
 
+       
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    $row['description_cellier'] = trim($row['description_cellier']);
-                    $row['nom_type_cellier'] = trim($row['nom_type_cellier']);
-
                     $rows[] = $row;
                 }
             }
         } else {
             throw new Exception("Erreur de requête sur la base de donnée", 1);
         }
+      
         return $rows;
     }
 
@@ -165,7 +164,7 @@ class Cellier extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    $row['nom_cellier'] = trim($row['nom_cellier']);
+                    //$row['nom_cellier'] = trim(utf8_encode($row['nom_cellier']));
                     // $row['description_cellier'] = trim(utf8_encode($row['description_cellier']));
                     $rows[] = $row;
                 }
@@ -326,15 +325,30 @@ class Cellier extends Modele
      */
     public function deplacerBouteillesCellier($id, $bouteilles)
     {
-        foreach ($bouteilles as $bouteille) {
-            $id_bouteille = $bouteille['id_bouteille'];
-
-            $requete = "UPDATE usager__bouteille SET id_cellier = '$id'
-                WHERE id_bouteille = '$id_bouteille'";
-
-            $res = $this->_db->query($requete);
-        }
-
+      
+            foreach ($bouteilles as $bouteille) {
+                if($id === "null"){
+                    
+                    $id_bouteille = $bouteille['id_bouteille'];
+    
+                    $requete = "UPDATE usager__bouteille SET id_cellier = null
+                        WHERE id_bouteille = '$id_bouteille'";
+        
+                    $res = $this->_db->query($requete);
+                }else{
+                    $id_bouteille = $bouteille['id_bouteille'];
+    
+                    $requete = "UPDATE usager__bouteille SET id_cellier = '$id'
+                        WHERE id_bouteille = '$id_bouteille'";
+        
+                    $res = $this->_db->query($requete);
+                }
+                
+            }
+            
+        
+        
+       
         return $res;
     }
     /**
@@ -348,9 +362,12 @@ class Cellier extends Modele
      */
     public function supprimerCellier($id)
     {
-
+       
         $requete = "DELETE FROM usager__cellier WHERE id_cellier = '$id'";
+
         $res = $this->_db->query($requete);
         return $res;
+
+        
     }
 }

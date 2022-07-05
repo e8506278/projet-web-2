@@ -313,3 +313,41 @@ select{
     margin-top: 40px;
     line-height: 23px;
 }
+
+.submit_btns{
+    display: flex;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.bouton-danger{
+    background: #bd1717;
+    border-color: #bd1717;
+}
+
+.empty-state-message{
+    font-size: 12px;
+    opacity: .8;
+    text-align: center;
+    padding: 10px 5px;
+}
+
+.info-unit{
+    font-size: 13px;
+}
+
+.icon-btn{
+    cursor: pointer;
+}
+
+.active-icon-btn {
+    cursor: pointer;
+    color: var(--couleur-orange);
+}
+
+.share-social-media{
+    color: var(--couleur-secondaire);
+}
+
+.star_rated { color: gold; cursor: pointer}
+.star-container {text-shadow: 0 0 1px #F48F0A; cursor: pointer;  white-space: nowrap; }

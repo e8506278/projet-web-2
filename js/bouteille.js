@@ -20,6 +20,86 @@ $baseUrl_without_parameters = $baseUrl_without_parameters.length > 0 ? $baseUrl_
 
 let etatModification = true;
 console.log('hello bouteille', etatModification);
+
+function ratestar(note, id_bouteille, id_cellier) {
+    if(note && id_bouteille){
+        const requete = new Request($baseUrl_without_parameters + "?requete=noteBouteille", { method: 'POST', body: JSON.stringify({note: note, id_bouteille: id_bouteille, id_cellier: id_cellier }) });
+        fetch(requete).then(response => {
+            return response.json();
+        }).then(function (data) {
+            console.log('resultat', data);
+        }).finally(() => {
+            location.reload();
+        });
+    }
+}
+
+function modifierAAcheter(valeur, id_bouteille, id_cellier, vino_id){
+    // if( id_bouteille){
+        const requete = new Request($baseUrl_without_parameters + "?requete=modifierAAcheter",
+            { method: 'POST', body: JSON.stringify(
+                {valeur: valeur, id_bouteille: id_bouteille, id_cellier: id_cellier, vino_id: vino_id }) });
+        fetch(requete).then(response => {
+            return response.json();
+        }).then(function (data) {
+            console.log('resultat', data);
+            if(data && data.id_bouteille ){
+                if(vino_id){
+                    window.location.replace($baseUrl_without_parameters + "?requete=bouteille&id_bouteille="+data['id_bouteille']);
+                }else{
+                    location.reload();
+                }
+            }
+        }).finally(() => {
+
+        });
+    // }
+}
+
+function modifierAEssayer(valeur, id_bouteille, id_cellier, vino_id){
+    // if(id_bouteille){
+        const requete = new Request($baseUrl_without_parameters + "?requete=modifierAEssayer",
+            { method: 'POST', body: JSON.stringify(
+                {valeur: valeur, id_bouteille: id_bouteille, id_cellier: id_cellier, vino_id: vino_id }) });
+        fetch(requete).then(response => {
+            return response.json();
+        }).then(function (data) {
+            console.log('resultat', data);
+            if(data && data.id_bouteille ){
+                if(vino_id){
+                    window.location.replace($baseUrl_without_parameters + "?requete=bouteille&id_bouteille="+data['id_bouteille']);
+                }else{
+                    location.reload();
+                }
+            }
+        }).finally(() => {
+
+        });
+    // }
+}
+
+function modifierFavoris(valeur, id_bouteille, id_cellier, vino_id){
+    // if(id_bouteille){
+        const requete = new Request($baseUrl_without_parameters + "?requete=modifierFavoris",
+            { method: 'POST', body: JSON.stringify(
+                {valeur: valeur, id_bouteille: id_bouteille, id_cellier: id_cellier, vino_id: vino_id }) });
+        fetch(requete).then(response => {
+            return response.json();
+        }).then(function (data) {
+            console.log('resultat', data);
+            if(data && data.id_bouteille ){
+                if(vino_id){
+                    window.location.replace($baseUrl_without_parameters + "?requete=bouteille&id_bouteille="+data['id_bouteille']);
+                }else{
+                    location.reload();
+                }
+            }
+        }).finally(() => {
+
+        });
+    // }
+}
+
 window.addEventListener('load', function () {
     console.log("load bouteille.js");
 
@@ -43,38 +123,36 @@ window.addEventListener('load', function () {
             console.log('selectBouteilleInput', e.target.value);
             afficheBouteille(e.target.value);
 
-        })
-    }
-
-    function afficheBouteille(nomBouteille) {
-        const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({ nom: nomBouteille }) });
-        fetch(requete)
-            .then(response => {
-                // if (response.status === 200) {
-                //     console.log('got result', response.json());
-                // }
-                return response.json();
-            }).then(function (data) {
+            const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom: e.target.value}) });
+            fetch(requete)
+                .then(response => {
+                    // if (response.status === 200) {
+                    //     console.log('got result', response.json());
+                    // }
+                    return response.json();
+                }).then(function (data) {
                 console.log('data', data);
-                Object.keys(data).forEach(key => {
+                if(data){
+                    Object.keys(data).forEach(key => {
 
-                    if (key === 'image_bouteille') {
-                        const image_bouteille = document.getElementById(key);
-                        if (data['image_bouteille']) {
-                            image_bouteille.src = data['image_bouteille'];
-                        } else if (data['image_url']) {
-                            image_bouteille.src = data['image_url'];
-                        } else {
-                            image_bouteille.src = $baseUrl_without_parameters + '/assets/img/default_bouteille.png';
+                        if(key === 'image_bouteille'){
+                            const image_bouteille = document.getElementById(key);
+                            if(data['image_bouteille']){
+                                image_bouteille.src = data['image_bouteille'];
+                            }else if( data['image_url'] ){
+                                image_bouteille.src = data['image_url'];
+                            }else {
+                                image_bouteille.src = $baseUrl_without_parameters+'/assets/img/default_bouteille.png';
+                            }
                         }
-                    }
-                    const elements = document.getElementsByName(key);
-                    if (elements && elements.length > 0) {
-                        elements[0].value = data[key];
-                    } else {
-                        console.log('not found in form', key);
-                    }
-                });
+                        const elements = document.getElementsByName(key);
+                        if( elements && elements.length>0){
+                            elements[0].value = data[key];
+                        }else{
+                            console.log('not found in form', key);
+                        }
+                    });
+                }
             });
 
     }
@@ -114,38 +192,59 @@ window.addEventListener('load', function () {
     const annulerDetruirebtn = document.getElementById("annulerDetruirebtn");
     const annulerDetruirebtn2 = document.getElementById("annulerDetruirebtn2");
     const fermerModalAnnulation = document.getElementById("fermerModalAnnulation");
+    const shareFacebook = document.getElementById("shareFacebook");
+    const shareTwitter = document.getElementById("shareTwitter");
+    document.querySelectorAll(".cellier-block").forEach(element => {
+        element.style.display = "none";
+    });
 
-    // if(fermerFormulaire){
-    //     fermerFormulaire.disabled = true;
-    // }
-
-    if (enregistrerFormulaire) {
-        enregistrerFormulaire.disabled = true;
+    if(shareFacebook){
+        // shareFacebook.setAttribute("href", "http://www.facebook.com/sharer.php?u="+encodeURIComponent($baseUrl_without_parameters));
+        shareFacebook.setAttribute("href", "http://www.facebook.com/sharer.php?u="+encodeURIComponent($baseUrl_without_parameters));
+    }
+    if(shareFacebook){
+        shareTwitter.setAttribute("href", "https://twitter.com/share?url="+ encodeURIComponent(window.location.href) );
     }
 
-    if (modifier_bouton) {
-        modifier_bouton.addEventListener('click', function (e) {
-            etatModification = true;
+    if(fermerFormulaire){
+        // fermerFormulaire.disabled = true;
+        fermerFormulaire.style.display = 'none';
+    }
+
+    if(enregistrerFormulaire){
+        // enregistrerFormulaire.disabled = true;
+        enregistrerFormulaire.style.display = 'none';
+    }
+
+    if(modifier_bouton){
+        modifier_bouton.addEventListener('click', function (e){
+            etatModification  = true;
             document.querySelectorAll(".input-state").forEach(element => {
                 element.style.display = "block";
             });
             document.querySelectorAll(".label-state").forEach(element => {
                 element.style.display = "none";
             });
+            document.querySelectorAll(".cellier-block").forEach(element => {
+                element.style.display = "block";
+            });
 
-            if (modifier_bouton) {
-                modifier_bouton.disabled = true;
+            if(modifier_bouton){
+                // modifier_bouton.disabled = true;
+                modifier_bouton.style.display = "none";
             }
-            // if(fermerFormulaire){
-            //     fermerFormulaire.disabled = false;
-            // }
-
-            if (askDeleteBtn) {
-                askDeleteBtn.disabled = true;
+            if(fermerFormulaire){
+                // fermerFormulaire.disabled = false;
+                fermerFormulaire.style.display = 'block';
             }
 
-            if (enregistrerFormulaire) {
-                enregistrerFormulaire.disabled = false;
+            if(askDeleteBtn){
+                // askDeleteBtn.disabled = true;
+                askDeleteBtn.style.display = "none";
+            }
+
+            if(enregistrerFormulaire){
+                enregistrerFormulaire.style.display = "block";
             }
         });
     }
@@ -161,21 +260,28 @@ window.addEventListener('load', function () {
             document.querySelectorAll(".label-state").forEach(element => {
                 element.style.display = "block";
             });
+            document.querySelectorAll(".cellier-block").forEach(element => {
+                element.style.display = "none";
+            });
 
-            if (modifier_bouton) {
-                modifier_bouton.disabled = false;
+            if(modifier_bouton){
+                // modifier_bouton.disabled = false;
+                modifier_bouton.style.display = 'block';
             }
 
-            // if(fermerFormulaire){
-            //     fermerFormulaire.disabled = true;
-            // }
-
-            if (askDeleteBtn) {
-                askDeleteBtn.disabled = false;
+            if(fermerFormulaire){
+                // fermerFormulaire.disabled = true;
+                fermerFormulaire.style.display = 'none';
             }
 
-            if (enregistrerFormulaire) {
-                enregistrerFormulaire.disabled = true;
+            if(askDeleteBtn){
+                askDeleteBtn.style.display = 'block';
+                // askDeleteBtn.disabled = false;
+            }
+
+            if(enregistrerFormulaire){
+                // enregistrerFormulaire.disabled = true;
+                enregistrerFormulaire.style.display = 'none';
             }
 
         });
@@ -294,4 +400,7 @@ window.addEventListener('load', function () {
             }
         });
     }
+
+    // document.querySelector(".note-input").
+
 });

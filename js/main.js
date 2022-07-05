@@ -10,10 +10,17 @@
 
 
 const BaseURL = document.baseURI;
-
+console.log(BaseURL)
 window.addEventListener('load', function () {
-
-
+    
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: "auto",
+        spaceBetween: 30,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
 /*
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
 
