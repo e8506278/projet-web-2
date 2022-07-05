@@ -2,26 +2,36 @@
 include('./controller/profilUsager.php');
 
 if (isset($unUsager)) {
-    $nom = "";
-    $adresse = "";
-    $ville = "";
-    $pays_id = "";
+    $nom = $unUsager["nom"];
+    $adresse = $unUsager["adresse"];
+    $ville = $unUsager["ville"];
+    $pays_id = $unUsager["pays_id"];
+    $telephone =  $unUsager["telephone"];
+    $date_naissance =  $unUsager["date_naissance"];
+    $courriel = $unUsager["courriel"];
+    $utilisateur =  $unUsager["nom_utilisateur"];
+
+    if (isset($date_naissance)) {
+        $naissance = explode("-", $date_naissance);
+
+        $annee = $naissance[0];
+        $mois = $naissance[1];
+        $jour = $naissance[2];
+    }
 }
-
 ?>
-
-<!--HERO-->
 
 <!--PROFIL-->
 <section class="main-connexion">
     <div class="section-wrapper wrapper-center">
         <div class="main-section">
             <div class="entete">
-                <h2 class="">Votre profil</h2>
+                <h2 class="">Mes informations</h2>
             </div>
 
-            <form class="formulaire" action="" method="POST">
+            <form class="formulaire-profil" action="" method="POST">
                 <div class="form-group">
+                    <div class="libelle">Nom</div>
                     <input type="text" class="form-control" name="usager_nom" data-js-nom placeholder="Votre nom" value="<?= $nom ?>" />
 
                     <?php if (isset($erreurs['usager_nom'])) : ?>
@@ -32,6 +42,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Adresse</div>
                     <textarea class="form-control" name="usager_adresse" data-js-adresse placeholder="Votre adresse"><?= $adresse ?></textarea>
 
                     <?php if (isset($erreurs['usager_adresse'])) : ?>
@@ -42,6 +53,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Ville</div>
                     <input type="text" class="form-control" name="usager_ville" data-js-ville placeholder="Votre ville" value="<?= $ville ?>" />
 
                     <?php if (isset($erreurs['usager_ville'])) : ?>
@@ -52,6 +64,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Pays</div>
                     <select name="usager_pays_id" class="form-control" data-js-pays>
                         <option value="0">Votre pays</option>
 
@@ -74,6 +87,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Téléphone</div>
                     <input type="text" class="form-control" name="usager_telephone" data-js-telephone placeholder="Votre numéro de téléphone" value="<?= $telephone ?>" />
 
                     <?php if (isset($erreurs['usager_telephone'])) : ?>
@@ -84,6 +98,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Date de naissance</div>
                     <div class="date-container">
                         <select name="usager_naissance[jour]" class="form-control" data-js-ddn-jour>
                             <option value="0">Jour</option>
@@ -142,6 +157,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Courriel</div>
                     <input type="text" class="form-control" name="usager_courriel" data-js-courriel placeholder="Votre courriel" value="<?= $courriel ?>" />
 
                     <?php if (isset($erreurs['usager_courriel'])) : ?>
@@ -152,6 +168,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Nom d'utilisateur</div>
                     <input type="text" class="form-control" name="usager_nom_utilisateur" data-js-utilisateur placeholder="Entrez un nom d'utilisateur" value="<?= $utilisateur ?>" />
 
                     <?php if (isset($erreurs['usager_nom_utilisateur'])) : ?>
@@ -162,6 +179,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Mot de passe</div>
                     <input type="password" class="form-control" name="usager_mot_de_passe" data-js-mdp placeholder="Entrez un mot de passe" value="" />
 
                     <?php if (isset($erreurs['usager_mot_de_passe'])) : ?>
@@ -172,6 +190,7 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group">
+                    <div class="libelle">Confirmer le mot de passe</div>
                     <input type="password" class="form-control" name="confirmer_mot_de_passe" data-js-confirmer placeholder="Retapez le mot de passe" value="" />
 
                     <?php if (isset($erreurs['confirmer_mot_de_passe'])) : ?>
@@ -182,9 +201,11 @@ if (isset($unUsager)) {
                 </div>
 
                 <div class="form-group btn-group">
-                    <button type="submit" class="bouton-secondaire" name="soumettre" data-js-btn-submit>M'enregistrer</button>
+                    <button type="submit" class="bouton-secondaire" name="modifier_profil" data-js-btn-submit>Modifier mes informations</button>
                 </div>
             </form>
         </div>
     </div>
 </section>
+
+<script src="./js/profilUsager.js" defer></script>

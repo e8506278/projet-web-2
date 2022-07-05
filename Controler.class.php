@@ -1477,13 +1477,9 @@ class Controler
     private function voirProfilUsager()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-            $body = json_decode(file_get_contents('php://input'), true);
-
-            $usager = new Usager();
-            $unUsager = isset($body->id_usager) ? $body->id_usager : "";
-
             include("vues/entete.php");
             include("vues/profilUsager.php");
+            include("vues/pied.php");
         } else {
             include("vues/entete.php");
             include("vues/connexion.php");

@@ -29,8 +29,7 @@ if (!isset($lesMois)) {
     $lesMois = ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"];
 }
 
-if (isset($_POST["soumettre"])) {
-
+if (isset($_POST["modifier_profil"])) {
     if (isset($_POST["usager_nom"])) {
         $nom = $_POST["usager_nom"];
     }
@@ -71,7 +70,7 @@ if (isset($_POST["soumettre"])) {
     }
 
     // Vérifier que les valeurs du formulaire ne soient pas vides
-    if (!empty($nom) && !empty($adresse) && !empty($ville) && !empty($pays_id) && !empty($telephone) && !empty($jour) && !empty($mois) && !empty($annee) && !empty($courriel) && !empty($utilisateur) && !empty($motDePasse) && !empty($confirmerMdp)) {
+    if (!empty($nom) && !empty($adresse) && !empty($ville) && !empty($pays_id) && !empty($telephone) && !empty($jour) && !empty($mois) && !empty($annee) && !empty($courriel) && !empty($utilisateur)) {
         // Nettoyer les données du formulaire avant de les envoyer à la base de données
         $nom            = mysqli_real_escape_string($connection, $nom);
         $adresse        = mysqli_real_escape_string($connection, $adresse);
@@ -89,26 +88,36 @@ if (isset($_POST["soumettre"])) {
         // Effectuer les validations
         $estValide = true;
 
-        // Vérifier si l'utilisateur existe déjà
-        $utilisateurTrouve = $oUsager->verifierNom($utilisateur);
+        // On récupère l'information de l'utilisateur afin de la comparer avec celle entrée.
+        $id_usager = $_SESSION['utilisateur']['id'];
+        $infoUtilisateur = $oUsager->verifierUtilisateur($id_usager);
+        $utilisateurCourriel = $infoUtilisateur[0]["courriel"];
+        $utilisateurNom = $infoUtilisateur[0]["nom_utilisateur"];
 
-        if ($utilisateurTrouve > 0) {
-            $erreurs['usager_nom_utilisateur'] = "Ce nom d'utilisateur existe déjà.";
-            $estValide = false;
+        // Vérifier si l'utilisateur existe déjà
+        if ($utilisateur <> $utilisateurNom) {
+            $utilisateurTrouve = $oUsager->verifierNom($utilisateur);
+
+            if ($utilisateurTrouve > 0) {
+                $erreurs['usager_nom_utilisateur'] = "Ce nom d'utilisateur existe déjà.";
+                $estValide = false;
+            }
         }
 
         // Vérifier si le courriel existe déjà
-        $courrielTrouve = $oUsager->verifierCourriel($courriel);
+        if ($courriel <> $utilisateurCourriel) {
+            $courrielTrouve = $oUsager->verifierCourriel($courriel);
 
-        if ($courrielTrouve > 0) {
-            $erreurs['usager_courriel']  = "Ce courriel existe déjà.";
-            $estValide = false;
-        } else if (!filter_var($courriel, FILTER_VALIDATE_EMAIL)) {
-            $erreurs['usager_courriel'] = "Le format du courriel est invalide.";
-            $estValide = false;
+            if ($courrielTrouve > 0) {
+                $erreurs['usager_courriel']  = "Ce courriel existe déjà.";
+                $estValide = false;
+            } else if (!filter_var($courriel, FILTER_VALIDATE_EMAIL)) {
+                $erreurs['usager_courriel'] = "Le format du courriel est invalide.";
+                $estValide = false;
+            }
         }
 
-        if ($estValide) {
+        if ($estValide && !empty($motDePasse)) {
             // Vérifier si le mot de passe a la bonne longueur
             $nbCar = strlen($motDePasse);
 
@@ -126,6 +135,8 @@ if (isset($_POST["soumettre"])) {
             $date = new DateTime();
 
             // Préparer et exécuter la requête
+            $donnees = new StdClass();
+            $donnees->id = $_SESSION['utilisateur']['id'];
             $donnees->nom = $nom;
             $donnees->adresse = $adresse;
             $donnees->telephone = $telephone;
@@ -137,12 +148,10 @@ if (isset($_POST["soumettre"])) {
             $donnees->mot_de_passe = $hachageMdp;
             $donnees->date_modification = $date->getTimestamp();
 
-            $resultat = $oUsager->ajouterUsager($donnees);
+            $resultat = $oUsager->modifierUsager($donnees);
 
             if (!$resultat) {
                 die("La requête à la base de données a échoué");
-            } else {
-                header("Location: ./index.php?requete=connecter");
             }
         }
     } else {
@@ -177,11 +186,8 @@ if (isset($_POST["soumettre"])) {
         if (empty($utilisateur)) {
             $erreurs['usager_nom_utilisateur'] = "Vous devez entrer un nom d'utilisateur.";
         }
-        if (empty($motDePasse)) {
-            $erreurs['usager_mot_de_passe'] = "Vous devez entrer un mot de passe.";
-        }
-        if (empty($confirmerMdp)) {
-            $erreurs['confirmer_mot_de_passe'] = "Vous devez confirmer le mot de passe.";
-        }
     }
+} else {
+    $id_usager = $_SESSION['utilisateur']['id'];
+    $unUsager = $oUsager->lireUsager($id_usager)[0];
 }
