@@ -796,48 +796,52 @@ function home_base_url(){
                             </div>
                         </div>
                         <!--            Information liées au cellier-->
-                        <div class="form-block" >
-                            <h6>Gérer les quantité de la bouteille dans mes celliers</h6>
+                        <div class="" >
                             <?php if($celliers && is_array($celliers) && count($celliers)>0) {?>
-                                <?php $key = 0; foreach ($celliers as $cellier) {?>
-                                    <div class="row">
-                                        <div class="col-6 info-unit">
-                                            <div class="label">Cellier</div>
-                                            <div class="value">
-                                                <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
-                                                       name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
-                                                <input type="hidden" value="<?php echo $cellier['id_bouteille'] ?>"
-                                                       name="celliers<?php echo "[".$key."]"?>[id_bouteille]"/>
-                                                <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
-                                                <?php echo  $cellier['nom_cellier'] && $cellier['id_cellier'] === $id_cellier ? '(Cellier actuel)': ''; ?>
+                                <div class="input-state form-block">
+                                    <h6>Gérer les quantité de la bouteille dans mes celliers</h6>
+                                    <?php $key = 0; foreach ($celliers as $cellier) {?>
+                                        <div class="row">
+                                            <div class="col-6 info-unit">
+                                                <div class="label">Cellier</div>
+                                                <div class="value">
+                                                    <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
+                                                           name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
+                                                    <input type="hidden" value="<?php echo $cellier['id_bouteille'] ?>"
+                                                           name="celliers<?php echo "[".$key."]"?>[id_bouteille]"/>
+                                                    <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
+                                                    <?php echo  $cellier['nom_cellier'] && $cellier['id_cellier'] === $id_cellier ? '(Cellier actuel)': ''; ?>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 info-unit">
+                                                <div class="label">Quantité(*)</div>
+                                                <div class="value label-state">
+                                                    <?php echo isset($cellier['quantite'])  ? $cellier['quantite'] : '0'?>
+                                                </div>
+                                                <div class="value input-state">
+                                                    <input type="number"
+                                                           required
+                                                           min="0"
+                                                           name="celliers<?php echo "[".$key."]"?>[quantite]"
+                                                           value="<?php echo(isset($cellier['quantite']) ? $cellier['quantite'] : 0) ?>"
+                                                           class="input formulaire__champs boite-double__champs"
+                                                           placeholder="Saisir ici"></div>
                                             </div>
                                         </div>
-                                        <div class="col-6 info-unit">
-                                            <div class="label">Quantité(*)</div>
-                                            <div class="value label-state">
-                                                <?php echo isset($cellier['quantite'])  ? $cellier['quantite'] : '0'?>
-                                            </div>
-                                            <div class="value input-state">
-                                                <input type="number"
-                                                       required
-                                                       min="0"
-                                                       name="celliers<?php echo "[".$key."]"?>[quantite]"
-                                                       value="<?php echo(isset($cellier['quantite']) ? $cellier['quantite'] : 0) ?>"
-                                                       class="input formulaire__champs boite-double__champs"
-                                                       placeholder="Saisir ici"></div>
+                                   <?php $key++; } ?>
+                                 </div>
+                            <?php } else { ?>
+                                    <div class="form-block">
+                                        <div  class="empty-state-message">Il semble que vous n'avez aucun cellier pour le moment</div>
+                                        <div  class="empty-state-message">
+                                            clicquer ici pour ajouter un nouveau cellier
+                                        </div>
+                                        <div class="empty-state-message">
+                                            <i class="carte--aligne-centre" >
+                                                <svg data-js-nouveaucellier class="carte__lien-icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z"/></svg>
+                                            </i>
                                         </div>
                                     </div>
-                                    <?php $key++; } ?>
-                            <?php } else { ?>
-                                <div  class="empty-state-message">Il semble que vous n'avez aucun cellier pour le moment</div>
-                                <div  class="empty-state-message">
-                                    clicquer ici pour ajouter un nouveau cellier
-                                </div>
-                                <div class="empty-state-message">
-                                    <i class="carte--aligne-centre" >
-                                        <svg data-js-nouveaucellier class="carte__lien-icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z"/></svg>
-                                    </i>
-                                </div>
                             <?php } ?>
                             <!--                        <div class="row">-->
                             <!--                            <div class="col-6 info-unit">-->
