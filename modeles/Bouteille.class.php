@@ -170,7 +170,6 @@ class Bouteille extends Modele
                          ub.degre_alcool_nom ,
                          ub.produit_du_quebec_nom,
                          ub.classification_nom
-
                         from vino__bouteille b
                         LEFT JOIN usager__bouteille ub ON ub.id_bouteille = b.id_bouteille
                     
@@ -190,7 +189,7 @@ class Bouteille extends Modele
         if ($id_cellier) {
             $requete = $requete . " AND ub.id_cellier = '" . $id_cellier . "'";
         }
-       
+        $this->_db->set_charset('utf8');
       
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
@@ -291,7 +290,6 @@ class Bouteille extends Modele
                          da.nom as nom_degre_alcool,
                          pc.nom as nom_produit_du_quebec,
                         classif.nom as nom_classification
-
                         from vino__bouteille b
                         LEFT JOIN usager__bouteille ub ON ub.id_bouteille = b.id_bouteille
                     
@@ -307,7 +305,6 @@ class Bouteille extends Modele
                         LEFT JOIN vino__degre_alcool da ON da.id = b.degre_alcool_id  
                         LEFT JOIN vino__produit_du_quebec pc ON pc.id = b.produit_du_quebec_id
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
-
                        WHERE b.id_bouteille = '" . $vino_bouteille_id . "'";
 
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
@@ -408,7 +405,6 @@ class Bouteille extends Modele
                          da.nom as nom_degre_alcool,
                          pc.nom as nom_produit_du_quebec,
                         classif.nom as nom_classification
-
                         from vino__bouteille b
                         LEFT JOIN usager__bouteille ub ON ub.id_bouteille = b.id_bouteille
                     
@@ -424,9 +420,8 @@ class Bouteille extends Modele
                         LEFT JOIN vino__degre_alcool da ON da.id = b.degre_alcool_id  
                         LEFT JOIN vino__produit_du_quebec pc ON pc.id = b.produit_du_quebec_id
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
-
                        WHERE b.nom_bouteille = '" . $nom . "'";
-       // $this->_db->set_charset('utf8');
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
@@ -607,6 +602,15 @@ class Bouteille extends Modele
         return $rows;
     }
 
+
+    /**
+     * Cette méthode récupère l'id d'une bouteille selon le code cup envoyé en paramètre
+     *
+     * @param int $cup, le code cup
+     * 
+     * @return Array id_bouteille, le id de la bouteille
+     *
+     */
     public function getBouteilleCUP($cup){
         $rows = array();
         $requete = "SELECT id_bouteille

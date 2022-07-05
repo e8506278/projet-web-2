@@ -1,23 +1,13 @@
 <section class="section-wrapper">
-    <h3>Statistiques</h3>
-    <select data-js-lescelliers>
-                <option value="tous">Tous les celliers</option>
-                <?php foreach($data as $cellier){?>
-                <option value="<?php echo $cellier['id_cellier']?>"><?php echo $cellier['nom_cellier']?></option>
-                <?php }?>
-            </select>
-            
-    
-    
-            <div class="grille grille--2l">
+    <h3 class="graphique__titre">Statistiques</h3>
+        <?php if($bouteille_total !== 0){?>
+        <div class="grille grille--2l">
         <!--1-TYPE-->
         <div>
             <h4 class="graphique__titre">Type de bouteille</h4><div data-js-btnsformat>
         </div>
             <ul class="graphique" data-js-graphique>
-           
                 <li>
-                    
                     <div>ROUGE </div>
                     <span class="graphique__qte" ></span>
                     <span class="index" style="width: <?php echo $types['p_rouge'];?>%; background-color: #b11226; ">("<?php echo $types['p_rouge'];?>%")</span>
@@ -35,14 +25,13 @@
                     <span class="index" style="width: <?php echo $types['p_rose'];?>%; background-color: #f4c4bb;">("<?php echo $types['p_rose'];?>%")</span>
                     <span class="graphique--police"><?php echo round($types['p_rose'],2);?>%</span>
                 </li>
-              
             </ul>
         </div>
        
 
         <!--3-VALEUR DES DIFFÉRENTS CELLIERS-->
         <div>
-            <h4>Valeur des celliers</h4>       
+            <h4 class="graphique__titre">Valeur des celliers</h4>       
             <ul class="graphique" data-js-graphique>
                 <?php foreach($data as $cellier){  ?>
                 <li>
@@ -55,7 +44,7 @@
                 </ul> 
         </div>
         <!--4-AJOUT DE BOUTEILLE-->
-        <div>
+        <div class="graphique__contenant">
             <h4 class="graphique__titre">Bouteilles ajoutée</h4>
 
             <ul class="graphique-vertical">
@@ -70,7 +59,7 @@
             </ul>    
         </div>
         <!--2-BUES-->
-        <div>
+        <div class="graphique__contenant">
             <h4 class="graphique__titre">Bouteilles consommées</h4>
 
             <ul class="graphique-vertical">
@@ -84,5 +73,7 @@
             <?php }}?>
             </ul>    
         </div>
-        
+        <?php }else{?>
+            <p>Statistiques non disponibles, aucune bouteilles trouvées</p>
+            <?php }?>
 </section>

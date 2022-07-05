@@ -7,8 +7,11 @@ elBtnScan.addEventListener('click', (e)=>{
     elPied.classList.add('contenu-scan-on')
     function onScanSuccess(decodedText, decodedResult) {
        
-   
+
+
         let requete = new Request(BaseURL + "?requete=scan", { method: 'POST', body: '{"scan_resultat": "' + decodedText + '"}' });
+        
+       
         fetch(requete)
         .then(response => {
             if (response.status === 200) {
@@ -19,21 +22,22 @@ elBtnScan.addEventListener('click', (e)=>{
             }
         })
         .then(response => {
-            let vino_bouteille = response[0]['id_bouteille']
+            console.log(response);
+            //let vino_bouteille = response[0]['id_bouteille']
             html5qrcode.stop().then((ignore) => {
                 // QR Code scanning is stopped.
               }).catch((err) => {
                 // Stop failed, handle it.
               });
              
-              location.href = BaseURL+"?requete=bouteille&vino_id="+vino_bouteille;
+              //location.href = BaseURL+"?requete=bouteille&vino_id="+vino_bouteille;
          
             
             
         }).catch(error => {
             console.error(error);
         });
-        
+     
     }
     
     let html5qrcode = new Html5Qrcode("reader", {

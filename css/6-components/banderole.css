@@ -9,12 +9,11 @@
     padding: var(--espace-p);
     background-color: var(--couleur-secondaire);
     font-size: var(--police-xp);
-    transition: transform .2s
+    transition: transform .2s;
+    justify-content: space-evenly;
    
 }
-.banderole__contenant:hover{
-    transform: scale(1.1);
-}
+
 .banderole__texte{
     font-weight: var(--police-xgras);
    
