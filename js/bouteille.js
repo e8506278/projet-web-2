@@ -22,6 +22,7 @@ let etatModification = true;
 console.log('hello bouteille', etatModification);
 
 function ratestar(note, id_bouteille, id_cellier) {
+    supprimerMessageFromUrl();
     if(note && id_bouteille){
         const requete = new Request($baseUrl_without_parameters + "?requete=noteBouteille", { method: 'POST', body: JSON.stringify({note: note, id_bouteille: id_bouteille, id_cellier: id_cellier }) });
         fetch(requete).then(response => {
@@ -35,6 +36,7 @@ function ratestar(note, id_bouteille, id_cellier) {
 }
 
 function modifierAAcheter(valeur, id_bouteille, id_cellier, vino_id){
+    supprimerMessageFromUrl();
     // if( id_bouteille){
         const requete = new Request($baseUrl_without_parameters + "?requete=modifierAAcheter",
             { method: 'POST', body: JSON.stringify(
@@ -57,6 +59,7 @@ function modifierAAcheter(valeur, id_bouteille, id_cellier, vino_id){
 }
 
 function modifierAEssayer(valeur, id_bouteille, id_cellier, vino_id){
+    supprimerMessageFromUrl();
     // if(id_bouteille){
         const requete = new Request($baseUrl_without_parameters + "?requete=modifierAEssayer",
             { method: 'POST', body: JSON.stringify(
@@ -79,6 +82,7 @@ function modifierAEssayer(valeur, id_bouteille, id_cellier, vino_id){
 }
 
 function modifierFavoris(valeur, id_bouteille, id_cellier, vino_id){
+    supprimerMessageFromUrl();
     // if(id_bouteille){
         const requete = new Request($baseUrl_without_parameters + "?requete=modifierFavoris",
             { method: 'POST', body: JSON.stringify(
@@ -98,6 +102,12 @@ function modifierFavoris(valeur, id_bouteille, id_cellier, vino_id){
 
         });
     // }
+}
+
+function supprimerMessageFromUrl(){
+    const url = new URL(location);
+    url.searchParams.delete('message');
+    history.replaceState(null, null, url);
 }
 
 window.addEventListener('load', function () {

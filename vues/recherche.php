@@ -70,7 +70,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
         </button>
     </div>
 
-    <section class="section-wrapper carte carte--bg-couleur "  data-js-usager="<?php echo $id_usager?>">
+    <section class="section-wrapper carte carte--bg-couleur " data-js-usager="<?php echo $id_usager ?>">
         <div class="detail">
             <div class="barre-tri" data-js-barre-tri>
                 <div class="ouvrir-fermer">
@@ -139,6 +139,51 @@ $aTypesVin = $oRecherche->lireTypesVin();
                         </div>
 
                         <div class="recherche-groupe">
+                            <!-- Les listes -->
+                            <div class="recherche-item">
+                                <button class="accordeon accordeon-flex" data-js-accordeon-listes>
+                                    <div class="nb-listes nb-selectionnes"><span class="nb-selections hide"></span></div>
+                                    <div>Mes listes</div>
+                                </button>
+
+                                <div class="acc-container">
+                                    <div class="filtre-listbox">
+                                        <div class="filtre-entete">
+                                            <div class="filtre-entete-checkbox">
+                                                <input type="checkbox" id="listes-toutes" data-js-listes-toutes data-js-type-tous />
+                                                <label class="libelle-tous" for="listes-toutes">Toutes</label>
+                                            </div>
+                                        </div>
+
+                                        <fieldset>
+                                            <div class="liste-choix">
+                                                <div class="choix-item">
+                                                    <input name="favori_bouteille" type="checkbox" id="favori_bouteille" title="Afficher mes bouteilles favorites" data-js-liste="favori" />
+
+                                                    <div class="choix-nom">
+                                                        <label for="favori_bouteille" title="Afficher mes bouteilles favorites">mes bouteilles favorites</label>
+                                                    </div>
+                                                </div>
+                                                <div class="choix-item">
+                                                    <input name="essayer_bouteille" type="checkbox" id="essayer_bouteille" title="Afficher mes bouteilles à essayer" data-js-liste="essayer" />
+
+                                                    <div class=" choix-nom">
+                                                        <label for="essayer_bouteille" title="Afficher mes bouteilles à essayer">mes bouteilles à essayer</label>
+                                                    </div>
+                                                </div>
+                                                <div class="choix-item">
+                                                    <input name="achat_bouteille" type="checkbox" id="achat_bouteille" title="Afficher mes bouteilles à acheter" data-js-liste="achat" />
+
+                                                    <div class=" choix-nom">
+                                                        <label for="achat_bouteille" title="Afficher mes bouteilles à acheter">mes bouteilles à acheter</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Cellier -->
                             <div class="recherche-item">
                                 <?php if (!$aCelliers) { ?>

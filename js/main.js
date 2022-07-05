@@ -22,6 +22,22 @@ window.addEventListener('load', function () {
         },
       });
 
+ let elFicheTitres = document.querySelectorAll('[data-js-fichetitre]');
+ elFicheTitres.forEach(function(element){
+     element.addEventListener('click',(e)=>{
+         e.preventDefault
+       
+         if (element.nextElementSibling.classList.contains('tiroir-off')) {
+           
+            element.nextElementSibling.classList.replace('tiroir-off', 'tiroir');
+        
+        }
+        else if(element.nextElementSibling.classList.contains('tiroir')){
+            element.nextElementSibling.classList.replace('tiroir', 'tiroir-off');
+        }
+     })
+ })
+
 
 
 
