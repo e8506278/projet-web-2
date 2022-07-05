@@ -32,11 +32,11 @@ class Statistique extends Modele
         $p_rose = 0;
         $rows = array();
         if($id_usager){
-            $res = $this->_db->query("SELECT quantite_bouteille, type_de_vin_id FROM usager__bouteille WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = '$id_usager')");
+            $res = $this->_db->query("SELECT quantite_bouteille, type_de_vin_nom FROM usager__bouteille WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = '$id_usager')");
            
         }
         else if($id_cellier !== 0 || $id_cellier !== null ){
-            $res = $this->_db->query("SELECT type_de_vin_id FROM usager__bouteille WHERE id_cellier IN ('$id_cellier')"); 
+            $res = $this->_db->query("SELECT type_de_vin_nom FROM usager__bouteille WHERE id_cellier IN ('$id_cellier')"); 
         }
 
         if ($res->num_rows) {
@@ -47,22 +47,32 @@ class Statistique extends Modele
         foreach($rows as $type){
             $nbre_bouteilles_totales += $type['quantite_bouteille'];
             
-            if($type['type_de_vin_id'] == 1){
+            if($type['type_de_vin_nom'] == 'Vin rouge'){
                 $nbre_bouteilles_rouge += $type['quantite_bouteille'];
             }
-            else if($type['type_de_vin_id'] == 2){
+            else if($type['type_de_vin_id'] == 'Vin blanc'){
                 $nbre_bouteilles_blanc += $type['quantite_bouteille'];
             }
-            else if($type['type_de_vin_id'] == 3){
+            else if($type['type_de_vin_id'] == 'Vin rosé'){
                 $nbre_bouteilles_rose += $type['quantite_bouteille'];
             }
 
         }
+      
+        if($nbre_bouteilles_rouge !== 0){
             $p_rouge= ($nbre_bouteilles_rouge/$nbre_bouteilles_totales)*100;
-            $p_blanc = ($nbre_bouteilles_blanc/$nbre_bouteilles_totales)*100;
-            $p_rose = ($nbre_bouteilles_rose/$nbre_bouteilles_totales)*100;
-            $rows = ["p_rouge" =>$p_rouge,"p_blanc" =>$p_blanc,"p_rose" =>$p_rose,"n_rouge" =>$nbre_bouteilles_rouge,"n_blanc" =>$nbre_bouteilles_blanc,"n_rose" =>$nbre_bouteilles_rose];
+            
+        }
+        if($nbre_bouteilles_blanc!== 0){
+            $p_blanc= ($nbre_bouteilles_blanc/$nbre_bouteilles_totales)*100;
+        }
+        if($nbre_bouteilles_rose!== 0){
+            $p_rose= ($nbre_bouteilles_rose/$nbre_bouteilles_totales)*100;
+        }
            
+            $rows = ["p_rouge" =>$p_rouge,"p_blanc" =>$p_blanc,"p_rose" =>$p_rose,"n_rouge" =>$nbre_bouteilles_rouge,"n_blanc" =>$nbre_bouteilles_blanc,"n_rose" =>$nbre_bouteilles_rose];
+        
+       
         return $rows;
     }
 
