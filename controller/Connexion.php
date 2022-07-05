@@ -1,7 +1,4 @@
 <?php
-
-
-
 // Ouvrir une nouvelle connexion au serveur MySQL
 $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion à la base de données non établie.");
 
@@ -35,7 +32,7 @@ if (isset($_POST["soumettre"])) {
         $estValide = true;
 
         // Vérifier si l'utilisateur existe
-        $sqlValiderUtilisateur = mysqli_query($connection, "SELECT * FROM usager__login WHERE nom_utilisateur = '{$utilisateur}' ");
+        $sqlValiderUtilisateur = mysqli_query($connection, "SELECT * FROM usager__detail WHERE nom_utilisateur = '{$utilisateur}' ");
         $utilisateurTrouve = mysqli_num_rows($sqlValiderUtilisateur);
 
         if ($utilisateurTrouve === 0) {
@@ -71,7 +68,6 @@ if (isset($_POST["soumettre"])) {
                 $_SESSION['utilisateur']['nom'] = $nom_utilisateur;
                 $_SESSION['utilisateur']['jeton'] = $jeton;
                 $_SESSION['utilisateur']['estConnecte'] = true;
-
             } else {
                 $erreurs['usager_non_connecte'] = "Échec de la connexion! Identifiant ou mot de passe invalide!";
             }

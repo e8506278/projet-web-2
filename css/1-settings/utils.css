@@ -3,12 +3,14 @@
     margin: 10px 0;
 }
 
-.row{
+.row-f{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
-.row__liste{
-    display: flex;
+@media only screen and (min-width: 760px){
+    .row-f{
+       flex-direction: row;
+    }
 }
 .col{
     flex-basis: 0;

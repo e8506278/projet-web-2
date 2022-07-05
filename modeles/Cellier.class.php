@@ -15,14 +15,26 @@ class Cellier extends Modele
     const TABLE = 'usager__cellier';
 
 
+    public function ajouterAdminCellier($donnees)
+    {
+        $requete = "INSERT INTO usager__cellier (id_usager, nom_cellier, description_cellier, type_cellier_id)
+                    VALUES (" .
+            "'{$donnees->id_usager}'," .
+            "'{$donnees->nom_cellier}'," .
+            "'{$donnees->description_cellier}'," .
+            "'{$donnees->type_cellier_id}')";
+
+        $res = $this->_db->query($requete);
+        return $res;
+    }
+
+
     public function getAdminCelliers()
     {
         $rows = array();
 
-        $requete = "SELECT id_cellier, id_usager, nom_cellier, T2.nom_type_cellier AS type_cellier
-                    FROM usager__cellier AS T1 
-                    LEFT JOIN vino__type_cellier AS T2 
-                    ON T1.type_cellier_id = T2.id_type_cellier
+        $requete = "SELECT id_cellier, id_usager, nom_cellier, type_cellier_id
+                    FROM usager__cellier
                     ORDER BY id_cellier";
 
         if (($res = $this->_db->query($requete)) == true) {
@@ -36,6 +48,59 @@ class Cellier extends Modele
         }
 
         return $rows;
+    }
+
+
+    public function getAdminNbCelliers()
+    {
+        $nbTrouve = 0;
+        $requete = "SELECT COUNT(*) AS nbTrouve FROM usager__cellier";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                $row = $res->fetch_assoc();
+                $nbTrouve = $row['nbTrouve'];
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $nbTrouve;
+    }
+
+
+    public function getAdminUnCellier($id_cellier)
+    {
+        $rows = array();
+
+        $requete = "SELECT id_cellier, id_usager, nom_cellier, description_cellier, type_cellier_id
+                    FROM usager__cellier
+                    WHERE id_cellier = " . $id_cellier;
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
+    public function modifierAdminCellier($donnees)
+    {
+        $requete = "UPDATE usager__cellier SET 
+                            nom_cellier = '{$donnees->nom_cellier}',
+                            description_cellier = '{$donnees->description_cellier}',
+                            type_cellier_id = '{$donnees->type_cellier_id}'
+                    WHERE id_cellier = '{$donnees->id}'";
+
+        $res = $this->_db->query($requete);
+        return $res;
     }
 
 
@@ -68,7 +133,6 @@ class Cellier extends Modele
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-
                     $rows[] = $row;
                 }
             }
