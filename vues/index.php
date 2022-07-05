@@ -12,7 +12,7 @@
 
 <section class="section-wrapper banderole">
 <h4 class="vignette__entete">Aperçu</h4><br>
-<div cwiper">
+<div class="swiper mySwiper">
     <div class="swiper-wrapper">
         <div class="swiper-slide">
 			<a class="banderole__contenant" href="?requete=statistiques">
@@ -141,8 +141,10 @@
 						<figcaption class="vignette__titre">Mes statistiques</figcaption>
 					</figure>
 				</a>
-			</div>
-		
+			</div>	
 		</section>
 
+
 		
+    
+    
