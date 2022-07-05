@@ -40,7 +40,11 @@ $nbBouteilles = $oBouteille->getAdminNbBouteilles();
                 </svg>
                 <div class="box p-3">
                     <h1 class="nb-usagers"><?= $nbUsagers ?></h1>
-                    <h3>usagers</h3>
+                    <?php if ($nbUsagers > 1) { ?>
+                        <h3>usagers</h3>
+                    <?php } else { ?>
+                        <h3>usager</h3>
+                    <?php } ?>
                 </div>
             </div>
             <div class="carte-admin col-md-6 col-lg-3 mb-4 mb-lg-0 carte-cellier">
@@ -50,7 +54,11 @@ $nbBouteilles = $oBouteille->getAdminNbBouteilles();
                 </svg>
                 <div class="box p-3">
                     <h1 class="nb-celliers"><?= $nbCelliers ?></h1>
-                    <h3>celliers</h3>
+                    <?php if ($nbCelliers > 1) { ?>
+                        <h3>celliers</h3>
+                    <?php } else { ?>
+                        <h3>cellier</h3>
+                    <?php } ?>
                 </div>
             </div>
             <div class="carte-admin col-md-6 col-lg-3 mb-4 mb-lg-0 carte-bouteille">
@@ -60,7 +68,11 @@ $nbBouteilles = $oBouteille->getAdminNbBouteilles();
                 </svg>
                 <div class="box p-3">
                     <h1 class="nb-bouteilles"><?= $nbBouteilles ?></h1>
-                    <h3>bouteilles</h3>
+                    <?php if ($nbBouteilles > 1) { ?>
+                        <h3>bouteilles</h3>
+                    <?php } else { ?>
+                        <h3>bouteille</h3>
+                    <?php } ?>
                 </div>
             </div>
         </div>

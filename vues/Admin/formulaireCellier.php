@@ -51,21 +51,17 @@ $aTypesCellier = $vino->lireTypesCellier();
                             <td><?= $unCellier["id_usager"] ?></td>
                             <td><?= $unCellier["nom_cellier"] ?></td>
                             <td>
-                                <select readonly>
-                                    <option value="-1">Aucun type de cellier</option>
+                                <?php
+                                $valeur = "Aucun type de cellier";
 
-                                    <?php
-                                    foreach ($aTypesCellier as $unTypeCellier) {
-                                    ?>
-                                        <option value="<?= $unTypeCellier['id']; ?>" <?php if ($unCellier["type_cellier_id"] == $unTypeCellier['id']) {
-                                                                                            echo ' selected="selected"';
-                                                                                        } ?>>
-                                            <?= $unTypeCellier['nom'] ?> </option>
-                                    <?php
+                                foreach ($aTypesCellier as $unTypeCellier) {
+                                    if ($unCellier["type_cellier_id"] == $unTypeCellier['id']) {
+                                        $valeur = $unTypeCellier['nom'];
                                     }
-                                    ?>
+                                }
 
-                                </select>
+                                echo $valeur;
+                                ?>
                             </td>
                         </tr>
                 <?php

@@ -52,20 +52,17 @@ $aTypesUsager = $usager->lireTypesUsager();
                             <td><?= $unUsager["courriel"] ?></td>
                             <td><?= $unUsager["nom_utilisateur"] ?></td>
                             <td>
-                                <select readonly>
-                                    <option value="-1">Aucun type d'utilisateur</option>
+                                <?php
+                                $valeur = "Aucun type d'utilisateur";
 
-                                    <?php
-                                    foreach ($aTypesUsager as $unTypeUsager) {
-                                    ?>
-                                        <option value="<?= $unTypeUsager['id']; ?>" <?php if ($unUsager["type_utilisateur"] == $unTypeUsager['id']) {
-                                                                                        echo ' selected="selected"';
-                                                                                    } ?>>
-                                            <?= $unTypeUsager['nom'] ?> </option>
-                                    <?php
+                                foreach ($aTypesUsager as $unTypeUsager) {
+                                    if ($unUsager["type_utilisateur"] == $unTypeUsager['id']) {
+                                        $valeur = $unTypeUsager['nom'];
                                     }
-                                    ?>
-                                </select>
+                                }
+
+                                echo $valeur;
+                                ?>
                             </td>
                         </tr>
                 <?php

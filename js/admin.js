@@ -252,6 +252,8 @@ function afficherFormulaire() {
                     filtrerDonnees();
                 });
 
+                conserverDonnees();
+
                 rows = elTableBody.getElementsByTagName("tr");
 
                 for (let i = 0, l = rows.length; i < l; i++) {
@@ -323,6 +325,7 @@ function basculerEdition(el) {
 function basculerFleche(event) {
     let element = event.target;
     let caret, champ, inverse;
+
     if (element.tagName === "SPAN") {
         caret = element.getElementsByClassName("caret")[0];
         champ = element.id;
@@ -333,11 +336,12 @@ function basculerFleche(event) {
 
     let iconClassName = caret.className;
     effacerFleche();
+
     if (iconClassName.includes(caretUpClassName)) {
         caret.className = `caret ${caretDownClassName}`;
-        inverse = false;
-    } else {
         inverse = true;
+    } else {
+        inverse = false;
         caret.className = `caret ${caretUpClassName}`;
     }
 
@@ -357,6 +361,33 @@ function cacherSection1() {
 function confirmerAnnulation() {
     gererEdition("fin");
     reinitialiserSection4();
+}
+
+
+function conserverDonnees() {
+    elTableColonnes = document.querySelectorAll(".table-colonne");
+    let lesEntetes = [];
+
+    for (let column of elTableColonnes) {
+        let champ = column.id;
+        lesEntetes.push(champ);
+    }
+
+    tableData = [];
+    rows = elTableBody.getElementsByTagName("tr");
+
+    for (let i = 0, l = rows.length; i < l; i++) {
+        let cells = rows[i].getElementsByTagName("td");
+        let oData = {};
+
+        for (let j = 0, k = cells.length; j < k; j++) {
+            oData[lesEntetes[j]] = cells[j].textContent;
+        }
+
+        tableData.push(oData);
+    }
+
+    console.log(tableData);
 }
 
 
@@ -732,152 +763,6 @@ function ouvrirModal() {
 }
 
 
-function reinitialiserSection4() {
-    if (tableSelectionnee["id"] > 0) {
-        afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
-        tableSelectionnee["actionCourante"] = "";
-    }
-
-    else {
-        elSection4.innerHTML = "";
-    }
-}
-
-
-async function sauvegarderDonnees() {
-
-    // Method
-    let methode = "POST";
-
-    if (tableSelectionnee["actionCourante"] == "ajouter") {
-        methode = "PUT"
-    }
-
-    // Headers
-    const entete = new Headers();
-    entete.append("Content-Type", "application/json");
-    entete.append("Accept", "application/json");
-
-    // Body
-    const nomTable = tableSelectionnee["nomTable"];
-    const action = tableSelectionnee["actionCourante"];
-
-    const lesInputs = document.querySelectorAll("select,input");
-    const donnees = {};
-
-    for (let i = 0, l = lesInputs.length; i < l; i++) {
-        const element = lesInputs[i];
-        donnees[element.name] = element.value;
-    }
-
-    donnees["id"] = tableSelectionnee["id"];
-    const body = { "nomTable": nomTable, "action": action, "donnees": donnees };
-
-    const reqOptions = {
-        method: methode,
-        headers: entete,
-        body: JSON.stringify(body)
-    };
-
-    if (!document.body.classList.contains("waiting")) {
-        document.body.classList.add("waiting");
-    }
-
-    const requete = new Request($baseUrl_without_parameters + "?requete=sauvegarderAdminDonnees", reqOptions);
-    const reponse = await fetch(requete);
-
-    if (!reponse.ok) {
-        throw new Error(`Erreur HTTP : statut = ${reponse.status}`);
-    }
-
-    const data = await reponse.text();
-
-    rafraichirPageInfo();
-    document.body.classList.remove("waiting");
-}
-
-
-/**
- * Ajoute la classe 'selected' à l'élément fourni en paramètre et l'enlève aux autres
- * @param el L'élément qui doit recevoir la classe
- */
-function selectionnerCarte(el) {
-    for (let i = 0, l = elCartes.length; i < l; i++) {
-        elCartes[i].classList.remove("selected");
-
-    }
-    el.classList.add("selected");
-}
-
-
-function selectionnerLigne(rangee) {
-    rows = elTableBody.getElementsByTagName("tr");
-
-    for (let row of rows) {
-        row.classList.remove("selected");
-    }
-
-    rows[rangee].classList.add("selected");
-}
-
-
-function traiterProchaineAction(prochaineAction) {
-
-    if (prochaineAction.hasOwnProperty("nomTable")) {
-        tableSelectionnee["id"] = -1;
-        tableSelectionnee["nomTable"] = prochaineAction["nomTable"];
-        tableSelectionnee["ligneActive"] = -1;
-        tableSelectionnee["actionCourante"] = "";
-
-        reinitialiserSection4();
-        afficherFormulaire();
-
-    } else if (prochaineAction.hasOwnProperty("ligneActive")) {
-        const ligneActive = prochaineAction["ligneActive"];
-
-        tableSelectionnee["id"] = elTableBody.rows[ligneActive].cells[0].innerHTML;
-        tableSelectionnee["ligneActive"] = ligneActive;
-        tableSelectionnee["actionCourante"] = "";
-
-        selectionnerLigne(ligneActive);
-        afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
-
-    } else if (prochaineAction.hasOwnProperty("actionCourante")) {
-        switch (prochaineAction["actionCourante"]) {
-            case "ajouter":
-                tableSelectionnee["actionCourante"] = "ajouter";
-                afficherDetail({ "mode": "ajouter" });
-                break;
-
-            case "annuler":
-                gererAnnulation();
-                break;
-
-            case "confirmer":
-                // Sauvegarde des données
-                sauvegarderDonnees();
-
-                // Gérer la fin de l'édition de l'enregistrement
-                gererEdition("fin");
-                reinitialiserSection4();
-                break;
-
-            case "lire":
-                afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
-                break;
-
-            case "modifier":
-                tableSelectionnee["actionCourante"] = "modifier";
-                afficherDetail({ "mode": "modifier", "id": tableSelectionnee["id"] });
-                break;
-
-            default:
-                break;
-        }
-    }
-}
-
-
 function rafraichirPageInfo() {
 
     const elSelect = document.querySelector('#selection-table-vino');
@@ -1069,5 +954,151 @@ function rafraichirSection3() {
 
                 rows[rows.length - 1].scrollIntoView(false);
             });
+    }
+}
+
+
+function reinitialiserSection4() {
+    if (tableSelectionnee["id"] > 0) {
+        afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
+        tableSelectionnee["actionCourante"] = "";
+    }
+
+    else {
+        elSection4.innerHTML = "";
+    }
+}
+
+
+async function sauvegarderDonnees() {
+
+    // Method
+    let methode = "POST";
+
+    if (tableSelectionnee["actionCourante"] == "ajouter") {
+        methode = "PUT"
+    }
+
+    // Headers
+    const entete = new Headers();
+    entete.append("Content-Type", "application/json");
+    entete.append("Accept", "application/json");
+
+    // Body
+    const nomTable = tableSelectionnee["nomTable"];
+    const action = tableSelectionnee["actionCourante"];
+
+    const lesInputs = document.querySelectorAll("select,input");
+    const donnees = {};
+
+    for (let i = 0, l = lesInputs.length; i < l; i++) {
+        const element = lesInputs[i];
+        donnees[element.name] = element.value;
+    }
+
+    donnees["id"] = tableSelectionnee["id"];
+    const body = { "nomTable": nomTable, "action": action, "donnees": donnees };
+
+    const reqOptions = {
+        method: methode,
+        headers: entete,
+        body: JSON.stringify(body)
+    };
+
+    if (!document.body.classList.contains("waiting")) {
+        document.body.classList.add("waiting");
+    }
+
+    const requete = new Request($baseUrl_without_parameters + "?requete=sauvegarderAdminDonnees", reqOptions);
+    const reponse = await fetch(requete);
+
+    if (!reponse.ok) {
+        throw new Error(`Erreur HTTP : statut = ${reponse.status}`);
+    }
+
+    const data = await reponse.text();
+
+    rafraichirPageInfo();
+    document.body.classList.remove("waiting");
+}
+
+
+/**
+ * Ajoute la classe 'selected' à l'élément fourni en paramètre et l'enlève aux autres
+ * @param el L'élément qui doit recevoir la classe
+ */
+function selectionnerCarte(el) {
+    for (let i = 0, l = elCartes.length; i < l; i++) {
+        elCartes[i].classList.remove("selected");
+
+    }
+    el.classList.add("selected");
+}
+
+
+function selectionnerLigne(rangee) {
+    rows = elTableBody.getElementsByTagName("tr");
+
+    for (let row of rows) {
+        row.classList.remove("selected");
+    }
+
+    rows[rangee].classList.add("selected");
+}
+
+
+function traiterProchaineAction(prochaineAction) {
+
+    if (prochaineAction.hasOwnProperty("nomTable")) {
+        tableSelectionnee["id"] = -1;
+        tableSelectionnee["nomTable"] = prochaineAction["nomTable"];
+        tableSelectionnee["ligneActive"] = -1;
+        tableSelectionnee["actionCourante"] = "";
+
+        reinitialiserSection4();
+        afficherFormulaire();
+
+    } else if (prochaineAction.hasOwnProperty("ligneActive")) {
+        const ligneActive = prochaineAction["ligneActive"];
+
+        tableSelectionnee["id"] = elTableBody.rows[ligneActive].cells[0].innerHTML;
+        tableSelectionnee["ligneActive"] = ligneActive;
+        tableSelectionnee["actionCourante"] = "";
+
+        selectionnerLigne(ligneActive);
+        afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
+
+    } else if (prochaineAction.hasOwnProperty("actionCourante")) {
+        switch (prochaineAction["actionCourante"]) {
+            case "ajouter":
+                tableSelectionnee["actionCourante"] = "ajouter";
+                afficherDetail({ "mode": "ajouter" });
+                break;
+
+            case "annuler":
+                gererAnnulation();
+                break;
+
+            case "confirmer":
+                // Sauvegarde des données
+                sauvegarderDonnees();
+
+                // Gérer la fin de l'édition de l'enregistrement
+                gererEdition("fin");
+                reinitialiserSection4();
+                break;
+
+            case "lire":
+                afficherDetail({ "mode": "lire", "id": tableSelectionnee["id"] });
+                break;
+
+            case "modifier":
+                tableSelectionnee["actionCourante"] = "modifier";
+                afficherDetail({ "mode": "modifier", "id": tableSelectionnee["id"] });
+                break;
+
+            default:
+                break;
+        }
     }
 }

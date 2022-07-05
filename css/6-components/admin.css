@@ -297,7 +297,7 @@ h1 {
     display: block;
     overflow: auto;
     table-layout: fixed;
-    max-height: 195px;
+    max-height: 250px;
 }
 
 .detail-container td label {
