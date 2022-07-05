@@ -132,7 +132,7 @@ if(isset($form_values['image_bouteille']) && $form_values['image_bouteille'] != 
         $form_values['image_bouteille'] = home_base_url().$form_values['image_bouteille'];
     }
 }
-
+/*
 // fonction pour récupérer l'url absolu
 function home_base_url(){
     $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off') ? 'https://' : 'http://';
@@ -155,7 +155,7 @@ function home_base_url(){
 }
 
 
-
+*/
 ?>
 
 <script src="./js/bouteille.js"  type="text/javascript"></script>
@@ -257,546 +257,514 @@ function home_base_url(){
                                     </div>
                                 </div>
                             <?php } ?>
-                            <div class="row">
-                                <div class="col info-unit">
-                                    <input type="hidden" value="<?php echo $form_values['id_bouteille']?>" name="id_bouteille"/>
-                                    <div class="label">Nom de la bouteille(*)</div>
-                                    <div class="value label-state" style="<?php if(!isset($id_bouteille)) echo 'display: unset'?>">
-                                        <?php echo ($form_values['nom_bouteille'] ?: 'Non défini') ?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="bouteilles"
-                                               required
-                                               value="<?php echo $form_values['nom_bouteille']?>"
-                                               placeholder="Sélectionner ici"
-                                               data-js-bouteille-select
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="nom_bouteille" id="id_bouteille" >
+                            <!--INFOS-->
+                            <div>
+                                                        <div class="row">
+                                                            <div class="col info-unit">
+                                                                <input type="hidden" value="<?php echo $form_values['id_bouteille']?>" name="id_bouteille"/>
+                                                                <div class="label">Nom de la bouteille(*)</div>
+                                                                <div class="value label-state" style="<?php if(!isset($id_bouteille)) echo 'display: unset'?>">
+                                                                    <?php echo ($form_values['nom_bouteille'] ?: 'Non défini') ?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input list="bouteilles"
+                                                                        required
+                                                                        value="<?php echo $form_values['nom_bouteille']?>"
+                                                                        placeholder="Sélectionner ici"
+                                                                        data-js-bouteille-select
+                                                                        class="input select formulaire__champs boite-double__champs"
+                                                                        name="nom_bouteille" id="id_bouteille" >
 
-                                        <datalist id="bouteilles">
-                                            <?php foreach ($bouteilles as $element){ ?>
-                                            <option value="<?php echo $element['nom_bouteille'] ?>">
+                                                                    <datalist id="bouteilles">
+                                                                        <?php foreach ($bouteilles as $element){ ?>
+                                                                        <option value="<?php echo $element['nom_bouteille'] ?>">
+                                                                            <?php } ?>
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Type(*)</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['type_de_vin_nom']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input list="types"
+                                                                        required
+                                                                        placeholder="Sélectionner ici"
+                                                                        value="<?php echo $form_values['type_de_vin_nom']?>"
+                                                                        class="input select formulaire__champs boite-double__champs"
+                                                                        name="type_de_vin_nom" id="type_de_vin_nom" >
+
+                                                                    <datalist id="types">
+                                                                        <?php foreach ($types as $element){ ?>
+                                                                            <option><?php echo $element['nom'] ?></option>
+                                                                        <?php } ?>
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Pays(*)</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['pays_nom']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input list="pays"
+                                                                        required
+                                                                        placeholder="Sélectionner ici"
+                                                                        value="<?php echo $form_values['pays_nom']?>"
+                                                                        class="input select formulaire__champs boite-double__champs"
+                                                                        name="pays_nom" id="pays_nom">
+
+                                                                    <datalist id="pays">
+                                                                        <?php foreach ($pays as $element){ ?>
+                                                                            <option><?php echo $element['nom'] ?></option>
+                                                                        <?php } ?>
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Region(*)</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['region_nom']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input list="regions"
+                                                                        required
+                                                                        value="<?php echo $form_values['region_nom']?>"
+                                                                        placeholder="Sélectionner ici"
+                                                                        class="input select formulaire__champs boite-double__champs"
+                                                                        name="region_nom" id="region_nom" >
+
+                                                                    <datalist id="regions">
+                                                                        <?php foreach ($regions as $element){ ?>
+                                                                            <option><?php echo $element['nom'] ?></option>
+                                                                        <?php } ?>
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Cepages</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['cepage_nom']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input list="cepages"
+                                                                        placeholder="Sélectionner ici"
+                                                                        value="<?php echo $form_values['cepage_nom']?>"
+                                                                        class="input select formulaire__champs boite-double__champs"
+                                                                        name="cepage_nom" id="cepage_nom" >
+
+                                                                    <datalist id="cepages">
+                                                                        <?php foreach ($cepages as $element){ ?>
+                                                                            <option><?php echo $element['nom'] ?></option>
+                                                                        <?php } ?>
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Millésime</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['millesime']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input type="text"
+                                                                        value="<?php echo $form_values['millesime']?>"
+                                                                        placeholder="Sélectionner ici"
+                                                                        class="input formulaire__champs boite-double__champs"
+                                                                        name="millesime"
+                                                                        id="millesime" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Format(*)</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['format_nom']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input list="formats"
+                                                                        required
+                                                                        placeholder="Sélectionner ici"
+                                                                        value="<?php echo $form_values['format_nom']?>"
+                                                                        class="input select formulaire__champs boite-double__champs"
+                                                                        name="format_nom" id="format_nom" >
+
+                                                                    <datalist id="formats">
+                                                                        <?php foreach ($formats as $element){ ?>
+                                                                            <option><?php echo $element['nom'] ?></option>
+                                                                        <?php } ?>
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Degre d'alcool</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['degre_alcool_nom']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input list="degre_alcools"
+                                                                        value="<?php echo $form_values['degre_alcool_nom']?>"
+                                                                        placeholder="Sélectionner ici"
+                                                                        class="input select formulaire__champs boite-double__champs"
+                                                                        name="degre_alcool_nom" id="degre_alcool_nom" />
+
+                                                                    <datalist id="degre_alcools">
+                                                                        <?php foreach ($degre_alcools as $element){ ?>
+                                                                            <option><?php echo $element['nom'] ?></option>
+                                                                        <?php } ?>
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Date d'achat</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['date_achat']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input type="date"
+                                                                        value="<?php echo $form_values['date_achat']?>"
+                                                                        placeholder="Sélectionner ici"
+                                                                        class="input formulaire__champs boite-double__champs"
+                                                                        name="date_achat"
+                                                                        id="date_achat" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 info-unit">
+                                                                <div class="label">Garder jusqu'à</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['garde_jusqua']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input type="date"
+                                                                        value="<?php echo $form_values['garde_jusqua']?>"
+                                                                        placeholder="Sélectionner ici"
+                                                                        class="input formulaire__champs boite-double__champs"
+                                                                        name="garde_jusqua"
+                                                                        id="garde_jusqua" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                        <div class="col-6 info-unit">
+                                                                <div class="label">Prix(*)</div>
+                                                                <div class="value label-state">
+                                                                    <?php echo $form_values['prix_bouteille']  ?: 'Non défini'?>
+                                                                </div>
+                                                                <div class="value input-state">
+                                                                    <input type="text" name="prix_bouteille"
+                                                                        required
+                                                                        value="<?php echo $form_values['prix_bouteille']?>"
+                                                                        class="input formulaire__champs boite-double__champs"
+                                                                        placeholder="Saisir ici">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                            </div>
+                            <!--Général-->
+                            <div>
+                                <h4>INFORMATIONS GÉNÉRALES</h4>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Producteur</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['producteur']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="text" name="producteur"
+                                                    value="<?php echo $form_values['producteur']?>"
+                                                    class="input formulaire__champs boite-double__champs"
+                                                    placeholder="Saisir ici">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Appellation</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['appellation_nom']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input list="appellations"
+                                                    placeholder="Sélectionner ici"
+                                                    value="<?php echo $form_values['appellation_nom']?>"
+                                                    class="input select formulaire__champs boite-double__champs"
+                                                    name="appellation_nom" id="appellation_nom" >
+
+                                            <datalist id="appellations">
+                                                <?php foreach ($appellations as $element){ ?>
+                                                    <option><?php echo $element['nom'] ?></option>
                                                 <?php } ?>
-                                        </datalist>
+                                            </datalist>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Url de l'image de la bouteille</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['image_bouteille']  ?: 'Non défini'?>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Designation</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['designation_nom']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input list="designations"
+                                                    placeholder="Sélectionner ici"
+                                                    value="<?php echo $form_values['designation_nom']?>"
+                                                    class="input select formulaire__champs boite-double__champs"
+                                                    name="designation_nom" id="designation_nom" >
+
+                                            <datalist id="designations">
+                                                <?php foreach ($designations as $element){ ?>
+                                                    <option><?php echo $element['nom'] ?></option>
+                                                <?php } ?>
+                                            </datalist>
+                                        </div>
                                     </div>
-                                    <div class="value input-state">
-                                        <input type="text" name="image_bouteille"
-                                               value="<?php echo $form_values['image_bouteille']?>"
-                                               class="input formulaire__champs boite-double__champs"
-                                               placeholder="Saisir ici">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Classification</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['classification_nom']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input list="classifications"
+                                                    value="<?php echo $form_values['classification_nom']?>"
+                                                    placeholder="Sélectionner ici"
+                                                    class="input select formulaire__champs boite-double__champs"
+                                                    name="classification_nom" id="classification_nom" />
+
+                                            <datalist id="classifications">
+                                                <?php foreach ($classifications as $element){ ?>
+                                                    <option><?php echo $element['nom'] ?></option>
+                                                <?php } ?>
+                                            </datalist>
+                                        </div>
                                     </div>
-                                    <div class="value input-state" style="margin-top: 10px;">
-                                        <input type="file" name="photo">
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Taux de sucre(*)</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['taux_de_sucre_nom']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input list="taux_de_sucres"
+                                                placeholder="Sélectionner ici"
+                                                required
+                                                value="<?php echo $form_values['taux_de_sucre_nom']?>"
+                                                class="input select formulaire__champs boite-double__champs"
+                                                name="taux_de_sucre_nom" id="taux_de_sucre_nom" />
+
+                                            <datalist id="taux_de_sucres">
+                                                <?php foreach ($taux_de_sucres as $element){ ?>
+                                                    <option><?php echo $element['nom'] ?></option>
+                                                <?php } ?>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Produit du quebec</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['produit_du_quebec_nom']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input list="produit_du_quebecs"
+                                                    placeholder="Sélectionner ici"
+                                                    value="<?php echo $form_values['produit_du_quebec_nom']?>"
+                                                    class="input select formulaire__champs boite-double__champs"
+                                                    name="produit_du_quebec_nom" id="produit_du_quebec_nom" />
+
+                                            <datalist id="produit_du_quebecs">
+                                                <?php foreach ($produit_du_quebecs as $element){ ?>
+                                                    <option><?php echo $element['nom'] ?></option>
+                                                <?php } ?>
+                                            </datalist>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Description</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['description_bouteille']  ?: 'Non défini'?>
+                            <!--IMAGE ET CUP-->
+                            <div>
+                                <h4>IMAGE ET CUP</h4>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Code cup</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['code_cup']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="text" name="code_cup"
+                                                    value="<?php echo $form_values['code_cup']?>"
+                                                    class="input formulaire__champs boite-double__champs"
+                                                    placeholder="Saisir ici">
+                                        </div>
                                     </div>
-                                    <div class="value input-state">
-                                        <input type="text" name="description_bouteille"
-                                               value="<?php echo $form_values['description_bouteille']?>"
-                                               class="input formulaire__champs boite-double__champs"
-                                               placeholder="Saisir ici">
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Code saq</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['code_saq']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state"><input type="text" name="code_saq"
-                                                                          value="<?php echo $form_values['code_saq']?>"
-                                                                          class="input formulaire__champs boite-double__champs"
-                                                                          placeholder="Saisir ici">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Code cup</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['code_cup']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="text" name="code_cup"
-                                               value="<?php echo $form_values['code_cup']?>"
-                                               class="input formulaire__champs boite-double__champs"
-                                               placeholder="Saisir ici">
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Prix(*)</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['prix_bouteille']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="text" name="prix_bouteille"
-                                               required
-                                               value="<?php echo $form_values['prix_bouteille']?>"
-                                               class="input formulaire__champs boite-double__champs"
-                                               placeholder="Saisir ici">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Url de l'image de la bouteille</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['image_bouteille']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="text" name="image_bouteille"
+                                                    value="<?php echo $form_values['image_bouteille']?>"
+                                                    class="input formulaire__champs boite-double__champs"
+                                                    placeholder="Saisir ici">
+                                        </div>
+                                        <div class="value input-state" style="margin-top: 10px;">
+                                            <input type="file" name="photo">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Producteur</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['producteur']  ?: 'Non défini'?>
+                            <!--Particularité-->
+                            <div>
+                                <h4>PARTICULARITÉS</h4>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Biodynamique</div>
+                                        <div class="value label-state">
+                                            <?php echo isset($form_values['biodynamique']) && $form_values['biodynamique'] != null? ($form_values['biodynamique'] ? 'Oui': 'Non')  : 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state"><input type="checkbox" name="biodynamique"
+                                                                                value="<?php echo $form_values['biodynamique']?>"
+                                                <?php if ($form_values['biodynamique']) echo "checked='checked'"; ?>
+                                                                                class="checkbox"
+                                                                                placeholder="Saisir ici">
+                                        </div>
                                     </div>
-                                    <div class="value input-state">
-                                        <input type="text" name="producteur"
-                                               value="<?php echo $form_values['producteur']?>"
-                                               class="input formulaire__champs boite-double__champs"
-                                               placeholder="Saisir ici">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Casher</div>
+                                        <div class="value label-state">
+                                            <?php echo isset($form_values['casher']) && $form_values['casher'] != null? ($form_values['casher'] ? 'Oui': 'Non')  : 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state"><input type="checkbox" name="casher"
+                                                                                value="<?php echo $form_values['casher']?>"
+                                                <?php if ($form_values['casher']) echo "checked='checked'"; ?>
+                                                                                class="checkbox"
+                                                                                placeholder="Saisir ici">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Desalcoolise</div>
+                                        <div class="value label-state">
+                                            <?php echo isset($form_values['desalcoolise']) && $form_values['desalcoolise'] != null? ($form_values['desalcoolise'] ? 'Oui': 'Non')  : 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="checkbox" name="desalcoolise"
+                                                    value="<?php echo $form_values['desalcoolise']?>"
+                                                <?php if ($form_values['desalcoolise']) echo "checked='checked'"; ?>
+                                                    class="checkbox"
+                                                    placeholder="Saisir ici">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Equitable</div>
+                                        <div class="value label-state">
+                                            <?php echo isset($form_values['equitable']) && $form_values['equitable'] != null? ($form_values['equitable'] ? 'Oui': 'Non')  : 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="checkbox" name="equitable"
+                                                    value="<?php echo $form_values['equitable']?>"
+                                                <?php if ($form_values['equitable']) echo "checked='checked'"; ?>
+                                                    class="checkbox"  placeholder="Saisir ici">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Url saq</div>
-                                    <div class="value label-state">
-                                        <?php if($form_values['url_saq'] )  { ?>
-                                            <a href="<?php echo $form_values['url_saq']  ?>" target="_blank"><?php echo $form_values['url_saq']; ?></a>
-                                        <?php } else { echo 'Non défini' ;}?>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Faible taux alcool</div>
+                                        <div class="value label-state">
+                                            <?php echo isset($form_values['faible_taux_alcool']) && $form_values['faible_taux_alcool'] != null? ($form_values['faible_taux_alcool'] ? 'Oui': 'Non')  : 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state"><input type="checkbox" name="faible_taux_alcool"
+                                                                                value="<?php echo $form_values['faible_taux_alcool']?>"
+                                                <?php if ($form_values['faible_taux_alcool']) echo "checked='checked'"; ?>
+                                                                                class="checkbox"
+                                                                                placeholder="Saisir ici"></div>
                                     </div>
-                                    <div class="value input-state">
-                                        <input type="text" name="url_saq"
-                                               value="<?php echo $form_values['url_saq']?>"
-                                               class="input formulaire__champs boite-double__champs"
-                                               placeholder="Saisir ici">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Produit bio</div>
+                                        <div class="value label-state">
+                                            <?php echo isset($form_values['produit_bio']) && $form_values['produit_bio'] != null? ($form_values['produit_bio'] ? 'Oui': 'Non')  : 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="checkbox" name="produit_bio"
+                                                    value="<?php echo $form_values['produit_bio']?>"
+                                                <?php if ($form_values['produit_bio']) echo "checked='checked'"; ?>
+                                                    class="checkbox"
+                                                    placeholder="Saisir ici">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Vin nature</div>
+                                        <div class="value label-state">
+                                            <?php echo isset($form_values['vin_nature']) && $form_values['vin_nature'] != null? ($form_values['vin_nature'] ? 'Oui': 'Non')  : 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="checkbox" name="vin_nature"
+                                                    value="<?php echo $form_values['vin_nature']?>"
+                                                <?php if ($form_values['vin_nature']) echo "checked='checked'"; ?>
+                                                    class="checkbox"
+                                                    placeholder="Saisir ici">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Vin orange</div>
+                                        <div class="value label-state">
+                                            <?php echo isset($form_values['vin_orange']) && $form_values['vin_orange'] != null? ($form_values['vin_orange'] ? 'Oui': 'Non')  : 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="checkbox" name="vin_orange"
+                                                    value="<?php echo $form_values['vin_orange']?>"
+                                                <?php if ($form_values['vin_orange']) echo "checked='checked'"; ?>
+                                                    class="checkbox"
+                                                    placeholder="Saisir ici">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Biodynamique</div>
-                                    <div class="value label-state">
-                                        <?php echo isset($form_values['biodynamique']) && $form_values['biodynamique'] != null? ($form_values['biodynamique'] ? 'Oui': 'Non')  : 'Non défini'?>
+                            <!--INFORMATION SAQ-->
+                            <div>
+                                <h4>INFORMATIONS SAQ</h4>
+                                <div class="row">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Code saq</div>
+                                        <div class="value label-state">
+                                            <?php echo $form_values['code_saq']  ?: 'Non défini'?>
+                                        </div>
+                                        <div class="value input-state"><input type="text" name="code_saq"
+                                                                            value="<?php echo $form_values['code_saq']?>"
+                                                                            class="input formulaire__champs boite-double__champs"
+                                                                            placeholder="Saisir ici">
+                                        </div>
                                     </div>
-                                    <div class="value input-state"><input type="checkbox" name="biodynamique"
-                                                                          value="<?php echo $form_values['biodynamique']?>"
-                                            <?php if ($form_values['biodynamique']) echo "checked='checked'"; ?>
-                                                                          class="checkbox"
-                                                                          placeholder="Saisir ici">
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Casher</div>
-                                    <div class="value label-state">
-                                        <?php echo isset($form_values['casher']) && $form_values['casher'] != null? ($form_values['casher'] ? 'Oui': 'Non')  : 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state"><input type="checkbox" name="casher"
-                                                                          value="<?php echo $form_values['casher']?>"
-                                            <?php if ($form_values['casher']) echo "checked='checked'"; ?>
-                                                                          class="checkbox"
-                                                                          placeholder="Saisir ici">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Desalcoolise</div>
-                                    <div class="value label-state">
-                                        <?php echo isset($form_values['desalcoolise']) && $form_values['desalcoolise'] != null? ($form_values['desalcoolise'] ? 'Oui': 'Non')  : 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="checkbox" name="desalcoolise"
-                                               value="<?php echo $form_values['desalcoolise']?>"
-                                            <?php if ($form_values['desalcoolise']) echo "checked='checked'"; ?>
-                                               class="checkbox"
-                                               placeholder="Saisir ici">
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Equitable</div>
-                                    <div class="value label-state">
-                                        <?php echo isset($form_values['equitable']) && $form_values['equitable'] != null? ($form_values['equitable'] ? 'Oui': 'Non')  : 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="checkbox" name="equitable"
-                                               value="<?php echo $form_values['equitable']?>"
-                                            <?php if ($form_values['equitable']) echo "checked='checked'"; ?>
-                                               class="checkbox"  placeholder="Saisir ici">
+                                    <div class="col-6 info-unit">
+                                        <div class="label">Url saq</div>
+                                        <div class="value label-state">
+                                            <?php if($form_values['url_saq'] )  { ?>
+                                                <a href="<?php echo $form_values['url_saq']  ?>" target="_blank"><?php echo $form_values['url_saq']; ?></a>
+                                            <?php } else { echo 'Non défini' ;}?>
+                                        </div>
+                                        <div class="value input-state">
+                                            <input type="text" name="url_saq"
+                                                    value="<?php echo $form_values['url_saq']?>"
+                                                    class="input formulaire__champs boite-double__champs"
+                                                    placeholder="Saisir ici">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Faible taux alcool</div>
-                                    <div class="value label-state">
-                                        <?php echo isset($form_values['faible_taux_alcool']) && $form_values['faible_taux_alcool'] != null? ($form_values['faible_taux_alcool'] ? 'Oui': 'Non')  : 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state"><input type="checkbox" name="faible_taux_alcool"
-                                                                          value="<?php echo $form_values['faible_taux_alcool']?>"
-                                            <?php if ($form_values['faible_taux_alcool']) echo "checked='checked'"; ?>
-                                                                          class="checkbox"
-                                                                          placeholder="Saisir ici"></div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Produit bio</div>
-                                    <div class="value label-state">
-                                        <?php echo isset($form_values['produit_bio']) && $form_values['produit_bio'] != null? ($form_values['produit_bio'] ? 'Oui': 'Non')  : 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="checkbox" name="produit_bio"
-                                               value="<?php echo $form_values['produit_bio']?>"
-                                            <?php if ($form_values['produit_bio']) echo "checked='checked'"; ?>
-                                               class="checkbox"
-                                               placeholder="Saisir ici">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Vin nature</div>
-                                    <div class="value label-state">
-                                        <?php echo isset($form_values['vin_nature']) && $form_values['vin_nature'] != null? ($form_values['vin_nature'] ? 'Oui': 'Non')  : 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="checkbox" name="vin_nature"
-                                               value="<?php echo $form_values['vin_nature']?>"
-                                            <?php if ($form_values['vin_nature']) echo "checked='checked'"; ?>
-                                               class="checkbox"
-                                               placeholder="Saisir ici">
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Vin orange</div>
-                                    <div class="value label-state">
-                                        <?php echo isset($form_values['vin_orange']) && $form_values['vin_orange'] != null? ($form_values['vin_orange'] ? 'Oui': 'Non')  : 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="checkbox" name="vin_orange"
-                                               value="<?php echo $form_values['vin_orange']?>"
-                                            <?php if ($form_values['vin_orange']) echo "checked='checked'"; ?>
-                                               class="checkbox"
-                                               placeholder="Saisir ici">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Pays(*)</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['pays_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="pays"
-                                               required
-                                               placeholder="Sélectionner ici"
-                                               value="<?php echo $form_values['pays_nom']?>"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="pays_nom" id="pays_nom">
 
-                                        <datalist id="pays">
-                                            <?php foreach ($pays as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Region(*)</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['region_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="regions"
-                                               required
-                                               value="<?php echo $form_values['region_nom']?>"
-                                               placeholder="Sélectionner ici"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="region_nom" id="region_nom" >
-
-                                        <datalist id="regions">
-                                            <?php foreach ($regions as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Type(*)</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['type_de_vin_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="types"
-                                               required
-                                               placeholder="Sélectionner ici"
-                                               value="<?php echo $form_values['type_de_vin_nom']?>"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="type_de_vin_nom" id="type_de_vin_nom" >
-
-                                        <datalist id="types">
-                                            <?php foreach ($types as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Format(*)</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['format_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="formats"
-                                               required
-                                               placeholder="Sélectionner ici"
-                                               value="<?php echo $form_values['format_nom']?>"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="format_nom" id="format_nom" >
-
-                                        <datalist id="formats">
-                                            <?php foreach ($formats as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Appellation</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['appellation_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="appellations"
-                                               placeholder="Sélectionner ici"
-                                               value="<?php echo $form_values['appellation_nom']?>"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="appellation_nom" id="appellation_nom" >
-
-                                        <datalist id="appellations">
-                                            <?php foreach ($appellations as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Designation</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['designation_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="designations"
-                                               placeholder="Sélectionner ici"
-                                               value="<?php echo $form_values['designation_nom']?>"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="designation_nom" id="designation_nom" >
-
-                                        <datalist id="designations">
-                                            <?php foreach ($designations as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Cepages</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['cepage_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="cepages"
-                                               placeholder="Sélectionner ici"
-                                               value="<?php echo $form_values['cepage_nom']?>"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="cepage_nom" id="cepage_nom" >
-
-                                        <datalist id="cepages">
-                                            <?php foreach ($cepages as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Taux de sucre(*)</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['taux_de_sucre_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="taux_de_sucres"
-                                               placeholder="Sélectionner ici"
-                                               required
-                                               value="<?php echo $form_values['taux_de_sucre_nom']?>"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="taux_de_sucre_nom" id="taux_de_sucre_nom" />
-
-                                        <datalist id="taux_de_sucres">
-                                            <?php foreach ($taux_de_sucres as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Degre d'alcool</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['degre_alcool_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="degre_alcools"
-                                               value="<?php echo $form_values['degre_alcool_nom']?>"
-                                               placeholder="Sélectionner ici"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="degre_alcool_nom" id="degre_alcool_nom" />
-
-                                        <datalist id="degre_alcools">
-                                            <?php foreach ($degre_alcools as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Produit du quebec</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['produit_du_quebec_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="produit_du_quebecs"
-                                               placeholder="Sélectionner ici"
-                                               value="<?php echo $form_values['produit_du_quebec_nom']?>"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="produit_du_quebec_nom" id="produit_du_quebec_nom" />
-
-                                        <datalist id="produit_du_quebecs">
-                                            <?php foreach ($produit_du_quebecs as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Classification</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['classification_nom']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input list="classifications"
-                                               value="<?php echo $form_values['classification_nom']?>"
-                                               placeholder="Sélectionner ici"
-                                               class="input select formulaire__champs boite-double__champs"
-                                               name="classification_nom" id="classification_nom" />
-
-                                        <datalist id="classifications">
-                                            <?php foreach ($classifications as $element){ ?>
-                                                <option><?php echo $element['nom'] ?></option>
-                                            <?php } ?>
-                                        </datalist>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php if(isset($id_cellier) && $id_cellier!=null) {?>
-                                <input type="hidden"
-                                       name="celliers[0][nom_cellier]"
-                                       value="<?php echo $form_values['nom_cellier']?>"
-                                />
-                                <input type="hidden"
-                                       name="celliers[0][id_cellier]"
-                                       value="<?php echo $form_values['id_cellier']?>"
-                                />
-                            <?php } ?>
-
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Date d'achat</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['date_achat']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="date"
-                                               value="<?php echo $form_values['date_achat']?>"
-                                               placeholder="Sélectionner ici"
-                                               class="input formulaire__champs boite-double__champs"
-                                               name="date_achat"
-                                               id="date_achat" />
-                                    </div>
-                                </div>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Garder jusqu'à</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['garde_jusqua']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="date"
-                                               value="<?php echo $form_values['garde_jusqua']?>"
-                                               placeholder="Sélectionner ici"
-                                               class="input formulaire__champs boite-double__champs"
-                                               name="garde_jusqua"
-                                               id="garde_jusqua" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 info-unit">
-                                    <div class="label">Millisime</div>
-                                    <div class="value label-state">
-                                        <?php echo $form_values['millesime']  ?: 'Non défini'?>
-                                    </div>
-                                    <div class="value input-state">
-                                        <input type="text"
-                                               value="<?php echo $form_values['millesime']?>"
-                                               placeholder="Sélectionner ici"
-                                               class="input formulaire__champs boite-double__champs"
-                                               name="millesime"
-                                               id="millesime" />
-                                    </div>
-                                </div>
-                                <!--                            --><?php //if(isset($id_cellier) && $id_cellier!=null) {?>
-                                <!--                                <div class="col-6 info-unit">-->
-                                <!--                                <div class="label">Quantité(*)</div>-->
-                                <!--                                <div class="value label-state">-->
-                                <!--                                    --><?php //echo $form_values['quantite']  ?: 'Non défini'?>
-                                <!--                                </div>-->
-                                <!--                                <div class="value input-state">-->
-                                <!--                                    <input type="hidden" name="celliers[0][id_cellier]"-->
-                                <!--                                           value="--><?php //echo $id_cellier?><!--"-->
-                                <!--                                    />-->
-                                <!--                                    <input type="number"-->
-                                <!--                                           required-->
-                                <!--                                           min="0"-->
-                                <!--                                           value="--><?php //echo $form_values['quantite']?><!--"-->
-                                <!--                                           placeholder="Sélectionner ici"-->
-                                <!--                                           class="input formulaire__champs boite-double__champs"-->
-                                <!--                                           name="celliers[0][quantite]"-->
-                                <!--                                           id="quantite" />-->
-                                <!--                                </div>-->
-                                <!--                            </div>-->
-                                <!--                            --><?php //} ?>
-                            </div>
-                            <div class="row">
-
-                            </div>
-                        </div>
                         <!--            Information liées au cellier-->
-                        <div class="form-block" >
+                        <div >
                             <h6>Gérer les quantité de la bouteille dans mes celliers</h6>
                             <?php if($celliers && is_array($celliers) && count($celliers)>0) {?>
                                 <?php $key = 0; foreach ($celliers as $cellier) {?>
@@ -839,54 +807,22 @@ function home_base_url(){
                                     </i>
                                 </div>
                             <?php } ?>
-                            <!--                        <div class="row">-->
-                            <!--                            <div class="col-6 info-unit">-->
-                            <!--                                <div class="label">Date d'achat</div>-->
-                            <!--                                <div class="value label-state">-->
-                            <!--                                    --><?php //echo $form_values['date_achat']  ?: 'Non défini' ?>
-                            <!--                                </div>-->
-                            <!--                                <div class="value input-state"><input type="date" name="date_achat"-->
-                            <!--                                                                      value="--><?php //echo $form_values['date_achat']?><!--"-->
-                            <!--                                                                      class="input formulaire__champs boite-double__champs"-->
-                            <!--                                                                      placeholder="Saisir ici"></div>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-6 info-unit">-->
-                            <!--                                <div class="label">Garde jusqu'à</div>-->
-                            <!--                                <div class="value label-state">-->
-                            <!--                                    --><?php //echo $form_values['garde_jusqua']  ?: 'Non défini'?>
-                            <!--                                </div>-->
-                            <!--                                <div class="value input-state"><input type="date" name="garde_jusqua"-->
-                            <!--                                                                      value="--><?php //echo $form_values['garde_jusqua']?><!--"-->
-                            <!--                                                                      class="input formulaire__champs boite-double__champs"-->
-                            <!--                                                                      placeholder="Saisir ici"></div>-->
-                            <!--                            </div>-->
-                            <!--                        </div>-->
-                            <!--                        <div class="row">-->
-                            <!--                            <div class="col-6 info-unit">-->
-                            <!--                                <div class="label">Notes</div>-->
-                            <!--                                <div class="value label-state">-->
-                            <!--                                    --><?php //echo $form_values['notes']  ?: 'Non défini'?>
-                            <!--                                </div>-->
-                            <!--                                <div class="value input-state">-->
-                            <!--                                    <input type="number" name="notes"-->
-                            <!--                                           value="--><?php //echo $form_values['notes']?><!--"-->
-                            <!--                                           class="input formulaire__champs boite-double__champs"-->
-                            <!--                                           placeholder="Saisir ici">-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-6 info-unit">-->
-                            <!--                                <div class="label">Millesime</div>-->
-                            <!--                                <div class="value label-state">-->
-                            <!--                                    --><?php //echo $form_values['millesime']  ?: 'Non défini'?>
-                            <!--                                </div>-->
-                            <!--                                <div class="value input-state">-->
-                            <!--                                    <input type="text" name="millesime"-->
-                            <!--                                           value="--><?php //echo $form_values['millesime']?><!--"-->
-                            <!--                                           class="input formulaire__champs boite-double__champs"-->
-                            <!--                                           placeholder="Saisir ici">-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                        </div>-->
+                            <?php if(isset($id_cellier) && $id_cellier!=null) {?>
+                                <input type="hidden"
+                                       name="celliers[0][nom_cellier]"
+                                       value="<?php echo $form_values['nom_cellier']?>"
+                                />
+                                <input type="hidden"
+                                       name="celliers[0][id_cellier]"
+                                       value="<?php echo $form_values['id_cellier']?>"
+                                />
+                            <?php } ?>
+
+                            
+                            </div>
+                            
+                        </div>
+
                         </div>
                         <div class="row submit-bloc">
                             <div class="col-12 info-unit">
@@ -927,12 +863,9 @@ function home_base_url(){
 
                                 </div>
 
-
-
-
                             </div>
                         </div>
-                    </form>
+                </form>
 
             </div>
         <?php } ?>

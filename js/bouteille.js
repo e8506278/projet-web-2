@@ -29,7 +29,7 @@ function ratestar(note, id_bouteille, id_cellier) {
         }).then(function (data) {
             console.log('resultat', data);
         }).finally(() => {
-            location.reload();
+            //location.reload();
         });
     }
 }

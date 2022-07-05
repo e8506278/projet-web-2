@@ -306,4 +306,33 @@ class Cellier extends Modele
 
         
     }
+
+    /**
+     * Cette méthode récupère l'id d'une bouteille selon le code cup envoyé en paramètre
+     *
+     * @param int $cup, le code cup
+     * 
+     * @return Array id_bouteille, le id de la bouteille
+     *
+     */
+    public function getBouteilleCUP($cup){
+        $rows = array();
+        $requete = 'SELECT id_bouteille
+                    FROM vino__bouteille 
+                    WHERE code_cup =' .$cup;
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                  
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+      
+        return $rows[0]['id_bouteille'];
+    }
 }

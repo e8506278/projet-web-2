@@ -21,6 +21,10 @@ window.addEventListener('load', function () {
           clickable: true,
         },
       });
+
+
+
+
 /*
     let inputNomBouteille = document.querySelector("[name='nom_bouteille']");
 
