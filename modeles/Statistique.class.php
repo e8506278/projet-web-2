@@ -50,10 +50,10 @@ class Statistique extends Modele
             if($type['type_de_vin_nom'] == 'Vin rouge'){
                 $nbre_bouteilles_rouge += $type['quantite_bouteille'];
             }
-            else if($type['type_de_vin_id'] == 'Vin blanc'){
+            else if($type['type_de_vin_nom'] == 'Vin blanc'){
                 $nbre_bouteilles_blanc += $type['quantite_bouteille'];
             }
-            else if($type['type_de_vin_id'] == 'Vin rosé'){
+            else if($type['type_de_vin_nom'] == 'Vin rosé'){
                 $nbre_bouteilles_rose += $type['quantite_bouteille'];
             }
 
