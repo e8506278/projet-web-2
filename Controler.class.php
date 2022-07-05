@@ -171,6 +171,9 @@ class Controler
             case 'sauvegarderAdminDonnees':
                 $this->sauvegarderAdminDonnees();
                 break;
+            case 'profilUsager':
+                $this->voirProfilUsager();
+                break;
             case 'accueil':
                 $this->accueil();
                 break;
@@ -259,8 +262,8 @@ class Controler
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $body = json_decode(file_get_contents('php://input'), true);
 
-            $usagers = new Usager();
-            $listeUsagers = $usagers->getAdminUnUsager($body["id_usager"]);
+            $usager = new Usager();
+            $listeUsagers = $usager->getAdminUnUsager($body["id_usager"]);
             echo json_encode($listeUsagers);
         } else {
             include("vues/entete.php");
@@ -273,8 +276,8 @@ class Controler
     private function lireAdminUsagers()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-            $usagers = new Usager();
-            $listeUsagers = $usagers->getAdminUsagers();
+            $usager = new Usager();
+            $listeUsagers = $usager->getAdminUsagers();
             echo json_encode($listeUsagers);
         } else {
             include("vues/entete.php");
@@ -948,6 +951,7 @@ class Controler
         include("vues/pied.php");
     }
 
+
     /**
      * Cette méthode affiche une page d'erreur lorsque l'url est erronnée
      *   
@@ -1466,6 +1470,24 @@ class Controler
         } else {
             $cellier = new Cellier();
             $cellier->supprimerCellier($id);
+        }
+    }
+
+
+    private function voirProfilUsager()
+    {
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $body = json_decode(file_get_contents('php://input'), true);
+
+            $usager = new Usager();
+            $unUsager = isset($body->id_usager) ? $body->id_usager : "";
+
+            include("vues/entete.php");
+            include("vues/profilUsager.php");
+        } else {
+            include("vues/entete.php");
+            include("vues/connexion.php");
+            include("vues/pied.php");
         }
     }
 }

@@ -53,7 +53,7 @@ class Usager extends Modele
     {
         echo ('ajouterUsager');
 
-        $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, nom_utilisateur, mot_de_passe, type_utilisateur, jeton, date_creation, date_modification, dernier_access) 
+        $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, pays_id, nom_utilisateur, mot_de_passe, type_utilisateur, jeton, date_creation, date_modification, dernier_access) 
                         VALUES (" .
             "'{$donnees->nom}'," .
             "'{$donnees->adresse}'," .
@@ -61,6 +61,7 @@ class Usager extends Modele
             "'{$donnees->courriel}'," .
             "'{$donnees->date_naissance}'," .
             "'{$donnees->ville}'," .
+            "'{$donnees->pays_id}'," .
             "'{$donnees->nom_utilisateur}'," .
             "'{$donnees->mot_de_passe}'," .
             "'{$donnees->type_utilisateur}'," .
@@ -148,6 +149,18 @@ class Usager extends Modele
         }
 
         return $rows;
+    }
+
+
+    public function lireUsager($id)
+    {
+        $requete = "SELECT nom, adresse, telephone, courriel, verification_courriel, 
+                            date_naissance, ville, nom_utilisateur, mot_de_passe
+                    FROM usager__detail
+                    WHERE id = " . $id;
+
+        $res = $this->_db->query($requete);
+        return $res;
     }
 
 

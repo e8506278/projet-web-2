@@ -19,7 +19,7 @@ $connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE) or die("Connexion �
 global $erreurs;
 
 // Les champs à valider
-$nom = $adresse = $ville = $utilisateur = $motDePasse = $confirmerMdp = $pays_id = $telephone = $jour = $mois = $annee = $courriel = $conditions =  "";
+$nom = $adresse = $ville = $utilisateur = $motDePasse = $confirmerMdp = $pays_id = $telephone = $jour = $mois = $annee = $courriel = "";
 
 if (!isset($lesPays)) {
     $lesPays = $oVino->lirePays();
@@ -61,9 +61,6 @@ if (isset($_POST["soumettre"])) {
     if (isset($_POST["confirmer_mot_de_passe"])) {
         $confirmerMdp = $_POST["confirmer_mot_de_passe"];
     }
-    if (isset($_POST["accepter_conditions"])) {
-        $conditions = $_POST["accepter_conditions"];
-    }
 
     if (isset($naissance)) {
         $jour  = $naissance['jour'];
@@ -74,7 +71,7 @@ if (isset($_POST["soumettre"])) {
     }
 
     // Vérifier que les valeurs du formulaire ne soient pas vides
-    if (!empty($nom) && !empty($adresse) && !empty($ville) && !empty($pays_id) && !empty($telephone) && !empty($jour) && !empty($mois) && !empty($annee) && !empty($courriel) && !empty($utilisateur) && !empty($motDePasse) && !empty($confirmerMdp) && !empty($conditions)) {
+    if (!empty($nom) && !empty($adresse) && !empty($ville) && !empty($pays_id) && !empty($telephone) && !empty($jour) && !empty($mois) && !empty($annee) && !empty($courriel) && !empty($utilisateur) && !empty($motDePasse) && !empty($confirmerMdp)) {
         // Nettoyer les données du formulaire avant de les envoyer à la base de données
         $nom            = mysqli_real_escape_string($connection, $nom);
         $adresse        = mysqli_real_escape_string($connection, $adresse);
@@ -88,7 +85,6 @@ if (isset($_POST["soumettre"])) {
         $utilisateur    = mysqli_real_escape_string($connection, $utilisateur);
         $motDePasse     = mysqli_real_escape_string($connection, $motDePasse);
         $confirmerMdp   = mysqli_real_escape_string($connection, $confirmerMdp);
-        $conditions     = mysqli_real_escape_string($connection, $conditions);
 
         // Effectuer les validations
         $estValide = true;
@@ -124,8 +120,6 @@ if (isset($_POST["soumettre"])) {
 
         if ($estValide) {
             // Générer un jeton d'activation aléatoire
-            $jeton = md5(rand() . time());
-
             // Hachage du mot de passe
             $hachageMdp = password_hash($motDePasse, PASSWORD_BCRYPT);
 
@@ -141,9 +135,6 @@ if (isset($_POST["soumettre"])) {
             $donnees->pays_id = $pays_id;
             $donnees->nom_utilisateur = $utilisateur;
             $donnees->mot_de_passe = $hachageMdp;
-            $donnees->type_utilisateur = 1;
-            $donnees->jeton = $jeton;
-            $donnees->date_creation = $date->getTimestamp();
             $donnees->date_modification = $date->getTimestamp();
 
             $resultat = $oUsager->ajouterUsager($donnees);
@@ -191,9 +182,6 @@ if (isset($_POST["soumettre"])) {
         }
         if (empty($confirmerMdp)) {
             $erreurs['confirmer_mot_de_passe'] = "Vous devez confirmer le mot de passe.";
-        }
-        if (empty($conditions)) {
-            $erreurs['accepter_conditions'] = "Vous devez accepter les termes et conditions.";
         }
     }
 }
