@@ -58,6 +58,18 @@ class Controler
             case 'bouteille': //fr
                 $this->ficheBouteille();
                 break;
+            case 'noteBouteille': //fr
+                $this->noteBouteille();
+                break;
+            case 'modifierAAcheter': //fr
+                $this->modifierAAcheter();
+                break;
+            case 'modifierAEssayer': //fr
+                $this->modifierAEssayer();
+                break;
+            case 'modifierFavoris': //fr
+                $this->modifierFavoris();
+                break;
             case 'ajouterBouteilleCellier':
                 $this->ajouterBouteilleCellier();
                 break;
@@ -344,6 +356,109 @@ class Controler
         include("vues/pied.php");
     }
 
+    // Ajouter la note à une bouteille
+    private function noteBouteille(){
+         $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body)) {
+            $bouteille = new Bouteille();
+
+            $resultat = $bouteille->noteBouteille($body->note, $body->id_bouteille);
+
+            if ($resultat) {
+                return $this->returnJsonHttpResponse(true, true);
+            }
+        }
+
+        return $this->returnJsonHttpResponse(false, null);
+    }
+
+    // Bouteille à acheter (rendre oui ou non)
+    private function modifierAAcheter(){
+         $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body)) {
+            $bouteille = new Bouteille();
+
+            if(isset($body->vino_id) && $body->vino_id){
+                $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
+                if($usager_bouteille) {
+                    $resultat = $bouteille->modifierAAcheter($body->valeur, $usager_bouteille['id_bouteille'], null);
+                    if($resultat){
+                        return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
+                    }
+                }
+            }else{
+                $resultat = $bouteille->modifierAAcheter($body->valeur, $body->id_bouteille, $body->id_cellier);
+                if($resultat){
+                    return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
+                }
+            }
+
+        }
+
+        return $this->returnJsonHttpResponse(false, null);
+    }
+
+    // Bouteille à essayer (rendre oui ou non)
+    private function modifierAEssayer(){
+         $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body)) {
+            $bouteille = new Bouteille();
+
+            if(isset($body->vino_id) && $body->vino_id){
+               $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
+                if($usager_bouteille) {
+                    $resultat = $bouteille->modifierAEssayer($body->valeur, $usager_bouteille['id_bouteille'], null);
+                    if($resultat){
+                        return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
+                    }
+                }
+            }else{
+                $resultat = $bouteille->modifierAEssayer($body->valeur, $body->id_bouteille, $body->id_cellier);
+                if($resultat){
+                    return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
+                }
+            }
+
+            if ($resultat) {
+                return $this->returnJsonHttpResponse(true, true);
+            }
+        }
+
+        return $this->returnJsonHttpResponse(false, null);
+    }
+
+    // Bouteille favoris (rendre oui ou non)
+    private function modifierFavoris(){
+        $body = json_decode(file_get_contents('php://input'));
+
+        if (!empty($body) ) {
+            $bouteille = new Bouteille();
+            // récupérer bouteille depuis vinno__bouteille et insérer dans usager__bouteille
+            if(isset($body->vino_id) && $body->vino_id){
+                $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
+                if($usager_bouteille) {
+                    $resultat = $bouteille->modifierFavoris($body->valeur, $usager_bouteille['id_bouteille'], null);
+                    if($resultat){
+                        return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
+                    }
+                }
+            }else{
+                $resultat = $bouteille->modifierFavoris($body->valeur, $body->id_bouteille, $body->id_cellier);
+                if($resultat){
+                    return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
+                }
+            }
+
+            if ($resultat) {
+                return $this->returnJsonHttpResponse(true, true);
+            }
+        }
+
+        return $this->returnJsonHttpResponse(false, null);
+    }
 
     private function ficheBouteille()
     {
@@ -370,7 +485,8 @@ class Controler
                     $bouteille = $bouteille->getOneBouteilleFromVino($vino_id);
                     if (is_array($bouteille) && count($bouteille) > 0) {
                         $bouteille = $bouteille[0];
-                        $id_bouteille = $bouteille['id_bouteille'];
+//                        $id_bouteille = $bouteille['id_bouteille'];
+//                        $vino_id = $bouteille['id_bouteille'];
                     }
                 }
             }

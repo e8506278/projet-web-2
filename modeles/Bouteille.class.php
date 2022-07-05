@@ -108,7 +108,6 @@ class Bouteille extends Modele
         return $rows;
     }
 
-
     public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();
@@ -123,6 +122,10 @@ class Bouteille extends Modele
                           ub.image_bouteille,
                           ub.code_saq,
                           ub.code_cup,
+       
+                          ub.essayer_bouteille,
+                          ub.favori_bouteille,
+                          ub.achat_bouteille,
        
                           ub.pays_id,
                           ub.region_id,
@@ -194,7 +197,7 @@ class Bouteille extends Modele
 
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    
+
                     $rows[] = $row;
                 }
             }
@@ -204,7 +207,6 @@ class Bouteille extends Modele
         }
         return $rows;
     }
-
 
     public function getOneBouteilleFromVino($vino_bouteille_id)
     {
@@ -533,16 +535,43 @@ class Bouteille extends Modele
             }   
     }
 
-
     public function deleteUsageBouteille($id_bouteille, $id_cellier)
     {
-        $query_string = "DELETE from usager__bouteille WHERE id_bouteille = " . $id_bouteille . " AND id_cellier = " . $id_cellier;
+        $this->_db->set_charset('utf8');
 
-        $res = $this->_db->query($query_string);
+        // On récupere la ligne usager_bouteille pour avoir la quantite à mettre dans l'action
+        $query_string_select = "SELECT * FROM usager__bouteille WHERE id_bouteille = " . $id_bouteille . " AND id_cellier = " . $id_cellier;
+        $res = MonSQL::getInstance()->query($query_string_select);// or die(mysqli_error(MonSQL::getInstance()));
+        $row = [];
+        if($res){
+            $row = $res->fetch_assoc();
+        }
 
-        return $res;
+        if(isset($row['quantite_bouteille']) && $row['quantite_bouteille']){
+            // On ajoute l'action de suppression
+            $query_string_action = "INSERT INTO bouteille_action(
+                                    id_usager,
+                                    id_bouteille,
+                                    date_creation,
+                                    action,
+                                    quantite_bouteille
+                                    ) VALUES (
+                                         '".$_SESSION['utilisateur']['id']."',
+                                         ".$id_bouteille.",
+                                         '".date('Y-m-d h:m:s', time())."',
+                                         'd',
+                                        '".abs($row["quantite_bouteille"])."'
+                                    )";
+            $res = MonSQL::getInstance()->query($query_string_action) or die(mysqli_error(MonSQL::getInstance()));
+
+            // On supprime la ligne usager bouteille
+            $delete_quuery = "DELETE from usager__bouteille WHERE id_bouteille = " . $id_bouteille . " AND id_cellier = " . $id_cellier;
+            $res = $this->_db->query($delete_quuery);
+
+            return $res;
+        }
+       return false;
     }
-
 
     public function rechercherBouteillesCellier($id_cellier, $filtres)
     {
@@ -597,5 +626,190 @@ class Bouteille extends Modele
 
       
         return $rows;
+    }
+
+    public function getOneFromUsagerbouteille($id_bouteille){
+        $rows = array();
+        $requete = "SELECT  *  from vino__bouteille b
+                       WHERE b.id_bouteille = '" . $id_bouteille . "'";
+
+        $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
+        if ($res) {
+
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+            //$this->_db->error;
+        }
+        return $rows;
+    }
+
+    //copier une ligne depuis vino__bouteille dans usager_bouteille
+    public function copierVinoDansUsagerBouteillle($vino_id){
+        $this->_db->set_charset('utf8');
+
+        // On récupere la ligne depuis vino_bouteille
+        $row = $this->getOneBouteilleFromVino($vino_id);
+        $row = $row[0];
+
+        if($row){
+            //On insere dans usager_bouteille
+            $query_string = "INSERT INTO usager__bouteille(
+                        id_cellier,
+                        nom_bouteille,
+                        image_bouteille ,
+                        description_bouteille ,
+                        code_saq ,
+                        code_cup ,
+                        prix_bouteille ,
+                        url_saq,
+                        producteur ,
+                        biodynamique,
+                        casher,
+                        desalcoolise,
+                        equitable,
+                        faible_taux_alcool,
+                        produit_bio,
+                        vin_nature,
+                        vin_orange,
+                        pays_nom,
+                        region_nom,
+                        type_de_vin_nom,
+                        format_nom,
+                        appellation_nom,
+                        designation_nom,
+                        cepage_nom,
+                        taux_de_sucre_nom,
+                        degre_alcool_nom,
+                        produit_du_quebec_nom,
+                        classification_nom,
+                        quantite_bouteille ,
+                        date_achat ,
+                        garde_jusqua ,
+                        millesime,
+                       id_vino__bouteille
+                ) VALUES (
+                       NULL,
+                       '".$row['nom_bouteille']."',
+                      '".($row['image_bouteille'])."',
+                      '".$row['description_bouteille']."',
+                      ".($row['code_saq'] ?: 'NULL').",
+                      ".($row['code_cup'] ?: 'NULL').",
+                      '".$row['prix_bouteille']."',
+                      '".$row['url_saq']."',
+                      '".$row['producteur']."',
+                      ".(isset($row['biodynamique'])? 1: 0).",
+                      ".(isset($row['casher'])? 1: 0).",
+                      ".(isset($row['desalcoolise'])? 1: 0).",
+                      ".(isset($row['equitable'])? 1: 0).",
+                      ".(isset($row['faible_taux_alcool'])? 1: 0).",
+                      ".(isset($row['produit_bio'])? 1: 0).",
+                      ".(isset($row['vin_nature'])? 1: 0).",
+                      ".(isset($row['vin_orange'])? 1: 0).",
+                      '".$row['pays_nom']."',
+                      '".$row['region_nom']."',
+                       '".$row['type_de_vin_nom']."',
+                       '".$row['format_nom']."',
+                        '".$row['appellation_nom']."',
+                       '".$row['designation_nom']."',
+                      '".$row['cepage_nom']."',
+                       '".$row['taux_de_sucre_nom']."',
+                       '".$row['degre_alcool_nom']."',
+                      '".$row['produit_du_quebec_nom']."',
+                      '".$row['classification_nom']."',
+                      1,
+                      ".($row['date_achat'] ? "'".$row['date_achat']."'":  'NULL' ).",
+                      ".($row['garde_jusqua'] ? "'".$row['garde_jusqua']."'"  : 'NULL' ).",
+                     '".($row['millesime'])."',
+                     '".($row['id_bouteille'])."'
+                )";
+            $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+            if($res){
+                $last_id = MonSQL::getInstance()->insert_id;
+                $last_inserted_row = $this->getOneFromUsagerbouteille($last_id, null);
+                if($last_inserted_row && count($last_inserted_row)>0){
+                    return $last_inserted_row[0];
+                }
+            }
+        }
+        return null;
+    }
+
+    //Donner une note à une bouteille
+    public function noteBouteille($note, $id_bouteille){
+        $query_string = "UPDATE  usager__bouteille SET
+                            note = '".$note."'
+                            WHERE id_bouteille=".$id_bouteille;//
+
+        $this->_db->set_charset('utf8');
+        $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+        if ($res) {
+           return true;
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+        return false;
+    }
+
+    // Bouteille favoris (rendre oui ou non)
+    public function modifierFavoris($valeur, $id_bouteille, $id_cellier){
+
+        $query_string = "UPDATE  usager__bouteille SET
+                            favori_bouteille = ".($valeur ? 1: 0);
+        $query_string = $query_string." WHERE id_bouteille=".$id_bouteille;
+        if($id_cellier){
+            $query_string = $query_string." AND id_cellier=".$id_cellier;
+        }
+
+        $this->_db->set_charset('utf8');
+        $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+        if ($res) {
+            return true;
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+        return false;
+    }
+
+    // Bouteille à essayer (rendre oui ou non)
+    public function modifierAEssayer($valeur, $id_bouteille, $id_cellier){
+        $query_string = "UPDATE  usager__bouteille SET
+                            essayer_bouteille = ".($valeur ? 1: 0);
+        $query_string = $query_string." WHERE id_bouteille=".$id_bouteille;
+
+        if($id_cellier){
+            $query_string = $query_string." AND id_cellier=".$id_cellier;
+        }
+
+        $this->_db->set_charset('utf8');
+        $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+        if ($res) {
+            return true;
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+        return false;
+    }
+
+    // Bouteille à acheter (rendre oui ou non)
+    public function modifierAAcheter($valeur, $id_bouteille, $id_cellier){
+        $query_string = "UPDATE  usager__bouteille SET
+                            achat_bouteille = ".($valeur ? 1: 0);
+        $query_string = $query_string." WHERE id_bouteille=".$id_bouteille;
+        if($id_cellier){
+            $query_string = $query_string." AND id_cellier=".$id_cellier;
+        }
+        $this->_db->set_charset('utf8');
+        $res =  $this->_db->query($query_string);
+        if ($res) {
+            return true;
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+        return false;
     }
 }
