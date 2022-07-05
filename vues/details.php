@@ -123,8 +123,6 @@ foreach ($celliers as & $cellier_dans_le_compte){
 }
 
 if(isset($form_values['image_bouteille']) && $form_values['image_bouteille'] != null){
-<<<<<<< HEAD
-=======
 
     if(strpos($form_values['image_bouteille'], 'photos') !== false &&
         (substr($form_values['image_bouteille'], 0, 7) != "http://") &&
@@ -155,43 +153,9 @@ function home_base_url(){
         $base_url .= $tmpURL.'/';
     return $base_url;
 }
->>>>>>> sprint03
 
-    if(strpos($form_values['image_bouteille'], 'photos') !== false &&
-        (substr($form_values['image_bouteille'], 0, 7) != "http://") &&
-        (substr($form_values['image_bouteille'], 0, 8) != "https://")
-    ){
-        // Le cas d'une image local chargé depuis la gallerie
-        $form_values['image_bouteille'] = home_base_url().$form_values['image_bouteille'];
-    }
-}
 
-// fonction pour récupérer l'url absolu
-function home_base_url(){
-    $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off') ? 'https://' : 'http://';
 
-<<<<<<< HEAD
-    $tmpURL = dirname(__FILE__);
-=======
->>>>>>> sprint03
-
-    $tmpURL = str_replace(chr(92),'/',$tmpURL);
-    $tmpURL = str_replace($_SERVER['DOCUMENT_ROOT'],'',$tmpURL);
-    $tmpURL = ltrim($tmpURL,'/');
-    $tmpURL = rtrim($tmpURL, '/');
-    if (strpos($tmpURL,'/')){
-        $tmpURL = explode('/',$tmpURL);
-        $tmpURL = $tmpURL[0];
-    }
-    if ($tmpURL !== $_SERVER['HTTP_HOST'])
-        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
-    else
-        $base_url .= $tmpURL.'/';
-    return $base_url;
-}
-
-if(isset($form_values['essayer_bouteille']))
-echo ($form_values['essayer_bouteille']);
 ?>
 
 <script src="./js/bouteille.js"  type="text/javascript"></script>
@@ -832,11 +796,7 @@ echo ($form_values['essayer_bouteille']);
                             </div>
                         </div>
                         <!--            Information liées au cellier-->
-<<<<<<< HEAD
-                        <div class="form-block input-state" >
-=======
                         <div class="form-block" >
->>>>>>> sprint03
                             <h6>Gérer les quantité de la bouteille dans mes celliers</h6>
                             <?php if($celliers && is_array($celliers) && count($celliers)>0) {?>
                                 <?php $key = 0; foreach ($celliers as $cellier) {?>
@@ -1438,15 +1398,8 @@ echo ($form_values['essayer_bouteille']);
                                             <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                    name="celliers<?php echo "[".$key."]"?>[id_cellier]"
                                             />
-<<<<<<< HEAD
-                                            <?php if(isset($cellier['id_bouteille'])){?>
                                             <input type="hidden" value="<?php echo $cellier['id_bouteille'] ?>"
                                                    name="celliers<?php echo "[".$key."]"?>[id_bouteille]"/>
-                                                   <?php } ?>
-=======
-                                            <input type="hidden" value="<?php echo $cellier['id_bouteille'] ?>"
-                                                   name="celliers<?php echo "[".$key."]"?>[id_bouteille]"/>
->>>>>>> sprint03
                                             <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
                                         </div>
                                     </div>

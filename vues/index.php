@@ -141,19 +141,10 @@
 						<figcaption class="vignette__titre">Mes statistiques</figcaption>
 					</figure>
 				</a>
-			</div>
-		
+			</div>	
 		</section>
 
-		<script>
+
 		
     
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: "auto",
-        spaceBetween: 30,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-      });
-		</script>
+    
