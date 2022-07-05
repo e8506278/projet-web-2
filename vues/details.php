@@ -1,5 +1,3 @@
-
-
 <!--Page d'accueil non connecté-->
 <?php
 //    foreach ($product as $key => $value){
@@ -53,7 +51,7 @@ $form_values = [
     'code_cup' => null,
     'prix_bouteille' => null,
     'producteur' => null,
-    'url_saq'=> null,
+    'url_saq' => null,
 
     'biodynamique' => false,
     'casher' => false,
@@ -96,8 +94,8 @@ $form_values = [
     'note' => null,
 
     'celliers' => [
-         'nom_cellier' => null,
-         'quantite' => null
+        'nom_cellier' => null,
+        'quantite' => null
     ]
 ];
 
@@ -105,15 +103,15 @@ $erreur = "";
 
 
 
-if(isset($bouteille) && isset($bouteille['id_bouteille']) && $bouteille != null && $bouteille['id_bouteille'] && strlen($bouteille['nom_bouteille'])){
+if (isset($bouteille) && isset($bouteille['id_bouteille']) && $bouteille != null && $bouteille['id_bouteille'] && strlen($bouteille['nom_bouteille'])) {
     $form_values = $bouteille;
-}else{
+} else {
     $bouteille = null;
 }
 
-foreach ($celliers as & $cellier_dans_le_compte){
-   
-    foreach ($usager_bouteille as $ub){
+foreach ($celliers as &$cellier_dans_le_compte) {
+
+    foreach ($usager_bouteille as $ub) {
         $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
             $cellier_dans_le_compte['quantite'] = $bouteille ? $ub['quantite_bouteille']: 0;
@@ -171,23 +169,21 @@ function home_base_url(){
             <!--  Le cas d'un id de bouteille inntrouvable dans la base de données-->
             <div class="warrning-message">
                 Cette bouteille est introuvable
-                <?php if(isset($id_cellier)) {?>
+                <?php if (isset($id_cellier)) { ?>
                     dans ce cellier
                 <?php } ?>
             </div>
-        <?php }else{ ?>
+        <?php } else { ?>
             <!--  Le cas normal-->
             <!--   Le cas de la modification-->
             <div class="boite-double">
                 <div class="boite-double__contenant-form">
                     <div class="product-photo">
-                        <img src="<?php echo $form_values['image_bouteille']?>"
-                             id="image_bouteille"
-                             onerror="document.getElementById('image_bouteille').src = './assets/img/default_bouteille.png'; this.onerror=null;"
-                             alt="degustation2">
+                        <img src="<?php echo $form_values['image_bouteille'] ?>" id="image_bouteille" onerror="document.getElementById('image_bouteille').src = './assets/img/default_bouteille.png'; this.onerror=null;" alt="degustation2">
                     </div>
 
                 </div>
+                
                 <form class="formulaire info-details"  action="./controller/AjouterBouteille.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden"
                                name="nom_cellier"
@@ -401,7 +397,6 @@ function home_base_url(){
                                                                           placeholder="Saisir ici">
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="col-6 info-unit">
@@ -568,7 +563,6 @@ function home_base_url(){
                                         </datalist>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="col-6 info-unit">
@@ -609,7 +603,6 @@ function home_base_url(){
                                         </datalist>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="col-6 info-unit">
@@ -941,35 +934,22 @@ function home_base_url(){
         <div class="boite-double">
             <div class="boite-double__contenant-form">
                 <div class="product-photo">
-                    <img src="<?php echo $form_values['image_bouteille']?>"
-                         id="image_bouteille"
-                         onerror="document.getElementById('image_bouteille').src ='./assets/img/default_bouteille.png'; this.onerror=null;"
-                         alt="degustation2">
+                    <img src="<?php echo $form_values['image_bouteille'] ?>" id="image_bouteille" onerror="document.getElementById('image_bouteille').src ='./assets/img/default_bouteille.png'; this.onerror=null;" alt="degustation2">
                 </div>
             </div>
             <form class="formulaire info-details"  action="./controller/AjouterBouteille.php" method="POST" enctype="multipart/form-data">
-
-                <input type="hidden"
-                       name="id_cellier"
-                       value="<?php echo $form_values['id_cellier']?>"
-                />
+                <input type="hidden" name="id_cellier" value="<?php echo $form_values['id_cellier'] ?>" />
                 <div class="form-block">
                     <h6>Informations sur la bouteille</h6>
                     <div class="row">
                         <div class="col info-unit">
                             <div class="label">Nom de la bouteille(*)</div>
                             <div class="value">
-                                <input list="bouteilles"
-                                       value="<?php echo $form_values['nom_bouteille']?>"
-                                       placeholder="Sélectionner ici"
-                                       required
-                                       data-js-bouteille-select
-                                       class="input select formulaire__champs boite-double__champs"
-                                       name="nom_bouteille" id="id_bouteille" >
+                                <input list="bouteilles" value="<?php echo $form_values['nom_bouteille'] ?>" placeholder="Sélectionner ici" required data-js-bouteille-select class="input select formulaire__champs boite-double__champs" name="nom_bouteille" id="id_bouteille">
 
                                 <datalist id="bouteilles">
-                                    <?php foreach ($bouteilles as $element){ ?>
-                                    <option value="<?php echo $element['nom_bouteille'] ?>">
+                                    <?php foreach ($bouteilles as $element) { ?>
+                                        <option data-js-id-bouteille="<?= $element['id_bouteille'] ?>" value="<?php echo $element['nom_bouteille'] ?>">
                                         <?php } ?>
                                 </datalist>
                             </div>
@@ -977,10 +957,7 @@ function home_base_url(){
                         <div class="col-6 info-unit">
                             <div class="label">Url de l'image de la bouteille</div>
                             <div class="value">
-                                <input type="text" name="image_bouteille"
-                                       value="<?php echo $form_values['image_bouteille']?>"
-                                       class="input formulaire__champs boite-double__champs"
-                                       placeholder="Saisir ici">
+                                <input type="text" name="image_bouteille" value="<?php echo $form_values['image_bouteille'] ?>" class="input formulaire__champs boite-double__champs" placeholder="Saisir ici">
                             </div>
                             <div class="value" style="margin-top: 10px;">
                                 <input type="file" name="photo">
@@ -991,19 +968,13 @@ function home_base_url(){
                         <div class="col-6 info-unit">
                             <div class="label">Description</div>
                             <div class="value">
-                                <input type="text" name="description_bouteille"
-                                       value="<?php echo $form_values['description_bouteille']?>"
-                                       class="input formulaire__champs boite-double__champs"
-                                       placeholder="Saisir ici">
+                                <input type="text" name="description_bouteille" value="<?php echo $form_values['description_bouteille'] ?>" class="input formulaire__champs boite-double__champs" placeholder="Saisir ici">
                             </div>
                         </div>
                         <div class="col-6 info-unit">
                             <div class="label">Code saq</div>
                             <div class="value ">
-                                <input type="text" name="code_saq"
-                                  value="<?php echo $form_values['code_saq']?>"
-                                  class="input formulaire__champs boite-double__champs"
-                                  placeholder="Saisir ici">
+                                <input type="text" name="code_saq" value="<?php echo $form_values['code_saq'] ?>" class="input formulaire__champs boite-double__champs" placeholder="Saisir ici">
                             </div>
                         </div>
                     </div>
@@ -1011,21 +982,13 @@ function home_base_url(){
                         <div class="col-6 info-unit">
                             <div class="label">Code cup</div>
                             <div class="value">
-                                <input type="text" name="code_cup"
-                                       value="<?php echo $form_values['code_cup']?>"
-                                       class="input formulaire__champs boite-double__champs"
-                                       placeholder="Saisir ici">
+                                <input type="text" name="code_cup" value="<?php echo $form_values['code_cup'] ?>" class="input formulaire__champs boite-double__champs" placeholder="Saisir ici">
                             </div>
                         </div>
                         <div class="col-6 info-unit">
                             <div class="label">Prix(*)</div>
                             <div class="value">
-                                <input type="text"
-                                       name="prix_bouteille"
-                                       required
-                                       value="<?php echo $form_values['prix_bouteille']?>"
-                                       class="input formulaire__champs boite-double__champs"
-                                       placeholder="Saisir ici">
+                                <input type="text" name="prix_bouteille" required value="<?php echo $form_values['prix_bouteille'] ?>" class="input formulaire__champs boite-double__champs" placeholder="Saisir ici">
                             </div>
                         </div>
                     </div>
@@ -1033,19 +996,13 @@ function home_base_url(){
                         <div class="col-6 info-unit">
                             <div class="label">Producteur</div>
                             <div class="value">
-                                <input type="text" name="producteur"
-                                       value="<?php echo $form_values['producteur']?>"
-                                       class="input formulaire__champs boite-double__champs"
-                                       placeholder="Saisir ici">
+                                <input type="text" name="producteur" value="<?php echo $form_values['producteur'] ?>" class="input formulaire__champs boite-double__champs" placeholder="Saisir ici">
                             </div>
                         </div>
                         <div class="col-6 info-unit">
                             <div class="label">Url saq</div>
                             <div class="value">
-                                <input type="text" name="url_saq"
-                                       value="<?php echo $form_values['url_saq']?>"
-                                       class="input formulaire__champs boite-double__champs"
-                                       placeholder="Saisir ici">
+                                <input type="text" name="url_saq" value="<?php echo $form_values['url_saq'] ?>" class="input formulaire__champs boite-double__champs" placeholder="Saisir ici">
                             </div>
                         </div>
                     </div>
@@ -1053,21 +1010,13 @@ function home_base_url(){
                         <div class="col-6 info-unit">
                             <div class="label">Biodynamique</div>
                             <div class="value">
-                                <input type="checkbox" name="biodynamique"
-                                       value="<?php echo $form_values['biodynamique']?>"
-                                    <?php if ($form_values['biodynamique']) echo "checked='checked'"; ?>
-                                                                  class="checkbox"
-                                                                  placeholder="Saisir ici">
+                                <input type="checkbox" name="biodynamique" value="<?php echo $form_values['biodynamique'] ?>" <?php if ($form_values['biodynamique']) echo "checked='checked'"; ?> class="checkbox" placeholder="Saisir ici">
                             </div>
                         </div>
                         <div class="col-6 info-unit">
                             <div class="label">Casher</div>
                             <div class="value">
-                                <input type="checkbox" name="casher"
-                                       value="<?php echo $form_values['casher']?>"
-                                    <?php if ($form_values['casher']) echo "checked='checked'"; ?>
-                                                                  class="checkbox"
-                                                                  placeholder="Saisir ici">
+                                <input type="checkbox" name="casher" value="<?php echo $form_values['casher'] ?>" <?php if ($form_values['casher']) echo "checked='checked'"; ?> class="checkbox" placeholder="Saisir ici">
                             </div>
                         </div>
 
@@ -1076,40 +1025,25 @@ function home_base_url(){
                         <div class="col-6 info-unit">
                             <div class="label">Desalcoolise</div>
                             <div class="value">
-                                <input type="checkbox" name="desalcoolise"
-                                       value="<?php echo $form_values['desalcoolise']?>"
-                                    <?php if ($form_values['desalcoolise']) echo "checked='checked'"; ?>
-                                       class="checkbox"
-                                       placeholder="Saisir ici">
+                                <input type="checkbox" name="desalcoolise" value="<?php echo $form_values['desalcoolise'] ?>" <?php if ($form_values['desalcoolise']) echo "checked='checked'"; ?> class="checkbox" placeholder="Saisir ici">
                             </div>
                         </div>
                         <div class="col-6 info-unit">
                             <div class="label">Equitable</div>
                             <div class="value">
-                                <input type="checkbox" name="equitable"
-                                       value="<?php echo $form_values['equitable']?>"
-                                    <?php if ($form_values['equitable']) echo "checked='checked'"; ?>
-                                       class="checkbox"  placeholder="Saisir ici">
+                                <input type="checkbox" name="equitable" value="<?php echo $form_values['equitable'] ?>" <?php if ($form_values['equitable']) echo "checked='checked'"; ?> class="checkbox" placeholder="Saisir ici">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6 info-unit">
                             <div class="label">Faible taux alcool</div>
-                            <div class="value"><input type="checkbox" name="faible_taux_alcool"
-                                                                  value="<?php echo $form_values['faible_taux_alcool']?>"
-                                    <?php if ($form_values['faible_taux_alcool']) echo "checked='checked'"; ?>
-                                                                  class="checkbox"
-                                                                  placeholder="Saisir ici"></div>
+                            <div class="value"><input type="checkbox" name="faible_taux_alcool" value="<?php echo $form_values['faible_taux_alcool'] ?>" <?php if ($form_values['faible_taux_alcool']) echo "checked='checked'"; ?> class="checkbox" placeholder="Saisir ici"></div>
                         </div>
                         <div class="col-6 info-unit">
                             <div class="label">Produit bio</div>
                             <div class="value">
-                                <input type="checkbox" name="produit_bio"
-                                       value="<?php echo $form_values['produit_bio']?>"
-                                    <?php if ($form_values['produit_bio']) echo "checked='checked'"; ?>
-                                       class="checkbox"
-                                       placeholder="Saisir ici">
+                                <input type="checkbox" name="produit_bio" value="<?php echo $form_values['produit_bio'] ?>" <?php if ($form_values['produit_bio']) echo "checked='checked'"; ?> class="checkbox" placeholder="Saisir ici">
                             </div>
                         </div>
                     </div>
@@ -1117,21 +1051,13 @@ function home_base_url(){
                         <div class="col-6 info-unit">
                             <div class="label">Vin nature</div>
                             <div class="value">
-                                <input type="checkbox" name="vin_nature"
-                                       value="<?php echo $form_values['vin_nature']?>"
-                                    <?php if ($form_values['vin_nature']) echo "checked='checked'"; ?>
-                                       class="checkbox"
-                                       placeholder="Saisir ici">
+                                <input type="checkbox" name="vin_nature" value="<?php echo $form_values['vin_nature'] ?>" <?php if ($form_values['vin_nature']) echo "checked='checked'"; ?> class="checkbox" placeholder="Saisir ici">
                             </div>
                         </div>
                         <div class="col-6 info-unit">
                             <div class="label">Vin orange</div>
                             <div class="value">
-                                <input type="checkbox" name="vin_orange"
-                                       value="<?php echo $form_values['vin_orange']?>"
-                                    <?php if ($form_values['vin_orange']) echo "checked='checked'"; ?>
-                                       class="checkbox"
-                                       placeholder="Saisir ici">
+                                <input type="checkbox" name="vin_orange" value="<?php echo $form_values['vin_orange'] ?>" <?php if ($form_values['vin_orange']) echo "checked='checked'"; ?> class="checkbox" placeholder="Saisir ici">
                             </div>
                         </div>
                     </div>
@@ -1147,7 +1073,7 @@ function home_base_url(){
                                        name="pays_nom" id="pays_nom">
 
                                 <datalist id="pays">
-                                    <?php foreach ($pays as $element){ ?>
+                                    <?php foreach ($pays as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1164,7 +1090,7 @@ function home_base_url(){
                                        name="region_nom" id="region_nom" >
 
                                 <datalist id="regions">
-                                    <?php foreach ($regions as $element){ ?>
+                                    <?php foreach ($regions as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1184,7 +1110,7 @@ function home_base_url(){
                                        name="type_de_vin_nom" id="type_de_vin_nom" >
 
                                 <datalist id="types">
-                                    <?php foreach ($types as $element){ ?>
+                                    <?php foreach ($types as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1201,7 +1127,7 @@ function home_base_url(){
                                        name="format_nom" id="format_nom" >
 
                                 <datalist id="formats">
-                                    <?php foreach ($formats as $element){ ?>
+                                    <?php foreach ($formats as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1220,7 +1146,7 @@ function home_base_url(){
                                        name="appellation_nom" id="appellation_nom" >
 
                                 <datalist id="appellations">
-                                    <?php foreach ($appellations as $element){ ?>
+                                    <?php foreach ($appellations as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1236,7 +1162,7 @@ function home_base_url(){
                                        name="designation_nom" id="designation_nom" >
 
                                 <datalist id="designations">
-                                    <?php foreach ($designations as $element){ ?>
+                                    <?php foreach ($designations as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1255,7 +1181,7 @@ function home_base_url(){
                                        name="cepage_nom" id="cepage_nom" >
 
                                 <datalist id="cepages">
-                                    <?php foreach ($cepages as $element){ ?>
+                                    <?php foreach ($cepages as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1272,7 +1198,7 @@ function home_base_url(){
                                        name="taux_de_sucre_nom" id="taux_de_sucre_nom" />
 
                                 <datalist id="taux_de_sucres">
-                                    <?php foreach ($taux_de_sucres as $element){ ?>
+                                    <?php foreach ($taux_de_sucres as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1290,7 +1216,7 @@ function home_base_url(){
                                        name="degre_alcool_nom" id="degre_alcool_nom" />
 
                                 <datalist id="degre_alcools">
-                                    <?php foreach ($degre_alcools as $element){ ?>
+                                    <?php foreach ($degre_alcools as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1306,7 +1232,7 @@ function home_base_url(){
                                        name="produit_du_quebec_nom" id="produit_du_quebec_nom" />
 
                                 <datalist id="produit_du_quebecs">
-                                    <?php foreach ($produit_du_quebecs as $element){ ?>
+                                    <?php foreach ($produit_du_quebecs as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
@@ -1324,65 +1250,44 @@ function home_base_url(){
                                        name="classification_nom" id="classification_nom" />
 
                                 <datalist id="classifications">
-                                    <?php foreach ($classifications as $element){ ?>
+                                    <?php foreach ($classifications as $element) { ?>
                                         <option><?php echo $element['nom'] ?></option>
                                     <?php } ?>
                                 </datalist>
                             </div>
                         </div>
                     </div>
-                        <div class="row">
-                            <div class="col-6 info-unit">
-                                <div class="label">Date d'achat</div>
-                                <div class="value">
-                                    <input type="date"
-                                           value="<?php echo $form_values['date_achat']?>"
-                                           placeholder="Sélectionner ici"
-                                           class="input formulaire__champs boite-double__champs"
-                                           name="date_achat" id="date_achat" />
-                                </div>
-                            </div>
-                            <div class="col-6 info-unit">
-                                <div class="label">Garder jusqu'à</div>
-                                <div class="value">
-                                    <input type="date"
-                                           value="<?php echo $form_values['garde_jusqua']?>"
-                                           placeholder="Sélectionner ici"
-                                           class="input formulaire__champs boite-double__champs"
-                                           name="garde_jusqua" id="garde_jusqua" />
-                                </div>
+                    <div class="row">
+                        <div class="col-6 info-unit">
+                            <div class="label">Date d'achat</div>
+                            <div class="value">
+                                <input type="date" value="<?php echo $form_values['date_achat'] ?>" placeholder="Sélectionner ici" class="input formulaire__champs boite-double__champs" name="date_achat" id="date_achat" />
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="col-6 info-unit">
+                            <div class="label">Garder jusqu'à</div>
+                            <div class="value">
+                                <input type="date" value="<?php echo $form_values['garde_jusqua'] ?>" placeholder="Sélectionner ici" class="input formulaire__champs boite-double__champs" name="garde_jusqua" id="garde_jusqua" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 info-unit">
+                            <div class="label">Millisime</div>
+                            <div class="value">
+                                <input type="text" value="<?php echo $form_values['millesime'] ?>" placeholder="Sélectionner ici" class="input formulaire__champs boite-double__champs" name="millesime" id="millesime" />
+                            </div>
+                        </div>
+                        <?php if (isset($id_cellier) && $id_cellier != null) { ?>
                             <div class="col-6 info-unit">
-                                <div class="label">Millisime</div>
+                                <div class="label">Quantité(*)</div>
                                 <div class="value">
-                                    <input type="text"
-                                           value="<?php echo $form_values['millesime']?>"
-                                           placeholder="Sélectionner ici"
-                                           class="input formulaire__champs boite-double__champs"
-                                           name="millesime" id="millesime" />
+                                    <input type="hidden" name="celliers[0][id_cellier]" value="<?php echo $id_cellier ?>" />
+                                    <input type="number" required min="0" value="<?php echo $form_values['quantite'] ?>" placeholder="Sélectionner ici" class="input formulaire__champs boite-double__champs" name="celliers[0][quantite]" id="quantite" />
                                 </div>
                             </div>
-                            <?php if(isset($id_cellier) && $id_cellier!=null) {?>
-                                <div class="col-6 info-unit">
-                                    <div class="label">Quantité(*)</div>
-                                    <div class="value">
-                                        <input type="hidden" name="celliers[0][id_cellier]"
-                                               value="<?php echo $id_cellier?>"
-                                        />
-                                        <input type="number"
-                                               required
-                                               min="0"
-                                               value="<?php echo $form_values['quantite']?>"
-                                               placeholder="Sélectionner ici"
-                                               class="input formulaire__champs boite-double__champs"
-                                               name="celliers[0][quantite]"
-                                               id="quantite" />
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
+                        <?php } ?>
+                    </div>
 
                 </div>
 
@@ -1403,16 +1308,11 @@ function home_base_url(){
                                             <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
                                         </div>
                                     </div>
-                                    <div class="col-6 info-unit">
-                                        <div class="label">Quantité(*)</div>
-                                        <div class="value">
-                                            <input type="number"
-                                                   required
-                                                   min="0"
-                                                   name="celliers<?php echo "[".$key."]"?>[quantite]"
-                                                   value="0"
-                                                   class="input formulaire__champs boite-double__champs"
-                                                   placeholder="Saisir ici"></div>
+                                </div>
+                                <div class="col-6 info-unit">
+                                    <div class="label">Quantité(*)</div>
+                                    <div class="value">
+                                        <input type="number" required min="0" name="celliers<?php echo "[" . $key . "]" ?>[quantite]" value="0" class="input formulaire__champs boite-double__champs" placeholder="Saisir ici">
                                     </div>
                                 </div>
                                 <?php $key++; } ?>
@@ -1428,16 +1328,16 @@ function home_base_url(){
                             </div>
                         <?php } ?>
                     </div>
-                <?php }?>
+                <?php } ?>
 
                 <div class="row submit-bloc">
                     <div class="col-6 info-unit">
                     </div>
-                    <div class="col-6 info-unit" >
-<!--                        <div >-->
-                            <button class="bouton-primaire" type="button" id="fermerFormulaire" >Annuler</button>
-                            <button class="bouton-secondaire">Enregistrer</button>
-<!--                        </div>-->
+                    <div class="col-6 info-unit">
+                        <!--                        <div >-->
+                        <button class="bouton-primaire" type="button" id="fermerFormulaire">Annuler</button>
+                        <button class="bouton-secondaire">Enregistrer</button>
+                        <!--                        </div>-->
                     </div>
                 </div>
 
@@ -1449,15 +1349,21 @@ function home_base_url(){
                 <!--                            <div class="label">Cellier</div>-->
                 <!--                            <div class="value">-->
                 <!--                                <input list="usager_celliers"-->
-                <!--                                       value="--><?php //echo $form_values['nom_cellier']?><!--"-->
+                <!--                                       value="--><?php //echo $form_values['nom_cellier']
+                                                                        ?>
+                <!--"-->
                 <!--                                       placeholder="Sélectionner ici"-->
                 <!--                                       class="input select formulaire__champs boite-double__champs"-->
                 <!--                                       name="nom_cellier" id="nom_cellier" >-->
                 <!---->
                 <!--                                <datalist id="usager_celliers">-->
-                <!--                                    --><?php //foreach ($usager_celliers as $element){ ?>
-                <!--                                        <option>--><?php //echo $element['nom_cellier'] ?><!--</option>-->
-                <!--                                    --><?php //} ?>
+                <!--                                    --><?php //foreach ($usager_celliers as $element){ 
+                                                            ?>
+                <!--                                        <option>--><?php //echo $element['nom_cellier'] 
+                                                                        ?>
+                <!--</option>-->
+                <!--                                    --><?php //} 
+                                                            ?>
                 <!--                                </datalist>-->
                 <!--                            </div>-->
                 <!--                        </div>-->
@@ -1465,7 +1371,9 @@ function home_base_url(){
                 <!--                            <div class="label">Quantité</div>-->
                 <!--                            <div class="value ">-->
                 <!--                                <input type="number" name="quantite"-->
-                <!--                                  value="--><?php //echo $form_values['quantite']?><!--"-->
+                <!--                                  value="--><?php //echo $form_values['quantite']
+                                                                ?>
+                <!--"-->
                 <!--                                  class="input formulaire__champs boite-double__champs"-->
                 <!--                                  placeholder="Saisir ici"></div>-->
                 <!--                        </div>-->
@@ -1474,14 +1382,18 @@ function home_base_url(){
                 <!--                        <div class="col-6 info-unit">-->
                 <!--                            <div class="label">Date d'achat</div>-->
                 <!--                            <div class="value"><input type="date" name="date_achat"-->
-                <!--                                                                  value="--><?php //echo $form_values['date_achat']?><!--"-->
+                <!--                                                                  value="--><?php //echo $form_values['date_achat']
+                                                                                                ?>
+                <!--"-->
                 <!--                                                                  class="input formulaire__champs boite-double__champs"-->
                 <!--                                                                  placeholder="Saisir ici"></div>-->
                 <!--                        </div>-->
                 <!--                        <div class="col-6 info-unit">-->
                 <!--                            <div class="label">Garde jusqu'à</div>-->
                 <!--                            <div class="value"><input type="date" name="garde_jusqua"-->
-                <!--                                                                  value="--><?php //echo $form_values['garde_jusqua']?><!--"-->
+                <!--                                                                  value="--><?php //echo $form_values['garde_jusqua']
+                                                                                                ?>
+                <!--"-->
                 <!--                                                                  class="input formulaire__champs boite-double__champs"-->
                 <!--                                                                  placeholder="Saisir ici"></div>-->
                 <!--                        </div>-->
@@ -1491,7 +1403,9 @@ function home_base_url(){
                 <!--                            <div class="label">Notes</div>-->
                 <!--                            <div class="value">-->
                 <!--                                <input type="number" name="notes"-->
-                <!--                                       value="--><?php //echo $form_values['notes']?><!--"-->
+                <!--                                       value="--><?php //echo $form_values['notes']
+                                                                        ?>
+                <!--"-->
                 <!--                                       class="input formulaire__champs boite-double__champs"-->
                 <!--                                       placeholder="Saisir ici">-->
                 <!--                            </div>-->
@@ -1500,7 +1414,9 @@ function home_base_url(){
                 <!--                            <div class="label">Millesime</div>-->
                 <!--                            <div class="value">-->
                 <!--                                <input type="text" name="millesime"-->
-                <!--                                       value="--><?php //echo $form_values['millesime']?><!--"-->
+                <!--                                       value="--><?php //echo $form_values['millesime']
+                                                                        ?>
+                <!--"-->
                 <!--                                       class="input formulaire__champs boite-double__champs"-->
                 <!--                                       placeholder="Saisir ici">-->
                 <!--                            </div>-->
@@ -1517,7 +1433,7 @@ function home_base_url(){
 <section class="section-wrapper texte-photo w-100">
     <div class="boite-double info-details w-100" style="max-width: unset">
 
-        <form class="form-block formulaire w-100"  action="./controller/AjouterBouteille.php" method="POST">
+        <form class="form-block formulaire w-100" action="./controller/AjouterBouteille.php" method="POST">
             <input type="hidden" name="estCommentaire" value="1" />
             <div class='comments'>
                 <div class="comment">
@@ -1578,23 +1494,14 @@ function home_base_url(){
                         </div>
                     </div>
                     <div class="comment-text new-comment">
-                            <textarea placeholder='Ajouter un nouveau commentaire'
-                                      rows="4"
-                                      name="commentaires"
-                                      class="input formulaire__champs boite-double__champs"><?php echo $form_values['commentaires']?></textarea>
+                        <textarea placeholder='Ajouter un nouveau commentaire' rows="4" name="commentaires" class="input formulaire__champs boite-double__champs"><?php echo $form_values['commentaires'] ?></textarea>
                     </div>
-                    <input type="hidden"
-                           name="id_bouteille"
-                           id="id_bouteille"
-                           value="<?php echo $form_values['id_bouteille']?>" />
-                    <input type="hidden"
-                           name="id_cellier"
-                           id="id_cellier"
-                           value="<?php echo $form_values['id_cellier']?>" />
+                    <input type="hidden" name="id_bouteille" id="id_bouteille" value="<?php echo $form_values['id_bouteille'] ?>" />
+                    <input type="hidden" name="id_cellier" id="id_cellier" value="<?php echo $form_values['id_cellier'] ?>" />
                     <div class="comment-text submit-bloc">
-                        <button class="btn bouton-secondaire"
-                            <?php if(!isset($bouteille) || !$bouteille) {echo "disabled";}?>
-                        >Soumettre</button>
+                        <button class="btn bouton-secondaire" <?php if (!isset($bouteille) || !$bouteille) {
+                                                                    echo "disabled";
+                                                                } ?>>Soumettre</button>
                     </div>
                 </div>
                 <!--                we should do listing here-->
@@ -1833,66 +1740,60 @@ function home_base_url(){
 
 <!--MODAL-->
 <div class="modal modal--ferme" modal-confirmation-delete>
-    <?php if($erreur !== ""){?>
+    <?php if ($erreur !== "") { ?>
         <div class="modal__contenu">
-            <p><?php echo $erreur?></p>
+            <p><?php echo $erreur ?></p>
             <div class="formulaire__champs">
                 <button data-js-boutonFerme class="bouton-secondaire">Annuler</button>
             </div>
         </div>
-    <?php }else{?>
-        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id'];?>" >
+    <?php } else { ?>
+        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id']; ?>">
             <h4 class="text-center">Voulez vous vraiment supprimer cette bouteille?</h4>
 
             <div class="submit-bloc">
-                <input type="hidden"
-                       name="id_bouteille_input"
-                       id="id_bouteille_input"
-                       value="<?php echo $form_values['id_bouteille']?>" />
-                <input type="hidden"
-                       name="id_cellier_input"
-                       id="id_cellier_input"
-                       value="<?php echo $form_values['id_cellier']?>" />
+                <input type="hidden" name="id_bouteille_input" id="id_bouteille_input" value="<?php echo $form_values['id_bouteille'] ?>" />
+                <input type="hidden" name="id_cellier_input" id="id_cellier_input" value="<?php echo $form_values['id_cellier'] ?>" />
                 <button data-js-boutonFerme class="bouton-secondaire" id="annulerDetruirebtn">Annuler</button>
-                <button  class="bouton-danger" id="detruirebtn">
+                <button class="bouton-danger" id="detruirebtn">
                     Oui, supprimer
                 </button>
             </div>
         </div>
-    <?php }?>
+    <?php } ?>
 </div>
 
-<div   modal-modification-statut class="modal--ferme modal">
-    <?php if($erreur !== ""){?>
+<div modal-modification-statut class="modal--ferme modal">
+    <?php if ($erreur !== "") { ?>
         <div class="modal__contenu">
-            <p><?php echo $erreur?></p>
+            <p><?php echo $erreur ?></p>
             <div class="formulaire__champs">
                 <button data-js-boutonFerme class="bouton-secondaire">Annuler</button>
             </div>
         </div>
-    <?php }else{?>
-        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id'];?>">
-            <h4 class="text-center"><?php echo (isset($message) && $message != null ? $message: ''); ?></h4>
+    <?php } else { ?>
+        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id']; ?>">
+            <h4 class="text-center"><?php echo (isset($message) && $message != null ? $message : ''); ?></h4>
 
             <div class="submit-bloc">
-                <button type="button" value="<?php echo ($form_values['id_cellier'] ?: -1) ;?>"  class="bouton-secondaire" id="gobackbtn" data-js-boutonAjouterCellier>Retour sur la page précédente</button>
+                <button type="button" value="<?php echo ($form_values['id_cellier'] ?: -1); ?>" class="bouton-secondaire" id="gobackbtn" data-js-boutonAjouterCellier>Retour sur la page précédente</button>
                 <button data-js-boutonFerme class="bouton-secondaire" id="annulerDetruirebtn2">Fermer</button>
             </div>
 
         </div>
-    <?php }?>
+    <?php } ?>
 </div>
 
-<div   modal-annulation class="modal--ferme modal">
-    <?php if($erreur !== ""){?>
+<div modal-annulation class="modal--ferme modal">
+    <?php if ($erreur !== "") { ?>
         <div class="modal__contenu">
-            <p><?php echo $erreur?></p>
+            <p><?php echo $erreur ?></p>
             <div class="formulaire__champs">
                 <button data-js-boutonFerme class="bouton-secondaire">Annuler</button>
             </div>
         </div>
-    <?php }else{?>
-        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id'];?>">
+    <?php } else { ?>
+        <div class="modal__contenu" data-js-usager="<?php echo $_SESSION['utilisateur']['id']; ?>">
             <h4 class="text-center">Annulation réussie, Voulez-vous rester sur catte page?</h4>
 
             <div class="submit-bloc">
@@ -1901,7 +1802,7 @@ function home_base_url(){
             </div>
 
         </div>
-    <?php }?>
+    <?php } ?>
 </div>
 
 

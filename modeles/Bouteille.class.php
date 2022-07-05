@@ -16,6 +16,59 @@ class Bouteille extends Modele
     const TABLE = 'vino__bouteille';
 
 
+    public function ajouterAdminBouteille($donnees)
+    {
+        $requete = "INSERT INTO usager__bouteille
+                        (id_cellier, nom_bouteille, quantite_bouteille, prix_bouteille, description_bouteille, 
+                        image_bouteille, date_achat, garde_jusqua, note, commentaires, millesime, favori_bouteille, 
+                        essayer_bouteille, code_saq, code_cup, pays_nom, region_nom, type_de_vin_nom, producteur, 
+                        url_saq, url_img, format_nom, appellation_nom, designation_nom, classification_nom, cepage_nom, 
+                        taux_de_sucre_nom, degre_alcool_nom, produit_du_quebec_nom, biodynamique, casher, desalcoolise, 
+                        equitable, faible_taux_alcool, produit_bio, vin_nature, vin_orange)
+                    VALUES (" .
+            "'{$donnees->id_cellier}'," .
+            "'{$donnees->nom_bouteille}'," .
+            "'{$donnees->quantite_bouteille}'," .
+            "'{$donnees->prix_bouteille}'," .
+            "'{$donnees->description_bouteille}'," .
+            "'{$donnees->url_img}'," .
+            "'{$donnees->date_achat}'," .
+            "'{$donnees->garde_jusqua}'," .
+            "'{$donnees->note}'," .
+            "'{$donnees->commentaires}'," .
+            "'{$donnees->millesime}'," .
+            "'{$donnees->favori_bouteille}'," .
+            "'{$donnees->essayer_bouteille}'," .
+            "'{$donnees->code_saq}'," .
+            "'{$donnees->code_cup}'," .
+            "'{$donnees->pays_nom}'," .
+            "'{$donnees->region_nom}'," .
+            "'{$donnees->type_de_vin_nom}'," .
+            "'{$donnees->producteur}'," .
+            "'{$donnees->url_saq}'," .
+            "'{$donnees->url_img}'," .
+            "'{$donnees->format_nom}'," .
+            "'{$donnees->appellation_nom}'," .
+            "'{$donnees->designation_nom}'," .
+            "'{$donnees->classification_nom}'," .
+            "'{$donnees->cepage_nom}'," .
+            "'{$donnees->taux_de_sucre_nom}'," .
+            "'{$donnees->degre_alcool_nom}'," .
+            "'{$donnees->produit_du_quebec_nom}'," .
+            "'{$donnees->biodynamique}'," .
+            "'{$donnees->casher}'," .
+            "'{$donnees->desalcoolise}'," .
+            "'{$donnees->equitable}'," .
+            "'{$donnees->faible_taux_alcool}'," .
+            "'{$donnees->produit_bio}'," .
+            "'{$donnees->vin_nature}'," .
+            "'{$donnees->vin_orange}')";
+
+        $res = $this->_db->query($requete);
+        return $res;
+    }
+
+
     public function getAdminBouteilles()
     {
         $rows = array();
@@ -38,14 +91,35 @@ class Bouteille extends Modele
     }
 
 
-    public function getAdminRevisions()
+    public function getAdminNbBouteilles()
+    {
+        $nbTrouve = 0;
+        $requete = "SELECT COUNT(*) AS nbTrouve FROM usager__bouteille";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                $row = $res->fetch_assoc();
+                $nbTrouve = $row['nbTrouve'];
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $nbTrouve;
+    }
+
+
+    public function getAdminUneBouteille($id_bouteille)
     {
         $rows = array();
 
-        $requete = "SELECT id_bouteille, id_cellier, nom_bouteille, url_saq
+        $requete = "SELECT id_bouteille, id_cellier, nom_bouteille, quantite_bouteille, prix_bouteille, description_bouteille, 
+                            date_achat, garde_jusqua, note, commentaires, millesime, favori_bouteille, essayer_bouteille, code_saq, code_cup, pays_nom, region_nom,
+                            type_de_vin_nom, producteur, url_saq, url_img, format_nom, appellation_nom, designation_nom, classification_nom, cepage_nom, taux_de_sucre_nom,
+                            degre_alcool_nom, produit_du_quebec_nom, biodynamique, casher, desalcoolise, equitable, faible_taux_alcool, produit_bio, vin_nature, vin_orange,
+                            id_vino__bouteille 
                     FROM usager__bouteille
-                    WHERE  id_bouteille = 1000000
-                    ORDER BY id_bouteille";
+                    WHERE id_bouteille = " . $id_bouteille;
 
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
@@ -58,6 +132,53 @@ class Bouteille extends Modele
         }
 
         return $rows;
+    }
+
+
+    public function modifierAdminBouteille($donnees)
+    {
+        $requete = "UPDATE usager__bouteille SET 
+                            id_cellier = '{$donnees->id_cellier}',
+                            nom_bouteille = '{$donnees->nom_bouteille}',
+                            quantite_bouteille = '{$donnees->quantite_bouteille}',
+                            prix_bouteille = '{$donnees->prix_bouteille}',
+                            description_bouteille = '{$donnees->description_bouteille}',
+                            image_bouteille = '{$donnees->url_img}',
+                            date_achat = '{$donnees->date_achat}',
+                            garde_jusqua = '{$donnees->garde_jusqua}',
+                            note = '{$donnees->note}',
+                            commentaires = '{$donnees->commentaires}',
+                            millesime = '{$donnees->millesime}',
+                            favori_bouteille = '{$donnees->favori_bouteille}',
+                            essayer_bouteille = '{$donnees->essayer_bouteille}',
+                            code_saq = '{$donnees->code_saq}',
+                            code_cup = '{$donnees->code_cup}',
+                            pays_nom = '{$donnees->pays_nom}',
+                            region_nom = '{$donnees->region_nom}',
+                            type_de_vin_nom = '{$donnees->type_de_vin_nom}',
+                            producteur = '{$donnees->producteur}',
+                            url_saq = '{$donnees->url_saq}',
+                            url_img = '{$donnees->url_img}',
+                            format_nom = '{$donnees->format_nom}',
+                            appellation_nom = '{$donnees->appellation_nom}',
+                            designation_nom = '{$donnees->designation_nom}',
+                            classification_nom = '{$donnees->classification_nom}',
+                            cepage_nom = '{$donnees->cepage_nom}',
+                            taux_de_sucre_nom = '{$donnees->taux_de_sucre_nom}',
+                            degre_alcool_nom = '{$donnees->degre_alcool_nom}',
+                            produit_du_quebec_nom = '{$donnees->produit_du_quebec_nom}',
+                            biodynamique = '{$donnees->biodynamique}',
+                            casher = '{$donnees->casher}',
+                            desalcoolise = '{$donnees->desalcoolise}',
+                            equitable = '{$donnees->equitable}',
+                            faible_taux_alcool = '{$donnees->faible_taux_alcool}',
+                            produit_bio = '{$donnees->produit_bio}',
+                            vin_nature = '{$donnees->vin_nature}',
+                            vin_orange = '{$donnees->vin_orange}'
+                    WHERE id_bouteille = '{$donnees->id}'";
+
+        $res = $this->_db->query($requete);
+        return $res;
     }
 
 
