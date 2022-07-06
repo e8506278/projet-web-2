@@ -42,7 +42,7 @@ export default class ModalCellier{
              <!--Nom cellier-->
             <div class="formulaire__champs">
                 <label>Nom du cellier:</label>
-                <input type="text" name="nom_cellier" class="modal__input" required>
+                <input type="text" name="nom_cellier_modal" class="modal__input" value="" required>
                 <small class="carte__erreur" data-js-erreurnom></small>
             </div>
             <div class="formulaire__champs">

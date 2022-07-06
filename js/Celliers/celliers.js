@@ -83,7 +83,7 @@ import { fetchGetCellier } from './FetchCellier.js';
             modal.ouvre()
             
             //Contenu des champs du modal
-            let elNomCellierChamps = elModalContenu.querySelector("[name='nom_cellier']"),
+            let elNomCellierChamps = elModalContenu.querySelector("[name='nom_cellier_modal']"),
                 elTypeCellierIdChamps = elModalContenu.querySelectorAll("[name='type_cellier_id']"),
                 elDescriptionCellierChamps = elModalContenu.querySelector("[name='description_cellier']"),
                 elIdCellier = elModifierCellier[i].dataset.jsModifiercellier,

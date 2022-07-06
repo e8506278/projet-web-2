@@ -106,6 +106,8 @@ class Controler
             case 'statistiques':
                 $this->statistiquesUtilisateur();
                 break;
+            case 'scan':
+                $this->scan();
             case 'admin':
                 $this->afficherPageAdmin();
                 break;
@@ -169,14 +171,9 @@ class Controler
             case 'sauvegarderAdminDonnees':
                 $this->sauvegarderAdminDonnees();
                 break;
-            case 'profilUsager':
-                $this->voirProfilUsager();
-                break;
             case 'accueil':
                 $this->accueil();
                 break;
-                case 'scan':
-                    $this->scan();
             case '':
                 $this->accueil();
                 break;
@@ -262,8 +259,8 @@ class Controler
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $body = json_decode(file_get_contents('php://input'), true);
 
-            $usager = new Usager();
-            $listeUsagers = $usager->getAdminUnUsager($body["id_usager"]);
+            $usagers = new Usager();
+            $listeUsagers = $usagers->getAdminUnUsager($body["id_usager"]);
             echo json_encode($listeUsagers);
         } else {
             include("vues/entete.php");
@@ -276,8 +273,8 @@ class Controler
     private function lireAdminUsagers()
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-            $usager = new Usager();
-            $listeUsagers = $usager->getAdminUsagers();
+            $usagers = new Usager();
+            $listeUsagers = $usagers->getAdminUsagers();
             echo json_encode($listeUsagers);
         } else {
             include("vues/entete.php");
@@ -753,25 +750,27 @@ class Controler
             $nombre_cellier = $celliers->nombreCellierUsager($id);
             $bouteille_total = 0;
             $prix_total = 0;
-            foreach ($data as $cellier) {
-
+            foreach($data as $cellier){     
+               
                 $bouteille_total += $cellier['bouteille_total'];
                 $prix_total += $cellier['prix_total'];
             }
-            $total = $prix_total * $bouteille_total;
+            $total = $prix_total*$bouteille_total;
 
 
             $stats = new Statistique();
             $bouteillesBues = 0;
             $actionsBues = $stats->getBouteilleBues($id);
 
-            foreach ($actionsBues as $bues) {
+            foreach($actionsBues as $bues){
                 $bouteillesBues += $bues['quantite_bouteille'];
+                
             }
             $bouteillesAchetees = 0;
             $actionsAjouts = $stats->getBouteilleAjouts($id);
-            foreach ($actionsAjouts as $achetees) {
-                $bouteillesAchetees += $achetees['quantite_bouteille'];
+            foreach($actionsAjouts as $achetees){
+                 $bouteillesAchetees += $achetees['quantite_bouteille'];
+           
             }
             include("vues/index.php");
         } else {
@@ -787,7 +786,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager, $body->id, 1, "a");
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager,$body->id, 1 , "a");
     }
 
 
@@ -798,25 +797,16 @@ class Controler
      */
     private function ajouterNouveauCellier()
     {
-        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-            $id = $_SESSION['utilisateur']['id'];
-            $body = json_decode(file_get_contents('php://input'));
+        $body = json_decode(file_get_contents('php://input'));
 
-            if (!empty($body)) {
-                $cellier = new Cellier();
-                $resultat = $cellier->ajouterNouveauCellier($body);
-            } else {
-                include("vues/entete.php");
-                include("vues/Celliers/celliers.php");
-                include("vues/pied.php");
-            }
-        }
-        else{
+        if (!empty($body)) {
+            $cellier = new Cellier();
+            $resultat = $cellier->ajouterNouveauCellier($body);
+        } else {
             include("vues/entete.php");
-            include("vues/connexion.php");
+            include("vues/Celliers/celliers.php");
             include("vues/pied.php");
         }
-
     }
 
 
@@ -852,7 +842,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager, $body->id, 1, "a");
+        $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager,$body->id, 1, "a");
     }
 
 
@@ -873,7 +863,7 @@ class Controler
         $body = json_decode(file_get_contents('php://input'));
 
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager, $body->id, 1, "d");
+        $resultat = $bte->modifierQuantiteBouteilleCellier($body->id_usager,$body->id, 1, "d");
     }
 
 
@@ -923,7 +913,7 @@ class Controler
 
                 $cellier = new Cellier();
                 $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
-
+                
                 if ($resultat) {
                     $resultat = $cellier->supprimerCellier($id);
                 }
@@ -960,7 +950,6 @@ class Controler
         include("vues/pied.php");
     }
 
-
     /**
      * Cette méthode affiche une page d'erreur lorsque l'url est erronnée
      *   
@@ -973,9 +962,8 @@ class Controler
     }
 
     // Ajouter la note à une bouteille
-    private function noteBouteille()
-    {
-        $body = json_decode(file_get_contents('php://input'));
+    private function noteBouteille(){
+         $body = json_decode(file_get_contents('php://input'));
 
         if (!empty($body)) {
             $bouteille = new Bouteille();
@@ -991,51 +979,50 @@ class Controler
     }
 
     // Bouteille à acheter (rendre oui ou non)
-    private function modifierAAcheter()
-    {
-        $body = json_decode(file_get_contents('php://input'));
+    private function modifierAAcheter(){
+         $body = json_decode(file_get_contents('php://input'));
 
         if (!empty($body)) {
             $bouteille = new Bouteille();
 
-            if (isset($body->vino_id) && $body->vino_id) {
+            if(isset($body->vino_id) && $body->vino_id){
                 $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
-                if ($usager_bouteille) {
+                if($usager_bouteille) {
                     $resultat = $bouteille->modifierAAcheter($body->valeur, $usager_bouteille['id_bouteille'], null);
-                    if ($resultat) {
+                    if($resultat){
                         return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
                     }
                 }
-            } else {
+            }else{
                 $resultat = $bouteille->modifierAAcheter($body->valeur, $body->id_bouteille, $body->id_cellier);
-                if ($resultat) {
+                if($resultat){
                     return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
                 }
             }
+
         }
 
         return $this->returnJsonHttpResponse(false, null);
     }
 
     // Bouteille à essayer (rendre oui ou non)
-    private function modifierAEssayer()
-    {
-        $body = json_decode(file_get_contents('php://input'));
+    private function modifierAEssayer(){
+         $body = json_decode(file_get_contents('php://input'));
 
         if (!empty($body)) {
             $bouteille = new Bouteille();
 
-            if (isset($body->vino_id) && $body->vino_id) {
-                $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
-                if ($usager_bouteille) {
+            if(isset($body->vino_id) && $body->vino_id){
+               $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
+                if($usager_bouteille) {
                     $resultat = $bouteille->modifierAEssayer($body->valeur, $usager_bouteille['id_bouteille'], null);
-                    if ($resultat) {
+                    if($resultat){
                         return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
                     }
                 }
-            } else {
+            }else{
                 $resultat = $bouteille->modifierAEssayer($body->valeur, $body->id_bouteille, $body->id_cellier);
-                if ($resultat) {
+                if($resultat){
                     return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
                 }
             }
@@ -1049,24 +1036,23 @@ class Controler
     }
 
     // Bouteille favoris (rendre oui ou non)
-    private function modifierFavoris()
-    {
+    private function modifierFavoris(){
         $body = json_decode(file_get_contents('php://input'));
 
-        if (!empty($body)) {
+        if (!empty($body) ) {
             $bouteille = new Bouteille();
             // récupérer bouteille depuis vinno__bouteille et insérer dans usager__bouteille
-            if (isset($body->vino_id) && $body->vino_id) {
+            if(isset($body->vino_id) && $body->vino_id){
                 $usager_bouteille  = $bouteille->copierVinoDansUsagerBouteillle($body->vino_id);
-                if ($usager_bouteille) {
+                if($usager_bouteille) {
                     $resultat = $bouteille->modifierFavoris($body->valeur, $usager_bouteille['id_bouteille'], null);
-                    if ($resultat) {
+                    if($resultat){
                         return $this->returnJsonHttpResponse(true, ['id_bouteille' => $usager_bouteille['id_bouteille']]);
                     }
                 }
-            } else {
+            }else{
                 $resultat = $bouteille->modifierFavoris($body->valeur, $body->id_bouteille, $body->id_cellier);
-                if ($resultat) {
+                if($resultat){
                     return $this->returnJsonHttpResponse(true, ['id_bouteille' => $body->id_bouteille]);
                 }
             }
@@ -1085,42 +1071,33 @@ class Controler
             $this->deconnecterUtilisateur();
             return;
         }
-        
 
         $id_cellier = isset($_GET['id_cellier']) ? $_GET['id_cellier'] : null;
         $id_bouteille = isset($_GET['id_bouteille']) ? $_GET['id_bouteille'] : null;
-        //$vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
+        $vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
         $message = isset($_GET['message']) ? $_GET['message'] : null;
 
-        if(isset($_GET['vino_id'])){
-            $idB = new Cellier;
-            $id = $idB->getBouteilleCUP($_GET['vino_id']);
-            $id_bouteille= $id;
-        }
-        else{
-            $id_bouteille = null;
-        }
-        
 
-        if ($id_bouteille) {
-            $bouteille = (new Bouteille());
-            $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
-            if (is_array($bouteille) && count($bouteille) > 0) {
-                $bouteille = $bouteille[0];
-            }
-        } else {
-            if (isset($vino_id) && $vino_id != null) {
+            if ($id_bouteille) {
                 $bouteille = (new Bouteille());
-                $bouteille = $bouteille->getOneBouteilleFromVino($vino_id);
+                $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
                 if (is_array($bouteille) && count($bouteille) > 0) {
                     $bouteille = $bouteille[0];
-                    //                        $id_bouteille = $bouteille['id_bouteille'];
-                    //                        $vino_id = $bouteille['id_bouteille'];
+                }
+            } else{
+                if(isset($vino_id) && $vino_id != null){
+                    $bouteille = (new Bouteille());
+                    $bouteille = $bouteille->getOneBouteilleFromVino($vino_id);
+                    if (is_array($bouteille) && count($bouteille) > 0) {
+                        $bouteille = $bouteille[0];
+                        var_dump($bouteille);exit;
+                       $id_bouteille = $bouteille['id_bouteille'];
+                        $vino_id = $bouteille['id_bouteille'];
+                    }
                 }
             }
-        }
 
-        //            print_r($bouteille); die();
+//            print_r($bouteille); die();
 
         $body = json_decode(file_get_contents('php://input'));
 
@@ -1165,18 +1142,18 @@ class Controler
     public function getBouteille()
     {
         $body = json_decode(file_get_contents('php://input'));
-
+       
         if (!empty($body)) {
             $bouteille = new Bouteille();
 
             $resultat = $bouteille->getOneBouteilleByName($body->nom);
-
-
+           
+            
             if (count($resultat) > 0) {
                 return $this->returnJsonHttpResponse(true, $resultat[0]);
             }
         }
-
+       
         return $this->returnJsonHttpResponse(false, null);
     }
 
@@ -1210,7 +1187,8 @@ class Controler
     private function listeCelliers()
     {
 
-        $id = $_SESSION['utilisateur']['id'];;
+        $id = $_SESSION['utilisateur']['id'];
+;
         $celliers = new Cellier();
 
         $data = $celliers->getListeCellier($id);
@@ -1281,7 +1259,7 @@ class Controler
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $id_usager = $_SESSION['utilisateur']['id'];
-
+           
             include("vues/entete.php");
             include("vues/recherche.php");
             include("vues/pied.php");
@@ -1337,7 +1315,7 @@ class Controler
         $id_usager = $_SESSION['utilisateur']['id'];
         $body = json_decode(file_get_contents('php://input'));
         $bte = new Bouteille();
-        $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager, $body->id, 1, "d");
+        $resultat = $bte->modifierQuantiteBouteilleCellier($id_usager,$body->id, 1,"d");
     }
 
 
@@ -1371,20 +1349,11 @@ class Controler
     }
 
     private function scan(){
-        header('Content-Type: application/json');
         $body = json_decode(file_get_contents('php://input'));
-      
-        $id_bouteille = new Cellier;
-        $id = $id_bouteille ->getBouteilleCUP($body->scan_resultat);
-       
-        //$objet = json_encode($id,true);
-        //var_dump($objet);
-     
-        //exit(header("Location:index.php?requete=bouteille&vino_id=".$id));
-      
-        echo json_encode($id);
-        
-        
+        if (!empty($body)) {
+           
+            
+        } 
        
     }
 
@@ -1392,9 +1361,8 @@ class Controler
      * Cette méthode affiche les statistiques d'un usager
      *  
      */
-    private function statistiquesUtilisateur()
-    {
-
+    private function statistiquesUtilisateur(){
+        
 
         $jan = $fev = $mar = $avr = $mai = $jun = $jui = $aout = $sept = $oct = $nov = $dec = 0;
         $mois = [
@@ -1410,11 +1378,11 @@ class Controler
             '10' => ['Oct' => $oct],
             '11' => ['Nov' => $nov],
             '12' => ['Dec' => $dec],
-
+            
         ];
-
+       
         $id_cellier = 0;
-
+      
         $id_usager = $_SESSION['utilisateur']['id'];
         $bouteilles_bues = 0;
         $bouteilles_achat = 0;
@@ -1425,54 +1393,57 @@ class Controler
         // Valeur de tous les celliers
         $bouteille_total = 0;
         $prix_total = 0;
-        foreach ($data as $cellier) {
+        foreach($data as $cellier){        
             $bouteille_total += $cellier['bouteille_total'];
             $prix_total += $cellier['prix_total'];
         }
-        $total = $prix_total * $bouteille_total;
-
+        $total = $prix_total*$bouteille_total;
+   
         //echo json_encode($data);
 
-
+  
         $stats = new Statistique();
 
         //TYPE DE VIN
-        $types = $stats->getTypeVinCellier($id_usager, $id_cellier);
-
+        $types = $stats->getTypeVinCellier($id_usager,$id_cellier);
+        
         // BOUTEILLES BUES
         $actionsBues = $stats->getBouteilleBues($id_usager);
-
+       
         $moisBue = $mois;
-        foreach ($actionsBues as $actionBue) {
-            $bouteilles_bues += $actionBue['quantite_bouteille'];
-            foreach ($moisBue as $cle => $valeur) {
-
-                if ($actionBue['date_creation'][1] === $cle) {
-                    foreach ($valeur as $val => $nbre) {
-
+        foreach($actionsBues as $actionBue){
+            $bouteilles_bues+=$actionBue['quantite_bouteille'];
+            foreach($moisBue as $cle =>$valeur){
+             
+                if($actionBue['date_creation'][1] === $cle){
+                    foreach($valeur as $val =>$nbre){
+                       
                         $nbre += $actionBue['quantite_bouteille'];
                         $moisBue[$cle][$val] = $nbre;
+                    
                     }
                 }
             }
         }
-
+       
         // BOUTEILLES AJOUTÉES
         $actionsAjouts = $stats->getBouteilleAjouts($id_usager);
-        foreach ($actionsAjouts as $actionAjout) {
-            $bouteilles_achat += $actionAjout['quantite_bouteille'];
-            foreach ($mois as $cle => $valeur) {
-
-                if ($actionAjout['date_creation'][1] === $cle) {
-                    foreach ($valeur as $val => $nbre) {
-
+        foreach($actionsAjouts as $actionAjout){
+            $bouteilles_achat+= $actionAjout['quantite_bouteille'];
+            foreach($mois as $cle =>$valeur){
+                
+                if($actionAjout['date_creation'][1] === $cle){
+                    foreach($valeur as $val =>$nbre){
+                        
                         $nbre += $actionAjout['quantite_bouteille'];
                         $mois[$cle][$val] = $nbre;
+                        
+                        
                     }
                 }
             }
         }
-        $bouteilles = $stats->getInfosBouteilleUsager($id_usager, $id_cellier);
+        $bouteilles = $stats->getInfosBouteilleUsager($id_usager,$id_cellier);
         include("vues/entete.php");
         include("vues/statistiques.php");
         include("vues/pied.php");
@@ -1488,28 +1459,17 @@ class Controler
         $id = $body->id_cellierSupprime;
         $bte = new Bouteille();
         $bouteilles = $bte->getListeBouteilleCellier($body->id_cellierSupprime);
-        if (count($bouteilles) > 0) {
+        if(count($bouteilles) > 0){
             $cellier = new Cellier();
             $resultat = $cellier->deplacerBouteillesCellier($body->id_cellierChoisi, $bouteilles);
-
+          
             $cellier->supprimerCellier($id);
-        } else {
+        }
+        else{
             $cellier = new Cellier();
             $cellier->supprimerCellier($id);
         }
-    }
-
-
-    private function voirProfilUsager()
-    {
-        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
-            include("vues/entete.php");
-            include("vues/profilUsager.php");
-            include("vues/pied.php");
-        } else {
-            include("vues/entete.php");
-            include("vues/connexion.php");
-            include("vues/pied.php");
-        }
+       
+        
     }
 }
