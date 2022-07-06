@@ -126,12 +126,12 @@ window.addEventListener('load', function () {
             id_bouteille = vino_id;
             elOptBouteille = document.querySelector(`[data-js-id-bouteille="${id_bouteille}"]`);
             selectBouteilleInput.value = elOptBouteille.value;
-            afficheBouteille(selectBouteilleInput.value);
+            // afficheBouteille(selectBouteilleInput.value);
         }
 
         selectBouteilleInput.addEventListener('input', (e) => {
             console.log('selectBouteilleInput', e.target.value);
-            afficheBouteille(e.target.value);
+            // afficheBouteille(e.target.value);
 
             const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom: e.target.value}) });
             fetch(requete)
@@ -415,4 +415,4 @@ window.addEventListener('load', function () {
 
         // document.querySelector(".note-input").
     }
-});
+);
