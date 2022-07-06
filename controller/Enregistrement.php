@@ -132,12 +132,14 @@ if (isset($_POST["soumettre"])) {
             $date = new DateTime();
 
             // Préparer et exécuter la requête
+            $donnees = new StdClass();
             $donnees->nom = $nom;
             $donnees->adresse = $adresse;
             $donnees->telephone = $telephone;
             $donnees->courriel = $courriel;
             $donnees->date_naissance = $date_naissance;
             $donnees->ville = $ville;
+            $donnees->pays_id = $pays_id;
             $donnees->nom_utilisateur = $utilisateur;
             $donnees->mot_de_passe = $hachageMdp;
             $donnees->type_utilisateur = 1;

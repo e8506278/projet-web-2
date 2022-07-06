@@ -1,8 +1,9 @@
 
       let elMain = document.querySelector('main'),
       elPied = document.querySelector('footer')
-  
+
   let elBtnScan = document.querySelector("[data-js-scan]")
+  if(elBtnScan){
   elBtnScan.addEventListener('click', (e)=>{
       elMain.classList.add('contenu-scan-on')
       elPied.classList.add('contenu-scan-on')
@@ -49,3 +50,4 @@
         
       
   })
+}

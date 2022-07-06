@@ -1085,12 +1085,16 @@ class Controler
 
         $id_cellier = isset($_GET['id_cellier']) ? $_GET['id_cellier'] : null;
         $id_bouteille = isset($_GET['id_bouteille']) ? $_GET['id_bouteille'] : null;
-        $vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
+        //$vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
         $message = isset($_GET['message']) ? $_GET['message'] : null;
-        if($vino_id != null){
+
+        if(isset($_GET['vino_id'])){
             $idB = new Cellier;
-        $id = $idB->getBouteilleCUP($vino_id);
-        $vino_id = $id;
+            $id = $idB->getBouteilleCUP($_GET['vino_id']);
+            $id_bouteille= $id;
+        }
+        else{
+            $id_bouteille = null;
         }
         
 
