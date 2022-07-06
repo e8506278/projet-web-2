@@ -132,6 +132,7 @@ if (isset($_POST["soumettre"])) {
             $date = new DateTime();
 
             // Préparer et exécuter la requête
+            $donnees = new StdClass();
             $donnees->nom = $nom;
             $donnees->adresse = $adresse;
             $donnees->telephone = $telephone;

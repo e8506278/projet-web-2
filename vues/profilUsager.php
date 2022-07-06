@@ -1,5 +1,5 @@
 <?php
-include('./controller/profilUsager.php');
+include('./controller/ProfilUsager.php');
 
 if (isset($unUsager)) {
     $nom = $unUsager["nom"];
