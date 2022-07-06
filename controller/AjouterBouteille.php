@@ -309,6 +309,12 @@ array_walk_recursive($_POST, function (&$value) {
                         commentaires = '".$_POST['commentaires']."'
                         WHERE id_cellier=".$cellier['id_cellier']." AND id_bouteille=".$cellier['id_bouteille'];
 
+            if(isset($_POST['commentaires']) && $_POST['commentaires'] != null && $_POST['id_bouteille']){
+                $query_string_commentaire = "UPDATE  usager__bouteille SET commentaires = '".$_POST['commentaires']."' ".
+                    "WHERE id_bouteille=".$_POST['id_bouteille'];
+                $res = MonSQL::getInstance()->query($query_string_commentaire) or die(mysqli_error(MonSQL::getInstance()));
+
+            }
             echo "<br>".intval($ub[0]['quantite_bouteille'])." -- ".intval($cellier['quantite']). "<br>";
             if(intval($ub[0]['quantite_bouteille']) && intval($cellier['quantite'])){
                 $action = intval($ub[0]['quantite_bouteille']) < intval($cellier['quantite']) ? 'a': 'd';
@@ -373,7 +379,7 @@ if (headers_sent()) {
 else{
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
 //    exit(header("Location:../index.php?requete=mesCelliers"));
-header("Location:".$returnpage);
+header("Location:../".$returnpage);
 }
 /*
  *
@@ -396,7 +402,8 @@ function home_base_url(){
     }
 
     if ($tmpURL !== $_SERVER['HTTP_HOST']){
-        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
+//        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
+        $base_url .= $_SERVER['HTTP_HOST'].'/';
         //TODO
         // en serveur faire
         // $base_url .= $_SERVER['HTTP_HOST'].'/';
