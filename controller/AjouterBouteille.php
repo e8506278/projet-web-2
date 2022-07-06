@@ -21,6 +21,10 @@ if(isset($bouteille_id) && $bouteille_id != null){
     $returnpage = $returnpage.'&id_bouteille='.$bouteille_id;
 }
 
+array_walk_recursive($_POST, function (&$value) {
+    $value = htmlentities($value);
+});
+
 if(isset($_POST['estCommentaire'])){
     $query_string = "UPDATE  usager__bouteille SET
                             commentaires = '".$_POST['commentaires']."'
