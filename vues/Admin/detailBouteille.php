@@ -68,38 +68,6 @@ $disabled = ($mode == "lire") ? "disabled" : "";
         </thead>
         <tbody id="detail-body">
             <tr>
-                <td class="pa-8">bouteille SAQ</td>
-                <td class="pa-8">
-                    <!-- <select name="bouteille_saq" id="bouteille_saq" <?= $readonly ?>>
-                        <option value="-1">Choisir une bouteille pour faire afficher ses informations</option>
-
-                        <?php
-                        $id_bouteille = (isset($usagerBouteille) && isset($usagerBouteille['id_bouteille'])) ? $usagerBouteille['id_bouteille'] : "";
-                        $trouve = false;
-
-                        foreach ($vinoBouteilles as $uneBouteille) {
-                        ?>
-                            <option value="<?= $uneBouteille['id_bouteille']; ?>" <?php if ($id_bouteille == $uneBouteille['id_bouteille']) {
-                                                                                        echo ' selected="selected"';
-                                                                                        $trouve = true;
-                                                                                    } ?>>
-                                <?= $uneBouteille['nom_bouteille'] ?> </option>
-                            <?php
-                        }
-
-                        if (isset($usagerBouteille) && isset($usagerBouteille['id_bouteille'])) {
-                            if ($trouve == false) {
-                                $nom_bouteille = (isset($usagerBouteille) && isset($usagerBouteille['nom_bouteille'])) ? "** " . $usagerBouteille['nom_bouteille'] . " **" : "** Valeur non définie **";
-                            ?>
-                                <option value="-1" selected="selected"><?= $nom_bouteille ?></option>
-                        <?php
-                            }
-                        }
-                        ?>
-                    </select> -->
-                </td>
-            </tr>
-            <tr>
                 <td class="pa-8 non-modifiable">Id bouteille</td>
                 <td class="pa-8" name="id_bouteille"><?php echo (isset($usagerBouteille) && isset($usagerBouteille['id_bouteille'])) ? $usagerBouteille['id_bouteille'] : "** valeur auto-générée **"; ?></td>
             </tr>
