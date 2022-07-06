@@ -1506,8 +1506,6 @@ function rechercher() {
                         let prix_bouteille = bouteille["prix_bouteille"];
                         let note = bouteille["note"];
 
-                        console.log(note);
-
                         if (note) {
                             note = "Ma note est de ${ note }/10";
                         } else {
@@ -1647,4 +1645,50 @@ if (valIdAppellant > 0) {
             }
         });
     }
+}
+
+
+/**
+ * La page peut être appellée avec des listes à afficher, on les sélectionne si c'est le cas.
+ * On montre aussi dans les filtres que les listes ont été sélectionnées.
+ */
+const elFavoriListe = document.querySelector('[data-js-liste="favori"]');
+const elFavori = document.querySelector('[data-js-favori]');
+const valFavori = elFavori.dataset.jsFavori;
+
+const elEssayerListe = document.querySelector('[data-js-liste="essayer"]');
+const elEssayer = document.querySelector('[data-js-essayer]');
+const valEssayer = elEssayer.dataset.jsEssayer;
+
+const elAchatListe = document.querySelector('[data-js-liste="achat"]');
+const elAchat = document.querySelector('[data-js-achat]');
+const valAchat = elAchat.dataset.jsAchat;
+
+const elAccListes = document.querySelector('[data-js-accordeon-listes]');
+
+if (valFavori > 0 || valEssayer > 0 || valAchat > 0) {
+    const elPagePrecedente = document.querySelector('[data-js-page-precedente]');
+    const elParent = elPagePrecedente.closest('.page-precedente-container');
+
+    elParent.classList.remove("ferme");
+
+    elPagePrecedente.addEventListener('click', () => {
+        window.location.replace(document.referrer);
+    });
+
+    if (valFavori > 0) {
+        elFavoriListe.checked = true;
+    }
+
+    if (valEssayer > 0) {
+        elEssayerListe.checked = true;
+    }
+
+    if (valAchat > 0) {
+        elAchatListe.checked = true;
+    }
+
+    traiterListes();
+    elOuvrirFiltres.click();
+    elAccListes.click();
 }
