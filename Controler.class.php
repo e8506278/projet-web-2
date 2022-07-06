@@ -1093,7 +1093,6 @@ class Controler
                     $bouteille = $bouteille->getOneBouteilleFromVino($vino_id);
                     if (is_array($bouteille) && count($bouteille) > 0) {
                         $bouteille = $bouteille[0];
-                        var_dump($bouteille);exit;
                        $id_bouteille = $bouteille['id_bouteille'];
                         $vino_id = $bouteille['id_bouteille'];
                     }
