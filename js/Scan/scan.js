@@ -9,7 +9,6 @@
       elPied.classList.add('contenu-scan-on')
      function onScanSuccess(decodedText, decodedResult) {
          
-  
           let requete = new Request(BaseURL + "?requete=scan", { method: 'POST', body: '{"scan_resultat": "' + decodedText + '"}' });
           fetch(requete)
           .then(response => {
