@@ -130,6 +130,8 @@ if (isset($_POST["soumettre"])) {
             $hachageMdp = password_hash($motDePasse, PASSWORD_BCRYPT);
 
             $date = new DateTime();
+            $date->setTimezone(new DateTimeZone('America/New_York'));
+            $fdate = $date->format('Y-m-d H:i:s');
 
             // Préparer et exécuter la requête
             $donnees = new StdClass();
@@ -144,8 +146,8 @@ if (isset($_POST["soumettre"])) {
             $donnees->mot_de_passe = $hachageMdp;
             $donnees->type_utilisateur = 1;
             $donnees->jeton = $jeton;
-            $donnees->date_creation = $date->getTimestamp();
-            $donnees->date_modification = $date->getTimestamp();
+            $donnees->date_creation = $fdate;
+            $donnees->date_modification = $fdate;
 
             $resultat = $oUsager->ajouterUsager($donnees);
 
