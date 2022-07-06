@@ -113,7 +113,7 @@
 						<figcaption class="vignette__titre">Mes bouteilles</figcaption>
 					</figure>
 				</a>	
-				<a href="">
+				<a href="?requete=listes">
 					<figure class="vignette__wrapper">
 						<img class="vignette__img" src="./assets/img/etagere.jpg" alt="bouteilles">
 						<figcaption class="vignette__titre">Mes listes</figcaption>
