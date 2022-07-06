@@ -54,11 +54,12 @@ input.plus-gros {
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
-    margin: 0;
+    margin: 0 0 var(--espace-p) 0;
     padding: var(--espace-p);
 }
 
 .nom-table-wrapper {
+    flex-grow: 1;
     margin-top: var(--espace-p);
 }
 
@@ -81,9 +82,10 @@ input.plus-gros {
 }
 
 .vino-selection {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    justify-content: flex-end;
 }
 
 .vino-selection>*+* {
@@ -92,12 +94,12 @@ input.plus-gros {
 
 @media (min-width: 768px) {
     .vino-selection {
-        display: block;
-        width: 100%;
+        flex-direction: row;
     }
 
     .vino-selection>*+* {
         margin-left: var(--espace-p);
+        margin-top: 0;
     }
 }
 
@@ -180,21 +182,8 @@ input.plus-gros {
     }
 }
 
-@media (min-width: 992px) {
-    .col-lg-3 {
-        flex: 0 0 auto;
-        width: 24%;
-    }
-}
-
 .mb-4 {
     margin-bottom: 1.5rem !important;
-}
-
-@media (min-width: 992px) {
-    .mb-lg-0 {
-        margin-bottom: 0 !important;
-    }
 }
 
 .carte-admin {
@@ -288,8 +277,6 @@ h1 {
     padding: var(--espace-p);
 }
 
-
-
 @media (min-width: 768px) {
     .filtre-wrapper {
         flex-direction: row;
@@ -319,14 +306,14 @@ h1 {
     color: #f3f4f6;
 }
 
-@media (min-width: 768px) {
-    .filtre-wrapper>*:first-child {
-        margin: 0;
-    }
-}
-
 .filtre-wrapper>*:first-child {
     margin: 0;
+}
+
+@media (min-width: 768px) {
+    .filtre-wrapper>*:first-child {
+        margin: 0 var(--espace-xp);
+    }
 }
 
 .filtre-table {
@@ -367,6 +354,7 @@ h1 {
 
 .table-container thead,
 .table-container tbody,
+.table-container th,
 .table-container tr {
     display: table;
     width: 100%;
@@ -506,9 +494,23 @@ h1 {
 
 @media (min-width: 768px) {
 
-    .section3 table th,
-    .section3 table td {
-        display: block;
+    .section3 .table-bouteille th:nth-child(3),
+    .section3 .table-bouteille td:nth-child(3),
+    .section3 .table-bouteille th:nth-child(4),
+    .section3 .table-bouteille td:nth-child(4),
+    .section3 .table-cellier th:nth-child(3),
+    .section3 .table-cellier td:nth-child(3),
+    .section3 .table-cellier th:nth-child(4),
+    .section3 .table-cellier td:nth-child(4),
+    .section3 .table-usager th:nth-child(2),
+    .section3 .table-usager td:nth-child(2),
+    .section3 .table-usager th:nth-child(4),
+    .section3 .table-usager td:nth-child(4),
+    .section3 .table-vino th:nth-child(1),
+    .section3 .table-vino td:nth-child(1),
+    .section3 .table-vino th:nth-child(2),
+    .section3 .table-vino td:nth-child(2) {
+        display: table-cell;
     }
 }
 
@@ -659,57 +661,8 @@ h1 {
     padding: var(--espace-xp);
 }
 
-.bouton-primaire {
-    background-color: var(--couleur-primaire);
-    border: 1px solid var(--couleur-primaire);
-    transition: 0.3s;
-    padding: var(--espace-xp);
-    color: var(--couleur-secondaire);
-    font-weight: 700;
-    cursor: pointer;
-
-}
-
-.bouton-primaire:hover {
-    border: 1px solid var(--couleur-primaire);
-    background-color: var(--couleur-secondaire);
-    color: var(--couleur-primaire);
-
-}
-
-.bouton-secondaire {
-    background-color: var(--couleur-secondaire);
-    border: 1px solid var(--couleur-secondaire);
-    transition: 0.3s;
-    padding: var(--espace-xp);
-    color: var(--couleur-primaire);
-    font-weight: 700;
-    cursor: pointer;
-
-}
-
-.bouton-secondaire:hover {
-    border: 1px solid black;
-    background-color: var(--couleur-primaire);
-    color: var(--couleur-secondaire);
-}
-
-
-.bouton-danger {
-    background-color: var(--couleur-rouge);
-    border: 1px solid var(--couleur-rouge);
-    transition: 0.3s;
-    padding: var(--espace-xp);
-    color: var(--couleur-primaire);
-    font-weight: 700;
-    cursor: pointer;
-
-}
-
-.bouton-danger:hover {
-    border: 1px solid var(--couleur-rouge);
-    background-color: var(--couleur-primaire);
-    color: var(--couleur-rouge);
+.btn-afficher-vino {
+    width: 100%;
 }
 
 .section1.edition,
