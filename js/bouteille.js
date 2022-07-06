@@ -186,9 +186,8 @@ window.addEventListener('load', function () {
                     }
                 })
             })
-        } else {
-            console.log('not found in form', key);
         }
+
         /*AJOUT D'UN CELLIER*/
 
         // Swicher entre les vue selon si c'est modification ou bien just le mode view
