@@ -63,7 +63,7 @@ class Bouteille extends Modele
             "'{$donnees->produit_bio}'," .
             "'{$donnees->vin_nature}'," .
             "'{$donnees->vin_orange}')";
-
+            
         $res = $this->_db->query($requete);
         return $res;
     }
@@ -184,7 +184,7 @@ class Bouteille extends Modele
 
     public function getListeBouteille()
     {
-
+        $this->_db->set_charset('utf8');
         $rows = array();
         $res = $this->_db->query('Select * from ' . self::TABLE);
         if ($res->num_rows) {
@@ -215,7 +215,7 @@ class Bouteille extends Modele
                     WHERE usager__bouteille.id_cellier = '$id_cellier' 
                     AND usager__bouteille.quantite_bouteille > 0 
                     ORDER BY id_bouteille DESC ";
-
+$this->_db->set_charset('utf8');
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
@@ -311,7 +311,7 @@ class Bouteille extends Modele
             $requete = $requete . " AND ub.id_cellier = '" . $id_cellier . "'";
         }
         $this->_db->set_charset('utf8');
-      
+      print_r($requete);exit;
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
@@ -427,7 +427,8 @@ class Bouteille extends Modele
                         LEFT JOIN vino__produit_du_quebec pc ON pc.id = b.produit_du_quebec_id
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
                        WHERE b.id_bouteille = '" . $vino_bouteille_id . "'";
-
+                      
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
@@ -576,7 +577,7 @@ class Bouteille extends Modele
         $rows = array();
         $nom = $this->_db->real_escape_string($nom);
         $nom = preg_replace("/\*/", "%", $nom);
-
+        $this->_db->set_charset('utf8');
         //echo $nom;
         $requete = 'SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%' . $nom . '%") LIMIT 0,' . $nb_resultat;
         //var_dump($requete);
@@ -730,7 +731,7 @@ class Bouteille extends Modele
         $rows = array();
         $requete = "SELECT  *  from vino__bouteille b
                        WHERE b.id_bouteille = '" . $id_bouteille . "'";
-
+$this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 

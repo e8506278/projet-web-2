@@ -1074,33 +1074,41 @@ class Controler
             $this->deconnecterUtilisateur();
             return;
         }
-
+        $id_usager = $_SESSION['utilisateur']['id'];
         $id_cellier = isset($_GET['id_cellier']) ? $_GET['id_cellier'] : null;
         $id_bouteille = isset($_GET['id_bouteille']) ? $_GET['id_bouteille'] : null;
         $vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
         $message = isset($_GET['message']) ? $_GET['message'] : null;
 
-
+       
+        
             if ($id_bouteille) {
-                $bouteille = (new Bouteille());
+                
+                $bouteille = new Bouteille();
+                
                 $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
+                
+              
                 if (is_array($bouteille) && count($bouteille) > 0) {
                     $bouteille = $bouteille[0];
                 }
-            } else{
+            }
+            
+            else if(isset($vino_id) && $vino_id != null){
                 if(isset($vino_id) && $vino_id != null){
-                    $bouteille = (new Bouteille());
-                    $bouteille = $bouteille->getOneBouteilleFromVino($vino_id);
+                    $idB = new Cellier;
+                    $id_bouteille = $idB ->getBouteilleCUP($vino_id);
+                   
+                    $bouteille = new Bouteille();
+                    
+                    $bouteille = $bouteille->getOneBouteilleFromVino($id_bouteille);
                     if (is_array($bouteille) && count($bouteille) > 0) {
                         $bouteille = $bouteille[0];
-                        var_dump($bouteille);exit;
-                       $id_bouteille = $bouteille['id_bouteille'];
-                        $vino_id = $bouteille['id_bouteille'];
                     }
                 }
             }
 
-//            print_r($bouteille); die();
+
 
         $body = json_decode(file_get_contents('php://input'));
 
@@ -1108,7 +1116,7 @@ class Controler
         $bouteilles = $list->getList('bouteille');
         $usager_celliers = $list->getList('usager_cellier');
         $usager_bouteille = $list->getList('usager_bouteille');
-
+//var_dump($usager_bouteille);exit;
         $pays = $list->getList('pays');
         $regions = $list->getList('region');
         $types = $list->getList('type');
@@ -1360,11 +1368,19 @@ class Controler
     }
 
     private function scan(){
+        header('Content-Type: application/json');
         $body = json_decode(file_get_contents('php://input'));
-        if (!empty($body)) {
-           
-            
-        } 
+
+        $id_bouteille = new Cellier;
+        $id = $id_bouteille ->getBouteilleCUP($body->scan_resultat);
+
+        //$objet = json_encode($id,true);
+        //var_dump($objet);
+
+        //exit(header("Location:index.php?requete=bouteille&vino_id=".$id));
+
+        echo json_encode($id);
+
        
     }
 
