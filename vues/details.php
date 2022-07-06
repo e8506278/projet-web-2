@@ -107,7 +107,9 @@ $erreur = "";
 
 if(isset($bouteille) && isset($bouteille['id_bouteille']) && $bouteille != null && $bouteille['id_bouteille'] && strlen($bouteille['nom_bouteille'])){
     $form_values = $bouteille;
+    
 }else{
+  
     $bouteille = null;
 }
 
@@ -176,6 +178,7 @@ function home_base_url(){
                 <?php } ?>
             </div>
         <?php }else{ ?>
+            
             <!--  Le cas normal-->
             <!--   Le cas de la modification-->
             <div class="boite-double">
@@ -191,7 +194,7 @@ function home_base_url(){
                 <form class="formulaire info-details"  action="./controller/AjouterBouteille.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden"
                                name="nom_cellier"
-                               value="<?php echo $nom_cellier?>"
+                               value="<?php if(isset($nom_cellier))echo $nom_cellier?>"
                         />
                         <input type="hidden"
                                name="id_bouteille"
@@ -885,7 +888,7 @@ function home_base_url(){
                                             <div class="value">
                                                 <input type="hidden" value="<?php echo $cellier['id_cellier'] ?>"
                                                        name="celliers<?php echo "[".$key."]"?>[id_cellier]"/>
-                                                <input type="hidden" value="<?php echo $cellier['id_bouteille'] ?>"
+                                                <input type="hidden" value="<?php if(isset($cellier['id_bouteille'])) echo $cellier['id_bouteille'] ?>"
                                                        name="celliers<?php echo "[".$key."]"?>[id_bouteille]"/>
                                                 <?php echo $cellier['nom_cellier']  ?: 'Non défini'?>
                                                 <?php echo  $cellier['nom_cellier'] && $cellier['id_cellier'] === $id_cellier ? '(Cellier actuel)': ''; ?>
@@ -927,7 +930,7 @@ function home_base_url(){
 
 
                         <div class="row-f submit-bloc fiche--fe">
-                     <?php if(isset($id_bouteille) && $id_bouteille != null) {  ?>
+                     <?php if(isset($id_bouteille) && $id_bouteille != null || isset($vino_id)) {  ?>
                      
                             <div >
                                     <div id="submit_btns" class="submit_btns">
@@ -940,7 +943,7 @@ function home_base_url(){
                                     </div>
                                      <?php } ?>  
                             </div>
-                        <?php } ?>   
+                        <?php }else{ ?>   
                             <div  >
 
                                 <div  class="submit_btns">
@@ -949,6 +952,7 @@ function home_base_url(){
                                     <button class="bouton-secondaire" id="enregistrerFormulaire">Enregistrer</button>
                                 </div>
                             </div>
+                            <?php } ?>
                         </div> 
                     </form>
           

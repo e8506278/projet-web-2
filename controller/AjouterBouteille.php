@@ -9,7 +9,7 @@ if (!class_exists('Lists')) {
 $debug = false;
 $message = null;
 
-$returnpage = home_base_url()."index.php?requete=bouteille";
+$returnpage = "index.php?requete=bouteille";
 $id_cellier  = $_POST['id_cellier'];
 $nom_cellier = $_POST['nom_cellier'];
 $bouteille_id = isset($_POST['id_bouteille'])?$_POST['id_bouteille']: null;

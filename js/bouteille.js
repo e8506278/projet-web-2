@@ -408,3 +408,7 @@ window.addEventListener('load', function () {
         // document.querySelector(".note-input").
     }
 );
+
+        // document.querySelector(".note-input").
+    }
+);

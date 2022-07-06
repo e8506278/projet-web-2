@@ -23,8 +23,6 @@ let elNomTableVino;
 let elTableColonnes;
 let elbtnAfficherVino;
 
-let scrollbarWidth = getScrollbarWidth();
-
 const nbMaxLignesTable = 5;
 const caretUpClassName = "fa fa-caret-up";
 const caretDownClassName = "fa fa-caret-down";
@@ -150,8 +148,6 @@ function afficherDetail(body) {
                 elSection4.innerHTML = "";
                 elSection4.insertAdjacentHTML("beforeend", formulaire);
 
-                ajusterElementsResponsive();
-
                 elBtnModifier = document.querySelector("[data-js-btn-modifier]");
                 elBtnConfirmer = document.querySelector("[data-js-btn-confirmer]");
                 elBtnAnnuler = document.querySelector("[data-js-btn-annuler]");
@@ -245,11 +241,6 @@ function afficherFormulaire() {
                 // On ajuste l'entête de la liste pour tenir compte de la barre de défilement
                 elTableEntete = document.getElementById("table-entete");
                 elTableBody = document.getElementById("table-body");
-                const elTr = elTableBody.querySelectorAll("tr");
-
-                if (elTr.length > nbMaxLignesTable) {
-                    elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
-                }
 
                 // On ajoute des événements à certains éléments nouvellement créés
                 elTableColonnes = document.getElementsByClassName("table-colonne");
@@ -316,6 +307,60 @@ function afficherSection2() {
                 traiterProchaineAction({ "nomTable": nomTableVino });
             });
         });
+}
+
+
+/**
+ * On ajuste certains éléments en fonction de la largeur de l'écran
+ */
+function ajusterElementsResponsive() {
+    const elSelect = elSection4.querySelectorAll("select");
+    const elLiens = elSection4.querySelectorAll(".lien-image-saq");
+
+    dimWidth = window.innerWidth;
+
+    for (let i = 0, l = elSelect.length; i < l; i++) {
+        if (dimWidth < 1024) {
+            elSelect[i].addEventListener("click", () => ajusterHauteurListe(elSelect[i], "click"));
+            elSelect[i].addEventListener("change", () => ajusterHauteurListe(elSelect[i], "change"));
+            elSelect[i].addEventListener("blur", () => ajusterHauteurListe(elSelect[i], "blur"));
+
+        } else {
+            elSelect[i].removeEventListener("click", () => ajusterHauteurListe);
+            elSelect[i].removeEventListener("change", () => ajusterHauteurListe);
+            elSelect[i].removeEventListener("blur", () => ajusterHauteurListe);
+        }
+    }
+
+    for (let i = 0, l = elLiens.length; i < l; i++) {
+        const contenu = elLiens[i].innerText;
+        const lesParties = contenu.split("/");
+        const nomFichier = lesParties[lesParties.length - 1];
+
+        elLiens[i].innerText = nomFichier;
+    }
+}
+
+
+/**
+ * On ajuste la hauteur de l'élément selon l'événement généré.
+ * @param el  L'élément à ajuster
+ * @param evt L'événement qui génère la demande
+ */
+function ajusterHauteurListe(el, evt) {
+    switch (evt) {
+        case "click":
+            if (el.options.length > 8) {
+                el.size = 8;
+            } else {
+                el.size = el.options.length;
+            }
+            break;
+        case "change":
+        case "blur":
+            el.size = 0;
+            break;
+    }
 }
 
 
@@ -436,7 +481,6 @@ function filtrerDonnees() {
     let filter = input.value.toUpperCase();
     rows = elTableBody.getElementsByTagName("tr");
     let flag = false;
-    let compteur = 0;
 
     for (let row of rows) {
         let cells = row.getElementsByTagName("td");
@@ -459,20 +503,11 @@ function filtrerDonnees() {
 
         if (flag) {
             row.style.display = "";
-            compteur++;
         } else {
             row.style.display = "none";
         }
 
         flag = false;
-    }
-
-    elTableEntete = document.getElementById("table-entete");
-
-    if (compteur > nbMaxLignesTable) {
-        elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
-    } else {
-        elTableEntete.style = `width: 100%)`;
     }
 }
 
@@ -584,6 +619,8 @@ function gererEdition(pos) {
             elBtnAnnuler.classList.remove("hide");
         }
 
+        ajusterElementsResponsive();
+
     } else {
         // On rend la section 1 utilisable
         if (elSection1) {
@@ -621,33 +658,6 @@ function gererEdition(pos) {
         }
 
     }
-}
-
-
-/**
- * Fonction qui identifie la valeur d'une barre de défilement dans la page.
- * Est appellée quand une table a une barre de défilement afin de faire correspondre l'entête avec le détail.
- * @returns la largeur d'une barre de défilement
- */
-function getScrollbarWidth() {
-    // Creating invisible container
-    const outer = document.createElement("div");
-    outer.style.visibility = "hidden";
-    outer.style.overflow = "scroll"; // forcing scrollbar to appear
-    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
-    document.body.appendChild(outer);
-
-    // Creating inner element and placing it in the container
-    const inner = document.createElement("div");
-    outer.appendChild(inner);
-
-    // Calculating difference between container's full width and the child width
-    const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
-
-    // Removing temporary elements from the DOM
-    outer.parentNode.removeChild(outer);
-
-    return scrollbarWidth;
 }
 
 
@@ -924,11 +934,6 @@ function rafraichirSection3() {
                 // On ajuste l'entête de la liste pour tenir compte de la barre de défilement
                 elTableEntete = document.getElementById("table-entete");
                 elTableBody = document.getElementById("table-body");
-                const elTr = elTableBody.querySelectorAll("tr");
-
-                if (elTr.length > nbMaxLignesTable) {
-                    elTableEntete.style = `width: calc(100% - ${scrollbarWidth}px)`;
-                }
 
                 // On ajoute des événements à certains éléments nouvellement créés
                 elTableColonnes = document.getElementsByClassName("table-colonne");
@@ -1113,50 +1118,4 @@ function traiterProchaineAction(prochaineAction) {
                 break;
         }
     }
-}
-
-
-function ajusterElementsResponsive() {
-    const elSelect = elSection4.querySelectorAll("select");
-    const elLiens = elSection4.querySelectorAll(".lien-image-saq");
-
-    for (let i = 0, l = elSelect.length; i < l; i++) {
-        if (dimWidth < 768) {
-            elSelect[i].addEventListener("click", ajusterHauteurListe(elSelect[i], "click"));
-            elSelect[i].addEventListener("change", ajusterHauteurListe(elSelect[i], "change"));
-            elSelect[i].addEventListener("blur", ajusterHauteurListe(elSelect[i], "blur"));
-
-        } else {
-            elSelect[i].removeEventListener("click", ajusterHauteurListe);
-            elSelect[i].removeEventListener("change", ajusterHauteurListe);
-            elSelect[i].removeEventListener("blur", ajusterHauteurListe);
-
-        }
-    }
-
-    for (let i = 0, l = elLiens.length; i < l; i++) {
-        const contenu = elLiens[i].innerText;
-        const lesParties = contenu.split("/");
-        const nomFichier = lesParties[lesParties.length - 1];
-
-        elLiens[i].innerText = nomFichier;
-    }
-}
-
-
-function ajusterHauteurListe(el, evt) {
-    switch (evt) {
-        case "click":
-            if (el.options.length > 8) {
-                el.size = 8;
-            } else {
-                el.size = el.options.length;
-            }
-            break;
-        case "change":
-        case "blur":
-            el.size = 0;
-            break;
-    }
-
 }
