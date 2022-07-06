@@ -51,9 +51,7 @@ class Usager extends Modele
 
     public function ajouterUsager($donnees)
     {
-        echo ('ajouterUsager');
-
-        $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, pays_id, nom_utilisateur, mot_de_passe, type_utilisateur, jeton, date_creation, date_modification, dernier_access) 
+        $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, pays_id, nom_utilisateur, mot_de_passe, type_utilisateur, jeton, date_creation, date_modification) 
                         VALUES (" .
             "'{$donnees->nom}'," .
             "'{$donnees->adresse}'," .
