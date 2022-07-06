@@ -9,6 +9,7 @@ if (!class_exists('Lists')) {
 $debug = false;
 $message = null;
 
+//$returnpage = home_base_url()."index.php?requete=bouteille";
 $returnpage = home_base_url()."index.php?requete=bouteille";
 $id_cellier  = $_POST['id_cellier'];
 $nom_cellier = $_POST['nom_cellier'];
@@ -365,8 +366,8 @@ if (headers_sent()) {
 }
 else{
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
-//    exit(header("Location:../index.php?requete=mesCelliers"));
-    header("Location:".$returnpage);
+    header("Location:../".$returnpage);
+//    header("Location:".$returnpage);
 }
 /*
  *
