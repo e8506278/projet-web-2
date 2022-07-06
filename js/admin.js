@@ -138,6 +138,29 @@ function afficherDetail(body) {
                 elSection4.innerHTML = "";
                 elSection4.insertAdjacentHTML("beforeend", formulaire);
 
+                const elSelect = elSection4.querySelectorAll("select");
+
+                for (let i = 0, l = elSelect.length; i < l; i++) {
+                    console.log("click");
+                    elSelect[i].addEventListener("click", () => {
+                        if (elSelect[i].options.length > 8) {
+                            elSelect[i].size = 8;
+                        } else {
+                            elSelect[i].size = elSelect[i].options.length;
+                        }
+                    });
+
+                    elSelect[i].addEventListener("change", () => {
+                        console.log("change");
+                        elSelect[i].size = 0;
+                    });
+
+                    elSelect[i].addEventListener("blur", () => {
+                        console.log("blur");
+                        elSelect[i].size = 0;
+                    });
+                }
+
                 elBtnModifier = document.querySelector("[data-js-btn-modifier]");
                 elBtnConfirmer = document.querySelector("[data-js-btn-confirmer]");
                 elBtnAnnuler = document.querySelector("[data-js-btn-annuler]");
@@ -386,8 +409,6 @@ function conserverDonnees() {
 
         tableData.push(oData);
     }
-
-    console.log(tableData);
 }
 
 

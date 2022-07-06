@@ -24,7 +24,13 @@
 }
 
 .liste-wrapper {
-    padding: var(--espace-p) 0;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .liste-wrapper {
+        padding: var(--espace-p) 0;
+    }
 }
 
 .liste-wrapper select {
@@ -41,7 +47,59 @@ input.plus-gros {
     margin: var(--espace-xp);
 }
 
-/****************************************************************/
+.section2 {
+    align-items: center;
+    background-color: rgb(126, 0, 63);
+    color: white;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    margin: 0;
+    padding: var(--espace-p);
+}
+
+.nom-table-wrapper {
+    margin-top: var(--espace-p);
+}
+
+@media (min-width: 768px) {
+    .section2 {
+        flex-direction: row;
+        margin: var(--espace-p) 0;
+    }
+
+    .nom-table-wrapper {
+        margin-top: 0;
+    }
+}
+
+.section1.hide,
+.section2.hide,
+.section3.hide,
+.section4.hide {
+    display: none;
+}
+
+.vino-selection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.vino-selection>*+* {
+    margin-top: var(--espace-p);
+}
+
+@media (min-width: 768px) {
+    .vino-selection {
+        display: block;
+        width: 100%;
+    }
+
+    .vino-selection>*+* {
+        margin-left: var(--espace-p);
+    }
+}
 
 .carte-admin {
     display: flex;
@@ -171,10 +229,6 @@ input.plus-gros {
 }
 
 /**************************************************************************/
-body {
-    font-family: "Roboto", sans-serif;
-}
-
 /* General focus reset */
 .admin-body textarea:focus,
 .admin-body input[type="text"]:focus,
@@ -225,11 +279,22 @@ h1 {
 }
 
 .filtre-wrapper {
+    align-items: center;
     background-color: #04AA6D;
     color: white;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin: var(--espace-xp) 0;
+    padding: var(--espace-p);
+}
+
+
+
+@media (min-width: 768px) {
+    .filtre-wrapper {
+        flex-direction: row;
+        padding: 0;
+    }
 }
 
 .filtre-wrapper.filtre-bouteille {
@@ -254,14 +319,29 @@ h1 {
     color: #f3f4f6;
 }
 
+@media (min-width: 768px) {
+    .filtre-wrapper>*:first-child {
+        margin: 0;
+    }
+}
+
 .filtre-wrapper>*:first-child {
-    margin: 0 var(--espace-p);
+    margin: 0;
 }
 
 .filtre-table {
     flex-grow: 1;
     line-height: 1.5;
     padding: var(--espace-xp);
+    margin-top: var(--espace-p);
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .filtre-table {
+        margin-top: 0;
+        width: auto;
+    }
 }
 
 .section3 {
@@ -398,7 +478,6 @@ h1 {
 
 .section3 table.table-vino th {
     background-color: rgb(126, 0, 63);
-    ;
     color: #f3f4f6;
 }
 
@@ -407,6 +486,30 @@ h1 {
     height: 40px;
     line-height: 40px;
     text-align: center;
+}
+
+.section3 table th,
+.section3 table td {
+    display: none;
+}
+
+.section3 .table-bouteille th:nth-child(3),
+.section3 .table-bouteille td:nth-child(3),
+.section3 .table-cellier th:nth-child(3),
+.section3 .table-cellier td:nth-child(3),
+.section3 .table-usager th:nth-child(2),
+.section3 .table-usager td:nth-child(2),
+.section3 .table-vino th:nth-child(2),
+.section3 .table-vino td:nth-child(2) {
+    display: block;
+}
+
+@media (min-width: 768px) {
+
+    .section3 table th,
+    .section3 table td {
+        display: block;
+    }
 }
 
 .section4 {
@@ -458,8 +561,14 @@ h1 {
 
 .groupe-ajouter {
     display: flex;
-    margin: var(--espace-p) 0 var(--espace-xp) 0;
+    margin: 0 0 var(--espace-xp) 0;
     justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+    .groupe-ajouter {
+        margin: var(--espace-p) 0 var(--espace-xp) 0;
+    }
 }
 
 .groupe-action {
@@ -541,26 +650,6 @@ h1 {
     fill: #f3f4f6;
 }
 
-.section2 {
-    align-items: center;
-    background-color: rgb(126, 0, 63);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    margin: var(--espace-p) 0;
-    padding: var(--espace-p);
-}
-
-.section1.hide,
-.section2.hide,
-.section3.hide,
-.section4.hide {
-    display: none;
-}
-
-.vino-selection>*+* {
-    margin-left: var(--espace-p);
-}
 
 .selection-nom-table {
     font-size: larger;
@@ -627,4 +716,101 @@ h1 {
 .section2.edition,
 .section3.edition {
     pointer-events: none;
+}
+
+/* Forcer la table à ne plus être une table */
+.section4 table,
+.section4 thead,
+.section4 tbody,
+.section4 th,
+.section4 td,
+.section4 tr {
+    display: block;
+}
+
+/* Masquer les en-têtes de tableau */
+.section4 thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.section4 tr {
+    border: 1px solid #ccc;
+}
+
+.section4 td {
+    /* Doit se comporter comme une "rangée" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+}
+
+.section4 td:before {
+    /* Maintenant comme un en-tête de tableau */
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+
+.section4 td>* {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .section4 table {
+        display: table;
+        border-collapse: separate;
+        border-spacing: 2px;
+        border-color: gray;
+    }
+
+    .section4 thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    .section4 tbody {
+        display: table-row-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    .section4 td {
+        display: table-cell;
+        vertical-align: inherit;
+        border: none;
+        position: static;
+        padding: 0;
+    }
+
+    .section4 th {
+        display: table-cell;
+        vertical-align: inherit;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .section4 tr {
+        border: none;
+        border-bottom: 1px solid gray;
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+
+    .section4 thead tr {
+        position: static;
+        top: auto;
+        left: auto;
+    }
+
+    .section4 td>* {
+        width: auto;
+    }
 }
