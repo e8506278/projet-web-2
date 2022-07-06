@@ -164,8 +164,9 @@ window.addEventListener('load', function () {
                     });
                 }
             });
-
+        });
     }
+
     /**
      * CR - Fin des modifs
      */
