@@ -51,9 +51,7 @@ class Usager extends Modele
 
     public function ajouterUsager($donnees)
     {
-        echo ('ajouterUsager');
-
-        $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, nom_utilisateur, mot_de_passe, type_utilisateur, jeton, date_creation, date_modification, dernier_access) 
+        $requete = "INSERT INTO usager__detail (nom, adresse, telephone, courriel, date_naissance, ville, pays_id, nom_utilisateur, mot_de_passe, type_utilisateur, jeton, date_creation, date_modification) 
                         VALUES (" .
             "'{$donnees->nom}'," .
             "'{$donnees->adresse}'," .
@@ -61,6 +59,7 @@ class Usager extends Modele
             "'{$donnees->courriel}'," .
             "'{$donnees->date_naissance}'," .
             "'{$donnees->ville}'," .
+            "'{$donnees->pays_id}'," .
             "'{$donnees->nom_utilisateur}'," .
             "'{$donnees->mot_de_passe}'," .
             "'{$donnees->type_utilisateur}'," .
@@ -151,6 +150,46 @@ class Usager extends Modele
     }
 
 
+    public function lireUsager($id)
+    {
+        $requete = "SELECT nom, adresse, telephone, courriel, verification_courriel, 
+                            date_naissance, ville, pays_id, nom_utilisateur, mot_de_passe
+                    FROM usager__detail
+                    WHERE id = " . $id;
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
+    }
+
+
+    public function modifierUsager($donnees)
+    {
+        $requete = "UPDATE usager__detail SET 
+                            nom = '{$donnees->nom}',
+                            adresse = '{$donnees->adresse}',
+                            telephone = '{$donnees->telephone}',
+                            courriel = '{$donnees->courriel}',
+                            date_naissance = '{$donnees->date_naissance}',
+                            ville = '{$donnees->ville}',
+                            nom_utilisateur = '{$donnees->nom_utilisateur}',
+                            mot_de_passe = '{$donnees->mot_de_passe}',
+                            date_modification = '{$donnees->date_modification}'
+                    WHERE id = '{$donnees->id}'";
+
+        $res = $this->_db->query($requete);
+        return $res;
+    }
+
+
     public function verifierCourriel($courriel)
     {
         $trouve = false;
@@ -182,5 +221,24 @@ class Usager extends Modele
         }
 
         return $trouve;
+    }
+
+
+    public function verifierUtilisateur($id)
+    {
+        $trouve = false;
+        $requete = "SELECT courriel, nom_utilisateur FROM usager__detail WHERE id = '{$id}'";
+
+        if (($res = $this->_db->query($requete)) == true) {
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+            }
+        } else {
+            throw new Exception("Erreur de requête sur la base de donnée", 1);
+        }
+
+        return $rows;
     }
 }
