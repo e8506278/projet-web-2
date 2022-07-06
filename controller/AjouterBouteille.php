@@ -370,7 +370,7 @@ if (headers_sent()) {
 else{
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
 //    exit(header("Location:../index.php?requete=mesCelliers"));
-header("Location:../".$returnpage);
+header("Location:".$returnpage);
 }
 /*
  *
@@ -393,8 +393,8 @@ function home_base_url(){
     }
     
     if ($tmpURL !== $_SERVER['HTTP_HOST']){
-        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
-       var_dump($base_url);exit;
+        $base_url .= $_SERVER['HTTP_HOST'].'/';
+
     }else{
      $base_url .= $tmpURL.'/';
     }
