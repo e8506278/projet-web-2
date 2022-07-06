@@ -764,7 +764,7 @@ h1 {
 @media (min-width: 768px) {
     .section4 table {
         display: table;
-        border-collapse: separate;
+        border-collapse: collapse;
         border-spacing: 2px;
         border-color: gray;
     }

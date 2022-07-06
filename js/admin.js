@@ -62,6 +62,18 @@ const trier_par = (champ, inverse, primer) => {
 };
 
 
+// Détecter la dimension de l'écran
+let dimHeight = window.innerHeight;
+let dimWidth = window.innerWidth;
+
+window.onresize = function () {
+    dimHeight = window.innerHeight;
+    dimWidth = window.innerWidth;
+
+    ajusterElementsResponsive();
+};
+
+
 /**
  * Les événements quand on clique sur une des 4 boîtes du haut.
  * Ça génère la liste des enregistrements associés à la table de la boîte
@@ -138,28 +150,7 @@ function afficherDetail(body) {
                 elSection4.innerHTML = "";
                 elSection4.insertAdjacentHTML("beforeend", formulaire);
 
-                const elSelect = elSection4.querySelectorAll("select");
-
-                for (let i = 0, l = elSelect.length; i < l; i++) {
-                    console.log("click");
-                    elSelect[i].addEventListener("click", () => {
-                        if (elSelect[i].options.length > 8) {
-                            elSelect[i].size = 8;
-                        } else {
-                            elSelect[i].size = elSelect[i].options.length;
-                        }
-                    });
-
-                    elSelect[i].addEventListener("change", () => {
-                        console.log("change");
-                        elSelect[i].size = 0;
-                    });
-
-                    elSelect[i].addEventListener("blur", () => {
-                        console.log("blur");
-                        elSelect[i].size = 0;
-                    });
-                }
+                ajusterElementsResponsive();
 
                 elBtnModifier = document.querySelector("[data-js-btn-modifier]");
                 elBtnConfirmer = document.querySelector("[data-js-btn-confirmer]");
@@ -1122,4 +1113,50 @@ function traiterProchaineAction(prochaineAction) {
                 break;
         }
     }
+}
+
+
+function ajusterElementsResponsive() {
+    const elSelect = elSection4.querySelectorAll("select");
+    const elLiens = elSection4.querySelectorAll(".lien-image-saq");
+
+    for (let i = 0, l = elSelect.length; i < l; i++) {
+        if (dimWidth < 768) {
+            elSelect[i].addEventListener("click", ajusterHauteurListe(elSelect[i], "click"));
+            elSelect[i].addEventListener("change", ajusterHauteurListe(elSelect[i], "change"));
+            elSelect[i].addEventListener("blur", ajusterHauteurListe(elSelect[i], "blur"));
+
+        } else {
+            elSelect[i].removeEventListener("click", ajusterHauteurListe);
+            elSelect[i].removeEventListener("change", ajusterHauteurListe);
+            elSelect[i].removeEventListener("blur", ajusterHauteurListe);
+
+        }
+    }
+
+    for (let i = 0, l = elLiens.length; i < l; i++) {
+        const contenu = elLiens[i].innerText;
+        const lesParties = contenu.split("/");
+        const nomFichier = lesParties[lesParties.length - 1];
+
+        elLiens[i].innerText = nomFichier;
+    }
+}
+
+
+function ajusterHauteurListe(el, evt) {
+    switch (evt) {
+        case "click":
+            if (el.options.length > 8) {
+                el.size = 8;
+            } else {
+                el.size = el.options.length;
+            }
+            break;
+        case "change":
+        case "blur":
+            el.size = 0;
+            break;
+    }
+
 }
