@@ -133,45 +133,44 @@ window.addEventListener('load', function () {
             console.log('selectBouteilleInput', e.target.value);
             afficheBouteille(e.target.value);
 
-            const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", {
-                method: 'POST',
-                body: JSON.stringify({nom: e.target.value})
-            });
+            const requete = new Request($baseUrl_without_parameters + "?requete=getBouteille", { method: 'POST', body: JSON.stringify({nom: e.target.value}) });
             fetch(requete)
                 .then(response => {
                     // if (response.status === 200) {
                     //     console.log('got result', response.json());
                     // }
                     return response.json();
-                }).then(function (data) {
-                console.log('data', data);
-                if (data) {
-                    Object.keys(data).forEach(key => {
+                })
+                .then(function (data) {
+                    console.log('data', data);
+                    if (data) {
+                        Object.keys(data).forEach(key => {
 
-                        if (key === 'image_bouteille') {
-                            const image_bouteille = document.getElementById(key);
-                            if (data['image_bouteille']) {
-                                image_bouteille.src = data['image_bouteille'];
-                            } else if (data['image_url']) {
-                                image_bouteille.src = data['image_url'];
-                            } else {
-                                image_bouteille.src = $baseUrl_without_parameters + '/assets/img/default_bouteille.png';
+                            if (key === 'image_bouteille') {
+                                const image_bouteille = document.getElementById(key);
+                                if (data['image_bouteille']) {
+                                    image_bouteille.src = data['image_bouteille'];
+                                } else if (data['image_url']) {
+                                    image_bouteille.src = data['image_url'];
+                                } else {
+                                    image_bouteille.src = $baseUrl_without_parameters + '/assets/img/default_bouteille.png';
+                                }
                             }
-                        }
-                        const elements = document.getElementsByName(key);
-                        if (elements && elements.length > 0) {
-                            elements[0].value = data[key];
-                        } else {
-                            console.log('not found in form', key);
-                        }
-                    });
-                }
-            });
-
+                            const elements = document.getElementsByName(key);
+                            if (elements && elements.length > 0) {
+                                elements[0].value = data[key];
+                            } else {
+                                console.log('not found in form', key);
+                            }
+                        });
+                    }
+                });
         });
-        /**
-         * CR - Fin des modifs
-         */
+    }
+
+    /**
+     * CR - Fin des modifs
+     */
 
         const image_inputs = document.getElementsByName('image_bouteille');
         if (image_inputs && image_inputs.length > 0) {

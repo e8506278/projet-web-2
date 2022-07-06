@@ -16,7 +16,7 @@ $aTypesCellier = $oVino->lireTypesCellier();
 $aTypesVin = $oVino->lireTypesVin();
 ?>
 
-<div>
+<div class="nom-table-wrapper">
     <span class="selection-nom-table" data-js-selection-nom-table></span>
 </div>
 <div class="vino-selection">

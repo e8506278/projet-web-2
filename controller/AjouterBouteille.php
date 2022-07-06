@@ -9,7 +9,6 @@ if (!class_exists('Lists')) {
 $debug = false;
 $message = null;
 
-//$returnpage = home_base_url()."index.php?requete=bouteille";
 $returnpage = home_base_url()."index.php?requete=bouteille";
 $id_cellier  = $_POST['id_cellier'];
 $nom_cellier = $_POST['nom_cellier'];
@@ -366,8 +365,8 @@ if (headers_sent()) {
 }
 else{
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
-//    header("Location:../".$returnpage);
-//    header("Location:".$returnpage);
+//    exit(header("Location:../index.php?requete=mesCelliers"));
+header("Location:../".$returnpage);
 }
 /*
  *
@@ -390,12 +389,12 @@ function home_base_url(){
     }
     
     if ($tmpURL !== $_SERVER['HTTP_HOST']){
-        $base_url .= $_SERVER['HTTP_HOST'].'/';
-
+        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
+       var_dump($base_url);exit;
     }else{
      $base_url .= $tmpURL.'/';
     }
-
+   
     return $base_url;
 }
 ob_end_flush();

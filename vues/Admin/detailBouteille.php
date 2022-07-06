@@ -273,7 +273,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                     <td class="pa-8">
                         <div class="lien-externe">
                             <span><?= $usagerBouteille['url_saq']; ?></span>
-                            <div class="lien-externe pa-8">
+                            <div class="pa-8">
                                 <a href="<?= $usagerBouteille['url_saq']; ?>" target="_blank" title="Ouvre le document lié dans une nouvelle fenêtre ou un nouvel onglet">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
                                         <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
@@ -294,8 +294,8 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <?php if ($mode == "lire") { ?>
                     <td class="pa-8">
                         <div class="lien-externe">
-                            <span><?= $usagerBouteille['url_img']; ?></span>
-                            <div class="lien-externe pa-8">
+                            <span class="lien-image-saq" title="<?= $usagerBouteille['url_img']; ?>"><?= $usagerBouteille['url_img']; ?></span>
+                            <div class="pa-8">
                                 <a href="<?= $usagerBouteille['url_img']; ?>" target="_blank" title="Ouvre le document lié dans une nouvelle fenêtre ou un nouvel onglet">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
                                         <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->

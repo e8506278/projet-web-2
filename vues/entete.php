@@ -22,7 +22,7 @@
 		<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 
 
-		<script  src="./js/Scan/scan.js" type="text/javascript" defer></script>
+		
 		<script  src="./js/Statistiques/statistiques.js"defer></script>
 		<script  src="./js/connexion.js"defer></script>
 		<script  src="./js/enregistrement.js" defer></script>
@@ -30,6 +30,7 @@
 		<script src="./js/quantiteBouteille.js" defer></script>
 		<script src="./js/modal.js" defer></script>
 		<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js" ></script>
+		<script  src="./js/Scan/scan.js" defer></script>
 		<script src="./js/main.js"></script>
 	</head>
 

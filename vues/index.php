@@ -22,7 +22,7 @@
 				<div>
 					<div class="banderole__titre">Celliers</div>
 					<div class="banderole__texte">
-						<?php echo $nombre_cellier ?>
+						<?php if(isset($nombre_cellier)) echo $nombre_cellier ?>
 					</div>
 				</div>
 			</a>
@@ -35,7 +35,7 @@
 				<div>
 					<div class="banderole__titre">Bouteilles</div>
 					<div class="banderole__texte">
-						<?php echo $bouteille_total?>
+						<?php if(isset($bouteille_total)) echo $bouteille_total?>
 					</div>
 				</div>
 			</a>
@@ -48,7 +48,7 @@
 				<div>
 					<div class="banderole__titre">Valeurs</div>
 					<div class="banderole__texte">
-						<?php echo $total ?>$
+						<?php if(isset($total)) echo $total ?>$
 					</div>
 				</div>
 			</a>
@@ -60,7 +60,7 @@
 				<div>
 					<div class="banderole__titre">Bues</div>
 					<div class="banderole__texte">
-						<?php echo $bouteillesBues ?>
+						<?php if(isset( $bouteillesBues)) echo $bouteillesBues ?>
 					</div>
 				</div>
 			</a>
@@ -72,7 +72,7 @@
 				<div>
 					<div class="banderole__titre">Achetées</div>
 					<div class="banderole__texte">
-						<?php echo $bouteillesAchetees ?>
+						<?php if(isset( $bouteillesAchetees)) echo $bouteillesAchetees ?>
 					</div>
 				</div>
 			</a>
@@ -113,7 +113,7 @@
 						<figcaption class="vignette__titre">Mes bouteilles</figcaption>
 					</figure>
 				</a>	
-				<a href="">
+				<a href="?requete=listes">
 					<figure class="vignette__wrapper">
 						<img class="vignette__img" src="./assets/img/etagere.jpg" alt="bouteilles">
 						<figcaption class="vignette__titre">Mes listes</figcaption>

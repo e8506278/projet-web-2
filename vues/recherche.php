@@ -57,7 +57,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/styles.css" type="text/css" media="screen">
 
-    <base href="<?php echo BASEURL; ?>">
+    <base href="<?= BASEURL; ?>">
 
     <script src="./js/recherche.js" defer></script>
 </head>
@@ -70,7 +70,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
         </button>
     </div>
 
-    <section class="section-wrapper carte carte--bg-couleur " data-js-usager="<?php echo $id_usager ?>">
+    <section class="section-wrapper carte carte--bg-couleur " data-js-usager="<?= $id_usager ?>">
         <div class="detail">
             <div class="barre-tri" data-js-barre-tri>
                 <div class="ouvrir-fermer">
@@ -1121,42 +1121,47 @@ $aTypesVin = $oRecherche->lireTypesVin();
                             $date_achat = $listeBouteille[$i]["date_achat"];
                             $prix_bouteille = $listeBouteille[$i]["prix_bouteille"];
                             $note = $listeBouteille[$i]["note"];
+
+                            if ($note) {
+                                $note = "Ma note est de ${note}/10";
+                            } else {
+                                $note = "Aucune note encore attribuée";
+                            }
                     ?>
 
-
-                            <a class="carte__lien">
-                                <div class="carte__contenu" data-js-bouteille="<?php echo $id_bouteille ?>">
+                            <a class="carte__lien" href="?requete=bouteille&id_bouteille=<?= $id_bouteille ?>&id_cellier=<?= $id_cellier ?>">
+                                <div class="carte__contenu" data-js-bouteille="<?= $id_bouteille ?>">
                                     <div class="carte__lien carte--flex">
                                         <div class="carte__img">
-                                            <img src="<?php echo $image_bouteille ?>" alt="bouteille">
+                                            <img src="<?= $image_bouteille ?>" alt="bouteille">
                                         </div>
 
 
                                         <div class="carte__description">
                                             <div>
                                                 <div class="carte--flex carte__titre">
-                                                    <h4 class=""><?php echo $nom_bouteille ?> - <?php echo $millesime_bouteille ?></h4>
+                                                    <h4 class=""><?= $nom_bouteille ?> - <?= $millesime_bouteille ?></h4>
                                                 </div>
 
                                                 <div>
                                                     <div class="carte__texte">
-                                                        <?php echo $description_bouteille ?>
+                                                        <?= $description_bouteille ?>
                                                     </div>
                                                     <div class="carte__texte">
-                                                        Acheté le <?php echo $date_achat ?>
+                                                        Acheté le <?= $date_achat ?>
                                                     </div>
                                                     <div class="carte__texte">
-                                                        Au prix de <?php echo $prix_bouteille ?>
+                                                        Au prix de <?= $prix_bouteille ?>
                                                     </div>
                                                     <div class="carte__texte">
-                                                        Ma note est de <?php echo $note ?>/10
+                                                        <?= $note ?>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <ul class="carte--haut">
                                                 <li class="carte--aligne-droite">
-                                                    <form data-js-id="<?php echo $id_bouteille ?>">
+                                                    <form data-js-id="<?= $id_bouteille ?>">
                                                         <i><svg class="carte__icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                                 <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                                                 <path d="M507.3 72.57l-67.88-67.88c-6.252-6.25-16.38-6.25-22.63 0l-22.63 22.62c-6.25 6.254-6.251 16.38-.0006 22.63l-76.63 76.63c-46.63-19.75-102.4-10.75-140.4 27.25l-158.4 158.4c-25 25-25 65.51 0 90.51l90.51 90.52c25 25 65.51 25 90.51 0l158.4-158.4c38-38 47-93.76 27.25-140.4l76.63-76.63c6.25 6.25 16.5 6.25 22.75 0l22.63-22.63C513.5 88.95 513.5 78.82 507.3 72.57zM179.3 423.2l-90.51-90.51l122-122l90.51 90.52L179.3 423.2z"></path>
@@ -1169,7 +1174,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                                                 </svg></i>
                                                         </button>
 
-                                                        <span data-js-quantite=""><?php echo $quantite_bouteille ?></span>
+                                                        <span data-js-quantite=""><?= $quantite_bouteille ?></span>
 
                                                         <button class="bouton btnBoire">
                                                             <i class="carte__icone-petit--espace"><svg class="carte__icone-petit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
