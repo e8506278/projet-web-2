@@ -66,7 +66,7 @@ class Usager extends Modele
             "'{$donnees->jeton}'," .
             "'{$donnees->date_creation}'," .
             "'{$donnees->date_modification}')";
-
+var_dump($requete);
         $res = $this->_db->query($requete);
         return $res;
     }

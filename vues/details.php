@@ -1477,10 +1477,11 @@ function home_base_url(){
                     <div class="col-6 info-unit">
                     </div>
                     <div class="col-6 " >
-<!--                        <div >-->
+                    <?php if(!empty($celliers)) {?>
                             <button class="bouton-primaire" type="button" id="fermerFormulaire" >Annuler</button>
+
                             <button class="bouton-secondaire">Enregistrer</button>
-<!--                        </div>-->
+                    <?php } ?>
                     </div>
                 </div>
 
