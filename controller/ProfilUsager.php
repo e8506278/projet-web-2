@@ -133,6 +133,8 @@ if (isset($_POST["modifier_profil"])) {
             $hachageMdp = password_hash($motDePasse, PASSWORD_BCRYPT);
 
             $date = new DateTime();
+            $date->setTimezone(new DateTimeZone('America/New_York'));
+            $fdate = $date->format('Y-m-d H:i:s');
 
             // Préparer et exécuter la requête
             $donnees = new StdClass();
@@ -146,7 +148,7 @@ if (isset($_POST["modifier_profil"])) {
             $donnees->pays_id = $pays_id;
             $donnees->nom_utilisateur = $utilisateur;
             $donnees->mot_de_passe = $hachageMdp;
-            $donnees->date_modification = $date->getTimestamp();
+            $donnees->date_modification = $fdate;
 
             $resultat = $oUsager->modifierUsager($donnees);
 
