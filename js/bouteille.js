@@ -119,15 +119,8 @@ window.addEventListener('load', function () {
     /**
      * CR - Début des modifs
      */
-    const vino_id = urlParams.get('vino_id');
 
     if (selectBouteilleInput) {
-        if (vino_id) {
-            id_bouteille = vino_id;
-            elOptBouteille = document.querySelector(`[data-js-id-bouteille="${id_bouteille}"]`);
-            selectBouteilleInput.value = elOptBouteille.value;
-            // afficheBouteille(selectBouteilleInput.value);
-        }
 
         selectBouteilleInput.addEventListener('input', (e) => {
             console.log('selectBouteilleInput', e.target.value);
