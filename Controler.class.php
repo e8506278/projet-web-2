@@ -55,6 +55,9 @@ class Controler
             case 'ajouterNouvelleBouteilleCellier':
                 $this->ajouterNouvelleBouteilleCellier();
                 break;
+            case 'listes': //gm
+                $this->listes();
+                break;
             case 'bouteille': //fr
                 $this->ficheBouteille();
                 break;
@@ -1179,7 +1182,15 @@ class Controler
         include("vues/pied.php");
     }
 
-
+    /**
+     * Cette méthode affiche les listes
+     * 
+     */
+    private function listes(){
+        include("vues/entete.php");
+        include("vues/listes.php");
+        include("vues/pied.php");
+    }
     /**
      * Cette méthode récupère la liste des celliers d'un usager ainsi que le nombre de cellier par usager
      * avec l'id session de l'usager
