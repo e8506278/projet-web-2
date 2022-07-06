@@ -134,6 +134,8 @@ if(isset($form_values['image_bouteille']) && $form_values['image_bouteille'] != 
         $form_values['image_bouteille'] = home_base_url().$form_values['image_bouteille'];
     }
 }
+
+print_r($form_values['commentaires']);
 /*
 // fonction pour récupérer l'url absolu
 function home_base_url(){
@@ -774,7 +776,7 @@ function home_base_url(){
                             </h4>
                             <div class="tiroir-off">
                                  <input type="hidden" name="estCommentaire" value="1" />
-                                    <div class='info-details info-unit'>
+                                 <div class='info-details info-unit'>
                                         <div class="comment">
                                         
                                     
@@ -790,15 +792,15 @@ function home_base_url(){
                                             <textarea placeholder='Ajouter un nouveau commentaire'
                                                         row-fs="4"
                                                         name="commentaires"
-                                                        class="input formulaire__champs boite-double__champs input-state" style="display: none;"><?php echo $form_values['commentaires']?>
-                                            </textarea>
+                                                        class="input formulaire__champs boite-double__champs input-state" ><?php echo $form_values['commentaires']?></textarea>
                                             <p class=" label-state">
-                                            <?php if(isset($form_values['commentaires'])){
-                                                echo $form_values['commentaires'] ;
-                                            }else{ ?>
-                                                Aucun commentaire
-                                            <?php }?>
-                                                
+                                                <?php if(isset($form_values['commentaires'])){
+                                                    echo $form_values['commentaires'] ;
+                                                }else{ ?>
+                                                    Aucun commentaire
+                                                <?php }?>
+                                            </p>
+<!--                                                -->
                                               
                                         </div>
                                         <input type="hidden"
@@ -930,12 +932,12 @@ function home_base_url(){
 
 
                         <div class="row-f submit-bloc fiche--fe">
-                     <?php if(isset($id_bouteille) && $id_bouteille != null || isset($vino_id)) {  ?>
+                     <?php if((isset($id_bouteille) && $id_bouteille != null) || isset($vino_id)) {  ?>
                      
                             <div >
                                     <div id="submit_btns" class="submit_btns">
                                         <button class="bouton-secondaire bouton-danger" type="button" id="askDeleteBtn"
-                                                style="display:  <?php if(!$form_values['id_cellier'] || !$form_values['id_bouteille']) {echo "none";}?>"
+                                                style="display:  <?php if(!$form_values['id_cellier'] || !$form_values['id_bouteille'] || $form_values['vino_id']) {echo "none";}?>"
                                             >Détruire</button>
                                             <?php if(!empty($celliers)) {?>
                                         <button class="bouton-secondaire" type="button" id="ouvrirFormulaire"
@@ -943,7 +945,6 @@ function home_base_url(){
                                     </div>
                                      <?php } ?>  
                             </div>
-                        <?php }else{ ?>   
                             <div  >
 
                                 <div  class="submit_btns">
@@ -952,7 +953,7 @@ function home_base_url(){
                                     <button class="bouton-secondaire" id="enregistrerFormulaire">Enregistrer</button>
                                 </div>
                             </div>
-                            <?php } ?>
+                        <?php }?>
                         </div> 
                     </form>
           
