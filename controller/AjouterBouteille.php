@@ -25,19 +25,19 @@ array_walk_recursive($_POST, function (&$value) {
     $value = htmlentities($value);
 });
 
-if(isset($_POST['estCommentaire'])){
-    $query_string = "UPDATE  usager__bouteille SET
-                            commentaires = '".$_POST['commentaires']."'
-                            WHERE id_bouteille=".$_POST['id_bouteille'];//
-    $message = "Le commentaire a bien été ajouté";
-    if($debug){
-        echo "<br>";
-        echo $query_string;
-         echo "<br>";
-    }
-    $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
-
-}else{
+//if(isset($_POST['estCommentaire'])){
+//    $query_string = "UPDATE  usager__bouteille SET
+//                            commentaires = '".$_POST['commentaires']."'
+//                            WHERE id_bouteille=".$_POST['id_bouteille'];//
+//    $message = "Le commentaire a bien été ajouté";
+//    if($debug){
+//        echo "<br>";
+//        echo $query_string;
+//         echo "<br>";
+//    }
+//    $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+//
+//}else{
 
     $list = new Lists();
 
@@ -192,7 +192,8 @@ if(isset($_POST['estCommentaire'])){
                         quantite_bouteille ,
                         date_achat ,
                         garde_jusqua ,
-                        millesime
+                        millesime,
+                        commentaires 
                           
                 ) VALUES (
                       ".  ($cellier['quantite'] == 0 ? 'NULL': $cellier['id_cellier']) .",
@@ -248,7 +249,8 @@ if(isset($_POST['estCommentaire'])){
                       '".($cellier['quantite'] ?: 0)."',
                       ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
                       ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
-                     '".($_POST['millesime'])."'
+                     '".($_POST['millesime'])."',
+                     '".($_POST['commentaires'])."'
                 )";
 
             $action ="a";
@@ -303,7 +305,8 @@ if(isset($_POST['estCommentaire'])){
                         quantite_bouteille = '".($cellier['quantite'] ?: 0)."',
                         date_achat = ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
                         garde_jusqua = ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
-                        millesime = '".($_POST['millesime'])."'
+                        millesime = '".($_POST['millesime'])."',
+                        commentaires = '".$_POST['commentaires']."'
                         WHERE id_cellier=".$cellier['id_cellier']." AND id_bouteille=".$cellier['id_bouteille'];
 
             echo "<br>".intval($ub[0]['quantite_bouteille'])." -- ".intval($cellier['quantite']). "<br>";
@@ -352,7 +355,7 @@ if(isset($_POST['estCommentaire'])){
 
         //On ajoute l'action ici
     }
-}
+
 
 
 echo "Traitement terminé avec succès !<br><br>";
@@ -391,10 +394,12 @@ function home_base_url(){
         $tmpURL = explode('/',$tmpURL);
         $tmpURL = $tmpURL[0];
     }
-    
-    if ($tmpURL !== $_SERVER['HTTP_HOST']){
-        $base_url .= $_SERVER['HTTP_HOST'].'/';
 
+    if ($tmpURL !== $_SERVER['HTTP_HOST']){
+        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
+        //TODO
+        // en serveur faire
+        // $base_url .= $_SERVER['HTTP_HOST'].'/';
     }else{
      $base_url .= $tmpURL.'/';
     }
