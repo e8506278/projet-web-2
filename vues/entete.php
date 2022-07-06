@@ -55,7 +55,7 @@
 							<?php echo $_SESSION['utilisateur']['nom']?></div>
 							<ul class="nav__deroule-contenu">
 								<li><a href="?requete=profil">Mon compte</a></li>
-								<li><a>Mes listes</a></li>
+								<li><a href="?requete=listes">Mes listes</a></li>
 								<li><a href="?requete=statistiques">Mes Statistiques</a></li>
 								<li><a href="?requete=deconnecter">Déconnexion</a></li>
 							</ul>
