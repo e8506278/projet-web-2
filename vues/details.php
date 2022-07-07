@@ -213,7 +213,7 @@ function home_base_url(){
                         <!-- Information sur la bouteille     -->
                         <div class="form-block">
                             <h4 class="fiche__titre">Informations sur la bouteille</h4>
-                            <div class="star-container">
+                            <div class="star-container" data-js-etoiles  >
                                     <?php
                                     $note = $form_values['note'];
                                     for($i = 1; $i <= 5; $i++) {

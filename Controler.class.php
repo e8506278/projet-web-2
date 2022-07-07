@@ -931,7 +931,7 @@ class Controler
     private function detruireBouteille()
     {
         $body = json_decode(file_get_contents('php://input'));
-var_dump($body);
+
         $bte = new Bouteille();
         $resultat = $bte->deleteUsageBouteille($body->id_bouteille, $body->id_cellier);
 
