@@ -1080,35 +1080,33 @@ class Controler
         $vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
         $message = isset($_GET['message']) ? $_GET['message'] : null;
 
-       
-        
+
+
             if ($id_bouteille) {
-                
+
                 $bouteille = new Bouteille();
-                
+
                 $bouteille = $bouteille->getOneBouteille($id_bouteille, $id_cellier);
-                
-              
                 if (is_array($bouteille) && count($bouteille) > 0) {
                     $bouteille = $bouteille[0];
                 }
-            }
-            
-            else if(isset($vino_id) && $vino_id != null){
+            } else{
                 if(isset($vino_id) && $vino_id != null){
                     $idB = new Cellier;
                     $id_bouteille = $idB ->getBouteilleCUP($vino_id);
-                   
+
                     $bouteille = new Bouteille();
-                    
+
                     $bouteille = $bouteille->getOneBouteilleFromVino($id_bouteille);
                     if (is_array($bouteille) && count($bouteille) > 0) {
                         $bouteille = $bouteille[0];
+                       $id_bouteille = $bouteille['id_bouteille'];
+                        $vino_id = $bouteille['id_bouteille'];
                     }
                 }
             }
 
-
+//            print_r($bouteille); die();
 
         $body = json_decode(file_get_contents('php://input'));
 

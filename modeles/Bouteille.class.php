@@ -311,7 +311,7 @@ $this->_db->set_charset('utf8');
             $requete = $requete . " AND ub.id_cellier = '" . $id_cellier . "'";
         }
         $this->_db->set_charset('utf8');
-      
+     
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 

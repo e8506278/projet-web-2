@@ -5,10 +5,34 @@ $erreur = "";
 $aTri = array('champ' => 'nom_bouteille', 'ordre' => 'asc');
 $aDonnees = [];
 $id_appellant = -1;
+$achat = false;
+$favori = false;
+$essayer = false;
+
+$les_listes = "";
 
 if (isset($_GET['id_cellier'])) {
     $id_appellant = $_GET['id_cellier'];
     $aDonnees['id_cellier'] = $id_appellant;
+}
+
+if (isset($_GET['favori']) && $_GET['favori'] == 1) {
+    $favori = true;
+    $les_listes .= "favori,";
+}
+
+if (isset($_GET['essayer']) && $_GET['essayer'] == 1) {
+    $essayer = true;
+    $les_listes .= "essayer,";
+}
+
+if (isset($_GET['achat']) && $_GET['achat'] == 1) {
+    $achat = true;
+    $les_listes .= "achat,";
+}
+
+if ($les_listes) {
+    $aDonnees["les_listes"] = substr($les_listes, 0, strlen($les_listes) - 1);
 }
 
 if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
@@ -1106,7 +1130,12 @@ $aTypesVin = $oRecherche->lireTypesVin();
                         </div>
                     </div>
                 </div>
+
                 <input type="hidden" data-js-id-appellant="<?= $id_appellant ?>" />
+                <input type="hidden" data-js-achat="<?= $achat ?>" />
+                <input type="hidden" data-js-favori="<?= $favori ?>" />
+                <input type="hidden" data-js-essayer="<?= $essayer ?>" />
+
                 <div class="carte__contenant" data-js-carte-contenant>
                     <?php
                     if (count($listeBouteille)) {

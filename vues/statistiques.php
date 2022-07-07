@@ -16,13 +16,13 @@
                 <li>
                     <div class="graphique--gras">BLANC</div>
                     <span class="graphique__qte"></span>
-                    <span class="index" style="width: <?php echo $types['p_blanc'];?>%; background-color: #efe1a1;">("<?php echo $types['p_blanc'];?>%")</span>
+                    <span class="index" style="width: <?php echo $types['p_blanc'];?>%; background-color: #f3e5ab;">("<?php echo $types['p_blanc'];?>%")</span>
                     <span class="graphique--police graphique--pd"><?php echo round($types['p_blanc'],2);?>%</span>
                 </li>
                 <li>
                     <div class="graphique--gras">ROSÉ</div>
                     <span class="graphique__qte"></span>
-                    <span class="index" style="width: <?php echo $types['p_rose'];?>%; background-color: #f4c4bb;">("<?php echo $types['p_rose'];?>%")</span>
+                    <span class="index" style="width: <?php echo $types['p_rose'];?>%; background-color: #f48072;">("<?php echo $types['p_rose'];?>%")</span>
                     <span class="graphique--police graphique--pd"><?php echo round($types['p_rose'],2);?>%</span>
                 </li>
             </ul>
