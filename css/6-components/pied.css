@@ -75,7 +75,7 @@
 .pied__liens{
     color: var(--couleur-primaire);
     cursor: pointer;
-    padding: var(--espace-xp);
+    padding: var(--espace-xp) 0;
 }
 .pied__liens:hover{
     color: var(--couleur-accent);

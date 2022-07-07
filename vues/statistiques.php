@@ -10,7 +10,7 @@
                 <li>
                     <div class="graphique--gras">ROUGE </div>
                     <span class="graphique__qte" ></span>
-                    <span class="index" style="width: <?php echo $types['p_rouge'];?>%; background-color: #b11226; ">("<?php echo $types['p_rouge'];?>%")</span>
+                    <span class="index" style="width: <?php echo $types['p_rouge'];?>%; background-color: #641b30; ">("<?php echo $types['p_rouge'];?>%")</span>
                     <span class="graphique--police graphique--pd"><?php echo round($types['p_rouge'],2);?>%</span>
                 </li>
                 <li>
@@ -37,7 +37,7 @@
                 <li>
                     <div class="graphique--gras"><?php echo $cellier['nom_cellier'] ;?></div>
                     <span class="graphique__qte" ></span>
-                    <span class="index" style="width:<?php echo (($cellier['prix_total']*$cellier['bouteille_total'])/$total)*100?>%; background-color: #b11226; ">("<?php echo round(($cellier['prix_total']/$prix_total)*100,2)?>%")</span>
+                    <span class="index" style="width:<?php echo (($cellier['prix_total']*$cellier['bouteille_total'])/$total)*100?>%; background-color: #84a98c; ">("<?php echo round(($cellier['prix_total']/$prix_total)*100,2)?>%")</span>
                     <span class="graphique--police graphique--pd"><?php echo $cellier['prix_total']*$cellier['bouteille_total'] ?>$</span>
                 </li>
                 <?php }?>
