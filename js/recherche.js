@@ -1507,7 +1507,7 @@ function rechercher() {
                         let note = bouteille["note"];
 
                         if (note) {
-                            note = "Ma note est de ${ note }/10";
+                            note = `Ma note est de ${note}/5`;
                         } else {
                             note = "Aucune note encore attribuée";
                         }

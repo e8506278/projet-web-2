@@ -60,17 +60,7 @@ const trier_par = (champ, inverse, primer) => {
 };
 
 
-// Détecter la dimension de l'écran
-let dimHeight = window.innerHeight;
-let dimWidth = window.innerWidth;
-
-window.onresize = function () {
-    dimHeight = window.innerHeight;
-    dimWidth = window.innerWidth;
-
-    ajusterElementsResponsive();
-};
-
+ajusterElementsResponsive();
 
 /**
  * Les événements quand on clique sur une des 4 boîtes du haut.
@@ -172,8 +162,12 @@ function afficherDetail(body) {
                     });
                 }
 
-                if (body.mode == "ajouter" || body.mode == "modifier")
+                if (body.mode == "ajouter" || body.mode == "modifier") {
                     gererEdition("debut");
+                }
+
+                ajusterElementsResponsive();
+
             });
     }
 }
@@ -311,25 +305,16 @@ function afficherSection2() {
 
 
 /**
- * On ajuste certains éléments en fonction de la largeur de l'écran
+ * On ajuste certains éléments pour qu'ils soient utilisable dans tous les formats d'écran
  */
 function ajusterElementsResponsive() {
     const elSelect = elSection4.querySelectorAll("select");
     const elLiens = elSection4.querySelectorAll(".lien-image-saq");
 
-    dimWidth = window.innerWidth;
-
     for (let i = 0, l = elSelect.length; i < l; i++) {
-        if (dimWidth < 1024) {
-            elSelect[i].addEventListener("click", () => ajusterHauteurListe(elSelect[i], "click"));
-            elSelect[i].addEventListener("change", () => ajusterHauteurListe(elSelect[i], "change"));
-            elSelect[i].addEventListener("blur", () => ajusterHauteurListe(elSelect[i], "blur"));
-
-        } else {
-            elSelect[i].removeEventListener("click", () => ajusterHauteurListe);
-            elSelect[i].removeEventListener("change", () => ajusterHauteurListe);
-            elSelect[i].removeEventListener("blur", () => ajusterHauteurListe);
-        }
+        elSelect[i].addEventListener("click", () => ajusterHauteurListe(elSelect[i], "click"));
+        elSelect[i].addEventListener("change", () => ajusterHauteurListe(elSelect[i], "change"));
+        elSelect[i].addEventListener("blur", () => ajusterHauteurListe(elSelect[i], "blur"));
     }
 
     for (let i = 0, l = elLiens.length; i < l; i++) {
@@ -618,8 +603,6 @@ function gererEdition(pos) {
         if (elBtnAnnuler) {
             elBtnAnnuler.classList.remove("hide");
         }
-
-        ajusterElementsResponsive();
 
     } else {
         // On rend la section 1 utilisable
