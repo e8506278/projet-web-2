@@ -85,6 +85,9 @@ class SAQ extends Modele
     {
         $html = self::curl_get_contents($url);
 
+        $url_parties = explode("/", $url);
+        $code_saq = end($url_parties);
+
         $doc = new DOMDocument();
         $doc->recover = true;
         $doc->strictErrorChecking = false;
@@ -123,6 +126,7 @@ class SAQ extends Modele
         $bte["nom_bouteille"] = $titre;
         $bte["prix_bouteille"] = $prix;
         $bte["url_saq"] = $url;
+        $bte["code_saq"] = $code_saq;
         $bte["url_img"] = $src;
         $bte["pays_nom"] = NULL;
         $bte["region_nom"] = NULL;
