@@ -152,6 +152,13 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
             </tr>
             <tr>
+                <td class="pa-8">À acheter</td>
+                <td>
+                    <input type="text" name="achat_bouteille" <?= $disabled ?> value="<?php if (isset($usagerBouteille) && isset($usagerBouteille['achat_bouteille'])) echo $usagerBouteille['achat_bouteille']; ?>"></input>
+                </td>
+
+            </tr>
+            <tr>
                 <td class="pa-8">Code saq</td>
                 <td>
                     <input type="text" name="code_saq" <?= $disabled ?> value="<?php if (isset($usagerBouteille) && isset($usagerBouteille['code_saq'])) echo $usagerBouteille['code_saq']; ?>"></input>
