@@ -1,6 +1,15 @@
 <section class="section-wrapper carte--bg-couleur">
     <h3 class="carte__entete">Mon compte</h3>
     <div class="carte">
+
+        <!--Admin-->
+        <?php if(isset($_SESSION) && $_SESSION['type_utilisateur'] === 2 ){?>
+        <a class="carte__contenu carte__lien" href="?requete=admin">
+            <i class="carte--droite"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M352 192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H288V144C288 64.47 352.5 0 432 0C511.5 0 576 64.47 576 144V192C576 209.7 561.7 224 544 224C526.3 224 512 209.7 512 192V144C512 99.82 476.2 64 432 64C387.8 64 352 99.82 352 144V192z"/></svg></i>
+            Panneau administrateur
+        </a>
+        <?php };?>
+         <!--Admin & Usager-->
         <a class="carte__contenu carte__lien" href="?requete=profilUsager">
             <i class="carte--droite"><svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <path d="M362.7 19.32C387.7-5.678 428.3-5.678 453.3 19.32L492.7 58.75C517.7 83.74 517.7 124.3 492.7 149.3L444.3 197.7L314.3 67.72L362.7 19.32zM421.7 220.3L188.5 453.4C178.1 463.8 165.2 471.5 151.1 475.6L30.77 511C22.35 513.5 13.24 511.2 7.03 504.1C.8198 498.8-1.502 489.7 .976 481.2L36.37 360.9C40.53 346.8 48.16 333.9 58.57 323.5L291.7 90.34L421.7 220.3z" />

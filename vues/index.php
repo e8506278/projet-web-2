@@ -11,7 +11,7 @@
 
 
 <section class="section-wrapper banderole">
-<h4 class="vignette__entete">Aperçu</h4><br>
+<h4 class="vignette__entete">Aperçu - Statistiques globales</h4><br>
 <div class="swiper mySwiper">
     <div class="swiper-wrapper">
         <div class="swiper-slide">
@@ -21,6 +21,7 @@
 				</i>
 				<div>
 					<div class="banderole__titre">Celliers</div>
+					
 					<div class="banderole__texte">
 						<?php if(isset($nombre_cellier)) echo $nombre_cellier ?>
 					</div>

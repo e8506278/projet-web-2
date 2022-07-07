@@ -1209,25 +1209,33 @@ class Controler
      */
     private function listeCelliers()
     {
+        include("vues/entete.php");
 
-        $id = $_SESSION['utilisateur']['id'];;
-        $celliers = new Cellier();
+        if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
+            $id = $_SESSION['utilisateur']['id'];
+            $celliers = new Cellier();
 
-        $data = $celliers->getListeCellier($id);
-        $nombre_cellier = $celliers->nombreCellierUsager($id);
+            $data = $celliers->getListeCellier($id);
+            $nombre_cellier = $celliers->nombreCellierUsager($id);
 
-        // Si le nombre de cellier est égal à 10
-        if ($nombre_cellier == '10') {
+            // Si le nombre de cellier est égal à 10
+            if ($nombre_cellier == '10') {
 
-            $erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
+                $erreur = "Vous avez atteint le maximum de celliers disponibles (10).";
+            } else {
+                $erreur = "";
+            }
+            include("vues/Celliers/celliers.php");
         } else {
-            $erreur = "";
+            include("vues/connecter.php");
         }
 
-
-        include("vues/entete.php");
-        include("vues/Celliers/celliers.php");
         include("vues/pied.php");
+
+        
+
+
+     
     }
 
     /**
