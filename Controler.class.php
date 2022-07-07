@@ -296,8 +296,15 @@ class Controler
     {
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $body = json_decode(file_get_contents('php://input'));
+
             $mode = isset($body->mode) ? $body->mode : "lire";
             $id = isset($body->id) ? $body->id : null;
+            $url = isset($body->url) ? $body->url : null;
+
+            if ($url) {
+                $saq = new SAQ();
+                $usagerBouteille = $saq->recupereInfo($url);
+            }
 
             include("vues/Admin/detailBouteille.php");
         } else {
