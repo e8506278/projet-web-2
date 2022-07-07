@@ -12,8 +12,8 @@
     // $page = 1;
     // $nombreProduit = 96; //48 ou 96	
 
-    $saq = new SAQ();
-    $saq->recupereInfo();
+    // $saq = new SAQ();
+    // $saq->recupereInfo();
 
     // for ($i = 0; $i < 80; $i++)    //permet d'importer séquentiellement plusieurs pages.
     // {
