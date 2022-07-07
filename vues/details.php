@@ -138,7 +138,6 @@ if(isset($form_values['image_bouteille']) && $form_values['image_bouteille'] != 
     }
 }
 
-//print_r($celliers); die();
 
 /*
 // fonction pour récupérer l'url absolu
@@ -219,12 +218,12 @@ function home_base_url(){
                         <!-- Information sur la bouteille     -->
                         <div class="form-block">
                             <h4 class="fiche__titre">Informations sur la bouteille</h4>
-                            <div class="star-container">
+                            <div class="star-container" data-js-etoiles  >
                                     <?php
                                     $note = $form_values['note'];
                                     for($i = 1; $i <= 5; $i++) {
                                         if($i <= $note) { ?>
-                                            <span class="star_rated note-input"
+                                            <span class="star_rated note-input "
                                                   onclick="ratestar(<?php echo $i; ?>, <?php echo $form_values['id_bouteille']?>, <?php echo $form_values['id_cellier']?>)">
                                                 &#x2605;
                                             </span>
@@ -1418,6 +1417,13 @@ function home_base_url(){
                                 </div>
                             </div>
                         
+                        
+                </div>
+
+                
+                    <div class="form-block" >
+                        <h4 class="fiche__titre">Quantité à ajouter</h4>
+
                         <div class="row-f">
                             
                             <?php if(isset($id_cellier) && $id_cellier!=null) {?>
@@ -1439,12 +1445,7 @@ function home_base_url(){
                                 </div>
                             <?php } ?>
                         </div>
-
-                </div>
-
-                <?php if(!isset($id_cellier) || !$id_cellier) {?>
-                    <div class="form-block" >
-                        <h4 class="fiche__titre">Quantité à ajouter</h4>
+                        <?php if(!isset($id_cellier) || !$id_cellier) {?>
                         <?php if($celliers && is_array($celliers) && count($celliers)>0) {?>
                             <?php $key = 0; foreach ($celliers as $cellier) {?>
                                 <div class="row-f-r">
@@ -1486,6 +1487,9 @@ function home_base_url(){
                     </div>
                 <?php }?>
 
+                
+                </div>
+
                 <div class="row-f submit-bloc fiche--fe">
                     <div class="col-6 info-unit">
                     </div>
@@ -1496,9 +1500,6 @@ function home_base_url(){
                             <button class="bouton-secondaire">Enregistrer</button>
                     <?php } ?>
                     </div>
-                </div>
-
-          
             </form>
         </div>
     <?php } ?>

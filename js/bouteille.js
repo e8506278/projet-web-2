@@ -23,6 +23,7 @@ console.log('hello bouteille', etatModification);
 
 function ratestar(note, id_bouteille, id_cellier) {
     supprimerMessageFromUrl();
+   
     if(note && id_bouteille){
         const requete = new Request($baseUrl_without_parameters + "?requete=noteBouteille", { method: 'POST', body: JSON.stringify({note: note, id_bouteille: id_bouteille, id_cellier: id_cellier }) });
         fetch(requete).then(response => {
@@ -30,7 +31,9 @@ function ratestar(note, id_bouteille, id_cellier) {
         }).then(function (data) {
             console.log('resultat', data);
         }).finally(() => {
-            location.reload();
+           // for($i = 1; $i <= 5; $i++)
+           // location.reload();
+           injecterEtoile()
         });
     }
 }

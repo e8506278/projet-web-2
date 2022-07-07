@@ -8,22 +8,22 @@
         </div>
             <ul class="graphique" data-js-graphique>
                 <li>
-                    <div>ROUGE </div>
+                    <div class="graphique--gras">ROUGE </div>
                     <span class="graphique__qte" ></span>
-                    <span class="index" style="width: <?php echo $types['p_rouge'];?>%; background-color: #b11226; ">("<?php echo $types['p_rouge'];?>%")</span>
-                    <span class="graphique--police"><?php echo round($types['p_rouge'],2);?>%</span>
+                    <span class="index" style="width: <?php echo $types['p_rouge'];?>%; background-color: #641b30; ">("<?php echo $types['p_rouge'];?>%")</span>
+                    <span class="graphique--police graphique--pd"><?php echo round($types['p_rouge'],2);?>%</span>
                 </li>
                 <li>
-                    <div>BLANC</div>
+                    <div class="graphique--gras">BLANC</div>
                     <span class="graphique__qte"></span>
-                    <span class="index" style="width: <?php echo $types['p_blanc'];?>%; background-color: #efe1a1;">("<?php echo $types['p_blanc'];?>%")</span>
-                    <span class="graphique--police"><?php echo round($types['p_blanc'],2);?>%</span>
+                    <span class="index" style="width: <?php echo $types['p_blanc'];?>%; background-color: #f3e5ab;">("<?php echo $types['p_blanc'];?>%")</span>
+                    <span class="graphique--police graphique--pd"><?php echo round($types['p_blanc'],2);?>%</span>
                 </li>
                 <li>
-                    <div>ROSÉ</div>
+                    <div class="graphique--gras">ROSÉ</div>
                     <span class="graphique__qte"></span>
-                    <span class="index" style="width: <?php echo $types['p_rose'];?>%; background-color: #f4c4bb;">("<?php echo $types['p_rose'];?>%")</span>
-                    <span class="graphique--police"><?php echo round($types['p_rose'],2);?>%</span>
+                    <span class="index" style="width: <?php echo $types['p_rose'];?>%; background-color: #f48072;">("<?php echo $types['p_rose'];?>%")</span>
+                    <span class="graphique--police graphique--pd"><?php echo round($types['p_rose'],2);?>%</span>
                 </li>
             </ul>
         </div>
@@ -35,17 +35,19 @@
             <ul class="graphique" data-js-graphique>
                 <?php foreach($data as $cellier){  ?>
                 <li>
-                    <div><?php echo $cellier['nom_cellier'] ;?></div>
+                    <div class="graphique--gras"><?php echo $cellier['nom_cellier'] ;?></div>
                     <span class="graphique__qte" ></span>
-                    <span class="index" style="width:<?php echo (($cellier['prix_total']*$cellier['bouteille_total'])/$total)*100?>%; background-color: #b11226; ">("<?php echo round(($cellier['prix_total']/$prix_total)*100,2)?>%")</span>
-                    <span class="graphique--police"><?php echo $cellier['prix_total']*$cellier['bouteille_total'] ?>$</span>
+                    <span class="index" style="width:<?php echo (($cellier['prix_total']*$cellier['bouteille_total'])/$total)*100?>%; background-color: #84a98c; ">("<?php echo round(($cellier['prix_total']/$prix_total)*100,2)?>%")</span>
+                    <span class="graphique--police graphique--pd"><?php echo $cellier['prix_total']*$cellier['bouteille_total'] ?>$</span>
                 </li>
                 <?php }?>
                 </ul> 
         </div>
         <!--4-AJOUT DE BOUTEILLE-->
-        <div class="graphique__contenant">
-            <h4 class="graphique__titre">Bouteilles ajoutée</h4>
+        <div>
+        <h4 class="graphique__titre">Bouteilles ajoutée</h4>
+        <div class="graphique__contenant graphique__contenant--bordure">
+            
 
             <ul class="graphique-vertical">
             <?php foreach ($mois as $cle =>$valeur) { 
@@ -53,25 +55,29 @@
                 <li> 
                     <span class="graphique--police"><?php echo $nbre ?></span>
                     <span class="graphique-vertical--couleur" style="height:<?php echo ($nbre/$bouteilles_achat)*100?>%"></span>
-                    <span class="graphique--police"><?php echo $col?></span>
+                    <span class="graphique--gras"><?php echo $col?></span>
                 </li>
             <?php }}?>
             </ul>    
         </div>
+        </div>
         <!--2-BUES-->
-        <div class="graphique__contenant">
-            <h4 class="graphique__titre">Bouteilles consommées</h4>
+        <div>
+        <h4 class="graphique__titre">Bouteilles consommées</h4>
+        <div class="graphique__contenant graphique__contenant--bordure">
+           
 
             <ul class="graphique-vertical">
             <?php foreach ($moisBue as $cle =>$valeur) { 
                 foreach($valeur as $col =>$nbre){ ?>
                 <li> 
                     <span class="graphique--police"><?php echo $nbre ?></span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($nbre/$bouteilles_bues)*100?>%"></span>
-                    <span class="graphique--police"><?php echo $col?></span>
+                    <span class="graphique-vertical--couleur" style="height:<?php if($bouteilles_bues !== 0) echo ($nbre/$bouteilles_bues)*100?>%"></span>
+                    <span class="graphique--gras"><?php echo $col?></span>
                 </li>
             <?php }}?>
             </ul>    
+        </div>
         </div>
         <?php }else{?>
             <p>Statistiques non disponibles, aucune bouteilles trouvées</p>

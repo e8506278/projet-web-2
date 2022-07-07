@@ -26,14 +26,19 @@ window.addEventListener('load', function () {
  elFicheTitres.forEach(function(element){
      element.addEventListener('click',(e)=>{
          e.preventDefault
-       
+      
          if (element.nextElementSibling.classList.contains('tiroir-off')) {
-           
+            element.firstElementChild.innerHTML = `&#8722;`
+          
             element.nextElementSibling.classList.replace('tiroir-off', 'tiroir');
-        
+           
+           
         }
         else if(element.nextElementSibling.classList.contains('tiroir')){
+            element.firstElementChild.innerHTML = `&#43;`
+           
             element.nextElementSibling.classList.replace('tiroir', 'tiroir-off');
+           
         }
      })
  })
