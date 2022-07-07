@@ -9,7 +9,7 @@ if (!class_exists('Lists')) {
 $debug = false;
 $message = null;
 
-$returnpage = home_base_url()."index.php?requete=bouteille";
+$returnpage = "index.php?requete=bouteille";
 $id_cellier  = $_POST['id_cellier'];
 $nom_cellier = $_POST['nom_cellier'];
 $bouteille_id = isset($_POST['id_bouteille'])?$_POST['id_bouteille']: null;
@@ -21,19 +21,23 @@ if(isset($bouteille_id) && $bouteille_id != null){
     $returnpage = $returnpage.'&id_bouteille='.$bouteille_id;
 }
 
-if(isset($_POST['estCommentaire'])){
-    $query_string = "UPDATE  usager__bouteille SET
-                            commentaires = '".$_POST['commentaires']."'
-                            WHERE id_bouteille=".$_POST['id_bouteille'];//
-    $message = "Le commentaire a bien été ajouté";
-    if($debug){
-        echo "<br>";
-        echo $query_string;
-         echo "<br>";
-    }
-    $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+array_walk_recursive($_POST, function (&$value) {
+    $value = htmlentities($value);
+});
 
-}else{
+//if(isset($_POST['estCommentaire'])){
+//    $query_string = "UPDATE  usager__bouteille SET
+//                            commentaires = '".$_POST['commentaires']."'
+//                            WHERE id_bouteille=".$_POST['id_bouteille'];//
+//    $message = "Le commentaire a bien été ajouté";
+//    if($debug){
+//        echo "<br>";
+//        echo $query_string;
+//         echo "<br>";
+//    }
+//    $res = MonSQL::getInstance()->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
+//
+//}else{
 
     $list = new Lists();
 
@@ -188,7 +192,8 @@ if(isset($_POST['estCommentaire'])){
                         quantite_bouteille ,
                         date_achat ,
                         garde_jusqua ,
-                        millesime
+                        millesime,
+                        commentaires 
                           
                 ) VALUES (
                       ".  ($cellier['quantite'] == 0 ? 'NULL': $cellier['id_cellier']) .",
@@ -244,7 +249,8 @@ if(isset($_POST['estCommentaire'])){
                       '".($cellier['quantite'] ?: 0)."',
                       ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
                       ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
-                     '".($_POST['millesime'])."'
+                     '".($_POST['millesime'])."',
+                     '".($_POST['commentaires'])."'
                 )";
 
             $action ="a";
@@ -299,9 +305,16 @@ if(isset($_POST['estCommentaire'])){
                         quantite_bouteille = '".($cellier['quantite'] ?: 0)."',
                         date_achat = ".($_POST['date_achat'] ? "'".$_POST['date_achat']."'":  'NULL' ).",
                         garde_jusqua = ".($_POST['garde_jusqua'] ? "'".$_POST['garde_jusqua']."'"  : 'NULL' ).",
-                        millesime = '".($_POST['millesime'])."'
+                        millesime = '".($_POST['millesime'])."',
+                        commentaires = '".$_POST['commentaires']."'
                         WHERE id_cellier=".$cellier['id_cellier']." AND id_bouteille=".$cellier['id_bouteille'];
 
+            if(isset($_POST['commentaires']) && $_POST['commentaires'] != null && $_POST['id_bouteille']){
+                $query_string_commentaire = "UPDATE  usager__bouteille SET commentaires = '".$_POST['commentaires']."' ".
+                    "WHERE id_bouteille=".$_POST['id_bouteille'];
+                $res = MonSQL::getInstance()->query($query_string_commentaire) or die(mysqli_error(MonSQL::getInstance()));
+
+            }
             echo "<br>".intval($ub[0]['quantite_bouteille'])." -- ".intval($cellier['quantite']). "<br>";
             if(intval($ub[0]['quantite_bouteille']) && intval($cellier['quantite'])){
                 $action = intval($ub[0]['quantite_bouteille']) < intval($cellier['quantite']) ? 'a': 'd';
@@ -348,7 +361,7 @@ if(isset($_POST['estCommentaire'])){
 
         //On ajoute l'action ici
     }
-}
+
 
 
 echo "Traitement terminé avec succès !<br><br>";
@@ -366,7 +379,7 @@ if (headers_sent()) {
 else{
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
 //    exit(header("Location:../index.php?requete=mesCelliers"));
-    header("Location:".$returnpage);
+header("Location:../".$returnpage);
 }
 /*
  *
@@ -387,10 +400,13 @@ function home_base_url(){
         $tmpURL = explode('/',$tmpURL);
         $tmpURL = $tmpURL[0];
     }
-    
+
     if ($tmpURL !== $_SERVER['HTTP_HOST']){
-        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
-       
+//        $base_url .= $_SERVER['HTTP_HOST'].'/'.$tmpURL.'/';
+        $base_url .= $_SERVER['HTTP_HOST'].'/';
+        //TODO
+        // en serveur faire
+        // $base_url .= $_SERVER['HTTP_HOST'].'/';
     }else{
      $base_url .= $tmpURL.'/';
     }

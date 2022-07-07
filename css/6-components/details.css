@@ -1,11 +1,16 @@
+
 .tiroir{
     display: block;
+   
 }
 .tiroir-off{
     display: none;
 }
 .fiche--flex{
     display: flex;
+}
+.fiche--textb{
+    word-break: break-all;
 }
 .fiche--aligne-b{
     align-self: end;
@@ -29,6 +34,8 @@
     margin-top: var(--espace-xp);
     background-color: var(--couleur-intermediaire-pale);
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
     
 }
 .texte-photo__img{
@@ -51,9 +58,7 @@
     justify-content: center;
 }
 
-.boite-double__contenant-form{
 
-}
 @media only screen and (min-width: 760px){
     .boite-double__contenant-form{
         width: 35%;
@@ -62,12 +67,16 @@
 .product-photo img{
     /*height: 100%;*/
     object-fit: contain;
-    width: 80%;
+    width: 70%;
     position: sticky;
     top: 0;
     padding-top: 30px;
 }
-
+@media only screen and (min-width: 760px){
+    .product-photo img{
+        width: 80%;
+    }
+}
 .separator{
     margin: 1.714em 0;
     border-top: 0.0625rem solid #e0e0e0;
@@ -281,8 +290,6 @@ button[disabled]{
     opacity: .9;
 }
 .input{
-    min-height: 40px;
-    font-size: 12px;
     background: unset;
     border-bottom: 1px solid lightgray;
     width: 100%;
