@@ -1156,12 +1156,12 @@ class Controler
     public function getBouteille()
     {
         $body = json_decode(file_get_contents('php://input'));
-
+        
         if (!empty($body)) {
             $bouteille = new Bouteille();
 
             $resultat = $bouteille->getOneBouteilleByName($body->nom);
-
+           
 
             if (count($resultat) > 0) {
                 return $this->returnJsonHttpResponse(true, $resultat[0]);
