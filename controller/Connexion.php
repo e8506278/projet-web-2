@@ -41,10 +41,11 @@ if (isset($_POST["soumettre"])) {
         } else {
             // Récupérer les données utilisateur
             $row = mysqli_fetch_array($sqlValiderUtilisateur);
-            $id              = $row['id'];
-            $nom_utilisateur = $row['nom_utilisateur'];
-            $mot_de_passe    = $row['mot_de_passe'];
-            $jeton           = $row['jeton'];
+            $id               = $row['id'];
+            $nom_utilisateur  = $row['nom_utilisateur'];
+            $mot_de_passe     = $row['mot_de_passe'];
+            $jeton            = $row['jeton'];
+            $type_utilisateur = $row['type_utilisateur'];
         }
 
         if ($estValide) {
@@ -66,6 +67,7 @@ if (isset($_POST["soumettre"])) {
                 // Stocker les données utilisateur dans la session php
                 $_SESSION['utilisateur']['id'] = $id;
                 $_SESSION['utilisateur']['nom'] = $nom_utilisateur;
+                $_SESSION['utilisateur']['type'] = $type_utilisateur;
                 $_SESSION['utilisateur']['jeton'] = $jeton;
                 $_SESSION['utilisateur']['estConnecte'] = true;
             } else {
