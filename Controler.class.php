@@ -175,8 +175,8 @@ class Controler
             case 'accueil':
                 $this->accueil();
                 break;
-                case 'scan':
-                    $this->scan();
+            case 'scan':
+                $this->scan();
             case '':
                 $this->accueil();
                 break;
@@ -193,7 +193,9 @@ class Controler
      */
     private function afficherPageAdmin()
     {
+        include("vues/entete.php");
         include("vues/Admin/admin.php");
+        include("vues/pied.php");
     }
 
 
@@ -810,13 +812,11 @@ class Controler
                 include("vues/Celliers/celliers.php");
                 include("vues/pied.php");
             }
-        }
-        else{
+        } else {
             include("vues/entete.php");
             include("vues/connexion.php");
             include("vues/pied.php");
         }
-
     }
 
 
@@ -1085,18 +1085,18 @@ class Controler
             $this->deconnecterUtilisateur();
             return;
         }
-        
+
 
         $id_cellier = isset($_GET['id_cellier']) ? $_GET['id_cellier'] : null;
         $id_bouteille = isset($_GET['id_bouteille']) ? $_GET['id_bouteille'] : null;
         $vino_id = isset($_GET['vino_id']) ? $_GET['vino_id'] : null;
         $message = isset($_GET['message']) ? $_GET['message'] : null;
-        if($vino_id != null){
+        if ($vino_id != null) {
             $idB = new Cellier;
-        $id = $idB->getBouteilleCUP($vino_id);
-        $vino_id = $id;
+            $id = $idB->getBouteilleCUP($vino_id);
+            $vino_id = $id;
         }
-        
+
 
         if ($id_bouteille) {
             $bouteille = (new Bouteille());
@@ -1366,22 +1366,20 @@ class Controler
         exit();
     }
 
-    private function scan(){
+    private function scan()
+    {
         header('Content-Type: application/json');
         $body = json_decode(file_get_contents('php://input'));
-      
+
         $id_bouteille = new Cellier;
-        $id = $id_bouteille ->getBouteilleCUP($body->scan_resultat);
-       
+        $id = $id_bouteille->getBouteilleCUP($body->scan_resultat);
+
         //$objet = json_encode($id,true);
         //var_dump($objet);
-     
+
         //exit(header("Location:index.php?requete=bouteille&vino_id=".$id));
-      
+
         echo json_encode($id);
-        
-        
-       
     }
 
     /**
