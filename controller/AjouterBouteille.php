@@ -10,8 +10,8 @@ $debug = false;
 $message = null;
 
 $returnpage = "index.php?requete=bouteille";
-$id_cellier  = $_POST['id_cellier'];
-$nom_cellier = $_POST['nom_cellier'];
+$id_cellier  = $_POST['id_cellier'] ?: null;
+//$nom_cellier = $_POST['nom_cellier'];
 $bouteille_id = isset($_POST['id_bouteille'])?$_POST['id_bouteille']: null;
 
 if(isset( $_POST['id_cellier']) &&  $_POST['id_cellier'] != null){
@@ -374,12 +374,22 @@ if(isset($message) && $message != null){
 }
 // exit(header("Location:".$returnpage));
 if (headers_sent()) {
-    die("Un issue avec la redirection, svp cliquer ici pour retourner à la page précédente: <a href='../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier'>Page précédente</a>");
+    die("Un issue avec la redirection, svp cliquer ici pour retourner à la page précédente: <a href='../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier'>Page précédente</a>");
 }
 else{
     //exit(header("Location:../index.php?requete=listeBouteilleCellier&id_cellier=$id_cellier&nom_cellier=$nom_cellier"));
 //    exit(header("Location:../index.php?requete=mesCelliers"));
-header("Location:../".$returnpage);
+
+    if(!isset($_POST['id_bouteille']) || !$_POST['id_bouteille']){
+
+        if(isset($_POST['id_cellier']) && $_POST['id_cellier'] != null){
+            header('Location:../index.php?requete=listeBouteilleCellier&id_cellier='.$_POST['id_cellier'].'&nom_cellier=null');
+         }else{
+            header("Location:../index.php?requete=mesCelliers");
+        }
+    }else{
+        header("Location:../".$returnpage);
+    }
 }
 /*
  *
