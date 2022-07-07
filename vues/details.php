@@ -113,11 +113,14 @@ if(isset($bouteille) && isset($bouteille['id_bouteille']) && $bouteille != null 
     $bouteille = null;
 }
 
+//print_r($celliers);
+//echo "<br>";
+//print_r($usager_bouteille[0]); die();
 foreach ($celliers as & $cellier_dans_le_compte){
    
     foreach ($usager_bouteille as $ub){
         $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
-        if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier']){
+        if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier'] && $ub['id_bouteille'] == $bouteille['id_bouteille']){
             $cellier_dans_le_compte['quantite'] = $bouteille ? $ub['quantite_bouteille']: 0;
             $cellier_dans_le_compte['id_bouteille'] = $bouteille ? $ub['id_bouteille']: 0;
         }
@@ -202,10 +205,12 @@ function home_base_url(){
                                name="id_bouteille"
                                value="<?php echo $form_values['id_bouteille']?>"
                         />
-                        <input type="hidden"
-                               name="id_cellier"
-                               value="<?php echo $form_values['id_cellier']?>"
-                        />
+                        <?php if(isset($id_cellier) && $id_cellier != null) {?>
+                            <input type="hidden"
+                                   name="id_cellier"
+                                   value="<?php echo $id_cellier;?>"
+                            />
+                        <?php } ?>
                         <!--   block favoris-->
 
                         
@@ -972,10 +977,12 @@ function home_base_url(){
             </div>
             <form class="formulaire info-details"  action="./controller/AjouterBouteille.php" method="POST" enctype="multipart/form-data">
 
-                <input type="hidden"
-                       name="id_cellier"
-                       value="<?php echo $form_values['id_cellier']?>"
-                />
+                <?php if(isset($id_cellier) && $id_cellier != null) {?>
+                    <input type="hidden"
+                           name="id_cellier"
+                           value="<?php echo $id_cellier;?>"
+                    />
+                <?php } ?>
                 <div class="form-block">
                     <h4 class="fiche__titre">Informations sur la bouteille</h4>
 <!--INFOS-->
