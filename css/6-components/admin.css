@@ -575,21 +575,73 @@ h1 {
 
 .groupe-action {
     display: flex;
-    margin: var(--espace-p) 0 var(--espace-xp) 0;
-    justify-content: space-between;
+    flex-direction: column;
+    margin: var(--espace-l) 0 var(--espace-xp) 0;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .groupe-action {
+        flex-direction: row;
+    }
 }
 
 .action-texte {
     align-items: center;
     color: #f3f4f6;
     display: flex;
+    flex-grow: 1;
     font-size: var(--espace-p);
     font-weight: bold;
+    order: 1;
+    position: absolute;
+    top: 7px;
 }
 
 .action-boutons {
     display: flex;
     justify-content: flex-end;
+    order: 2;
+}
+
+.groupe-ajouter-saq {
+    display: flex;
+    margin: var(--espace-xp) 0 0 0;
+    justify-content: flex-end;
+    order: 3;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .action-texte {
+        position: static;
+        top: auto;
+    }
+
+    .groupe-ajouter-saq {
+        margin: 0 var(--espace-p) 0 0;
+        order: 2;
+        width: 300px;
+    }
+
+    .action-boutons {
+        order: 3;
+    }
+}
+
+.groupe-ajouter-saq.hide {
+    display: none;
+}
+
+.info-saq {
+    display: flex;
+    margin: var(--espace-xp) 0;
+}
+
+.url_saq {
+    flex-grow: 1;
+    margin-right: var(--espace-xp);
+    padding: var(--espace-xp);
 }
 
 .btn-ajouter,
@@ -604,7 +656,7 @@ h1 {
 }
 
 .btn-annuler {
-    margin-left: var(--espace-p);
+    margin-left: var(--espace-xp);
 }
 
 .btn-ajouter.hide {

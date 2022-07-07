@@ -143,6 +143,15 @@ function afficherDetail(body) {
                 elBtnAnnuler = document.querySelector("[data-js-btn-annuler]");
                 elActionTexte = document.querySelector(".action-texte");
 
+                let elBtnsAjouter = document.querySelectorAll("[data-js-btn-ajouter]");
+                elBtnAjouter = elBtnsAjouter[0];
+
+                for (let i = 0, l = elBtnsAjouter.length; i < l; i++) {
+                    elBtnsAjouter[i].addEventListener("click", () => {
+                        traiterProchaineAction({ "actionCourante": "ajouter" });
+                    });
+                }
+
                 if (elBtnModifier) {
                     elBtnModifier.addEventListener("click", () => {
                         traiterProchaineAction({ "actionCourante": "modifier" });
@@ -261,13 +270,16 @@ function afficherFormulaire() {
                     });
                 }
 
-                elBtnAjouter = document.querySelector("[data-js-btn-ajouter]");
+                let elBtnsAjouter = document.querySelectorAll("[data-js-btn-ajouter]");
+                elBtnAjouter = elBtnsAjouter[0];
                 elActionTexte = document.querySelector(".action-texte");
 
                 // Quand on clique sur le bouton pour ajouter un nouvel enregistrement.
-                elBtnAjouter.addEventListener("click", () => {
-                    traiterProchaineAction({ "actionCourante": "ajouter" });
-                });
+                for (let i = 0, l = elBtnsAjouter.length; i < l; i++) {
+                    elBtnsAjouter[i].addEventListener("click", () => {
+                        traiterProchaineAction({ "actionCourante": "ajouter" });
+                    });
+                }
             });
     }
 }
@@ -551,6 +563,9 @@ function gererAnnulation() {
 
 
 function gererEdition(pos) {
+    let action = tableSelectionnee["actionCourante"];
+    let elGroupeSAQ = document.querySelector(".groupe-ajouter-saq");
+
     if (pos === "debut") {
         // On rend la section 1 inutilisable le temps que dure l'édition
         if (elSection1 && !elSection1.classList.contains("edition")) {
@@ -568,24 +583,23 @@ function gererEdition(pos) {
         }
 
         // On rend inutilisable les boutons Ajouter et Modifier
-        let action = tableSelectionnee["actionCourante"];
-        action = action.charAt(0).toUpperCase() + action.slice(1);
+        let messageAction = action.charAt(0).toUpperCase() + action.slice(1);
 
         switch (tableSelectionnee["nomTable"]) {
             case "bouteille":
-                action += " une bouteille";
+                messageAction += " une bouteille";
                 break;
 
             case "cellier":
-                action += " un cellier";
+                messageAction += " un cellier";
                 break;
 
             case "usager":
-                action += " un usager";
+                messageAction += " un usager";
                 break;
         }
 
-        elActionTexte.innerHTML = action;
+        elActionTexte.innerHTML = messageAction;
 
         if (elBtnAjouter && !elBtnAjouter.classList.contains("hide")) {
             elBtnAjouter.classList.add("hide");
@@ -593,6 +607,11 @@ function gererEdition(pos) {
 
         if (elBtnModifier && !elBtnModifier.classList.contains("hide")) {
             elBtnModifier.classList.add("hide");
+        }
+
+        //groupe-ajouter-saq
+        if (action == "ajouter" && elGroupeSAQ) {
+            elGroupeSAQ.classList.remove("hide");
         }
 
         // On rend utilisable les boutons Confirmer et Annuler
@@ -629,6 +648,11 @@ function gererEdition(pos) {
 
         if (elBtnModifier) {
             elBtnModifier.classList.remove("hide");
+        }
+
+        //groupe-ajouter-saq
+        if (action == "ajouter" && elGroupeSAQ && !elGroupeSAQ.classList.contains("hide")) {
+            elGroupeSAQ.classList.add("hide");
         }
 
         // On rend inutilisable les boutons Confirmer et Annuler
@@ -941,13 +965,16 @@ function rafraichirSection3() {
                     });
                 }
 
-                elBtnAjouter = document.querySelector("[data-js-btn-ajouter]");
+                let elBtnsAjouter = document.querySelectorAll("[data-js-btn-ajouter]");
+                elBtnAjouter = elBtnsAjouter[0];
                 elActionTexte = document.querySelector(".action-texte");
 
                 // Quand on clique sur le bouton pour ajouter un nouvel enregistrement.
-                elBtnAjouter.addEventListener("click", () => {
-                    traiterProchaineAction({ "actionCourante": "ajouter" });
-                });
+                for (let i = 0, l = elBtnsAjouter.length; i < l; i++) {
+                    elBtnsAjouter[i].addEventListener("click", () => {
+                        traiterProchaineAction({ "actionCourante": "ajouter" });
+                    });
+                }
 
                 const lastRow = rows[rows.length - 1];
                 lastRow.click();
@@ -1071,8 +1098,15 @@ function traiterProchaineAction(prochaineAction) {
     } else if (prochaineAction.hasOwnProperty("actionCourante")) {
         switch (prochaineAction["actionCourante"]) {
             case "ajouter":
+                let elUrl = document.querySelector('input[name="url_saq"');
+                let body = { "mode": "ajouter" };
+
+                if (elUrl && elUrl.value) {
+                    body["url"] = elUrl.value;
+                }
+
                 tableSelectionnee["actionCourante"] = "ajouter";
-                afficherDetail({ "mode": "ajouter" });
+                afficherDetail(body);
                 break;
 
             case "annuler":
