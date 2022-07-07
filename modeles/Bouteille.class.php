@@ -854,6 +854,7 @@ $this->_db->set_charset('utf8');
         return false;
     }
 
+    
     // Bouteille favoris (rendre oui ou non)
     public function modifierFavoris($valeur, $id_bouteille, $id_cellier){
 
