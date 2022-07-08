@@ -788,7 +788,10 @@ class Controler
                 foreach ($actionsAjouts as $achetees) {
                     $bouteillesAchetees += $achetees['quantite_bouteille'];
                 }
+
+                include("vues/entete.php");
                 include("vues/index.php");
+                include("vues/pied.php");
             }
         } else {
             include("vues/entete.php");

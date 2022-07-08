@@ -81,14 +81,14 @@ class Statistique extends Modele
 
     
     /**
-     * Cette méthode récupère le pourcentage de chaque type de vin d'un usager
+     * Cette méthode récupère les données des bouteilles des usager par cellier
      * 
      * @param int $id_usager Id de session de l'usager
      * @param int $id_cellier Id du cellier 
      * 
      * @throws Exception Erreur de requête sur la base de données 
      * 
-     * @return Array Le pourcentage de chaque type
+     * @return Array Les données
      */
     public function getInfosBouteilleUsager($id_usager, $id_cellier){
         $rows = array();
@@ -100,20 +100,25 @@ class Statistique extends Modele
             $res = $this->_db->query("SELECT * FROM usager__bouteille WHERE id_cellier IN ('$id_cellier')"); 
         }
 
-        
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
-                $row['nom_bouteille'] = trim(utf8_encode($row['nom_bouteille']));
-                $row['pays_nom'] = trim(utf8_encode($row['pays_nom']));
-                $rows[] = $row;
-                
                
+                $rows[] = $row;
             }
         }
         
         return $rows;
     }
 
+    /**
+     * Cette méthode récupère les bouteilles bues par l'usager
+     * 
+     * @param int $id_usager Id de session de l'usager
+     * 
+     * @throws Exception Erreur de requête sur la base de données 
+     * 
+     * @return Array Les données
+     */
     public function getBouteilleBues($id_usager){
 
         $rows = array();
@@ -122,7 +127,7 @@ class Statistique extends Modele
            
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
-
+                // separe la date en annee, mois , jour
                 $row['date_creation'] = explode("-", $row['date_creation']);
                 $rows[] = $row; 
 
@@ -131,7 +136,15 @@ class Statistique extends Modele
         return $rows;
     }   
     
-    
+    /**
+     * Cette méthode récupère les bouteilles ajoutées par l'usager
+     * 
+     * @param int $id_usager Id de session de l'usager
+     * 
+     * @throws Exception Erreur de requête sur la base de données 
+     * 
+     * @return Array Les données
+     */
     public function getBouteilleAjouts($id_usager){
 
         $rows = array();
@@ -140,7 +153,7 @@ class Statistique extends Modele
            
         if ($res->num_rows) {
             while ($row = $res->fetch_assoc()) {
-
+                // separe la date en annee, mois , jour
                 $row['date_creation'] = explode("-", $row['date_creation']);
                 $rows[] = $row; 
 

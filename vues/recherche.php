@@ -234,7 +234,7 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                                     <?php
                                                     for ($i = 0, $l = count($aCelliers); $i < $l; $i++) {
                                                         $id = $aCelliers[$i]['id'];
-                                                        $nom = $aCelliers[$i]['nom'] . " - " . ucfirst($aCelliers[$i]['description']);
+                                                        $nom = $aCelliers[$i]['nom'] . " - " . ucfirst($aCelliers[$i]['description']); //utf8_encode(ucfirst($aCelliers[$i]['description']));
                                                         $infoBulle = $aCelliers[$i]['nom'];
                                                         $nomChamp = "cellier-" . ($i + 1);
 
@@ -282,13 +282,13 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                                         $id = $nom = $infoBulle = $aTypesCellier[$i]['nom'];
                                                         $nbTrouve = $aTypesCellier[$i]['nbTrouve'];
                                                         $nomChamp = "type-cellier-" . ($i + 1);
-
+                                                        //utf8_encode($nom) en ligne 291
                                                         echo '
                                                         <div class="choix-item">
                                                             <input name="' . $nomChamp . '" type="checkbox" id="' . $nomChamp . '" title="' . $infoBulle . '" data-js-type-cellier="' . $id . '" />
 
                                                             <div class="choix-nom">
-                                                                <label for="' . $nomChamp . '" title="' . $infoBulle . '">' .  $nom . '</label>
+                                                                <label for="' . $nomChamp . '" title="' . $infoBulle . '">' .  $nom . '</label> 
                                                                 <div class="choix-nb-trouve">
                                                                     (' . $nbTrouve . ')
                                                                 </div>

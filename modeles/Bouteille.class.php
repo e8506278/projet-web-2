@@ -186,7 +186,7 @@ class Bouteille extends Modele
 
     public function getListeBouteille()
     {
-        
+        $this->_db->set_charset('utf8');
         $rows = array();
         $res = $this->_db->query('Select * from ' . self::TABLE);
         if ($res->num_rows) {
@@ -217,7 +217,7 @@ class Bouteille extends Modele
                     WHERE usager__bouteille.id_cellier = '$id_cellier' 
                     AND usager__bouteille.quantite_bouteille > 0 
                     ORDER BY id_bouteille DESC ";
-        
+        $this->_db->set_charset('utf8');
         if (($res = $this->_db->query($requete)) == true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
@@ -231,8 +231,12 @@ class Bouteille extends Modele
         return $rows;
     }
 
-
-    
+      /*
+       *
+       * Récupération des info sur la bouteille par id
+       * utilisé dans la fiche bouteille
+       *
+       */
     public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();
@@ -314,7 +318,7 @@ class Bouteille extends Modele
         if ($id_cellier) {
             $requete = $requete . " AND ub.id_cellier = '" . $id_cellier . "'";
         }
-        
+        $this->_db->set_charset('utf8');
 
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
@@ -332,6 +336,11 @@ class Bouteille extends Modele
         return $rows;
     }
 
+   /*
+   *
+   * Récupération des info sur la bouteille par id_vino depuis vino_bouteille
+   * Utilisé dans le scan
+   */
     public function getOneBouteilleFromVino($vino_bouteille_id)
     {
         $rows = array();
@@ -432,7 +441,7 @@ class Bouteille extends Modele
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
                        WHERE b.id_bouteille = '" . $vino_bouteille_id . "'";
 
-        
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
@@ -448,9 +457,13 @@ class Bouteille extends Modele
         return $rows;
     }
 
+    /*
+   *
+   * Récupération des info sur la bouteille par nom
+   * Utilisé dans la fiche bouteille dans l'auto-complete
+   */
     public function getOneBouteilleByName($nom)
     {
-        $nom = addslashes($nom);
         $rows = array();
         $requete = "SELECT 
 						ub.id_cellier, 
@@ -548,7 +561,7 @@ class Bouteille extends Modele
                         LEFT JOIN vino__produit_du_quebec pc ON pc.id = b.produit_du_quebec_id
                         LEFT JOIN vino__classification classif ON classif.id = b.classification_id
                        WHERE b.nom_bouteille = '" . $nom . "'";
-        
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
@@ -582,14 +595,14 @@ class Bouteille extends Modele
         $rows = array();
         $nom = $this->_db->real_escape_string($nom);
         $nom = preg_replace("/\*/", "%", $nom);
-        
-
-        $requete = 'SELECT * FROM vino__bouteille where LOWER(nom_bouteille) like "' . $nom . '%" LIMIT 0,' . $nb_resultat;
-      
+        $this->_db->set_charset('utf8');
+        //echo $nom;
+        $requete = 'SELECT id, nom FROM vino__bouteille where LOWER(nom) like LOWER("%' . $nom . '%") LIMIT 0,' . $nb_resultat;
+        //var_dump($requete);
         if (($res = $this->_db->query($requete)) ==     true) {
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-              
+                    //$row['nom'] = trim(utf8_encode($row['nom']));
                     $rows[] = $row;
                 }
             }
@@ -597,6 +610,8 @@ class Bouteille extends Modele
             throw new Exception("Erreur de requête sur la base de données", 1);
         }
 
+
+        var_dump($rows);
         return $rows;
     }
 
@@ -657,7 +672,7 @@ class Bouteille extends Modele
 
     public function deleteUsageBouteille($id_bouteille, $id_cellier)
     {
-        
+        $this->_db->set_charset('utf8');
 
         // On récupere la ligne usager_bouteille pour avoir la quantite à mettre dans l'action
         $query_string_select = "SELECT * FROM usager__bouteille WHERE id_bouteille = " . $id_bouteille . " AND id_cellier = " . $id_cellier;
@@ -735,7 +750,7 @@ class Bouteille extends Modele
         $rows = array();
         $requete = "SELECT  *  from vino__bouteille b
                        WHERE b.id_bouteille = '" . $id_bouteille . "'";
-        
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($requete) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
 
@@ -751,10 +766,15 @@ class Bouteille extends Modele
         return $rows;
     }
 
-    //copier une ligne depuis vino__bouteille dans usager_bouteille
+      /*
+       *
+       * Copier un ligne depuis vino_bouteille sur la table usager bouteille
+       * Utilisé dans le cas ou on veux ajouter une bouteille danns vinno bouteille directement dans favoris, a essayer, ..
+       *  Et ca n'existee pas deja dans usager_bouteille
+       */
     public function copierVinoDansUsagerBouteillle($vino_id)
     {
-        
+        $this->_db->set_charset('utf8');
 
         // On récupere la ligne depuis vino_bouteille
         $row = $this->getOneBouteilleFromVino($vino_id);
@@ -850,7 +870,7 @@ class Bouteille extends Modele
                             note = '" . $note . "'
                             WHERE id_bouteille=" . $id_bouteille; //
 
-        
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
             return true;
@@ -872,7 +892,7 @@ class Bouteille extends Modele
             $query_string = $query_string . " AND id_cellier=" . $id_cellier;
         }
 
-        
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
             return true;
@@ -893,7 +913,7 @@ class Bouteille extends Modele
             $query_string = $query_string . " AND id_cellier=" . $id_cellier;
         }
 
-        
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($query_string) or die(mysqli_error(MonSQL::getInstance()));
         if ($res) {
             return true;
@@ -912,7 +932,7 @@ class Bouteille extends Modele
         if ($id_cellier) {
             $query_string = $query_string . " AND id_cellier=" . $id_cellier;
         }
-        
+        $this->_db->set_charset('utf8');
         $res =  $this->_db->query($query_string);
         if ($res) {
             return true;

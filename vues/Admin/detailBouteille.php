@@ -192,10 +192,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $pays_nom = (isset($usagerBouteille) && isset($usagerBouteille['pays_nom'])) ? $usagerBouteille['pays_nom'] : "";
+                        $pays_nom = preg_replace("/[^a-z0-9.]+/i", "", $pays_nom);
 
                         foreach ($vinoPays as $unPays) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $unPays['nom']);
                         ?>
-                            <option value="<?= $unPays['nom']; ?>" <?php if ($pays_nom == $unPays['nom']) {
+                            <option value="<?= $unPays['nom']; ?>" <?php if ($pays_nom == $unNom) {
                                                                         echo ' selected="selected"';
                                                                     } ?>>
                                 <?= $unPays['nom'] ?> </option>
@@ -213,10 +215,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $region_nom = (isset($usagerBouteille) && isset($usagerBouteille['region_nom'])) ? $usagerBouteille['region_nom'] : "";
+                        $region_nom = preg_replace("/[^a-z0-9.]+/i", "", $region_nom);
 
                         foreach ($vinoRegions as $uneRegion) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $uneRegion['nom']);
                         ?>
-                            <option value="<?= $uneRegion['nom']; ?>" <?php if ($region_nom == $uneRegion['nom']) {
+                            <option value="<?= $uneRegion['nom']; ?>" <?php if ($region_nom == $unNom) {
                                                                             echo ' selected="selected"';
                                                                         } ?>>
                                 <?= $uneRegion['nom'] ?> </option>
@@ -234,10 +238,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $type_nom = (isset($usagerBouteille) && isset($usagerBouteille['type_de_vin_nom'])) ? $usagerBouteille['type_de_vin_nom'] : "";
+                        $type_nom = preg_replace("/[^a-z0-9.]+/i", "", $type_nom);
 
                         foreach ($vinoTypesVin as $unType) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $unType['nom']);
                         ?>
-                            <option value="<?= $unType['nom']; ?>" <?php if ($type_nom == $unType['nom']) {
+                            <option value="<?= $unType['nom']; ?>" <?php if ($type_nom == $unNom) {
                                                                         echo ' selected="selected"';
                                                                     } ?>>
                                 <?= $unType['nom'] ?> </option>
@@ -306,10 +312,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $format_nom = (isset($usagerBouteille) && isset($usagerBouteille['format_nom'])) ? $usagerBouteille['format_nom'] : "";
+                        $format_nom = preg_replace("/[^a-z0-9.]+/i", "", $format_nom);
 
                         foreach ($vinoFormats as $unFormat) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $unFormat['nom']);
                         ?>
-                            <option value="<?= $unFormat['nom']; ?>" <?php if ($format_nom == $unFormat['nom']) {
+                            <option value="<?= $unFormat['nom']; ?>" <?php if ($format_nom == $unNom) {
                                                                             echo ' selected="selected"';
                                                                         } ?>>
                                 <?= $unFormat['nom'] ?> </option>
@@ -327,10 +335,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $vinoppellation_nom = (isset($usagerBouteille) && isset($usagerBouteille['appellation_nom'])) ? $usagerBouteille['appellation_nom'] : "";
+                        $vinoppellation_nom = preg_replace("/[^a-z0-9.]+/i", "", $vinoppellation_nom);
 
                         foreach ($vinoAppellations as $uneAppellation) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $uneAppellation['nom']);
                         ?>
-                            <option value="<?= $uneAppellation['nom']; ?>" <?php if ($vinoppellation_nom == $uneAppellation['nom']) {
+                            <option value="<?= $uneAppellation['nom']; ?>" <?php if ($vinoppellation_nom == $unNom) {
                                                                                 echo ' selected="selected"';
                                                                             } ?>>
                                 <?= $uneAppellation['nom'] ?> </option>
@@ -348,10 +358,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $designation_nom = (isset($usagerBouteille) && isset($usagerBouteille['designation_nom'])) ? $usagerBouteille['designation_nom'] : "";
+                        $designation_nom = preg_replace("/[^a-z0-9.]+/i", "", $designation_nom);
 
                         foreach ($vinoDesignations as $uneDesignation) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $uneDesignation['nom']);
                         ?>
-                            <option value="<?= $uneDesignation['nom']; ?>" <?php if ($designation_nom == $uneDesignation['nom']) {
+                            <option value="<?= $uneDesignation['nom']; ?>" <?php if ($designation_nom == $unNom) {
                                                                                 echo ' selected="selected"';
                                                                             } ?>>
                                 <?= $uneDesignation['nom'] ?> </option>
@@ -369,10 +381,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $classification_nom = (isset($usagerBouteille) && isset($usagerBouteille['classification_nom'])) ? $usagerBouteille['classification_nom'] : "";
+                        $classification_nom = preg_replace("/[^a-z0-9.]+/i", "", $classification_nom);
 
                         foreach ($vinoClassifications as $uneClassification) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $uneClassification['nom']);
                         ?>
-                            <option value="<?= $uneClassification['nom']; ?>" <?php if ($classification_nom == $uneClassification['nom']) {
+                            <option value="<?= $uneClassification['nom']; ?>" <?php if ($classification_nom == $unNom) {
                                                                                     echo ' selected="selected"';
                                                                                 } ?>>
                                 <?= $uneClassification['nom'] ?> </option>
@@ -390,11 +404,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $cepage_nom = (isset($usagerBouteille) && isset($usagerBouteille['cepage_nom'])) ? $usagerBouteille['cepage_nom'] : "";
-                        
+                        $cepage_nom = preg_replace("/[^a-z0-9.]+/i", "", $cepage_nom);
+
                         foreach ($vinoCepages as $unCepage) {
-                            
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $unCepage['nom']);
                         ?>
-                            <option value="<?= $unCepage['nom']; ?>" <?php if ($cepage_nom == $unCepage['nom']) {
+                            <option value="<?= $unCepage['nom']; ?>" <?php if ($cepage_nom == $unNom) {
                                                                             echo ' selected="selected"';
                                                                         } ?>>
                                 <?= $unCepage['nom'] ?> </option>
@@ -412,10 +427,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $taux_de_sucre_nom = (isset($usagerBouteille) && isset($usagerBouteille['taux_de_sucre_nom'])) ? $usagerBouteille['taux_de_sucre_nom'] : "";
+                        $taux_de_sucre_nom = preg_replace("/[^a-z0-9.]+/i", "", $taux_de_sucre_nom);
 
                         foreach ($vinoTauxDeSucre as $unTauxDeSucre) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $unTauxDeSucre['nom']);
                         ?>
-                            <option value="<?= $unTauxDeSucre['nom']; ?>" <?php if ($taux_de_sucre_nom == $unTauxDeSucre['nom']) {
+                            <option value="<?= $unTauxDeSucre['nom']; ?>" <?php if ($taux_de_sucre_nom == $unNom) {
                                                                                 echo ' selected="selected"';
                                                                             } ?>>
                                 <?= $unTauxDeSucre['nom'] ?> </option>
@@ -433,10 +450,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $degre_alcool_nom = (isset($usagerBouteille) && isset($usagerBouteille['degre_alcool_nom'])) ? $usagerBouteille['degre_alcool_nom'] : "";
+                        $degre_alcool_nom = preg_replace("/[^a-z0-9.]+/i", "", $degre_alcool_nom);
 
                         foreach ($vinoDegresAlcool as $unDegreAlcool) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $unDegreAlcool['nom']);
                         ?>
-                            <option value="<?= $unDegreAlcool['nom']; ?>" <?php if ($degre_alcool_nom == $unDegreAlcool['nom']) {
+                            <option value="<?= $unDegreAlcool['nom']; ?>" <?php if ($degre_alcool_nom == $unNom) {
                                                                                 echo ' selected="selected"';
                                                                             } ?>>
                                 <?= $unDegreAlcool['nom'] ?> </option>
@@ -454,10 +473,12 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $produit_du_quebec_nom = (isset($usagerBouteille) && isset($usagerBouteille['produit_du_quebec_nom'])) ? $usagerBouteille['produit_du_quebec_nom'] : "";
+                        $produit_du_quebec_nom = preg_replace("/[^a-z0-9.]+/i", "", $produit_du_quebec_nom);
 
                         foreach ($vinoProduitsQc as $unProduitQc) {
+                            $unNom = preg_replace("/[^a-z0-9.]+/i", "", $unProduitQc['nom']);
                         ?>
-                            <option value="<?= $unProduitQc['nom']; ?>" <?php if ($produit_du_quebec_nom == $unProduitQc['nom']) {
+                            <option value="<?= $unProduitQc['nom']; ?>" <?php if ($produit_du_quebec_nom == $unNom) {
                                                                             echo ' selected="selected"';
                                                                         } ?>>
                                 <?= $unProduitQc['nom'] ?> </option>
@@ -471,7 +492,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <td class="pa-8">Biodynamique</td>
                 <td class="pa-8">
                     <label>
-                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="biodynamique" id="biodynamique" <?php if (isset($usagerBouteille) && isset($usagerBouteille['biodynamique'])) echo "value=" . $usagerBouteille['biodynamique']; ?>>
+                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="biodynamique" id="biodynamique" <?php if (isset($usagerBouteille) && isset($usagerBouteille['biodynamique'])) echo 'checked="checked"'; ?>>
                     </label>
                 </td>
             </tr>
@@ -479,7 +500,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <td class="pa-8">Casher</td>
                 <td class="pa-8">
                     <label>
-                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="casher" id="casher" <?php if (isset($usagerBouteille) && isset($usagerBouteille['casher'])) echo "value=" . $usagerBouteille['casher']; ?>>
+                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="casher" id="casher" <?php if (isset($usagerBouteille) && isset($usagerBouteille['casher'])) echo 'checked="checked"'; ?>>
                     </label>
                 </td>
             </tr>
@@ -487,7 +508,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <td class="pa-8">Désalcoolisé</td>
                 <td class="pa-8">
                     <label>
-                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="desalcoolise" id="desalcoolise" <?php if (isset($usagerBouteille) && isset($usagerBouteille['desalcoolise'])) echo "value=" . $usagerBouteille['desalcoolise']; ?>>
+                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="desalcoolise" id="desalcoolise" <?php if (isset($usagerBouteille) && isset($usagerBouteille['desalcoolise'])) echo 'checked="checked"'; ?>>
                     </label>
                 </td>
             </tr>
@@ -495,7 +516,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <td class="pa-8">Équitable</td>
                 <td class="pa-8">
                     <label>
-                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="equitable" id="equitable" <?php if (isset($usagerBouteille) && isset($usagerBouteille['equitable'])) echo "value=" . $usagerBouteille['equitable']; ?>>
+                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="equitable" id="equitable" <?php if (isset($usagerBouteille) && isset($usagerBouteille['equitable'])) echo 'checked="checked"'; ?>>
                     </label>
                 </td>
             </tr>
@@ -503,7 +524,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <td class="pa-8">Faible taux d'alcool</td>
                 <td class="pa-8">
                     <label>
-                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="faible_taux_alcool" id="faible_taux_alcool" <?php if (isset($usagerBouteille) && isset($usagerBouteille['faible_taux_alcool'])) echo "value=" . $usagerBouteille['faible_taux_alcool']; ?>>
+                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="faible_taux_alcool" id="faible_taux_alcool" <?php if (isset($usagerBouteille) && isset($usagerBouteille['faible_taux_alcool'])) echo 'checked="checked"'; ?>>
                     </label>
                 </td>
             </tr>
@@ -511,7 +532,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <td class="pa-8">Produit bio</td>
                 <td class="pa-8">
                     <label>
-                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="produit_bio" id="produit_bio" <?php if (isset($usagerBouteille) && isset($usagerBouteille['produit_bio'])) echo "value=" . $usagerBouteille['produit_bio']; ?>>
+                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="produit_bio" id="produit_bio" <?php if (isset($usagerBouteille) && isset($usagerBouteille['produit_bio'])) echo 'checked="checked"'; ?>>
                     </label>
                 </td>
             </tr>
@@ -519,7 +540,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <td class="pa-8">Vin nature</td>
                 <td class="pa-8">
                     <label>
-                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="vin_nature" id="vin_nature" <?php if (isset($usagerBouteille) && isset($usagerBouteille['vin_nature'])) echo "value=" . $usagerBouteille['vin_nature']; ?>>
+                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="vin_nature" id="vin_nature" <?php if (isset($usagerBouteille) && isset($usagerBouteille['vin_nature'])) echo 'checked="checked"'; ?>>
                     </label>
                 </td>
             </tr>
@@ -527,7 +548,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
                 <td class="pa-8">Vin orange</td>
                 <td class="pa-8">
                     <label>
-                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="vin_orange" id="vin_orange" <?php if (isset($usagerBouteille) && isset($usagerBouteille['vin_orange'])) echo "value=" . $usagerBouteille['vin_orange']; ?>>
+                        <input type="checkbox" <?= $disabled ?> class="plus-gros" name="vin_orange" id="vin_orange" <?php if (isset($usagerBouteille) && isset($usagerBouteille['vin_orange'])) echo 'checked="checked"'; ?>>
                     </label>
                 </td>
             </tr>

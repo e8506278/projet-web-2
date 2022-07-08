@@ -52,7 +52,7 @@
                 foreach($valeur as $col =>$nbre){ ?>
                 <li> 
                     <span class="graphique--policel"><?php echo $nbre ?></span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($nbre/$bouteilles_achat)*100?>%"></span>
+                    <span class="graphique-vertical--couleur" style="height:<?php if($bouteilles_achat != 0) echo ($nbre/$bouteilles_achat)*100?>%"></span>
                     <span class="graphique--policel"><?php echo $col?></span>
                 </li>
             <?php }}?>
@@ -69,7 +69,7 @@
                 foreach($valeur as $col =>$nbre){ ?>
                 <li> 
                     <span class="graphique--policel"><?php echo $nbre ?></span>
-                    <span class="graphique-vertical--couleur" style="height:<?php echo ($nbre/$bouteilles_bues)*100?>%"></span>
+                    <span class="graphique-vertical--couleur" style="height:<?php if($bouteilles_bues != 0)echo ($nbre/$bouteilles_bues)*100?>%"></span>
                     <span class="graphique--policel"><?php echo $col?></span>
                 </li>
             <?php }}?>
