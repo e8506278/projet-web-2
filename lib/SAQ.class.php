@@ -124,9 +124,9 @@ class SAQ extends Modele
 
         $lesAttributs = array();
         foreach ($attributs as $attribut) {
-            $lesAttributs[] = $attribut->nodeValue;
+            $lesAttributs[] = trim(utf8_encode($attribut->nodeValue));
         }
-
+      
         $bte = array();
         $bte["nom_bouteille"] = $titre;
         $bte["prix_bouteille"] = $prix;

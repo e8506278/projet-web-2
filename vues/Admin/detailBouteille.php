@@ -390,8 +390,9 @@ $disabled = ($mode == "lire") ? "disabled" : "";
 
                         <?php
                         $cepage_nom = (isset($usagerBouteille) && isset($usagerBouteille['cepage_nom'])) ? $usagerBouteille['cepage_nom'] : "";
-
+                        
                         foreach ($vinoCepages as $unCepage) {
+                            
                         ?>
                             <option value="<?= $unCepage['nom']; ?>" <?php if ($cepage_nom == $unCepage['nom']) {
                                                                             echo ' selected="selected"';

@@ -14,13 +14,14 @@ class Statistique extends Modele
 {
 
     /**
-     * Cette méthode récupère le nombre de chaque type de vin d'un usager
+     * Cette méthode récupère le pourcentage de chaque type de vin d'un usager
      * 
-     * @param int $id Id de session de l'usager
+     * @param int $id_usager Id de session de l'usager
+     * @param int $id_cellier Id du cellier 
      * 
      * @throws Exception Erreur de requête sur la base de données 
      * 
-     * @return Array Les données.
+     * @return Array Le pourcentage de chaque type
      */
     public function getTypeVinCellier($id_usager, $id_cellier){
         $nbre_bouteilles_rouge = 0;
@@ -30,6 +31,7 @@ class Statistique extends Modele
         $p_rouge = 0;
         $p_blanc = 0;
         $p_rose = 0;
+
         $rows = array();
         if($id_usager){
             $res = $this->_db->query("SELECT quantite_bouteille, type_de_vin_nom FROM usager__bouteille WHERE id_cellier IN (SELECT id_cellier FROM usager__cellier WHERE id_usager = '$id_usager')");
@@ -44,6 +46,7 @@ class Statistique extends Modele
                 $rows[] = $row; 
             }
         }
+        //Nombre de bouteille de chaque type
         foreach($rows as $type){
             $nbre_bouteilles_totales += $type['quantite_bouteille'];
             
@@ -58,7 +61,7 @@ class Statistique extends Modele
             }
 
         }
-      
+       // Pourcentage de chaque type
         if($nbre_bouteilles_rouge !== 0){
             $p_rouge= ($nbre_bouteilles_rouge/$nbre_bouteilles_totales)*100;
             
@@ -76,6 +79,17 @@ class Statistique extends Modele
         return $rows;
     }
 
+    
+    /**
+     * Cette méthode récupère le pourcentage de chaque type de vin d'un usager
+     * 
+     * @param int $id_usager Id de session de l'usager
+     * @param int $id_cellier Id du cellier 
+     * 
+     * @throws Exception Erreur de requête sur la base de données 
+     * 
+     * @return Array Le pourcentage de chaque type
+     */
     public function getInfosBouteilleUsager($id_usager, $id_cellier){
         $rows = array();
         if($id_usager){

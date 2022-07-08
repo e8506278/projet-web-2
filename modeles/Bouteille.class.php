@@ -231,6 +231,8 @@ class Bouteille extends Modele
         return $rows;
     }
 
+
+    
     public function getOneBouteille($id_bouteille, $id_cellier)
     {
         $rows = array();

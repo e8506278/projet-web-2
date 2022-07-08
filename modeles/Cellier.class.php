@@ -344,12 +344,11 @@ class Cellier extends Modele
                 }
                 
             }
-            
-        
-        
        
         return $res;
     }
+
+    
     /**
      * Cette méthode supprime le cellier
      * 
