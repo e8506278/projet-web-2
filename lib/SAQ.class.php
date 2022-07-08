@@ -84,8 +84,12 @@ class SAQ extends Modele
     public function recupereInfo($url)
     {
         $html = self::curl_get_contents($url);
-
         $url_parties = explode("/", $url);
+
+        if (count($url_parties) != 5 || strpos($url_parties[0], "http") === false || strpos($url_parties[2], "www.saq.com")  === false || strpos($url_parties[3], "fr")  === false) {
+            return null;
+        }
+
         $code_saq = end($url_parties);
 
         $doc = new DOMDocument();
@@ -182,21 +186,21 @@ class SAQ extends Modele
             if (strpos($lesAttributs[$i], "Couleur") !== false) {
                 $couleur = trim(explode("Couleur", $lesAttributs[$i])[1]);
 
-                if (str_contains($couleur, "Rouge")) $bte["type_de_vin_nom"] = "Vin rouge";
-                if (str_contains($couleur, "Blanc")) $bte["type_de_vin_nom"] = "Vin blanc";
-                if (str_contains($couleur, "Rosé")) $bte["type_de_vin_nom"] = "Vin rosé";
+                if (strpos($couleur, "Rouge")) $bte["type_de_vin_nom"] = "Vin rouge";
+                if (strpos($couleur, "Blanc")) $bte["type_de_vin_nom"] = "Vin blanc";
+                if (strpos($couleur, "Rosé")) $bte["type_de_vin_nom"] = "Vin rosé";
             }
             if (strpos($lesAttributs[$i], "Particularité") !== false) {
                 $bte["particularite"] = trim(explode("Particularité", $lesAttributs[$i])[1]);
 
-                if (str_contains($bte["particularite"], "Biodynamique")) $bte["biodynamique"] = 1;
-                if (str_contains($bte["particularite"], "Casher")) $bte["casher"] = 1;
-                if (str_contains($bte["particularite"], "Désalcoolisé")) $bte["desalcoolise"] = 1;
-                if (str_contains($bte["particularite"], "Équitable")) $bte["equitable"] = 1;
-                if (str_contains($bte["particularite"], "Faible taux")) $bte["faible_taux_alcool"] = 1;
-                if (str_contains($bte["particularite"], "Produit bio")) $bte["produit_bio"] = 1;
-                if (str_contains($bte["particularite"], "Vin nature")) $bte["vin_nature"] = 1;
-                if (str_contains($bte["particularite"], "Vin orange")) $bte["vin_orange"] = 1;
+                if (strpos($bte["particularite"], "Biodynamique")) $bte["biodynamique"] = 1;
+                if (strpos($bte["particularite"], "Casher")) $bte["casher"] = 1;
+                if (strpos($bte["particularite"], "Désalcoolisé")) $bte["desalcoolise"] = 1;
+                if (strpos($bte["particularite"], "Équitable")) $bte["equitable"] = 1;
+                if (strpos($bte["particularite"], "Faible taux")) $bte["faible_taux_alcool"] = 1;
+                if (strpos($bte["particularite"], "Produit bio")) $bte["produit_bio"] = 1;
+                if (strpos($bte["particularite"], "Vin nature")) $bte["vin_nature"] = 1;
+                if (strpos($bte["particularite"], "Vin orange")) $bte["vin_orange"] = 1;
             }
             if (strpos($lesAttributs[$i], "Format") !== false) {
                 $bte["format_nom"] = trim(explode("Format", $lesAttributs[$i])[1]);
