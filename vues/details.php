@@ -44,7 +44,7 @@ $items = [
 $form_values = [
     'id_bouteille'  => null,
     'id_cellier' => null,
-
+    'vino_id'=> null,
     'nom_cellier' => null,
     'nom_bouteille' => null,
     'image_bouteille' => null,
@@ -120,11 +120,12 @@ foreach ($celliers as & $cellier_dans_le_compte){
    
     foreach ($usager_bouteille as $ub){
         $nom_cellier = $cellier_dans_le_compte['nom_cellier'];
-     
+     /*
         if($cellier_dans_le_compte['id_cellier'] == $ub['id_cellier'] && $ub['id_bouteille'] == $bouteille['id_bouteille']){
             $cellier_dans_le_compte['quantite'] = $bouteille ? $ub['quantite_bouteille']: 0;
             $cellier_dans_le_compte['id_bouteille'] = $bouteille ? $ub['id_bouteille']: 0;
         }
+        */
     }
 }
 
@@ -552,7 +553,6 @@ function home_base_url(){
                                         <div class="value input-state">
                                             <input list="taux_de_sucres"
                                                 placeholder="Sélectionner ici"
-                                                required
                                                 value="<?php echo $form_values['taux_de_sucre_nom']?>"
                                                 class="input select formulaire__champs boite-double__champs"
                                                 name="taux_de_sucre_nom" id="taux_de_sucre_nom" />
@@ -938,12 +938,12 @@ function home_base_url(){
 
 
                         <div class="row-f submit-bloc fiche--fe">
-                     <?php if((isset($id_bouteille) && $id_bouteille != null) || isset($vino_id)) {  ?>
+                     <?php if((isset($id_bouteille) && $id_bouteille != null) ) {  ?>
                      
                             <div >
                                     <div id="submit_btns" class="submit_btns">
                                         <button class="bouton-secondaire bouton-danger" type="button" id="askDeleteBtn"
-                                                style="display:  <?php if(!$form_values['id_cellier'] || !$form_values['id_bouteille'] || $form_values['vino_id']) {echo "none";}?>"
+                                                style="display:  <?php if(!$form_values['id_cellier'] || !$form_values['id_bouteille'] ) {echo "none";}?>"
                                             >Détruire</button>
                                             <?php if(!empty($celliers)) {?>
                                         <button class="bouton-secondaire" type="button" id="ouvrirFormulaire"
