@@ -83,6 +83,7 @@ class SAQ extends Modele
 
     public function recupereInfo($url)
     {
+        $url = trim($url);
         $html = self::curl_get_contents($url);
         $url_parties = explode("/", $url);
 
