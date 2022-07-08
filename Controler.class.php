@@ -755,42 +755,46 @@ class Controler
      */
     private function accueil()
     {
-        include("vues/entete.php");
-
         if (isset($_SESSION) && isset($_SESSION['utilisateur'])) {
             $id = $_SESSION['utilisateur']['id'];
-            $celliers = new Cellier();
+            $type = $_SESSION['utilisateur']['type'];
 
-            $data = $celliers->getListeCellier($id);
-            $nombre_cellier = $celliers->nombreCellierUsager($id);
-            $bouteille_total = 0;
-            $prix_total = 0;
-            foreach ($data as $cellier) {
+            if ($type == 2) {
+                include("vues/Admin/admin.php");
+            } else {
+                $celliers = new Cellier();
 
-                $bouteille_total += $cellier['bouteille_total'];
-                $prix_total += $cellier['prix_total'];
+                $data = $celliers->getListeCellier($id);
+                $nombre_cellier = $celliers->nombreCellierUsager($id);
+                $bouteille_total = 0;
+                $prix_total = 0;
+                foreach ($data as $cellier) {
+
+                    $bouteille_total += $cellier['bouteille_total'];
+                    $prix_total += $cellier['prix_total'];
+                }
+                $total = $prix_total * $bouteille_total;
+
+
+                $stats = new Statistique();
+                $bouteillesBues = 0;
+                $actionsBues = $stats->getBouteilleBues($id);
+
+                foreach ($actionsBues as $bues) {
+                    $bouteillesBues += $bues['quantite_bouteille'];
+                }
+                $bouteillesAchetees = 0;
+                $actionsAjouts = $stats->getBouteilleAjouts($id);
+                foreach ($actionsAjouts as $achetees) {
+                    $bouteillesAchetees += $achetees['quantite_bouteille'];
+                }
+                include("vues/index.php");
             }
-            $total = $prix_total * $bouteille_total;
-
-
-            $stats = new Statistique();
-            $bouteillesBues = 0;
-            $actionsBues = $stats->getBouteilleBues($id);
-
-            foreach ($actionsBues as $bues) {
-                $bouteillesBues += $bues['quantite_bouteille'];
-            }
-            $bouteillesAchetees = 0;
-            $actionsAjouts = $stats->getBouteilleAjouts($id);
-            foreach ($actionsAjouts as $achetees) {
-                $bouteillesAchetees += $achetees['quantite_bouteille'];
-            }
-            include("vues/index.php");
         } else {
+            include("vues/entete.php");
             include("vues/connexion.php");
+            include("vues/pied.php");
         }
-
-        include("vues/pied.php");
     }
 
 
@@ -983,7 +987,7 @@ class Controler
             $bouteille = new Bouteille();
 
             $resultat = $bouteille->noteBouteille($body->note, $body->id_bouteille);
-           
+
             if ($resultat) {
                 return $this->returnJsonHttpResponse(true, true);
             }
@@ -1238,11 +1242,6 @@ class Controler
         }
 
         include("vues/pied.php");
-
-        
-
-
-     
     }
 
     /**

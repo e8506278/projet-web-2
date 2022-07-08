@@ -36,7 +36,7 @@ $disabled = ($mode == "lire") ? "disabled" : "";
     </div>
 
     <div class="groupe-ajouter-saq hide">
-        <input type="text" class="url_saq" name="url_saq" title="Entrez l'url de la SAQ" data-js-url-saq />
+        <input type="text" class="url_saq" name="url_saq" title="Url de la SAQ. Le format doit être: https://www.saq.com/fr/<code SAQ>" placeholder="Format: https://www.saq.com/fr/<code SAQ>" data-js-url-saq />
 
         <div class="btn-ajouter" title="Chercher la bouteille sur le site de la SAQ" data-js-btn-ajouter="bouteille">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

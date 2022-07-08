@@ -8,6 +8,10 @@
     cursor: wait;
 }
 
+.admin-body .nav {
+    justify-content: flex-end;
+}
+
 .admin-body .section1 svg {
     fill: #f3f4f6;
     width: 75px;
