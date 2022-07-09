@@ -1162,10 +1162,12 @@ $aTypesVin = $oRecherche->lireTypesVin();
                                 <div class="carte__contenu" data-js-bouteille="<?= $id_bouteille ?>">
                                     <div class="carte__lien carte--flex">
                                         <div class="carte__img">
-                                            <img src="<?= $image_bouteille ?>" alt="bouteille">
+                                            <?php if($image_bouteille){ ?>
+                                            <img src="<?php echo $image_bouteille ?>" alt="bouteille">
+                                            <?php }else{?>
+                                            <img src="./assets/img/default_bouteille.png">
+                                            <?php }?>
                                         </div>
-
-
                                         <div class="carte__description">
                                             <div>
                                                 <div class="carte--flex carte__titre">

@@ -87,7 +87,7 @@
 			</ul>
 		</nav>
 		
-					
+		<!--Scan pour ouverture-->			
 		</header>
 		<div id="reader" ></div>
 	<main>
